@@ -1,0 +1,570 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"hi",
+				"history"
+			],
+			[
+				"in",
+				"index"
+			],
+			[
+				"his",
+				"history_"
+			],
+			[
+				"prin",
+				"print_usage"
+			],
+			[
+				"c",
+				"cout"
+			],
+			[
+				"e",
+				"exe"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "CoquiGames/index.html",
+			"settings":
+			{
+				"buffer_size": 37772,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CoquiGames/login.html",
+			"settings":
+			{
+				"buffer_size": 16409,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "CoquiGames/product-full.html",
+			"settings":
+			{
+				"buffer_size": 27840,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "CoquiGames/product.html",
+			"settings":
+			{
+				"buffer_size": 26374,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "CoquiGames/register.html",
+			"settings":
+			{
+				"buffer_size": 23356,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "CoquiGames/typography.html",
+			"settings":
+			{
+				"buffer_size": 20309,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "CoquiGames/compare.html",
+			"settings":
+			{
+				"buffer_size": 16732,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "CoquiGames/contact.html",
+			"settings":
+			{
+				"buffer_size": 17293,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "CoquiGames/category-list.html",
+			"settings":
+			{
+				"buffer_size": 25213,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/abi/development/ICOM5016/CoquiGames/CoquiGames/Client/CoquiGames"
+	],
+	"file_history":
+	[
+		"/home/abi/Desktop/angular-services/css/main.css",
+		"/home/abi/Desktop/angular-services/index.html",
+		"/home/abi/development/ICOM5016/CoquiGames/CoquiGames/Client/coquiGames.sublime-project",
+		"/home/abi/development/ICOM5016/CoquiGames/CoquiGames/Client/CoquiGames/compare.html",
+		"/home/abi/Desktop/electro-shoppe/index.html",
+		"/home/abi/Desktop/electro-shoppe/login.html",
+		"/home/abi/Desktop/electro-shoppe/compare.html",
+		"/home/abi/Desktop/electro-shoppe/css/style.css",
+		"/home/abi/Desktop/electro-shoppe/about.html",
+		"/home/abi/icom5007/lab1/myterm/src/command.h",
+		"/home/abi/icom5007/lab1/myterm/src/command.cxx",
+		"/home/abi/icom5007/lab1/processSample.c",
+		"/home/abi/icom5007/lab1/myterm/src/CMakeLists.txt",
+		"/home/abi/Desktop/templatestore/app/templates/templates.html",
+		"/home/abi/Desktop/templatestore/app/view2/view2.html",
+		"/home/abi/icom5007/lab1/signalSample.c",
+		"/home/abi/Desktop/test",
+		"/home/abi/ClionProjects/OSLab1/compile_lab1.sh",
+		"/home/abi/Desktop/hellow.c"
+	],
+	"find":
+	{
+		"height": 775.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"<!-- Header Section Starts -->\n	<header id=\"header-area\">\n	<!-- Header Top Starts -->\n		<div class=\"header-top\">\n			<div class=\"container\">\n				<div class=\"row\">\n				<!-- Header Links Starts -->\n					<div class=\"col-sm-8 col-xs-12\">\n						<div class=\"header-links\">\n							<ul class=\"nav navbar-nav pull-left\">\n								<li>\n									<a href=\"index.html\">\n										<i class=\"fa fa-home hidden-lg hidden-md\" title=\"Home\"></i>\n										<span class=\"hidden-sm hidden-xs\">\n											Home\n										</span>\n									</a>\n								</li>\n								<li>\n									<a href=\"#\">	\n										<i class=\"fa fa-heart hidden-lg hidden-md\" title=\"Wish List\"></i>\n										<span class=\"hidden-sm hidden-xs\">\n											Wish List(0)\n										</span>\n									</a>\n								</li>\n								<li>\n									<a href=\"#\">\n										<i class=\"fa fa-user hidden-lg hidden-md\" title=\"My Account\"></i>\n										<span class=\"hidden-sm hidden-xs\">\n											My Account\n										</span>\n									</a>\n								</li>\n								<li>\n									<a href=\"cart.html\">\n										<i class=\"fa fa-shopping-cart hidden-lg hidden-md\" title=\"Shopping Cart\"></i>\n										<span class=\"hidden-sm hidden-xs\">\n											Shopping Cart\n										</span>\n									</a>\n								</li>\n								<li>\n									<a href=\"#\">\n										<i class=\"fa fa-crosshairs hidden-lg hidden-md\" title=\"Checkout\"></i>\n										<span class=\"hidden-sm hidden-xs\">\n											Checkout\n										</span>\n									</a>\n								</li>\n								<li>\n									<a href=\"register.html\">\n										<i class=\"fa fa-unlock hidden-lg hidden-md\" title=\"Register\"></i>\n										<span class=\"hidden-sm hidden-xs\">\n											Register\n										</span>\n									</a>\n								</li>\n								<li>\n									<a href=\"login.html\">\n										<i class=\"fa fa-lock hidden-lg hidden-md\" title=\"Login\"></i>\n										<span class=\"hidden-sm hidden-xs\">\n											Login\n										</span>\n									</a>\n								</li>\n							</ul>\n						</div>\n					</div>\n				<!-- Header Links Ends -->\n				<!-- Currency & Languages Starts -->\n					<div class=\"col-sm-4 col-xs-12\">\n						<div class=\"pull-right\">\n						<!-- Currency Starts -->\n							<div class=\"btn-group\">\n								<button class=\"btn btn-link dropdown-toggle\" data-toggle=\"dropdown\">\n									Currency\n									<i class=\"fa fa-caret-down\"></i>\n								</button>\n								<ul class=\"pull-right dropdown-menu\">\n									<li><a tabindex=\"-1\" href=\"#\">Pound </a></li>\n									<li><a tabindex=\"-1\" href=\"#\">US Dollar</a></li>\n									<li><a tabindex=\"-1\" href=\"#\">Euro</a></li>\n								</ul>\n							</div>\n						<!-- Currency Ends -->\n						<!-- Languages Starts -->\n							<div class=\"btn-group\">\n								<button class=\"btn btn-link dropdown-toggle\" data-toggle=\"dropdown\">\n									Language\n									<i class=\"fa fa-caret-down\"></i>\n								</button>\n								<ul class=\"pull-right dropdown-menu\">\n									<li>\n										<a tabindex=\"-1\" href=\"#\">English</a>\n									</li>\n									<li>\n										<a tabindex=\"-1\" href=\"#\">French</a>\n									</li>\n								</ul>\n							</div>\n						<!-- Languages Ends -->\n						</div>\n					</div>\n				<!-- Currency & Languages Ends -->\n				</div>\n			</div>\n		</div>\n	<!-- Header Top Ends -->\n	<!-- Main Header Starts -->\n		<div class=\"main-header\">\n			<div class=\"container\">\n				<div class=\"row\">\n				<!-- Search Starts -->\n					<div class=\"col-md-3\">\n						<div id=\"search\">\n							<div class=\"input-group\">\n							  <input type=\"text\" class=\"form-control input-lg\" placeholder=\"Search\">\n							  <span class=\"input-group-btn\">\n								<button class=\"btn btn-lg\" type=\"button\">\n									<i class=\"fa fa-search\"></i>\n								</button>\n							  </span>\n							</div>\n						</div>	\n					</div>\n				<!-- Search Ends -->\n				<!-- Logo Starts -->\n					<div class=\"col-md-6\">\n						<div id=\"logo\">\n							<a href=\"index.html\"><img src=\"images/logo.png\" title=\"Spice Shoppe\" alt=\"Spice Shoppe\" class=\"img-responsive\" /></a>\n						</div>\n					</div>\n				<!-- Logo Starts -->				\n				<!-- Shopping Cart Starts -->\n					<div class=\"col-md-3\">\n						<div id=\"cart\" class=\"btn-group btn-block\">\n							<button type=\"button\" data-toggle=\"dropdown\" class=\"btn btn-block btn-lg dropdown-toggle\">\n								<i class=\"fa fa-shopping-cart\"></i>\n								<span class=\"hidden-md\">Cart:</span> \n								<span id=\"cart-total\">0 item(s) - $0.00</span>\n								<i class=\"fa fa-caret-down\"></i>\n							</button>\n							<ul class=\"dropdown-menu\">\n								<li>\n									<p class=\"text-center\">Your shopping cart is empty!</p>\n								</li>									\n							</ul>\n						</div>\n					</div>\n				<!-- Shopping Cart Ends -->\n				</div>\n			</div>\n		</div>\n	<!-- Main Header Ends -->\n	<!-- Main Menu Starts -->\n		<nav id=\"main-menu\" class=\"navbar\" role=\"navigation\">\n			<div class=\"container\">\n			<!-- Nav Header Starts -->\n				<div class=\"navbar-header\">\n					<button type=\"button\" class=\"btn btn-navbar navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-cat-collapse\">\n						<span class=\"sr-only\">Toggle Navigation</span>\n						<i class=\"fa fa-bars\"></i>\n					</button>\n				</div>\n			<!-- Nav Header Ends -->\n			<!-- Navbar Cat collapse Starts -->\n				<div class=\"collapse navbar-collapse navbar-cat-collapse\">\n					<ul class=\"nav navbar-nav\">\n						<li><a href=\"category-list.html\">Digital Cameras</a></li>\n						<li class=\"dropdown\">\n							<a href=\"category-list.html\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" data-hover=\"dropdown\" data-delay=\"10\">\n								Sound Devices\n							</a>\n							<ul class=\"dropdown-menu\" role=\"menu\">\n								<li><a tabindex=\"-1\" href=\"#\">Music System</a></li>\n								<li><a tabindex=\"-1\" href=\"#\">DTS</a></li>\n								<li><a tabindex=\"-1\" href=\"#\">Home Theater</a></li> \n							</ul>\n						</li>\n						<li class=\"dropdown\">\n							<a href=\"category-list.html\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" data-hover=\"dropdown\" data-delay=\"10\">Televisions </a>\n							<div class=\"dropdown-menu\">\n								<div class=\"dropdown-inner\">\n									<ul class=\"list-unstyled\">\n										<li class=\"dropdown-header\">Sub Category</li>\n										<li><a tabindex=\"-1\" href=\"#\">item 1</a></li>\n										<li><a tabindex=\"-1\" href=\"#\">item 2</a></li>\n										<li><a tabindex=\"-1\" href=\"#\">item 3</a></li>\n									</ul>										\n									<ul class=\"list-unstyled\">\n										<li class=\"dropdown-header\">Sub Category</li>\n										<li><a tabindex=\"-1\" href=\"#\">item 1</a></li>\n										<li><a tabindex=\"-1\" href=\"#\">item 2</a></li>\n										<li><a tabindex=\"-1\" href=\"#\">item 3</a></li>\n									</ul>\n									<ul class=\"list-unstyled\">\n										<li class=\"dropdown-header\">Sub Category</li>\n										<li><a tabindex=\"-1\" href=\"#\">item 1</a></li>\n										<li><a tabindex=\"-1\" href=\"#\">item 2</a></li>\n										<li><a tabindex=\"-1\" href=\"#\">item 3</a></li>\n									</ul>\n								</div>\n							</div>\n						</li>\n						<li><a href=\"category-list.html\">Computers </a></li>\n						<li><a href=\"category-list.html\">Washing Machines</a></li>\n						<li><a href=\"category-list.html\">Accessories </a></li>\n                        <li><a href=\"category-list.html\">Mobile Phones  </a></li>\n						<li class=\"dropdown\">\n					<a href=\"category-list.html\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" data-hover=\"dropdown\" data-delay=\"10\">\n						Pages\n					</a>\n					<ul class=\"dropdown-menu\" role=\"menu\">\n						<li><a tabindex=\"-1\" href=\"index.html\">Home</a></li>\n						<li><a tabindex=\"-1\" href=\"about.html\">About</a></li>\n						<li><a tabindex=\"-1\" href=\"category-list.html\">Category List</a></li>\n						<li><a tabindex=\"-1\" href=\"category-grid.html\">Category Grid</a></li>\n						<li><a tabindex=\"-1\" href=\"product.html\">Product</a></li>\n						<li><a tabindex=\"-1\" href=\"product-full.html\">Product Full Width</a></li>\n						<li><a tabindex=\"-1\" href=\"cart.html\">Cart</a></li>\n						<li><a tabindex=\"-1\" href=\"login.html\">Login</a></li>\n						<li><a tabindex=\"-1\" href=\"compare.html\">Compare Products</a></li>\n						<li><a tabindex=\"-1\" href=\"typography.html\">Typography</a></li>\n						<li><a tabindex=\"-1\" href=\"register.html\">Register</a></li>\n						<li><a tabindex=\"-1\" href=\"contact.html\">Contact</a></li>\n						<li><a tabindex=\"-1\" href=\"404.html\">404</a></li>\n					</ul>\n				</li>\n					</ul>\n				</div>\n			<!-- Navbar Cat collapse Ends -->\n			</div>\n		</nav>\n	<!-- Main Menu Ends -->\n	</header>\n<!-- Header Section Ends -->",
+			"	<meta charset=\"utf-8\">\n	<!--[if IE]>\n		<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge,chrome=1\">\n	<![endif]-->\n	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n	<meta name=\"description\" content=\"\">\n	<meta name=\"author\" content=\"\">\n	\n	<title>Electro Shoppe Stores - Bootstrap 3 Template</title>\n	\n	<!-- Bootstrap Core CSS -->\n	<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\n	\n	<!-- Google Web Fonts -->\n	<link href=\"http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700\" rel=\"stylesheet\" type=\"text/css\">\n	<link href=\"http://fonts.googleapis.com/css?family=Oswald:400,700,300\" rel=\"stylesheet\" type=\"text/css\">\n	<link href=\"http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400\" rel=\"stylesheet\" type=\"text/css\">\n	\n	<!-- CSS Files -->\n	<link href=\"font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\">\n	<link href=\"css/style.css\" rel=\"stylesheet\">\n	<link href=\"css/responsive.css\" rel=\"stylesheet\">\n	\n	<!--[if lt IE 9]>\n		<script src=\"js/ie8-responsive-file-warning.js\"></script>\n	<![endif]-->\n	\n	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n    <!--[if lt IE 9]>\n      <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n      <script src=\"https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js\"></script>\n    <![endif]-->\n	\n	<!-- Fav and touch icons -->\n	<link rel=\"apple-touch-icon-precomposed\" sizes=\"144x144\" href=\"images/fav-144.png\">\n	<link rel=\"apple-touch-icon-precomposed\" sizes=\"114x114\" href=\"images/fav-114.png\">\n	<link rel=\"apple-touch-icon-precomposed\" sizes=\"72x72\" href=\"images/fav-72.png\">\n	<link rel=\"apple-touch-icon-precomposed\" href=\"images/fav-57.png\">\n	<link rel=\"shortcut icon\" href=\"images/fav.png\">",
+			"logo",
+			"(\\w\\.\\w)+|([\\w\\/\\|\\.]+)|([\\-]+(\\w+))",
+			"(\\w+)|(([\\.\\/\\w+]+))|([\\-]+(\\w+))",
+			"(\\w+)|(([\\.\\/\\w+\\s]+))|([\\-]+(\\w+))",
+			"(([\\.\\/\\w+\\s]+))|([\\-]+(\\w+))",
+			"(\\.\\/)?(\\w+)[\\w\\d\\s\\.\\-\\\\\\/]*?$",
+			"\\w+(\\s+(\\-?)*((\\/[^\\/ ]*)+\\/?)*\\w+(\\.?\\w+)+)*\\s*",
+			"\\w+(\\s+(-?)*((\\/[^\\/ ]*)+\\/?)*\\w+)*\\s*",
+			"(\\.\\/)?\\w+(\\s+)?(-?)(((\\/[^\\/ ]*)+\\/?)*\\w+)*(\\w+\\.\\w+)?*\\s*$",
+			"(\\.\\/)?\\w+(\\s+)?(-?)(((\\/[^\\/ ]*)+\\/?)*\\w+)*\\s*$",
+			"\\w+(\\s+(-?)*((\\/[^\\/ ]*)+\\/?)*\\w+)*\\s*$",
+			"\\w+(\\s+(-?)*((\\/[^\\/ ]*)+\\/?)*\\w+)*\\s*",
+			"\\w+(\\s+(-?)*(\\.?)*\\w+)*\\s*(\\/[^\\/ ]*)+\\/?",
+			"\\w+(\\s+-?\\w+)*\\s*",
+			"\\w+(\\s+-?*\\w+)*\\s*",
+			"\\-?",
+			"\\w+(\\s+\\w+)*\\s*",
+			"\\\\w+(\\\\s+\\\\w+)*\\\\s*",
+			"\"\\\\w+(\\\\s+\\\\w+)*\\\\s*\"",
+			"int *",
+			","
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"struct student *"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 8,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "CoquiGames/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 37772,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								478,
+								478
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "CoquiGames/login.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16409,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10290,
+								10290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4859.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "CoquiGames/product-full.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 27840,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10345,
+								10345
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4876.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "CoquiGames/product.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 26374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10290,
+								10290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4859.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "CoquiGames/register.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23356,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10290,
+								10290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4859.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "CoquiGames/typography.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20309,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10290,
+								10290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 779.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "CoquiGames/compare.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16732,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10290,
+								10290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4859.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "CoquiGames/contact.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17293,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10290,
+								10290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4859.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "CoquiGames/category-list.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25213,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10290,
+								10290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4893.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "coquiGames.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
