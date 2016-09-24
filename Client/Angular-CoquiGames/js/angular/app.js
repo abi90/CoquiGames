@@ -57,6 +57,13 @@ app.config(function ($routeProvider) {
       .when('/typography.html', {
           controller: 'HomeController',
           templateUrl: 'views/typography.html'
+      })
+      .when('/wishlist', {
+          controller: 'HomeController',
+          templateUrl: 'views/wishlist.html'
+      })
+      .otherwise({
+      redirectTo: '/'
       });
 
 });
