@@ -7,7 +7,9 @@
   "description": "Database Systems Project",
   "main": "web.js",
   "dependencies": {
-    "grunt": "^1.0.1"
+    "express": "^4.14.0",
+    "grunt": "^1.0.1",
+    "gzippo": "^0.2.0"
   },
   "scripts": {
     "test": "echo \\\"Error: no test specified\\\" && exit 1"
