@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3a1f02a-93e1-4366-86a3-a957f9edc7ce" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../CoquiGames/.idea/CoquiGames.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../CoquiGames/.idea/modules.xml" afterPath="$PROJECT_DIR$/../CoquiGames/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../CoquiGames/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../CoquiGames/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../test/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../test/.idea/workspace.xml" />
     </list>
     <ignored path="Angular-CoquiGames.iws" />
