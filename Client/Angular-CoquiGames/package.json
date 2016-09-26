@@ -1,1 +1,25 @@
-web: node web.js
+{
+  "devDependencies": {
+    "grunt": "^1.0.1"
+  },
+  "name": "CoquiGames",
+  "version": "1.0.0",
+  "description": "Database Systems Project",
+  "main": "web.js",
+  "dependencies": {
+    "grunt": "^1.0.1"
+  },
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abi90/CoquiGames.git"
+  },
+  "author": "Abisai Ramos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abi90/CoquiGames/issues"
+  },
+  "homepage": "https://github.com/abi90/CoquiGames"
+}
