@@ -1,10 +1,17 @@
-var gzippo = require('gzippo');
 var express = require('express');
+
+var path = require('path');
+var bodyParser = require('body-parser');
 var app = express();
 
-app.use(express.logger('dev'));
-app.use(gzippo.staticGzip("" + __dirname + "/Angular-CoquiGames"));
-app.get('*', function(req, res) {
-    res.sendfile('./Angular-CoquiGames/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, '/')));
+
+/* GET home page. */
+app.get('/', function(req, res, next) {
+    //Path to your main file
+    res.status(200).sendFile(path.join(__dirname+'../index.html'));
 });
-app.listen(process.env.PORT || 5000);
+
+module.exports = app;
