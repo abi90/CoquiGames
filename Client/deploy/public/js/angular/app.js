@@ -1,4 +1,4 @@
-var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo']);
+var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize']);
 
 app.config(function ($routeProvider) {
   $routeProvider
@@ -62,8 +62,16 @@ app.config(function ($routeProvider) {
           controller: 'HomeController',
           templateUrl: 'views/wishlist.html'
       })
+      .when('/search-list', {
+          controller: 'HomeController',
+          templateUrl: 'views/search-list.html'
+      })
+      .when('/search-grid', {
+          controller: 'HomeController',
+          templateUrl: 'views/search-grid.html'
+      })
       .otherwise({
-      redirectTo: '/'
+          redirectTo: '/'
       });
 
 });
