@@ -66,9 +66,25 @@ app.config(function ($routeProvider) {
           controller: 'HomeController',
           templateUrl: 'views/search-list.html'
       })
-      .when('/search-grid', {
+      .when('/account-info', {
           controller: 'HomeController',
-          templateUrl: 'views/search-grid.html'
+          templateUrl: 'views/account-info.html'
+      })
+      .when('/account-orders', {
+          controller: 'HomeController',
+          templateUrl: 'views/account-orders.html'
+      })
+      .when('/account-payment', {
+          controller: 'HomeController',
+          templateUrl: 'views/account-payment.html'
+      })
+      .when('/checkout', {
+          controller: 'HomeController',
+          templateUrl: 'views/checkout.html'
+      })
+      .when('/account-address', {
+          controller: 'HomeController',
+          templateUrl: 'views/account-address.html'
       })
       .otherwise({
           redirectTo: '/'
