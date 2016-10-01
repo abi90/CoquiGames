@@ -1,5 +1,6 @@
 <!doctype html>
-<html ><head>
+<html>
+<head>
     <meta charset="utf-8">
     <!--[if IE]>
       <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -51,10 +52,12 @@
     <script src="js/angular/shared/angular-slider.js"></script>
   </head>
 <body ng-app="MainApp">
+<!--
 <p>Test $http.get</p>
 <div ng-controller="CGAPIController">
   <p>{{testApi}}</p>
 </div>
+-->
     <!-- Header Section Starts -->
     <header id="header-area" ng-controller="NavBarController">
       <!-- Header Top Starts -->
@@ -92,7 +95,7 @@
 									</a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="#/account-orders">
 
 										<i class="fa fa-user hidden-lg hidden-md" title="My Account"></i>
 
@@ -118,7 +121,7 @@
 									</a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="#/checkout">
 
 										<i class="fa fa-crosshairs hidden-lg hidden-md" title="Checkout"></i>
 
@@ -168,14 +171,13 @@
       <div class="main-header">
         <div class="container">
           <div class="row">
-            
             <!-- Search Starts -->
             <div class="col-md-3">
               <div id="search">
                 <div class="input-group">
                   <input type="text" class="form-control input-lg" placeholder="Search">
                   <span class="input-group-btn">
-                    <button class="btn btn-lg" type="button">
+                    <button class="btn btn-lg" type="button" ng-click="redirect()">
                       <i class="fa fa-search"></i>
                     </button>
                   </span>
@@ -525,6 +527,6 @@
     <script src="js/angular/services/cg-api.js"></script>
     <!-- Angular Directives -->
     <script src="js/angular/directives/WrapOwlCarousel.js"></script>
-
-
-</body></html>
+    <script src="js/angular/directives/myAccountNav.js"></script>
+</body>
+</html>

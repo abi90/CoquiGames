@@ -66,6 +66,10 @@ app.config(function ($routeProvider) {
           controller: 'HomeController',
           templateUrl: 'views/search-list.html'
       })
+      .when('/search-grid', {
+          controller: 'HomeController',
+          templateUrl: 'views/search-list.html'
+      })
       .when('/account-info', {
           controller: 'HomeController',
           templateUrl: 'views/account-info.html'

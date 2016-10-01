@@ -1,10 +1,10 @@
-app.directive('appInfo', function(){
+app.directive('myAccountNav', function(){
     return {
         restrict: 'E',
         scope:{
             info: '='
         },
         templateUrl:
-            'js/directives/appInfo.html'
+            'js/angular/directives/accountNav.html'
     };
 });

@@ -1,4 +1,4 @@
-app.controller('NavBarController', ['$scope', function($scope) {
+app.controller('NavBarController', ['$scope', '$location', function($scope, $location) {
     $scope.navbarOptions = [
         {
             platform: "PS4",
@@ -29,4 +29,7 @@ app.controller('NavBarController', ['$scope', function($scope) {
             topgames:["Deals","Action","eSHop","Fighting","Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
         }
     ];
+    $scope.redirect = function(){
+        $location.url("search-grid");
+    }
 }]);
