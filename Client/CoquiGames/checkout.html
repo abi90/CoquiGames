@@ -10,7 +10,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="Jesmarie" >
 	
-	<title>Electro Shoppe Stores - Bootstrap 3 Template</title>
+	<title>CoquiGames</title>
 	
 	<!-- Bootstrap Core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -294,134 +294,6 @@
 		<h2 class="main-heading text-center">
 			Checkout
 		</h2>
-		<!-- Main Heading Ends -->
-
-		<!-- Order Summary Table Starts -->
-		<!--<div class="table-responsive order-summary-table">-->
-			<!--<table class="table table-bordered">-->
-				<!--<thead>-->
-					<!--<tr>-->
-						<!--<th colspan="3" class="text-center" bgcolor="#4BAC52">-->
-							<!--<strong>Order Summary</strong>-->
-						<!--</th>-->
-					<!--</tr>-->
-					<!--</thead>-->
-
-				<!--<tbody>-->
-				<!--<tr>-->
-					<!--<td class="text-center">-->
-						<!--Products-->
-					<!--</td>-->
-					<!--<td class="text-center">-->
-						<!--Quantity-->
-					<!--</td>-->
-					<!--<td class="text-center">-->
-						<!--Price-->
-					<!--</td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="text-center">-->
-						<!--<a href="product-full.html">Digital Electro Goods</a>-->
-					<!--</td>-->
-					<!--<td class="text-center">-->
-						<!--2-->
-					<!--</td>-->
-					<!--<td class="text-left">-->
-						<!--$150.00-->
-					<!--</td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td class="text-center">-->
-						<!--<a href="product-full.html">Pokemon Rumble</a>-->
-					<!--</td>-->
-					<!--<td class="text-center">-->
-						<!--1-->
-					<!--</td>-->
-					<!--<td class="text-left">-->
-						<!--$39.99-->
-					<!--</td>-->
-				<!--</tr>-->
-				<!--</tbody>-->
-				<!--<tfoot>-->
-				<!--<tr>-->
-					<!--<td colspan="2" class="text-right">-->
-						<!--Subtotal:-->
-					<!--</td>-->
-					<!--<td colspan="2" class="text-left">-->
-						<!--$339.99-->
-					<!--</td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td colspan="2" class="text-right">-->
-						<!--<strong>Total :</strong>-->
-					<!--</td>-->
-					<!--<td colspan="2" class="text-left">-->
-						<!--$339.99-->
-					<!--</td>-->
-				<!--</tr>-->
-				<!--</tfoot>-->
-			<!--</table>-->
-		<!--</div>-->
-		<!--&lt;!&ndash; Order Summary Table Ends &ndash;&gt;-->
-
-
-		<!--&lt;!&ndash;Address Table Starts &ndash;&gt;-->
-		<!--<div class="table-responsive address-table">-->
-			<!--<table class="table table-bordered">-->
-				<!--<thead>-->
-					<!--<th class="text-center" bgcolor="4BAC52" colspan="2">-->
-						<!--Address-->
-					<!--</th>-->
-				<!--</thead>-->
-
-				<!--<tbody>-->
-					<!--<tr>-->
-						<!--<td rowspan="2">-->
-							<!--<input type="radio" name="shipping-address" value="true">-->
-							<!--Gary Oak<br>-->
-							<!--Pallet Town 3245, Route 1<br>-->
-							<!--Kanto Region, 09901<br>-->
-
-							<!--<button type="button">Edit</button>-->
-						<!--</td>-->
-
-						<!--<td>-->
-							<!--<input type="checkbox" name="mailing-address" value="true"> My shipping address is the same as my mailing address<br>-->
-						<!--</td>-->
-					<!--</tr>-->
-
-					<!--<tr>-->
-						<!--<td colspan="2">-->
-							<!--<button type="button">Add New Address</button>-->
-						<!--</td>-->
-					<!--</tr>-->
-				<!--</tbody>-->
-			<!--</table>-->
-		<!--</div>-->
-		<!--&lt;!&ndash;Address Table Ends &ndash;&gt;-->
-
-		<!--&lt;!&ndash;Shipping Table Starts &ndash;&gt;-->
-		<!--<div class="table-responsive shipping-table">-->
-			<!--<table class="table table-bordered">-->
-				<!--<thead>-->
-					<!--<th class="text-center" bgcolor="4BAC52" colspan="2">-->
-						<!--Shipping-->
-					<!--</th>-->
-				<!--</thead>-->
-				<!--<tbody>-->
-					<!--<tr>-->
-						<!--<td>-->
-							<!--<form action="">-->
-								<!--<input type="radio" name="shipping" value="free"> Free Standar Shipping (9 to 15 Business Days)<br>-->
-								<!--<input type="radio" name="shipping" value="standard"> Standard Shipping (7 to 10 Business Days)<br>-->
-								<!--<input type="radio" name="shipping" value="expres"> Express Shipping (2 to 7 Business Days)-->
-							<!--</form>-->
-						<!--</td>-->
-					<!--</tr>-->
-				<!--</tbody>-->
-			<!--</table>-->
-		<!--</div>-->
-		<!--&lt;!&ndash;Shipping Table Ends &ndash;&gt;-->
 
 		<section class="overview">
 			<div class="row">
@@ -506,7 +378,7 @@
 				<!-- Payment & Address Block Starts -->
 				<div class="col-sm-6">
 
-					<!-- Address Panel Starts -->
+					<!-- Shipping Address Panel Starts -->
 					<div class="panel panel-smart">
 						<div class="panel-heading">
 							<h3 class="panel-title">
@@ -515,23 +387,20 @@
 						</div>
 						<div class="panel-body">
 							<p>
+								<button type="button" class="btn btn-default btn-md pull-right" data-toggle="modal" data-target="#myModalS">Edit</button>
 								Gary Oak<br>
 								Pallet Town 3245, Route 1<br>
 								Kanto Region, 09901<br>
 							</p>
 
-							<p>
-								<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Edit</button>
-							</p>
-
                             <!--Modal-->
-                            <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal fade" id="myModalS" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Address</h4>
+                                            <h4 class="modal-title">Edit Shipping Address</h4>
                                         </div>
 
                                         <div class="modal-body">
@@ -602,13 +471,12 @@
                                                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             Country
                                                         </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="#">Action</a>
-                                                            <a class="dropdown-item" href="#">Another action</a>
-                                                            <a class="dropdown-item" href="#">Something else here</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="#">Separated link</a>
-                                                        </div>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="#">Aguada</a></li>
+															<li><a class="dropdown-item" href="#">Ponce</a></li>
+															<li><a class="dropdown-item" href="#">San Juan</a></li>
+															<li><a class="dropdown-item" href="#">Utuado</a></li>
+                                                        </ul>
                                                     </div>
 
                                                     <br><br>
@@ -652,14 +520,158 @@
                                 </div>
 
                             </div>
-
 							<p>
-								<input type="checkbox" name="mailing-address" value="true"> My mailing address is the same as my shipping address<br>
-
+								<input type="checkbox" name="billing-address" value="true"> My billing address is the same as my shipping address<br>
 							</p>
 						</div>
 					</div>
-					<!-- Address Panel Ends -->
+					<!-- Shipping address Panel Ends -->
+
+					<!-- Billing address Panel Starts -->
+					<div class="panel panel-smart">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								Billing Address
+							</h3>
+						</div>
+						<div class="panel-body">
+							<p>
+								<button type="button" class="btn btn-default btn-md pull-right" data-toggle="modal" data-target="#myModalB">Edit</button>
+								Gary Oak<br>
+								Pallet Town 3245, Route 1<br>
+								Kanto Region, 09901<br>
+							</p>
+
+							<!--Modal-->
+							<div class="modal fade" id="myModalB" role="dialog">
+								<div class="modal-dialog">
+									<!-- Modal content-->
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">Edit Billing Address</h4>
+										</div>
+
+										<div class="modal-body">
+											<form role="form">
+												<div class="form-group">
+
+													<label for="name">
+                                                        <span class="">
+                                                            First name:
+                                                        </span>
+													</label>
+													<input type="text" class="form-control" id="name" placeholder="First name">
+
+													<br>
+
+													<label for="lastname">
+                                                        <span class="">
+                                                            Last name:
+                                                        </span>
+													</label>
+													<input type="text" class="form-control" id="lastname" placeholder="Last name">
+
+													<br>
+
+													<label for="add1">
+                                                        <span class="">
+                                                            Address field 1:
+                                                        </span>
+													</label>
+													<input type="text" class="form-control" id="add1" placeholder="Address">
+
+													<br>
+
+													<label for="add2">
+                                                        <span class="">
+                                                            Address field 2:
+                                                        </span>
+													</label>
+													<input type="text" class="form-control" id="add2" placeholder="Address">
+
+													<br>
+
+													<label for="city">
+                                                        <span class="">
+                                                            City:
+                                                        </span>
+													</label>
+													<input type="text" class="form-control" id="city" placeholder="City">
+
+													<br>
+
+													<label for="state">
+                                                        <span class="">
+                                                            State / Province / Region:
+                                                        </span>
+													</label>
+													<input type="text" class="form-control" id="state" placeholder="State / Province / Region">
+
+													<br>
+
+													<label for="">
+                                                        <span class="">
+                                                           Country:
+                                                        </span>
+													</label>
+													<br>
+													<div class="btn-group">
+														<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															Country
+														</button>
+														<div class="dropdown-menu">
+															<li><a class="dropdown-item" href="#">Aguada</a></li>
+															<li><a class="dropdown-item" href="#">Ponce</a></li>
+															<li><a class="dropdown-item" href="#">San Juan</a></li>
+															<li><a class="dropdown-item" href="#">Utuado</a></li>
+														</div>
+													</div>
+
+													<br><br>
+
+													<label for="zipcode">
+                                                        <span class="">
+                                                            Postal / Zip Code:
+                                                        </span>
+													</label>
+													<input type="text" class="form-control" id="zipcode" placeholder="Postal / Zip Code">
+
+													<br>
+
+													<label for="email">
+                                                        <span class="">
+                                                            Email:
+                                                        </span>
+													</label>
+													<input type="text" class="form-control" id="email" placeholder="Email">
+
+													<br>
+
+													<label for="phone">
+                                                        <span class="">
+                                                            Phone number:
+                                                        </span>
+													</label>
+													<input type="text" class="form-control" id="phone" placeholder="Phone number">
+
+												</div>
+											</form>
+										</div>
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- Billing address Panel Ends -->
 
 				<!-- Payment Method Block Starts -->
 					<div class="panel panel-smart">
@@ -676,37 +688,113 @@
 								<label class="form-check-label">
 									<input type="radio" class="form-check-input" name="optionsRadio" id="Visa" value="option1">
 									<img src="images/payment-icon/visa.png" alt="PaymentGateway" />  Visa
-								</label>
+								</label> ending in 5555
+								<button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#CreditUpdate">Update</button>
 							</div>
 
 							<div class="form-check">
 								<label class="form-check-label">
 									<input type="radio" class="form-check-input" name="optionsRadio" id="MasterCard" value="option2">
 									<img src="images/payment-icon/cirrus.png" alt="PaymentGateway" />  Cirrus
-								</label>
+								</label> ending in 1234
+								<button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#CreditUpdate">Update</button>
 							</div>
 
-							<div class="form-check">
-								<label class="form-check-label">
-									<input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">
-									<img src="images/payment-icon/americanexpress.png" alt="PaymentGateway" />  American Express
-								</label>
-							</div>
+							<!--MODAL FOR Visa CARD -->
+							<div class="modal fade" id="CreditUpdate" role="dialog">
+								<div class="modal-dialog">
+									<!-- Modal content-->
+									<div class="modal-content">
 
-							<div class="form-check">
-								<label class="form-check-label">
-									<input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">
-									<img src="images/payment-icon/mastercard.png" alt="PaymentGateway" />  Master Card
-								</label>
-							</div>
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">Update credit card</h4>
+										</div>
 
+										<div class="modal-body">
+											<form role="form">
+												<div class="form-group">
+													<label for="ccnum">
+                                                        	<span class="">
+                                                            	Card number:
+                                                        	</span>
+													</label>
+													<input type="text" class="form-control" id="ccnum" placeholder="Card Number">
 
-							<div class="form-check">
-								<label class="form-check-label">
-									<input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">
-									<img src="images/payment-icon/paypal.png" alt="PaymentGateway" />  PayPal
-								</label>
-							</div>
+													<br>
+
+													<label for="ccfname">
+                                                        	<span class="">
+                                                            	Name on card:
+                                                        	</span>
+													</label>
+													<input type="text" class="form-control" id="ccfname" placeholder="Name">
+
+													<br>
+
+													<span class="">
+                                                            	Expiration date:
+													</span>
+													<div class="btn-group">
+														<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Month
+															<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></button>
+														<div class="dropdown-menu">
+															<li><a class="dropdown-item" href="#">Jan</a></li>
+															<li><a class="dropdown-item" href="#">Feb</a></li>
+															<li><a class="dropdown-item" href="#">Mar</a></li>
+															<li><a class="dropdown-item" href="#">Apr</a></li>
+															<li><a class="dropdown-item" href="#">May</a></li>
+															<li><a class="dropdown-item" href="#">Jun</a></li>
+															<li><a class="dropdown-item" href="#">Jul</a></li>
+															<li><a class="dropdown-item" href="#">Aug</a></li>
+															<li><a class="dropdown-item" href="#">Sep</a></li>
+															<li><a class="dropdown-item" href="#">Oct</a></li>
+															<li><a class="dropdown-item" href="#">Nov</a></li>
+															<li><a class="dropdown-item" href="#">Dec</a></li>
+														</div>
+													</div>
+
+													<div class="btn-group">
+														<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Year
+															<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></button>
+														<div class="dropdown-menu">
+															<li><a class="dropdown-item" href="#">2016</a></li>
+															<li><a class="dropdown-item" href="#">2017</a></li>
+															<li><a class="dropdown-item" href="#">2018</a></li>
+															<li><a class="dropdown-item" href="#">2019</a></li>
+															<li><a class="dropdown-item" href="#">2020</a></li>
+															<li><a class="dropdown-item" href="#">2021</a></li>
+															<li><a class="dropdown-item" href="#">2022</a></li>
+															<li><a class="dropdown-item" href="#">2023</a></li>
+															<li><a class="dropdown-item" href="#">2024</a></li>
+														</div>
+													</div>
+
+												</div>
+											</form>
+										</div>
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+								<!--MODAL Visa END-->
+
+							<!--<div class="form-check">-->
+								<!--<label class="form-check-label">-->
+									<!--<input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">-->
+									<!--<img src="images/payment-icon/americanexpress.png" alt="PaymentGateway" />  American Express-->
+								<!--</label>-->
+							<!--</div>-->
+
+							<!--<div class="form-check">-->
+								<!--<label class="form-check-label">-->
+									<!--<input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">-->
+									<!--<img src="images/payment-icon/mastercard.png" alt="PaymentGateway" />  Master Card-->
+								<!--</label>-->
+							<!--</div>-->
 
 						</fieldset>
 						<!-- Form Ends -->
@@ -739,27 +827,29 @@
 							<!-- Form Ends -->
 						</div>
 					</div>
-					<!-- Shipping Block Ends -->
 
-					<!-- Coupon Block Starts -->
-					<div class="panel panel-smart">
-						<div class="panel-heading">
-							<h3 class="panel-title">
-								Add a gift card or promotion code
-							</h3>
-						</div>
-						<div class="panel-body">
-							<!-- Form Starts -->
-								<div class="input-group">
-										<input type="text" class="form-control" id="promotioncode" placeholder="Enter code">
-											<span class="input-group-btn">
-												<button type="button" class="btn btn-default"> Apply </button>
-											</span>
-								</div>
-							<!-- Form Ends -->
-						</div>
-					</div>
-					<!-- Coupon Block Ends -->
+					<!-- COUPON BELOW-Just in case!!!!!!!!!!!!!!! -->
+
+					<!-- Shipping Block Ends -->
+					<!--&lt;!&ndash; Coupon Block Starts &ndash;&gt;-->
+					<!--<div class="panel panel-smart">-->
+						<!--<div class="panel-heading">-->
+							<!--<h3 class="panel-title">-->
+								<!--Add a gift card or promotion code-->
+							<!--</h3>-->
+						<!--</div>-->
+						<!--<div class="panel-body">-->
+							<!--&lt;!&ndash; Form Starts &ndash;&gt;-->
+								<!--<div class="input-group">-->
+										<!--<input type="text" class="form-control" id="promotioncode" placeholder="Enter code">-->
+											<!--<span class="input-group-btn">-->
+												<!--<button type="button" class="btn btn-default"> Apply </button>-->
+											<!--</span>-->
+								<!--</div>-->
+							<!--&lt;!&ndash; Form Ends &ndash;&gt;-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--&lt;!&ndash; Coupon Block Ends &ndash;&gt;-->
 
 					<!-- Total Panel Starts -->
 					<div class="panel panel-smart">
@@ -786,12 +876,12 @@
 							</dl>
 							<hr />
 							<div class="text-uppercase clearfix">
-								<a href="#" class="btn btn-default pull-left">
+					<!--			<a href="#" class="btn btn-default pull-left">
 									<span class="hidden-xs">Go back to cart</span>
 									<span class="visible-xs">Continue</span>
-								</a>
+								</a>-->
 								<a href="#" class="btn btn-default pull-right">
-									Continue to Payment
+									Place Order
 								</a>
 							</div>
 						</div>
@@ -891,9 +981,6 @@
 				<ul class="pull-right list-inline">
 					<li>
 						<img src="images/payment-icon/cirrus.png" alt="PaymentGateway" />
-					</li>
-					<li>
-						<img src="images/payment-icon/paypal.png" alt="PaymentGateway" />
 					</li>
 					<li>
 						<img src="images/payment-icon/visa.png" alt="PaymentGateway" />
