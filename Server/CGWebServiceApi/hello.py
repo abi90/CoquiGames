@@ -1,28 +1,28 @@
-from flask import Flask, request, Blueprint
+from flask import Flask, request, Blueprint, jsonify
+from authentication import requires_auth
+
 
 app = Flask(__name__)
-users = Blueprint('users',__name__)
+users = Blueprint('users', __name__)
+
 
 @users.route("/me")
+@requires_auth
 def me():
     return "This is my Page", 200
+
 
 @app.route("/")
 def hello():
     return "Hello World!"
 
+
 @app.route("/contact")
+@requires_auth
 def contact():
     return "You can contact me at 555-5555, or "" \
     "" email me at test@example.com"
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-# Logic for handling login
-        pass
-    else:
-        return "Done"
 
 if __name__ == "__main__":
     app.debug = True
