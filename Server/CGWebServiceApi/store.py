@@ -121,13 +121,13 @@ def announcements():
 
 
 @store_blueprint.route("/latestproduct", methods=['GET'])
-def latest_prod():
+def home_latest_prod():
     result = sorted(products, key=lambda k: k['Release'])
     return jsonify(result)
 
 
 @store_blueprint.route("/specialproduct", methods=['GET'])
-def latest_prod():
+def home_specials_prod():
     result = []
     for p in products:
         if p['InOffer']:
