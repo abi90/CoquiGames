@@ -64,10 +64,6 @@ platforms = [
         }
     ]
 
-announcements = []
-
-products_announcements = []
-
 products = [
     # {
     #     'Pid': 1,
@@ -291,6 +287,7 @@ products = [
         'Rating': 1
     }
 ]
+
 products_announcements = [
     #Nintendo 3DS
     {
@@ -380,6 +377,16 @@ products_announcements = [
         'Product': 'Wiiu'
     },
 ]
+
+announcements = [
+
+    {
+        'anid': 0,
+        'animg': 'path/to/{img}',
+        'antitle': 'Promo'
+    }
+]
+
 """
 GET Product
 """
