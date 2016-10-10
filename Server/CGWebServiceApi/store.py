@@ -21,6 +21,7 @@ products = [
         'Rating': 5
     }
 ]
+
 platforms = []
 
 announcements = []
@@ -30,7 +31,6 @@ products_announcements = []
 """
 GET Product
 """
-
 
 @store_blueprint.route("/<prodictid>", methods=['GET'])
 def prod(productid):

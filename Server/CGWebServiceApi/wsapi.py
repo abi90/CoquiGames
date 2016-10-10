@@ -1,4 +1,5 @@
 import os
+from OpenSSL import SSL
 import __init__
 
 app = __init__.create_app()
