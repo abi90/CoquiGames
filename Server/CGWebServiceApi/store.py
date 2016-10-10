@@ -4,25 +4,6 @@ from dateutil import parser
 
 store_blueprint = Blueprint('store', __name__)
 
-products = [
-    {
-        'Pid': 1,
-        'PhotoLink': 'img/{example}',
-        'Title': '{Title}',
-        'Platform': '{Platformid}',
-        'Genre': '{Genre|Category}',
-        'ESRB': '{M|E|T|NR|etc}',
-        'Release': 'YYYY-mm-dd',
-        'Availability': True,
-        'Price': 00.00,
-        'Description': '{Description}',
-        'AditionalInfo': '{Additional info}',
-        'InOffer': True,
-        'OfferProce': 0,
-        'Rating': 5
-    }
-]
-
 # Platform List with navbar information
 platforms = [
         {
@@ -288,6 +269,7 @@ products = [
     }
 ]
 
+# Product Home carousel announcements
 products_announcements = [
     #Nintendo 3DS
     {
@@ -378,12 +360,27 @@ products_announcements = [
     },
 ]
 
+# Global Store (Home) carousel announcements
 announcements = [
-
     {
-        'anid': 0,
-        'animg': 'path/to/{img}',
-        'antitle': 'Promo'
+        'Anid': 0,
+        'AnImg': 'images/slider-imgs/slide1-img.jpg',
+        'AnTitle': 'Promo 0'
+    },
+    {
+        'Anid': 1,
+        'AnImg': 'images/slider-imgs/slide2-img.jpg',
+        'AnTitle': 'Promo 1'
+    },
+    {
+        'Anid': 2,
+        'AnImg': 'images/slider-imgs/slide3-img.jpg',
+        'AnTitle': 'Promo 2 '
+    },
+    {
+        'Anid': 3,
+        'AnImg': 'images/slider-imgs/slide4-img.jpg',
+        'AnTitle': 'Promo 3'
     }
 ]
 
@@ -404,11 +401,11 @@ Products Methods by Platform
 """
 
 
-@store_blueprint.route("/latest/<platform>", methods=['GET'])
-def latest_prod(platform):
+@store_blueprint.route("/latest/<platformid>", methods=['GET'])
+def latest_prod(platformid):
     result = []
     for p in products:
-        if p['Platform'] == platform:
+        if p['Platform'] == platformid:
             result.append()
     if result:
         result = sorted(result, key=lambda k: parser.parse(k['Release']))
@@ -417,27 +414,27 @@ def latest_prod(platform):
         return not_found()
 
 
-@store_blueprint.route("/special/<platform>", methods=['GET'])
-def special_products(platform):
+@store_blueprint.route("/special/<platformid>", methods=['GET'])
+def special_products(platformid):
     result = []
     for p in products:
-        if p['Platform'] == platform and p['InOffer']:
+        if p['Platform'] == platformid and p['InOffer']:
             result.append()
     if result:
-        result = sorted(result, key=lambda k: k['Release'])
+        result = sorted(result, key=lambda k: parser.parse(k['Release']))
         return jsonify(result)
     else:
         return not_found()
 
 
 @store_blueprint.route("/announcements/<platformid>", methods=['GET'])
-def announcement_by_platform(platform):
+def announcement_by_platform(platformid):
     result = []
     for a in announcement_by_platform:
-        if a['Platform'] == platform:
+        if a['Platform'] == platformid:
             result.append(a)
     if result:
-        result = sorted(products, key=lambda k: k['Release'])
+        result = sorted(products, key=lambda k: parser.parse(k['Release']))
         return jsonify(result)
     else:
         return not_found()
@@ -455,7 +452,7 @@ def rating(productid):
 
 
 """
-Home Methods
+GET's for Store Home Page
 """
 
 
@@ -469,20 +466,22 @@ def search():
     result = []
     if request.json:
         # TODO: Search for products that match request.json parameters
+        
+
         return jsonify(result)
     else:
         return bad_request()
 
 
 @store_blueprint.route("/announcements", methods=['GET'])
-def announcements():
-    return jsonify(announcements)
+def home_announcements():
+    return jsonify({'Announcements': announcements})
 
 
 @store_blueprint.route("/latestproduct", methods=['GET'])
 def home_latest_prod():
-    result = sorted(products, key=lambda k: parser.parse(k['Release']))
-    return jsonify(result)
+    result = sorted(products, key=lambda k: parser.parse(k['Release']), reverse=True)
+    return jsonify({'LatestProducts':result})
 
 
 @store_blueprint.route("/specialproduct", methods=['GET'])
@@ -492,7 +491,7 @@ def home_specials_prod():
         if p['InOffer']:
             result.append(p)
     if result:
-        result = sorted(products, key=lambda k: parser.parse(k['Release']))
-        return jsonify(result)
+        result = sorted(products, key=lambda k: parser.parse(k['Release']), reverse=True)
+        return jsonify({'SpecialProducts':result})
     else:
         return not_found()
