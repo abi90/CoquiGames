@@ -5,45 +5,49 @@ from dateutil import parser
 store_blueprint = Blueprint('store', __name__)
 
 # Platform List with navbar information
-platforms = [
-        {
-            'platform': "PS4",
-            'imglogo': 'images/product-images/ps4-logo.jpg',
-            'consoles':
-                [
-                    {'pid':1, 'name': "PS4 Pro"},{'pid': 2, 'name': "PS4 Slim"}
-                ],
-            'accesories':
-                [
-                    "Controllers", "Headsets & Mics","Batteries & Chargers","Memory","Storage & Cases","Cables & Adapters","Guides"
-                ],
-            'gamegen':
-                [
-                    "Action", "Fighting", "VR Games", "Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"
-                ]
-        },
-        {
-            'platform': "XBOX ONE",
-            'imglogo': 'images/product-images/xbox-one-logo.jpg',
-            'consoles': [{'pid':1, 'name': "Xbox One S"},{'pid':2, 'name': "Xbox One"}],
-            'accesories': ["Controllers", "Headsets & Mics","Batteries & Chargers","Memory","Storage & Cases","Cables & Adapters","Guides"],
-            'topgames':["Action", "Fighting", "Kinect Games", "Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
-        },
-        {
-            'platform': "3DS",
-            'imglogo': 'images/product-images/3ds-logo.jpg',
-            'consoles': [{'pid':1, 'name': "Nintendo 3DS XL"},{'pid':2, 'name': "Nintendo 3DS"},{'id':3, 'name': "Nitendo 2DS"}],
-            'accesories': ["Controllers", "Headsets & Mics","Batteries & Chargers","Memory","Storage & Cases","Cables & Adapters","Guides"],
-            'gamegen':["Action","eSHop","Fighting","Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
-        },
-        {
-            'platform': "Wii U",
-            'imglogo': 'images/product-images/wii-u-logo.jpg',
-            'consoles': [{'pid': 1, 'name': "Wii U"}],
-            'accesories': ["Controllers", "Headsets & Mics","Batteries & Chargers","Memory","Storage & Cases", "Cables & Adapters","Guides"],
-            'gamegen':["Action","eSHop","Fighting","Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
-        }
-    ]
+platform_list = [
+    {
+        'PlatformId': 1,
+        'platform': "PS4",
+        'imglogo': 'images/product-images/ps4-logo.jpg',
+        'consoles':
+            [
+                {'pid':1, 'name': "PS4 Pro"},{'pid': 2, 'name': "PS4 Slim"}
+            ],
+        'accesories':
+            [
+                "Controllers", "Headsets & Mics","Batteries & Chargers","Memory","Storage & Cases","Cables & Adapters","Guides"
+            ],
+        'gamegen':
+            [
+                "Action", "Fighting", "VR Games", "Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"
+            ]
+    },
+    {
+        'PlatformId': 2,
+        'platform': "XBOX ONE",
+        'imglogo': 'images/product-images/xbox-one-logo.jpg',
+        'consoles': [{'pid':1, 'name': "Xbox One S"},{'pid':2, 'name': "Xbox One"}],
+        'accesories': ["Controllers", "Headsets & Mics","Batteries & Chargers","Memory","Storage & Cases","Cables & Adapters","Guides"],
+        'topgames':["Action", "Fighting", "Kinect Games", "Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
+    },
+    {
+        'PlatformId': 3,
+        'platform': "3DS",
+        'imglogo': 'images/product-images/3ds-logo.jpg',
+        'consoles': [{'pid':1, 'name': "Nintendo 3DS XL"},{'pid':2, 'name': "Nintendo 3DS"},{'id':3, 'name': "Nitendo 2DS"}],
+        'accesories': ["Controllers", "Headsets & Mics","Batteries & Chargers","Memory","Storage & Cases","Cables & Adapters","Guides"],
+        'gamegen':["Action","eSHop","Fighting","Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
+    },
+    {
+        'PlatformId': 4,
+        'platform': "Wii U",
+        'imglogo': 'images/product-images/wii-u-logo.jpg',
+        'consoles': [{'pid': 1, 'name': "Wii U"}],
+        'accesories': ["Controllers", "Headsets & Mics","Batteries & Chargers","Memory","Storage & Cases", "Cables & Adapters","Guides"],
+        'gamegen':["Action","eSHop","Fighting","Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
+    }
+]
 
 products = [
     # {
@@ -68,8 +72,9 @@ products = [
         'Pid': 1,
         'PhotoLink': 'img/{example}',
         'Title': 'Nintendo 3DS XL Red ',
-        'Platform': 'Nintendo 3DS',
-        'Genre': 'Platform',
+        'PlatformId': 3,
+        'Genre': 'Console',
+        'Category': 'Console',
         'ESRB': 'E',
         'Release': '2011-07-11',
         'Availability': True,
@@ -85,8 +90,9 @@ products = [
         'Pid': 2,
         'PhotoLink': 'img/{example}',
         'Title': 'Pokemon Rumble',
-        'Platform': 'Nintendo 3DS',
+        'PlatformId': 3,
         'Genre': 'Adventure',
+        'Category': 'Game',
         'ESRB': 'E',
         'Release': '2015-10-22',
         'Availability': True,
@@ -102,8 +108,9 @@ products = [
         'Pid': 3,
         'PhotoLink': 'img/{example}',
         'Title': 'Nintendo USB AC Adapter',
-        'Platform': 'Nintendo 3DS',
-        'Genre': 'Accesory',
+        'PlatformId': 3,
+        'Genre': 'Cables & Adapter',
+        'Category': 'Accessory',
         'ESRB': 'E',
         'Release': '2014-12-01',
         'Availability': True,
@@ -119,8 +126,9 @@ products = [
         'Pid': 4,
         'PhotoLink': 'img/{example}',
         'Title': 'Xbox One',
-        'Platform': 'Xbox One',
-        'Genre': 'Platform',
+        'PlatformId': 2,
+        'Genre': 'Console',
+        'Category': 'Console',
         'ESRB': 'E',
         'Release': '2014-06-04',
         'Availability': True,
@@ -136,8 +144,9 @@ products = [
         'Pid': 5,
         'PhotoLink': 'img/{example}',
         'Title': 'Gears of War 4',
-        'Platform': 'Xbox One',
+        'PlatformId': 2,
         'Genre': 'Action',
+        'Category': 'Game',
         'ESRB': 'M',
         'Release': '2016-10-11',
         'Availability': True,
@@ -153,8 +162,9 @@ products = [
         'Pid': 6,
         'PhotoLink': 'img/{example}',
         'Title': 'Xbox Elite Wireless Controller',
-        'Platform': 'Xbox One',
-        'Genre': 'Accesory',
+        'PlatformId': 2,
+        'Genre': 'Controllers',
+        'Category': 'Accessories',
         'ESRB': 'E',
         'Release': '2016-10-22',
         'Availability': True,
@@ -170,8 +180,9 @@ products = [
         'Pid': 7,
         'PhotoLink': 'img/{example}',
         'Title': 'PlayStation 4 Pro 1TB System',
-        'Platform': 'PS4',
-        'Genre': 'Platform',
+        'PlatformId': 1,
+        'Genre': 'Console',
+        'Category': 'Console',
         'ESRB': 'E',
         'Release': '2015-06-15',
         'Availability': True,
@@ -187,8 +198,9 @@ products = [
         'Pid': 8,
         'PhotoLink': 'img/{example}',
         'Title': 'Kingdom Hearts 3',
-        'Platform': 'PS4',
+        'PlatformId': 1,
         'Genre': 'Roleplaying',
+        'Category': 'Game',
         'ESRB': 'T',
         'Release': '2017-11-23',
         'Availability': False,
@@ -204,8 +216,9 @@ products = [
         'Pid': 9,
         'PhotoLink': 'img/{example}',
         'Title': 'PS4 Wired Headset',
-        'Platform': 'PS4',
-        'Genre': 'Accesory',
+        'PlatformId': 1,
+        'Genre': 'Headsets & Mics',
+        'Category': 'Accessory',
         'ESRB': 'E',
         'Release': '2016-03-17',
         'Availability': False,
@@ -221,8 +234,9 @@ products = [
         'Pid': 10,
         'PhotoLink': 'img/{example}',
         'Title': 'Nintedno WiiU 32GB - Black',
-        'Platform': 'Wiiu',
-        'Genre': 'Platform',
+        'PlatformId': 1,
+        'Genre': 'Console',
+        'Category': 'Console',
         'ESRB': 'E',
         'Release': '2012-11-25',
         'Availability': True,
@@ -238,8 +252,9 @@ products = [
         'Pid': 11,
         'PhotoLink': 'img/{example}',
         'Title': 'The Legend of Zelda: Wind Waker HD',
-        'Platform': 'Wiiu',
+        'PlatformId': 3,
         'Genre': 'Adventure',
+        'Category': 'Game',
         'ESRB': 'E',
         'Release': '2013-08-13',
         'Availability': True,
@@ -255,8 +270,9 @@ products = [
         'Pid': 12,
         'PhotoLink': 'img/{example}',
         'Title': '320 GB External Hard Drive',
-        'Platform': 'Wiiu',
-        'Genre': 'Accesory',
+        'PlatformId': 4,
+        'Genre': 'Memory',
+        'Category': 'Accessory',
         'ESRB': 'E',
         'Release': '2012-05-09',
         'Availability': True,
@@ -270,98 +286,119 @@ products = [
 ]
 
 # Product Home carousel announcements
-products_announcements = [
+platform_announcements = [
     #Nintendo 3DS
     {
-        'PAnid': 1,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'Pre-Order Pokemon Moon and Pokemon Sun',
-        'Product': 'Nintendo 3DS'
-    },
+        'PlatformId': 3,
+        'Announcements':
+            [
+                {
+                    'PAnid': 1,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'Pre-Order Pokemon Moon and Pokemon Sun',
+                    'Product': 'Nintendo 3DS'
+                },
 
-    {
-        'PAnid': 2,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': '20% off on all XL consoles',
-        'Product': 'Nintendo 3DS'
-    },
+                {
+                    'PAnid': 2,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': '20% off on all XL consoles',
+                    'Product': 'Nintendo 3DS'
+                },
 
-    {
-        'PAnid': 3,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'New Animal Crossing Amiibo Figures!',
-        'Product': 'Nintendo 3DS'
+                {
+                    'PAnid': 3,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'New Animal Crossing Amiibo Figures!',
+                    'Product': 'Nintendo 3DS'
+                },
+            ]
     },
-
     #Xbox One
     {
-        'PAnid': 4,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'Gears of War 4 Available now',
-        'Product': 'Xbox One'
-    },
+        'PlatformId': 2,
+        'Announcements':
+            [
+                {
+                    'PAnid': 4,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'Gears of War 4 Available now',
+                    'Product': 'Xbox One'
+                },
 
-    {
-        'PAnid': 5,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'Warhammer Available Now',
-        'Product': 'Xbox One'
-    },
+                {
+                    'PAnid': 5,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'Warhammer Available Now',
+                    'Product': 'Xbox One'
+                },
 
-    {
-        'PAnid': 6,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'Gears of War 4 Save 20%',
-        'Product': 'Xbox One'
+                {
+                    'PAnid': 6,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'Gears of War 4 Save 20%',
+                    'Product': 'Xbox One'
+                },
+            ]
     },
-
     #PS4
     {
-        'PAnid': 7,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'Pre-order Kingdom Hearts 3, get 15%',
-        'Product': 'PS4'
-    },
+        'PlatformId': 1,
+        'Announcements':
+            [
+                {
+                    'PAnid': 7,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'Pre-order Kingdom Hearts 3, get 15%',
+                    'Product': 'PS4'
+                },
 
-    {
-        'PAnid': 8,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'Available 2016/10/29',
-        'Product': 'PS4'
-    },
+                {
+                    'PAnid': 8,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'Available 2016/10/29',
+                    'Product': 'PS4'
+                },
 
-    {
-        'PAnnid': 9,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': '60% off all consoles',
-        'Product': 'PS4'
+                {
+                    'PAnnid': 9,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': '60% off all consoles',
+                    'Product': 'PS4'
+                },
+            ]
     },
-
     #Wii U
     {
-        'PAnid': 10,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'amiibo Pre-Order Now',
-        'Product': 'Wiiu'
-    },
+        'PlatformId': 4,
+        'Announcements':
+            [
+                {
+                    'PAnid': 10,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'amiibo Pre-Order Now',
+                    'Product': 'Wiiu'
+                },
 
-    {
-        'PAnid': 11,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'The Legend of Zelda: Breath of the Wild',
-        'Product': 'Wiiu'
-    },
+                {
+                    'PAnid': 11,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'The Legend of Zelda: Breath of the Wild',
+                    'Product': 'Wiiu'
+                },
 
-    {
-        'PAnid': 12,
-        'PAnPhotolink': 'img/{example}',
-        'PAnTitle': 'Pre-Order Skylanders today!',
-        'Product': 'Wiiu'
-    },
+                {
+                    'PAnid': 12,
+                    'PAnPhotolink': 'img/{example}',
+                    'PAnTitle': 'Pre-Order Skylanders today!',
+                    'Product': 'Wiiu'
+                },
+            ]
+    }
 ]
 
 # Global Store (Home) carousel announcements
-announcements = [
+home_announcements_list = [
     {
         'Anid': 0,
         'AnImg': 'images/slider-imgs/slide1-img.jpg',
@@ -388,10 +425,11 @@ announcements = [
 GET Product
 """
 
-@store_blueprint.route("/<prodictid>", methods=['GET'])
-def prod(productid):
+
+@store_blueprint.route("/<productid>", methods=['GET'])
+def get_product(productid):
     for p in products:
-        if p['Pid'] == productid:
+        if p['Pid'] == int(productid):
             return jsonify(p)
     return not_found()
 
@@ -405,11 +443,11 @@ Products Methods by Platform
 def latest_prod(platformid):
     result = []
     for p in products:
-        if p['Platform'] == platformid:
-            result.append()
+        if p['PlatformId'] == int(platformid):
+            result.append(p)
     if result:
         result = sorted(result, key=lambda k: parser.parse(k['Release']))
-        return jsonify(result)
+        return jsonify({"Latest": result, "PlatformId": int(platformid)})
     else:
         return not_found()
 
@@ -418,11 +456,11 @@ def latest_prod(platformid):
 def special_products(platformid):
     result = []
     for p in products:
-        if p['Platform'] == platformid and p['InOffer']:
-            result.append()
+        if p['PlatformId'] == int(platformid) and p['InOffer']:
+            result.append(p)
     if result:
         result = sorted(result, key=lambda k: parser.parse(k['Release']))
-        return jsonify(result)
+        return jsonify({"Specials": result, "PlatformId": int(platformid)})
     else:
         return not_found()
 
@@ -430,12 +468,9 @@ def special_products(platformid):
 @store_blueprint.route("/announcements/<platformid>", methods=['GET'])
 def announcement_by_platform(platformid):
     result = []
-    for a in announcement_by_platform:
-        if a['Platform'] == platformid:
-            result.append(a)
-    if result:
-        result = sorted(products, key=lambda k: parser.parse(k['Release']))
-        return jsonify(result)
+    for a in platform_announcements:
+        if a['PlatformId'] == int(platformid):
+            return jsonify(a)
     else:
         return not_found()
 
@@ -444,8 +479,9 @@ def announcement_by_platform(platformid):
 def rating(productid):
     if request.json:
         for p in products:
-            if p['Pid'] == productid:
+            if p['Pid'] == int(productid):
                 p['Rating'] = request.json['Rating']
+                return jsonify({"Message": "Completed"})
         return not_found()
     else:
         return bad_request()
@@ -457,25 +493,32 @@ GET's for Store Home Page
 
 
 @store_blueprint.route("/platforms", methods=['GET'])
-def platforms():
-    return jsonify(platforms)
+def store_platforms():
+    return jsonify({'Platforms': platform_list})
 
 
-@store_blueprint.route("/search", methods=['GET'])
+@store_blueprint.route("/search", methods=['POST'])
 def search():
     result = []
     if request.json:
-        # TODO: Search for products that match request.json parameters
-        
-
-        return jsonify(result)
+        for p in products:
+            if match(p, request.json):
+                result.append(p)
+        if result:
+            if request.json['Sort'] == 'A-Z':
+                result = sorted(result, key=lambda k: k['Title'])
+            elif request.json['Sort'] == 'Z-A':
+                result = sorted(result, key=lambda k: k['Title'], reverse=True)
+            return jsonify({'SearchResult': result[:request.json['Max']]})
+        else:
+            not_found()
     else:
         return bad_request()
 
 
 @store_blueprint.route("/announcements", methods=['GET'])
 def home_announcements():
-    return jsonify({'Announcements': announcements})
+    return jsonify({'Announcements': home_announcements_list})
 
 
 @store_blueprint.route("/latestproduct", methods=['GET'])
@@ -495,3 +538,13 @@ def home_specials_prod():
         return jsonify({'SpecialProducts':result})
     else:
         return not_found()
+
+
+def match(prod, request):
+    result = prod['PlatformId'] == request['PlatformId']
+    result = result and prod['Genre'] in request['Genre']
+    result = result and prod['Category'] in request['Category']
+    result = result and (prod['Price'] >= request['Price']['From'] or prod['Price'] <= request['Price']['To'])
+    if request['InOffer'] == "True":
+        result = result and prod['InOffer']
+    return result
