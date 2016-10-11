@@ -1,0 +1,612 @@
+<!-- Main Container Starts -->
+<div id="main-container" class="container">
+    <!-- Breadcrumb Starts -->
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Checkout</li>
+    </ol>
+    <!-- Breadcrumb Ends -->
+    <!-- Main Heading Starts -->
+    <h2 class="main-heading text-center">
+        Checkout
+    </h2>
+
+    <section class="overview">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-smart">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Order Summary
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <th>Produtcs</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td class="text-left">
+                                    <a href="product-full.html">Digital Electro Goods</a>
+                                </td>
+
+                                <td class="text-left">
+                                    2
+                                </td>
+
+                                <td class="text-left">
+                                    $150.00
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-left">
+                                    <a href="product-full.html">Pokemon Rumble</a>
+                                </td>
+
+                                <td class="text-left">
+                                    1
+                                </td>
+
+                                <td class="text-left">
+                                    $39.99
+                                </td>
+                            </tr>
+
+                            </tbody>
+                            <tfoot>
+
+                            <tr>
+                                <td colspan="2" class="text-right">
+                                    Subtotal:
+                                </td>
+
+                                <td colspan="2" class="text-left">
+                                    $339.99
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2" class="text-right">
+                                    <strong>Total :</strong>
+                                </td>
+
+                                <td colspan="2" class="text-left">
+                                    $339.99
+                                </td>
+                            </tr>
+
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment & Address Section Starts -->
+    <section class="registration-area">
+        <div class="row">
+            <!-- Payment & Address Block Starts -->
+            <div class="col-sm-6">
+
+                <!-- Shipping Address Panel Starts -->
+                <div class="panel panel-smart">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Shipping Address
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            <button type="button" class="btn btn-default btn-md pull-right" data-toggle="modal" data-target="#myModalS">Edit</button>
+                            Gary Oak<br>
+                            Pallet Town 3245, Route 1<br>
+                            Kanto Region, 09901<br>
+                        </p>
+
+                        <!--Modal-->
+                        <div class="modal fade" id="myModalS" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Edit Shipping Address</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <form role="form">
+                                            <div class="form-group">
+
+                                                <label for="name">
+                                                        <span class="">
+                                                            First name:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="name" placeholder="First name">
+
+                                                <br>
+
+                                                <label for="lastname">
+                                                        <span class="">
+                                                            Last name:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="lastname" placeholder="Last name">
+
+                                                <br>
+
+                                                <label for="add1">
+                                                        <span class="">
+                                                            Address field 1:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="add1" placeholder="Address">
+
+                                                <br>
+
+                                                <label for="add2">
+                                                        <span class="">
+                                                            Address field 2:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="add2" placeholder="Address">
+
+                                                <br>
+
+                                                <label for="city">
+                                                        <span class="">
+                                                            City:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="city" placeholder="City">
+
+                                                <br>
+
+                                                <label for="state">
+                                                        <span class="">
+                                                            State / Province / Region:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="state" placeholder="State / Province / Region">
+
+                                                <br>
+
+                                                <label for="">
+                                                        <span class="">
+                                                           Country:
+                                                        </span>
+                                                </label>
+                                                <br>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Country
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#">Aguada</a></li>
+                                                        <li><a class="dropdown-item" href="#">Ponce</a></li>
+                                                        <li><a class="dropdown-item" href="#">San Juan</a></li>
+                                                        <li><a class="dropdown-item" href="#">Utuado</a></li>
+                                                    </ul>
+                                                </div>
+
+                                                <br><br>
+
+                                                <label for="zipcode">
+                                                        <span class="">
+                                                            Postal / Zip Code:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="zipcode" placeholder="Postal / Zip Code">
+
+                                                <br>
+
+                                                <label for="email">
+                                                        <span class="">
+                                                            Email:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="email" placeholder="Email">
+
+                                                <br>
+
+                                                <label for="phone">
+                                                        <span class="">
+                                                            Phone number:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="phone" placeholder="Phone number">
+
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <p>
+                            <input type="checkbox" name="billing-address" value="true"> My billing address is the same as my shipping address<br>
+                        </p>
+                    </div>
+                </div>
+                <!-- Shipping address Panel Ends -->
+
+                <!-- Billing address Panel Starts -->
+                <div class="panel panel-smart">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Billing Address
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            <button type="button" class="btn btn-default btn-md pull-right" data-toggle="modal" data-target="#myModalB">Edit</button>
+                            Gary Oak<br>
+                            Pallet Town 3245, Route 1<br>
+                            Kanto Region, 09901<br>
+                        </p>
+
+                        <!--Modal-->
+                        <div class="modal fade" id="myModalB" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Edit Billing Address</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <form role="form">
+                                            <div class="form-group">
+
+                                                <label for="name">
+                                                        <span class="">
+                                                            First name:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="name" placeholder="First name">
+
+                                                <br>
+
+                                                <label for="lastname">
+                                                        <span class="">
+                                                            Last name:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="lastname" placeholder="Last name">
+
+                                                <br>
+
+                                                <label for="add1">
+                                                        <span class="">
+                                                            Address field 1:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="add1" placeholder="Address">
+
+                                                <br>
+
+                                                <label for="add2">
+                                                        <span class="">
+                                                            Address field 2:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="add2" placeholder="Address">
+
+                                                <br>
+
+                                                <label for="city">
+                                                        <span class="">
+                                                            City:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="city" placeholder="City">
+
+                                                <br>
+
+                                                <label for="state">
+                                                        <span class="">
+                                                            State / Province / Region:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="state" placeholder="State / Province / Region">
+
+                                                <br>
+
+                                                <label for="">
+                                                        <span class="">
+                                                           Country:
+                                                        </span>
+                                                </label>
+                                                <br>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Country
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#">Aguada</a></li>
+                                                        <li><a class="dropdown-item" href="#">Ponce</a></li>
+                                                        <li><a class="dropdown-item" href="#">San Juan</a></li>
+                                                        <li><a class="dropdown-item" href="#">Utuado</a></li>
+                                                    </div>
+                                                </div>
+
+                                                <br><br>
+
+                                                <label for="zipcode">
+                                                        <span class="">
+                                                            Postal / Zip Code:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="zipcode" placeholder="Postal / Zip Code">
+
+                                                <br>
+
+                                                <label for="email">
+                                                        <span class="">
+                                                            Email:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="email" placeholder="Email">
+
+                                                <br>
+
+                                                <label for="phone">
+                                                        <span class="">
+                                                            Phone number:
+                                                        </span>
+                                                </label>
+                                                <input type="text" class="form-control" id="phone" placeholder="Phone number">
+
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Billing address Panel Ends -->
+
+                <!-- Payment Method Block Starts -->
+                <div class="panel panel-smart">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Payment Method
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <!-- Form Starts -->
+                        <fieldset class="form-group">
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="optionsRadio" id="Visa" value="option1">
+                                    <img src="images/payment-icon/visa.png" alt="PaymentGateway" />  Visa
+                                </label> ending in 5555
+                                <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#CreditUpdate">Update</button>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="optionsRadio" id="MasterCard" value="option2">
+                                    <img src="images/payment-icon/cirrus.png" alt="PaymentGateway" />  Cirrus
+                                </label> ending in 1234
+                                <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#CreditUpdate">Update</button>
+                            </div>
+
+                            <!--MODAL FOR Visa CARD -->
+                            <div class="modal fade" id="CreditUpdate" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Update credit card</h4>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <form role="form">
+                                                <div class="form-group">
+                                                    <label for="ccnum">
+                                                        	<span class="">
+                                                            	Card number:
+                                                        	</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="ccnum" placeholder="Card Number">
+
+                                                    <br>
+
+                                                    <label for="ccfname">
+                                                        	<span class="">
+                                                            	Name on card:
+                                                        	</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="ccfname" placeholder="Name">
+
+                                                    <br>
+
+                                                    <span class="">
+                                                            	Expiration date:
+													</span>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Month
+                                                            <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></button>
+                                                        <div class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="#">Jan</a></li>
+                                                            <li><a class="dropdown-item" href="#">Feb</a></li>
+                                                            <li><a class="dropdown-item" href="#">Mar</a></li>
+                                                            <li><a class="dropdown-item" href="#">Apr</a></li>
+                                                            <li><a class="dropdown-item" href="#">May</a></li>
+                                                            <li><a class="dropdown-item" href="#">Jun</a></li>
+                                                            <li><a class="dropdown-item" href="#">Jul</a></li>
+                                                            <li><a class="dropdown-item" href="#">Aug</a></li>
+                                                            <li><a class="dropdown-item" href="#">Sep</a></li>
+                                                            <li><a class="dropdown-item" href="#">Oct</a></li>
+                                                            <li><a class="dropdown-item" href="#">Nov</a></li>
+                                                            <li><a class="dropdown-item" href="#">Dec</a></li>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Year
+                                                            <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></button>
+                                                        <div class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="#">2016</a></li>
+                                                            <li><a class="dropdown-item" href="#">2017</a></li>
+                                                            <li><a class="dropdown-item" href="#">2018</a></li>
+                                                            <li><a class="dropdown-item" href="#">2019</a></li>
+                                                            <li><a class="dropdown-item" href="#">2020</a></li>
+                                                            <li><a class="dropdown-item" href="#">2021</a></li>
+                                                            <li><a class="dropdown-item" href="#">2022</a></li>
+                                                            <li><a class="dropdown-item" href="#">2023</a></li>
+                                                            <li><a class="dropdown-item" href="#">2024</a></li>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--MODAL Visa END-->
+
+                                <!--<div class="form-check">-->
+                                <!--<label class="form-check-label">-->
+                                <!--<input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">-->
+                                <!--<img src="images/payment-icon/americanexpress.png" alt="PaymentGateway" />  American Express-->
+                                <!--</label>-->
+                                <!--</div>-->
+
+                                <!--<div class="form-check">-->
+                                <!--<label class="form-check-label">-->
+                                <!--<input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">-->
+                                <!--<img src="images/payment-icon/mastercard.png" alt="PaymentGateway" />  Master Card-->
+                                <!--</label>-->
+                                <!--</div>-->
+
+                        </fieldset>
+                        <!-- Form Ends -->
+                    </div>
+                </div>
+                <!-- Payment Method Block Ends -->
+            </div>
+            <!-- Payment & Address Block Ends -->
+
+            <!-- Shipping & Discount Blocks Starts -->
+            <div class="col-sm-6">
+                <!-- Shipping Block Starts -->
+                <div class="panel panel-smart">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Shipping Method
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <!-- Form Starts -->
+                        <form class="form-horizontal" role="form">
+                            <div class="form-check">
+                                <form action="">
+                                    <input type="radio" name="shipping" value="free"> Free Standard Shipping (9 to 15 Business Days) - $0.00<br>
+                                    <input type="radio" name="shipping" value="standard"> Standard Shipping (7 to 10 Business Days) - $5.99<br>
+                                    <input type="radio" name="shipping" value="expres"> Express Shipping (2 to 7 Business Days) - $12.99
+                                </form>
+                            </div>
+                        </form>
+                        <!-- Form Ends -->
+                    </div>
+                </div>
+
+                <!-- COUPON BELOW-Just in case!!!!!!!!!!!!!!! -->
+
+                <!-- Shipping Block Ends -->
+                <!--&lt;!&ndash; Coupon Block Starts &ndash;&gt;-->
+                <!--<div class="panel panel-smart">-->
+                <!--<div class="panel-heading">-->
+                <!--<h3 class="panel-title">-->
+                <!--Add a gift card or promotion code-->
+                <!--</h3>-->
+                <!--</div>-->
+                <!--<div class="panel-body">-->
+                <!--&lt;!&ndash; Form Starts &ndash;&gt;-->
+                <!--<div class="input-group">-->
+                <!--<input type="text" class="form-control" id="promotioncode" placeholder="Enter code">-->
+                <!--<span class="input-group-btn">-->
+                <!--<button type="button" class="btn btn-default"> Apply </button>-->
+                <!--</span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; Form Ends &ndash;&gt;-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; Coupon Block Ends &ndash;&gt;-->
+
+                <!-- Total Panel Starts -->
+                <div class="panel panel-smart">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Total
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>Coupon Discount :</dt>
+                            <dd>$-25.00</dd>
+                            <dt>Subtotal :</dt>
+                            <dd>$314.99</dd>
+                            <dt>Shipment Fee :</dt>
+                            <dd>$12.99</dd>
+                            <dt>Tax Total :</dt>
+                            <dd>$354.08</dd>
+                        </dl>
+                        <hr />
+                        <dl class="dl-horizontal total">
+                            <dt>Total :</dt>
+                            <dd>$365.70</dd>
+                        </dl>
+                        <hr />
+                        <div class="text-uppercase clearfix">
+                            <!--			<a href="#" class="btn btn-default pull-left">
+                                            <span class="hidden-xs">Go back to cart</span>
+                                            <span class="visible-xs">Continue</span>
+                                        </a>-->
+                            <a href="#" class="btn btn-default pull-right">
+                                Place Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total Panel Ends -->
+            </div>
+            <!-- Shipping & Discount Blocks Ends -->
+        </div>
+    </section>
+    <!-- Shipping Section Ends -->
+</div>
+<!-- Main Container Ends -->
