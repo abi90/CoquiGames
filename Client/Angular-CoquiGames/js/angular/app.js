@@ -54,6 +54,10 @@ app.config(function ($routeProvider) {
           controller: 'HomeController',
           templateUrl: 'views/register.html'
       })
+      .when('/checkout.html', {
+          controller: 'HomeController',
+          templateUrl: 'views/checkout.html'
+      })
       .when('/typography.html', {
           controller: 'HomeController',
           templateUrl: 'views/typography.html'
