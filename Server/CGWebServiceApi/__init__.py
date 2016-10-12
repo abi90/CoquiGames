@@ -1,9 +1,11 @@
 from flask import Flask
-from errors import errors
+from flask_cors import CORS
+import errors
 import user
 import store
 
 app = Flask(__name__)
+cors = CORS(app)
 
 
 @app.route("/")
@@ -12,7 +14,7 @@ def hello():
 
 
 def create_app():
-    app.register_blueprint(errors)
+    app.register_blueprint(errors.errors)
     app.register_blueprint(store.store_blueprint, url_prefix='/store')
     app.register_blueprint(user.user_blueprint, url_prefix='/user')
     return app

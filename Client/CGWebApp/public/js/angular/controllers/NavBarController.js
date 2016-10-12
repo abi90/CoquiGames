@@ -1,4 +1,4 @@
-app.controller('NavBarController', ['$scope', '$location', function($scope, $location) {
+app.controller('NavBarController', ['$scope', '$location', 'cgapi' , function($scope, $location, cgapi) {
     $scope.navbarOptions = [
         {
             platform: "PS4",
@@ -29,6 +29,7 @@ app.controller('NavBarController', ['$scope', '$location', function($scope, $loc
             topgames:["Deals","Action","eSHop","Fighting","Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
         }
     ];
+    //$scope.navbarOptions = cgapi.getNavbarOptions();
     $scope.redirect = function(){
         $location.url("search-grid");
     }

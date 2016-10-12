@@ -4,3 +4,4 @@ MarkupSafe==0.23
 gunicorn==19.0.0
 itsdangerous==0.24
 python-dateutil
+flask-cors

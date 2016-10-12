@@ -534,7 +534,11 @@ def home_specials_prod():
         if p['InOffer']:
             result.append(p)
     if result:
-        result = sorted(products, key=lambda k: parser.parse(k['Release']), reverse=True)
+        result = []
+        for p in products:
+            if p['InOffer']==True:
+                result.append(p)
+        result = sorted(result, key=lambda k: parser.parse(k['Release']), reverse=True)
         return jsonify({'SpecialProducts':result})
     else:
         return not_found()

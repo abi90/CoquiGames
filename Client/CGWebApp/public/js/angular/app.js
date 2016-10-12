@@ -1,6 +1,11 @@
 var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize']);
 
-app.config(function ($routeProvider) {
+app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
+    $httpProvider.defaults.useXDomain = true;
+    $httpProvider.defaults.withCredentials = false;
+    delete $httpProvider.defaults.headers.common["X-Requested-With"];
+    $httpProvider.defaults.headers.common["Accept"] = "application/json";
+    $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
   $routeProvider
     .when('/', {
       controller: 'HomeController',
@@ -94,4 +99,5 @@ app.config(function ($routeProvider) {
           redirectTo: '/'
       });
 
-});
+}]);
+
