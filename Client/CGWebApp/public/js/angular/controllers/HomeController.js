@@ -1,9 +1,12 @@
-app.controller('HomeController', ['$scope', '$http', 'cgapi',function($scope,$http, cgapi) {
-    cgapi.getLatestProducts.then(function(data) {
-        $scope.latest = data.data.LatestProducts;
+app.controller('HomeController', ['$scope', '$http', 'storewsapi',function($scope, $http, storewsapi) {
+    storewsapi.getLatestProducts().then(function(responce) {
+        $scope.latest = responce.data.LatestProducts;
     });
-    cgapi.getInOfferProducts.then(function(data) {
-        $scope.specials = data.data.SpecialProducts;
+    storewsapi.getInOfferProducts().then(function(responce) {
+        $scope.specials = responce.data.SpecialProducts;
+    });
+    storewsapi.getProduct(1).then(function(responce) {
+        $scope.product = responce.data;
     });
 
 }]);

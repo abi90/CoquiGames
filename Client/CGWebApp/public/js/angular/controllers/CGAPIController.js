@@ -1,4 +1,4 @@
-app.controller('CGAPIController', ['$scope', 'cgapi', '$routeParams', function($scope, cgapi, $routeParams) {
+app.controller('CGAPIController', ['$scope', 'storewsapi', '$routeParams', function($scope, storewsapi, $routeParams) {
     cgapi.success(function(data) {
         $scope.testApi = data;
     });
