@@ -18,6 +18,26 @@ app.config(function ($routeProvider) {
           controller: 'HomeController',
           templateUrl: 'views/about.html'
       })
+      .when('/account-info.html', {
+          controller: 'HomeController',
+          templateUrl: 'views/account-info.html'
+      })
+      .when('/account-orderdetails.html', {
+          controller: 'HomeController',
+          templateUrl: 'views/account-orderdetails.html'
+      })
+      .when('/account-orders.html', {
+          controller: 'HomeController',
+          templateUrl: 'views/account-orders.html'
+      })
+      .when('/account-payment.html', {
+          controller: 'HomeController',
+          templateUrl: 'views/account-payment.html'
+      })
+      .when('/account-address.html', {
+          controller: 'HomeController',
+          templateUrl: 'views/account-address.html'
+      })
       .when('/cart.html', {
           controller: 'HomeController',
           templateUrl: 'views/cart.html'
