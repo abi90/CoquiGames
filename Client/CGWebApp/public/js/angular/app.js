@@ -77,7 +77,18 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
       })
       .when('/account-info', {
           controller: 'HomeController',
-          templateUrl: 'views/account-info.html'
+          templateUrl: 'views/account-info.html',
+          resolve: {
+              auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+                  var userInfo = authenticationSvc.getUserInfo();
+
+                  if (userInfo) {
+                      return $q.when(userInfo);
+                  } else {
+                      return $q.reject({ authenticated: false });
+                  }
+              }]
+          }
       })
       .when('/account-orders', {
           controller: 'HomeController',
