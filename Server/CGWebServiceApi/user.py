@@ -612,3 +612,21 @@ def post_user():
         return json.dumps(request.json)
     else:
         bad_request()
+
+
+@user_blueprint.route("/login", methods=['POST'])
+def get_user_id():
+    if request.json:
+        for user in users:
+            if user['uname']==request.json['uname']:
+                if user['upassword'] == request.json['upassword']:
+                    return jsonify({"uid": user['uid']})
+                else:
+                    # Login Error Response
+                    message = {'Message': "Username or Password does not match!"}
+                    resp = jsonify(message)
+                    resp.status_code = 401
+                    return resp
+        return not_found()
+    else:
+        bad_request()

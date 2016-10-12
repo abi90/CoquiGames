@@ -29,7 +29,7 @@ platform_list = [
         'imglogo': 'images/product-images/xbox-one-logo.jpg',
         'consoles': [{'pid':1, 'name': "Xbox One S"},{'pid':2, 'name': "Xbox One"}],
         'accesories': ["Controllers", "Headsets & Mics","Batteries & Chargers","Memory","Storage & Cases","Cables & Adapters","Guides"],
-        'topgames':["Action", "Fighting", "Kinect Games", "Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
+        'gamegen':["Action", "Fighting", "Kinect Games", "Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
     },
     {
         'PlatformId': 3,
