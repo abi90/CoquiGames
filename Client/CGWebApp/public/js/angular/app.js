@@ -22,7 +22,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             }
         })
         .when('/404.html', {
-            controller: 'HomeController',
+            controller: '',
             templateUrl: 'views/404.html'
         })
         .when('/index.html', {

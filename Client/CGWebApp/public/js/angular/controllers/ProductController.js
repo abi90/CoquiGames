@@ -9,6 +9,6 @@ app.controller('ProductController', ['$scope', '$location', 'storewsapi','produc
     },
     function (error) {
         console.log(JSON.stringify(error));
-        $location.path("/");
+        $location.path("/404.html");
     });
 }]);

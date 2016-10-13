@@ -32,8 +32,13 @@ app.controller('NavBarController', ['$scope', '$location', 'storewsapi', 'userws
     $scope.navbarOptions;
     $scope.user;
 
-    storewsapi.getPlatforms().then(function (response) {
-            $scope.navbarOptions = response.data.Platforms;
+    storewsapi.getPlatforms().then(
+        function (response) {
+            $scope.navbarOptions = response.data;
+        },
+        function (error) {
+            console.log(JSON.stringify(error));
+            $location.path("/404.html");
         }
     );
 

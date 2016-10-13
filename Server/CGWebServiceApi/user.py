@@ -441,14 +441,14 @@ def user_wish_list(userid):
     if request.method == 'GET':
         for e in user_wishlist:
             if e['uid'] == userid:
-                return jsonify(e)
+                return jsonify(e['wishlist'])
         return not_found()
     elif request.method == 'PUT':
         for e in user_wishlist:
             if e['uid'] == userid:
                 user_wishlist.remove(e)
                 user_wishlist.append(e)
-                return jsonify(request.json)
+                return jsonify(request.json['wishlist'])
         return not_found()
     elif request.method == 'POST':
         if not request.json:
@@ -457,7 +457,7 @@ def user_wish_list(userid):
             if e['uid'] == userid:
                 return bad_request()
         user_wishlist.append(request.json)
-        return jsonify(request.json)
+        return jsonify(request.json['wishlist'])
 
 
 @user_blueprint.route("/<int:userid>/wishlist/<int:productid>", methods=['DELETE'])
@@ -495,7 +495,7 @@ def delete_cart(userid, productid):
                 for p in e['cartlist']:
                     if p['pid'] == productid:
                         p['pquantity'] = request.json['pquantity']
-                        return jsonify(e)
+                        return jsonify(e['cartlist'])
                 e['cartlist'].append(
                     {
                         'pid': request.json['pid'],
@@ -505,7 +505,7 @@ def delete_cart(userid, productid):
                         'pquantity': request.json['pquantity']
                     }
                 )
-                return jsonify(e)
+                return jsonify(e['cartlist'])
         return not_found()
 
 
@@ -516,7 +516,7 @@ def user_cart(userid):
     if request.method == 'GET':
         for e in user_cart_list:
             if e['uid'] == userid:
-                return jsonify(e)
+                return jsonify(e['cartlist'])
         return not_found()
     elif request.method == 'POST':
         if not request.json:
@@ -525,7 +525,7 @@ def user_cart(userid):
             if e['uid'] == userid:
                 return bad_request()
         user_cart_list.append(request.json)
-        return jsonify(request.json)
+        return jsonify(request.json['cartlist'])
 
 
 @user_blueprint.route("/<int:userid>", methods=['GET', 'PUT'])
@@ -565,10 +565,14 @@ def user(userid):
 @user_blueprint.route("/", methods=['POST'])
 def post_user():
     if request.json:
+        for u in users:
+            if u['uemail'] == request.json['uemail'] and u['uname'] == request.json['uname']:
+                response = jsonify({'Message': 'Username or email already taken.'})
+                response.status_code = 400
+                return response
         global count
         count += 1
-        users.append(
-            {
+        result = {
                 'uid': count,
                 'uadmin': False,
                 'ufirstname': request.json['ufirstname'],
@@ -579,8 +583,8 @@ def post_user():
                 'uname': request.json['uname'],
                 'upassword': request.json['upassword'],
             }
-        )
-        return json.dumps(request.json)
+        users.append(result)
+        return jsonify(result)
     else:
         bad_request()
 

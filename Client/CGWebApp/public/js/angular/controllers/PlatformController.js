@@ -10,13 +10,13 @@ app.controller("PlatformController", ["$scope", "$location", "storewsapi", "plat
                     $scope.platform = responce.data;
                 }
                 catch(err) {
-                    console.log(err);
-                    $location.path("/");
+                    console.log(JSON.stringify(err));
+                    $location.path("/404.html");
                 }
 
             }, function (error) {
                 console.log(error);
-                $location.path("/");
+                $location.path("/404.html");
             });
     };
 
@@ -25,16 +25,16 @@ app.controller("PlatformController", ["$scope", "$location", "storewsapi", "plat
         storewsapi.getPlatformLatest($scope.platformId)
             .then(function (responce) {
                 try{
-                    $scope.platformLatest = responce.data.Latest;
+                    $scope.platformLatest = responce.data;
                 }
                 catch(err) {
                     console.log(JSON.stringify(err));
-                    $location.path("/");
+                    $location.path("/404.html");
                 }
 
             }, function (error) {
                 console.log(JSON.stringify(error));
-                $location.path("/");
+                $location.path("/404.html");
             });
     };
 
@@ -43,18 +43,19 @@ app.controller("PlatformController", ["$scope", "$location", "storewsapi", "plat
         storewsapi.getPlatformInOffer($scope.platformId)
             .then(function (responce) {
                 try{
-                    $scope.platformSpecials = responce.data.Specials;
+                    $scope.platformSpecials = responce.data;
                 }
                 catch(err) {
                     console.log(JSON.stringify(err));
-                    $location.path("/");
+                    $location.path("/404.html");
                 }
 
             }, function (error) {
                 console.log(JSON.stringify(error));
-                $location.path("/");
+                $location.path("/404.html");
             });
     };
+
     getPlatform();
     getPlatformLatestProducts();
     getPlatformSpecialProducts();

@@ -34,28 +34,28 @@ app.factory('storewsapi', ['$http',
         storewsapi.getProduct =
             function (id)
             {
-                return $http.get(storeServiceURL+'/'+id)
+                return $http.get(storeServiceURL+'/product/'+id)
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
         storewsapi.getPlatformAnnouncements =
             function (id)
             {
-                return $http.get(storeServiceURL+'/announcements/'+id)
+                return $http.get(storeServiceURL+'/platform/'+id+'/announcements')
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
         storewsapi.getPlatformInOffer =
             function (id)
             {
-                return $http.get(storeServiceURL+'/special/'+id)
+                return $http.get(storeServiceURL+'/platform/'+id+'/special')
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
         storewsapi.getPlatformLatest =
             function (id)
             {
-                return $http.get(storeServiceURL+'/latest/'+id)
+                return $http.get(storeServiceURL+'/platform/'+id+'/latest')
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
