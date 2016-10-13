@@ -426,7 +426,7 @@ GET Product
 """
 
 
-@store_blueprint.route("/<productid>", methods=['GET'])
+@store_blueprint.route("/product/<int:productid>", methods=['GET'])
 def get_product(productid):
     for p in products:
         if p['Pid'] == int(productid):
@@ -439,7 +439,7 @@ Products Methods by Platform
 """
 
 
-@store_blueprint.route("/latest/<platformid>", methods=['GET'])
+@store_blueprint.route("/platform/<int:platformid>/latest", methods=['GET'])
 def latest_prod(platformid):
     result = []
     for p in products:
@@ -447,7 +447,7 @@ def latest_prod(platformid):
             result.append(p)
     if result:
         result = sorted(result, key=lambda k: parser.parse(k['Release']))
-        return jsonify({"Latest": result, "PlatformId": int(platformid)})
+        return jsonify(result)
     else:
         return not_found()
 
@@ -456,7 +456,7 @@ Get's platform drop-down menu content
 """
 
 
-@store_blueprint.route("/platform/<platformid>", methods=['GET'])
+@store_blueprint.route("/platform/<int:platformid>", methods=['GET'])
 def get_platform(platformid):
     for p in platform_list:
         if p['PlatformId'] == int(platformid):
@@ -464,34 +464,33 @@ def get_platform(platformid):
     return not_found()
 
 
-@store_blueprint.route("/special/<platformid>", methods=['GET'])
+@store_blueprint.route("/platform/<int:platformid>/special", methods=['GET'])
 def special_products(platformid):
     result = []
     for p in products:
-        if p['PlatformId'] == int(platformid) and p['InOffer']:
+        if p['PlatformId'] == platformid and p['InOffer']:
             result.append(p)
     if result:
         result = sorted(result, key=lambda k: parser.parse(k['Release']))
-        return jsonify({"Specials": result, "PlatformId": int(platformid)})
+        return jsonify(result)
     else:
         return not_found()
 
 
-@store_blueprint.route("/announcements/<platformid>", methods=['GET'])
+@store_blueprint.route("/platform/<int:platformid>/announcements", methods=['GET'])
 def announcement_by_platform(platformid):
-    result = []
     for a in platform_announcements:
-        if a['PlatformId'] == int(platformid):
-            return jsonify(a)
+        if a['PlatformId'] == platformid:
+            return jsonify(a['Announcements'])
     else:
         return not_found()
 
 
-@store_blueprint.route("/ratings/<productid>", methods=['PUT'])
+@store_blueprint.route("/product/<int:productid>/rating", methods=['PUT'])
 def rating(productid):
     if request.json:
         for p in products:
-            if p['Pid'] == int(productid):
+            if p['Pid'] == productid:
                 p['Rating'] = request.json['Rating']
                 return jsonify({"Message": "Completed"})
         return not_found()
@@ -506,7 +505,7 @@ GET's for Store Home Page
 
 @store_blueprint.route("/platforms", methods=['GET'])
 def store_platforms():
-    return jsonify({'Platforms': platform_list})
+    return jsonify(platform_list)
 
 
 @store_blueprint.route("/search", methods=['POST'])
@@ -521,7 +520,7 @@ def search():
                 result = sorted(result, key=lambda k: k['Title'])
             elif request.json['Sort'] == 'Z-A':
                 result = sorted(result, key=lambda k: k['Title'], reverse=True)
-            return jsonify({'SearchResult': result[:request.json['Max']]})
+            return jsonify(result[:request.json['Max']])
         else:
             not_found()
     else:
@@ -530,13 +529,13 @@ def search():
 
 @store_blueprint.route("/announcements", methods=['GET'])
 def home_announcements():
-    return jsonify({'Announcements': home_announcements_list})
+    return jsonify(home_announcements_list)
 
 
 @store_blueprint.route("/latestproduct", methods=['GET'])
 def home_latest_prod():
     result = sorted(products, key=lambda k: parser.parse(k['Release']), reverse=True)
-    return jsonify({'LatestProducts':result})
+    return jsonify(result)
 
 
 @store_blueprint.route("/specialproduct", methods=['GET'])
@@ -548,10 +547,10 @@ def home_specials_prod():
     if result:
         result = []
         for p in products:
-            if p['InOffer']==True:
+            if p['InOffer'] == True:
                 result.append(p)
         result = sorted(result, key=lambda k: parser.parse(k['Release']), reverse=True)
-        return jsonify({'SpecialProducts':result})
+        return jsonify(result)
     else:
         return not_found()
 
