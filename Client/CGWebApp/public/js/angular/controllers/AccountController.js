@@ -1,17 +1,46 @@
 /**
  * Created by abi on 10/12/16.
  */
-app.controller("AccountController", ["$scope", "$location", "authenticationSvc", "auth",function ($scope, $location, authenticationSvc, auth) {
-    $scope.userInfo = auth;
+app.controller('AccountController', ['$scope', '$location', 'authenticationSvc', 'auth', 'userwsapi',
+    function ($scope, $location, authenticationSvc, auth, userwsapi) {
+        $scope.userInfo = auth;
+        $scope.userData;
+        $scope.userAddress;
 
-    $scope.logout = function () {
+        $scope.logout = function () {
 
-        authenticationSvc.logout()
-            .then(function (result) {
-                $scope.userInfo = null;
-                $location.path("/login");
-            }, function (error) {
-                console.log(error);
-            });
-    };
-}]);
+            authenticationSvc.logout()
+                .then(function (result) {
+                    $scope.userInfo = null;
+                    $location.path("/login");
+                }, function (error) {
+                    console.log(error);
+                });
+        };
+
+        var getUserAddress = function (auth) {
+            userwsapi.getUserAddress(auth.uid, auth.uname, auth.upassword).then(
+                function (response) {
+                    $scope.userAddress = response.data;
+                },
+                function (error) {
+                    console.log("Error: " +error.statusCode);
+                    $location.path("/404.html");
+                }
+            )
+        };
+        var getUser = function (auth) {
+            userwsapi.getUser(auth.uid, auth.uname, auth.upassword).then(
+                function (response) {
+                    $scope.userData = response.data;
+                },
+                function (error) {
+                    console.log("Error: " +error.statusCode);
+                    $location.path("/404.html");
+                }
+            )
+        };
+
+        getUser(auth);
+        getUserAddress(auth);
+    }]);

@@ -10,12 +10,12 @@ app.controller("PlatformController", ["$scope", "$location", "storewsapi", "plat
                     $scope.platform = responce.data;
                 }
                 catch(err) {
-                    console.log(JSON.stringify(err));
+                    console.log(JSON.toString(err));
                     $location.path("/404.html");
                 }
 
             }, function (error) {
-                console.log(error);
+                console.log(JSON.stringify(error));
                 $location.path("/404.html");
             });
     };
@@ -28,12 +28,12 @@ app.controller("PlatformController", ["$scope", "$location", "storewsapi", "plat
                     $scope.platformLatest = responce.data;
                 }
                 catch(err) {
-                    console.log(JSON.stringify(err));
+                    console.log(JSON.toString(err));
                     $location.path("/404.html");
                 }
 
             }, function (error) {
-                console.log(JSON.stringify(error));
+                console.log(JSON.toString(error));
                 $location.path("/404.html");
             });
     };
@@ -46,12 +46,12 @@ app.controller("PlatformController", ["$scope", "$location", "storewsapi", "plat
                     $scope.platformSpecials = responce.data;
                 }
                 catch(err) {
-                    console.log(JSON.stringify(err));
+                    console.log(JSON.toString(err));
                     $location.path("/404.html");
                 }
 
             }, function (error) {
-                console.log(JSON.stringify(error));
+                console.log(JSON.toString(error));
                 $location.path("/404.html");
             });
     };

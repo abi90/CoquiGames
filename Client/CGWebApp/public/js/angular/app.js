@@ -1,4 +1,4 @@
-var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize']);
+var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize','$base64']);
 
 app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
     $httpProvider.defaults.useXDomain = true;
@@ -191,7 +191,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
 app.run(["$rootScope", "$location", function ($rootScope, $location) {
 
     $rootScope.$on("$routeChangeSuccess", function (userInfo) {
-        console.log(userInfo);
+        console.log(JSON.toString(userInfo));
     });
 
     $rootScope.$on("$routeChangeError", function (event, current, previous, eventObj) {

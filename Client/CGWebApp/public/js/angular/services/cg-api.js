@@ -7,30 +7,34 @@ app.factory('storewsapi', ['$http',
         storewsapi.getPlatforms =
             function()
             {
-                return $http.get(storeServiceURL+'/platforms')
+                return $http.get(storeServiceURL + '/platforms')
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
+
         storewsapi.getHomeAnnouncements =
             function (){
                 return $http.get(storeServiceURL+'/announcements')
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
-            }
+            };
+
         storewsapi.getLatestProducts =
             function()
             {
                 return $http.get(storeServiceURL + '/latestproduct')
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
-            }
+            };
+
         storewsapi.getInOfferProducts =
             function ()
             {
-                return $http.get(storeServiceURL+'/specialproduct')
+                return $http.get(storeServiceURL + '/specialproduct')
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
+
         storewsapi.getProduct =
             function (id)
             {
@@ -38,6 +42,7 @@ app.factory('storewsapi', ['$http',
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
+
         storewsapi.getPlatformAnnouncements =
             function (id)
             {
@@ -45,6 +50,7 @@ app.factory('storewsapi', ['$http',
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
+
         storewsapi.getPlatformInOffer =
             function (id)
             {
@@ -52,6 +58,7 @@ app.factory('storewsapi', ['$http',
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
+
         storewsapi.getPlatformLatest =
             function (id)
             {
@@ -59,6 +66,7 @@ app.factory('storewsapi', ['$http',
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
+
         storewsapi.getPlatform =
             function (id)
             {
@@ -66,34 +74,44 @@ app.factory('storewsapi', ['$http',
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
+
         return storewsapi;
     }]);
 
-app.factory('userwsapi', ['$http', function($http) {
+app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
 
-    var userServiceURL = serviceURL + '/user'
+    var userServiceURL = serviceURL + '/user';
+
     var userwsapi = {};
 
-    userwsapi.getCustomer = function (id) {
-        return $http.get(userServiceURL + '/' + id)
+    userwsapi.getUser = function (id, username, password) {
+        return $http.get(userServiceURL + '/' + id, { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };
 
-    userwsapi.insertCustomer = function (cust) {
-        return $http.post(userServiceURL, cust);
+    userwsapi.getUserCart = function (id, username, password) {
+        return $http.get(userServiceURL + '/' + id +'/cart', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
     };
 
-    userwsapi.updateCustomer = function (cust) {
-        return $http.put(userServiceURL + '/' + cust.ID, cust)
+    userwsapi.getUserAddress = function (id, username, password) {
+        return $http.get(userServiceURL + '/' + id +'/address', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
     };
 
-    userwsapi.deleteCustomer = function (id) {
-        return $http.delete(userServiceURL + '/' + id);
+    userwsapi.getUserOrders = function (id, username, password) {
+        return $http.get(userServiceURL + '/' + id +'order', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
     };
 
-    userwsapi.getOrders = function (id) {
-        return $http.get(userServiceURL + '/' + id + '/orders');
+    userwsapi.getUserPayment = function (id, username, password) {
+        return $http.get(userServiceURL + '/' + id +'/payment', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
     };
 
     return userwsapi;
@@ -108,10 +126,11 @@ app.factory("authenticationSvc", ["$http","$q","$window",function ($http, $q, $w
         $http.post(serviceURL +"/user/login", { uname: uname, upassword: upassword })
             .then(function (result) {
                 userInfo = {
-                    accessToken: result.data.access_token,
-                    uname: result.data.uname
+                    uid: result.data.uid,
+                    uname: uname,
+                    upassword: upassword
                 };
-                $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+                $window.sessionStorage["userInfo"] = JSON.toString(userInfo);
                 deferred.resolve(userInfo);
             }, function (error) {
                 deferred.reject(error);
@@ -145,6 +164,7 @@ app.factory("authenticationSvc", ["$http","$q","$window",function ($http, $q, $w
             userInfo = JSON.parse($window.sessionStorage["userInfo"]);
         }
     }
+
     init();
 
     return {

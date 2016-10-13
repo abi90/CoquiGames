@@ -37,7 +37,7 @@ app.controller('NavBarController', ['$scope', '$location', 'storewsapi', 'userws
             $scope.navbarOptions = response.data;
         },
         function (error) {
-            console.log(JSON.stringify(error));
+            console.log(error);
             $location.path("/404.html");
         }
     );
