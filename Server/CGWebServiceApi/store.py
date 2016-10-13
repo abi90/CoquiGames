@@ -451,9 +451,9 @@ def latest_prod(platformid):
     else:
         return not_found()
 
-    """
-    Get's platform drop-down menu content
-    """
+"""
+Get's platform drop-down menu content
+"""
 
 
 @store_blueprint.route("/platform/<platformid>", methods=['GET'])
