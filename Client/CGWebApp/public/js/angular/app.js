@@ -25,7 +25,17 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
       })
       .when('/cart.html', {
           controller: 'HomeController',
-          templateUrl: 'views/cart.html'
+          templateUrl: 'views/cart.html',
+          resolve: {
+              auth: function ($q, authenticationSvc) {
+                  var userInfo = authenticationSvc.getUserInfo();
+                  if (userInfo) {
+                      return $q.when(userInfo);
+                  } else {
+                      return $q.reject({ authenticated: false });
+                  }
+              }
+          }
       })
       .when('/category-grid.html', {
           controller: 'HomeController',
@@ -44,7 +54,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
           templateUrl: 'views/contact.html'
       })
       .when('/login.html', {
-          controller: 'HomeController',
+          controller: 'LoginController',
           templateUrl: 'views/login.html'
       })
       .when('/product.html', {
@@ -64,8 +74,18 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
           templateUrl: 'views/typography.html'
       })
       .when('/wishlist', {
-          controller: 'HomeController',
-          templateUrl: 'views/wishlist.html'
+          controller: 'AccountController',
+          templateUrl: 'views/wishlist.html',
+          resolve: {
+              auth: function ($q, authenticationSvc) {
+                  var userInfo = authenticationSvc.getUserInfo();
+                  if (userInfo) {
+                      return $q.when(userInfo);
+                  } else {
+                      return $q.reject({ authenticated: false });
+                  }
+              }
+          }
       })
       .when('/search-list', {
           controller: 'HomeController',
@@ -76,35 +96,74 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
           templateUrl: 'views/search-list.html'
       })
       .when('/account-info', {
-          controller: 'HomeController',
+          controller: 'AccountController',
           templateUrl: 'views/account-info.html',
           resolve: {
-              auth: ["$q", "authenticationSvc", function($q, authenticationSvc) {
+              auth: function ($q, authenticationSvc) {
                   var userInfo = authenticationSvc.getUserInfo();
-
                   if (userInfo) {
                       return $q.when(userInfo);
                   } else {
                       return $q.reject({ authenticated: false });
                   }
-              }]
+              }
           }
       })
       .when('/account-orders', {
-          controller: 'HomeController',
-          templateUrl: 'views/account-orders.html'
+          controller: 'AccountController',
+          templateUrl: 'views/account-orders.html',
+          resolve: {
+              auth: function ($q, authenticationSvc) {
+                  var userInfo = authenticationSvc.getUserInfo();
+                  if (userInfo) {
+                      return $q.when(userInfo);
+                  } else {
+                      return $q.reject({ authenticated: false });
+                  }
+              }
+          }
       })
       .when('/account-payment', {
-          controller: 'HomeController',
-          templateUrl: 'views/account-payment.html'
+          controller: 'AccountController',
+          templateUrl: 'views/account-payment.html',
+          resolve: {
+              auth: function ($q, authenticationSvc) {
+                  var userInfo = authenticationSvc.getUserInfo();
+                  if (userInfo) {
+                      return $q.when(userInfo);
+                  } else {
+                      return $q.reject({ authenticated: false });
+                  }
+              }
+          }
       })
       .when('/checkout', {
-          controller: 'HomeController',
-          templateUrl: 'views/checkout.html'
+          controller: 'AccountController',
+          templateUrl: 'views/checkout.html',
+          resolve: {
+              auth: function ($q, authenticationSvc) {
+                  var userInfo = authenticationSvc.getUserInfo();
+                  if (userInfo) {
+                      return $q.when(userInfo);
+                  } else {
+                      return $q.reject({ authenticated: false });
+                  }
+              }
+          }
       })
       .when('/account-address', {
-          controller: 'HomeController',
-          templateUrl: 'views/account-address.html'
+          controller: 'AccountController',
+          templateUrl: 'views/account-address.html',
+          resolve: {
+              auth: function ($q, authenticationSvc) {
+                  var userInfo = authenticationSvc.getUserInfo();
+                  if (userInfo) {
+                      return $q.when(userInfo);
+                  } else {
+                      return $q.reject({ authenticated: false });
+                  }
+              }
+          }
       })
       .otherwise({
           redirectTo: '/'
