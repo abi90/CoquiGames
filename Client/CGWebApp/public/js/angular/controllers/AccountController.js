@@ -7,6 +7,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         $scope.userData;
         $scope.userAddress;
         $scope.userOrder;
+        $scope.userPayment;
 
         $scope.logout = function () {
 
@@ -30,6 +31,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                 }
             )
         };
+
         var getUser = function (auth) {
             userwsapi.getUser(auth.uid, auth.uname, auth.upassword).then(
                 function (response) {
@@ -54,7 +56,33 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             )
         };
 
+        var getUserPayments = function (auth) {
+            userwsapi.getUserPayment(auth.uid, auth.uname, auth.upassword).then(
+                function (response) {
+                    $scope.userPayment = response.data;
+                },
+                function (error) {
+                    console.log("Error: " +error.statusCode);
+                    $location.path("/404.html");
+                }
+            )
+        };
+
+        var getUserCart= function (auth) {
+            userwsapi.getUserCart(auth.uid, auth.uname, auth.upassword).then(
+                function (response) {
+                    $scope.userPayment = response.data;
+                },
+                function (error) {
+                    console.log("Error: " +error.statusCode);
+                    $location.path("/404.html");
+                }
+            )
+        };
+
         getUser(auth);
         getUserAddress(auth);
         getUserOrder(auth);
+        getUserPayments(auth);
+        getUserCart(auth);
     }]);
