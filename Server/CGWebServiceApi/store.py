@@ -451,6 +451,18 @@ def latest_prod(platformid):
     else:
         return not_found()
 
+    """
+    Get's platform drop-down menu content
+    """
+
+
+@store_blueprint.route("/platform/<platformid>", methods=['GET'])
+def get_platform(platformid):
+    for p in platform_list:
+        if p['PlatformId'] == int(platformid):
+            return jsonify(p)
+    return not_found()
+
 
 @store_blueprint.route("/special/<platformid>", methods=['GET'])
 def special_products(platformid):
