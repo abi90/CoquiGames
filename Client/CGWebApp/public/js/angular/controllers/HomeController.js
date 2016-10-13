@@ -2,10 +2,10 @@ app.controller('HomeController', ['$scope', '$http', 'storewsapi',
     function($scope, $http, storewsapi) {
 
     storewsapi.getLatestProducts().then(function(responce) {
-        $scope.latest = responce.data.LatestProducts;
+        $scope.latest = responce.data;
     });
     storewsapi.getInOfferProducts().then(function(responce) {
-        $scope.specials = responce.data.SpecialProducts;
+        $scope.specials = responce.data;
     });
     storewsapi.getProduct(1).then(function(responce) {
         $scope.product = responce.data;
