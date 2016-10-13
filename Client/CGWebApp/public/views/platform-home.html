@@ -1,0 +1,116 @@
+<!-- Main Container Starts -->
+<div id="main-container-home" class="container">
+    <div class="container">
+        <!-- Sidebar Starts -->
+        <!-- Sidebar Ends -->
+        <!-- Primary Content Starts -->
+        <div class="text-center">
+            <div class="container">
+                <h2 class="main-heading2">
+                    {{platform.platform}}
+                </h2>
+                <img ng-src="{{platform.imglogo}}" alt="Image" class="img-responsive img-thumbnail">
+                <br>
+                <br>
+            </div>
+            <!-- Slider Section Starts -->
+            <div class="slider">
+                <div ng-controller="CarouselDemoCtrl">
+                    <div style="">
+                        <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+                            <div class="" uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
+                                <img ng-src="{{slide.image}}" class="img-responsive" style="margin:auto;">
+                                <div class="carousel-caption">
+                                    <p>{{slide.text}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slider Section Ends -->
+            <!-- Latest Products Starts -->
+            <section class="product-carousel">
+                <!-- Heading Starts -->
+                <h2 class="product-head">Latest Products</h2>
+                <!-- Heading Ends -->
+                <!-- Products Row Starts -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- Product Carousel Starts -->
+                        <data-owl-carousel class="owl-carousel">
+                            <div owl-carousel-item="" ng-repeat="item in ::platformLatest" class="item" >
+                                <div class="product-col">
+                                    <div class="image">
+                                        <img src="images/product-images/1.jpg" alt="product" class="img-responsive">
+                                    </div>
+                                    <div class="caption">
+                                        <h4>
+                                            <a href="#/product.html">{{item.Title | limitTo:16}}</a>
+                                        </h4>
+                                        <div class="description"></div>
+                                        <div class="price">
+                                            <span class="price-new">{{item.Price | currency}}</span>
+                                            <span ng-if="item.InOffer==true" class="price-old">{{item.OfferPrice | currency}}</span>
+
+
+                                        </div>
+                                        <div class="cart-button">
+                                            <button type="button" class="btn btn-cart">Add to cart
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </data-owl-carousel>
+                        <!-- Product Carousel Ends -->
+                    </div>
+                </div>
+                <!-- Products Row Ends -->
+            </section>
+            <!-- Latest Products Ends -->
+            <!-- Specials Products Starts -->
+            <section class="product-carousel">
+                <!-- Heading Starts -->
+                <h2 class="product-head">Special Products</h2>
+                <!-- Heading Ends -->
+                <!-- Products Row Starts -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- Product Carousel Starts -->
+                        <data-owl-carousel class="owl-carousel" data-options="{navigation: false, pagination: false, rewindNav: true}">
+                            <div owl-carousel-item="" ng-repeat="item in ::platformSpecials" class="item" >
+                                <div class="product-col">
+                                    <div class="image">
+                                        <img src="images/product-images/1.jpg" alt="product" class="img-responsive">
+                                    </div>
+                                    <div class="caption">
+                                        <h4>
+                                            <a href="#/product.html">{{item.Title | limitTo:16}}</a>
+                                        </h4>
+                                        <div class="description"></div>
+                                        <div class="price">
+                                            <span class="price-new">{{item.Price | currency}}</span>
+                                            <span ng-if="item.InOffer==true" class="price-old">{{item.OfferPrice | currency}}</span>
+                                        </div>
+                                        <div class="cart-button">
+                                            <button type="button" class="btn btn-cart">Add to cart
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </data-owl-carousel>
+                        <!-- Product Carousel Ends -->
+                    </div>
+                </div>
+                <!-- Products Row Ends -->
+            </section>
+            <!-- Specials Products Ends -->
+        </div>
+        <!-- Primary Content Ends -->
+    </div>
+</div>
+<!-- Main Container Ends -->

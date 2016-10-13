@@ -1,5 +1,6 @@
 app.controller('HomeController', ['$scope', '$http', 'storewsapi',
     function($scope, $http, storewsapi) {
+
     storewsapi.getLatestProducts().then(function(responce) {
         $scope.latest = responce.data.LatestProducts;
     });

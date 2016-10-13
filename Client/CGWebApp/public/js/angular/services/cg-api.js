@@ -59,6 +59,13 @@ app.factory('storewsapi', ['$http',
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
+        storewsapi.getPlatform =
+            function (id)
+            {
+                return $http.get(storeServiceURL+'/platform/'+id)
+                    .success(function (data) {return data;})
+                    .error(function (error) {return error;});
+            };
         return storewsapi;
     }]);
 
