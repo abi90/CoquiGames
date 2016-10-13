@@ -6,6 +6,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         $scope.userInfo = auth;
         $scope.userData;
         $scope.userAddress;
+        $scope.userOrder;
 
         $scope.logout = function () {
 
@@ -41,6 +42,19 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             )
         };
 
+        var getUserOrder = function (auth) {
+            userwsapi.getUserOrders(auth.uid, auth.uname, auth.upassword).then(
+                function (response) {
+                    $scope.userOrder = response.data;
+                },
+                function (error) {
+                    console.log("Error: " +error.statusCode);
+                    $location.path("/404.html");
+                }
+            )
+        };
+
         getUser(auth);
         getUserAddress(auth);
+        getUserOrder(auth);
     }]);
