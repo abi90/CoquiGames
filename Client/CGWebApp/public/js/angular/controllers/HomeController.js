@@ -1,9 +1,8 @@
-app.controller('HomeController', ['$scope', 'storewsapi', 'authenticationSvc',
-    function($scope, storewsapi, authenticationSvc) {
+app.controller('HomeController', ['$scope', 'storewsapi',
+    function($scope, storewsapi) {
 
         $scope.latest;
         $scope.specials;
-        $scope.user;
 
         storewsapi.getLatestProducts().then(function(responce) {
             $scope.latest = responce.data;
@@ -13,15 +12,6 @@ app.controller('HomeController', ['$scope', 'storewsapi', 'authenticationSvc',
             $scope.specials = responce.data;
         });
 
-        var getUser = function(){
 
-            if (authenticationSvc.getUserInfo())
-            {
-                $scope.user = authenticationSvc.getUserInfo();
-            }
-
-        };
-
-        getUser();
 
     }]);
