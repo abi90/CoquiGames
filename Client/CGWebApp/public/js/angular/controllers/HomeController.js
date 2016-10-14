@@ -1,27 +1,27 @@
-app.controller('HomeController', ['$scope', '$http', 'storewsapi',
-    function($scope, $http, storewsapi) {
+app.controller('HomeController', ['$scope', 'storewsapi', 'authenticationSvc',
+    function($scope, storewsapi, authenticationSvc) {
 
-    storewsapi.getLatestProducts().then(function(responce) {
-        $scope.latest = responce.data;
-    });
-    storewsapi.getInOfferProducts().then(function(responce) {
-        $scope.specials = responce.data;
-    });
-    storewsapi.getProduct(1).then(function(responce) {
-        $scope.product = responce.data;
-    });
+        $scope.latest;
+        $scope.specials;
+        $scope.user;
 
-    //$scope.userInfo = auth;
-/*
-    $scope.logout = function () {
+        storewsapi.getLatestProducts().then(function(responce) {
+            $scope.latest = responce.data;
+        });
 
-        authenticationSvc.logout()
-            .then(function (result) {
-                $scope.userInfo = null;
-                $location.path("/login.html");
-            }, function (error) {
-                console.log(error);
-            });
-    };*/
+        storewsapi.getInOfferProducts().then(function(responce) {
+            $scope.specials = responce.data;
+        });
 
-}]);
+        var getUser = function(){
+
+            if (authenticationSvc.getUserInfo())
+            {
+                $scope.user = authenticationSvc.getUserInfo();
+            }
+
+        };
+
+        getUser();
+
+    }]);

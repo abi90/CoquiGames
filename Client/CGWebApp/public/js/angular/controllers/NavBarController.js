@@ -1,4 +1,5 @@
-app.controller('NavBarController', ['$scope', '$location', 'storewsapi', 'userwsapi' , function($scope, $location, storewsapi, userwsapi) {
+app.controller('NavBarController', ['$scope', '$location', 'storewsapi',
+    function($scope, $location, storewsapi) {
     /*$scope.navbarOptions = [
      {
      platformId: "PS4",
@@ -30,7 +31,6 @@ app.controller('NavBarController', ['$scope', '$location', 'storewsapi', 'userws
      }
      ];*/
     $scope.navbarOptions;
-    $scope.user;
 
     storewsapi.getPlatforms().then(
         function (response) {
