@@ -15,7 +15,7 @@
                 <li>
                     <a href="index.html">Home</a>
                 </li>
-                <li class="active">{USER_NAME}</li>
+                <li class="active">{{userData.uname}}</li>
                 <li class="active">Orders</li>
             </ol>
             <!-- Breadcrumb Ends -->
@@ -29,26 +29,18 @@
                     <tr>
                         <td class="text-center">Order Number</td>
                         <td class="text-center">Order Date</td>
-                        <td class="text-center">Status</td>
-                        <td class="text-center">Total</td>
+                        <td class="text-center">Order Status</td>
+                        <td class="text-center">Order Total</td>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr ng-repeat="order in userOrder">
                         <td class="text-center">
-                            <a href="product-full.html">A12345F</a>
+                            <a href="product-full.html">{{order.oid}}</a>
                         </td>
-                        <td class="text-center">12/09/2015</td>
-                        <td class="text-center">Shipped</td>
-                        <td class="text-center">$150.00</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a href="product-full.html">BC1234F</a>
-                        </td>
-                        <td class="text-center">15/09/2015</td>
-                        <td class="text-center">In transit</td>
-                        <td class="text-center">$150.00</td>
+                        <td class="text-center">{{order.odate | date}}</td>
+                        <td class="text-center">{{order.ostatus}}</td>
+                        <td class="text-center">{{order.ototal}}</td>
                     </tr>
                     </tbody>
                     <tfoot></tfoot>

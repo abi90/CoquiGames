@@ -31,17 +31,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr ng-repeat="wish in userWishlist">
 						<td class="text-center">
 							<a href="product.html">
 								<img src="images/product-images/cart-thumb-img1.jpg" alt="Product Name" title="Product Name" class="img-thumbnail" />
 							</a>
 						</td>
 						<td class="text-center">
-							<a href="product-full.html">Digital Electro Goods</a>
+							<a href="product-full.html">{{wish.pname}}</a>
 						</td>
 						<td class="text-center">
-							$150.00
+							{{wish.pprice}}
 						</td>
 						<td class="text-center">
 							<button type="submit" title="Update" class="btn btn-default tool-tip">
@@ -52,27 +52,6 @@
 							</button>
 						</td>
 					</tr>
-					<tr>
-						<td class="text-center">
-							<a href="product.html">
-								<img src="images/product-images/cart-thumb-img2.jpg" alt="Product Name" title="Product Name" class="img-thumbnail" />
-							</a>
-						</td>
-						<td class="text-center">
-							<a href="product-full.html">Digital Electro Goods</a>
-						</td>
-						<td class="text-center">
-							$150.00
-						</td>
-						<td class="text-center">
-							<button type="submit" title="Update" class="btn btn-default tool-tip">
-								<i class="fa fa-refresh"></i>
-							</button>
-							<button type="button" title="Remove" class="btn btn-default tool-tip">
-								<i class="fa fa-times-circle"></i>
-							</button>
-						</td>
-					</tr>						
 				</tbody>
 			</table>				
 		</div>

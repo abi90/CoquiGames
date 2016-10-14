@@ -34,7 +34,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             templateUrl: 'views/about.html'
         })
         .when('/cart.html', {
-            controller: 'HomeController',
+            controller: 'AccountController',
             templateUrl: 'views/cart.html',
             resolve: {
                 auth: function ($q, authenticationSvc) {

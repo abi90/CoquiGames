@@ -96,6 +96,13 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    userwsapi.getUserWishlist = function (id, username, password) {
+        return $http.get(userServiceURL + '/' + id +'/wishlist', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+
     userwsapi.getUserAddress = function (id, username, password) {
         return $http.get(userServiceURL + '/' + id +'/address', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
             .success(function (data) {return data;})
@@ -103,7 +110,7 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
     };
 
     userwsapi.getUserOrders = function (id, username, password) {
-        return $http.get(userServiceURL + '/' + id +'order', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+        return $http.get(userServiceURL + '/' + id +'/order', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };

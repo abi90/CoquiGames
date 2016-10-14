@@ -15,7 +15,7 @@
                 <li>
                     <a href="index.html">Home</a>
                 </li>
-                <li class="active">{USER_NAME}</li>
+                <li class="active">{{userData.uname}}</li>
                 <li class="active">Payment Method</li>
             </ol>
             <div class="panel panel-smart">
@@ -26,15 +26,16 @@
                     <!-- Registration Form Starts -->
                     <form class="form-horizontal" role="form">
                         <!-- Personal Information Starts -->
-                        <div class="form-group">
+                        <div class="form-group" ng-repeat="pay in userPayment">
                             <div class="col-sm-2">
-                                <img src="images/payment-icon/visa.png" alt="PaymentGateway">
+                                <img ng-if="pay.ctype=='visa'"src="images/payment-icon/visa.png" alt="PaymentGateway">
+                                <img ng-if="pay.ctype =='mastercard'"src="images/payment-icon/mastercard.png" alt="PaymentGateway">
                             </div>
                             <div class="col-sm-3">
-                                <label class="control-label" id="inputCompany" placeholder="Full Name">Ending in 0009</label>
+                                <label class="control-label" id="" placeholder="Full Name">Ending in {{pay.cnumber}}</label>
                             </div>
                             <div class="col-sm-3">
-                                <label class="control-label" id="inputCompany" placeholder="Full Name">Expires 01/2017</label>
+                                <label class="control-label" id="inputCompany" placeholder="Full Name">Expires {{pay.cexpdate | date}}</label>
                             </div>
                             <div class="col-sm-2">
                                 <button type="submit" class="btn btn-black">CHANGE</button>

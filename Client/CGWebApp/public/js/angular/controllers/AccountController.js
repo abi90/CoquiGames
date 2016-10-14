@@ -8,6 +8,10 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         $scope.userAddress;
         $scope.userOrder;
         $scope.userPayment;
+        $scope.userWishlist;
+        $scope.userCart;
+        $scope.shippmentFee = 10;
+        $scope.cartTotal = 0;
 
         $scope.logout = function () {
 
@@ -71,7 +75,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         var getUserCart= function (auth) {
             userwsapi.getUserCart(auth.uid, auth.uname, auth.upassword).then(
                 function (response) {
-                    $scope.userPayment = response.data;
+                    $scope.userCart = response.data;
                 },
                 function (error) {
                     console.log("Error: " +error.statusCode);
@@ -80,9 +84,36 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             )
         };
 
+        var getUserWishlist= function (auth) {
+            userwsapi.getUserWishlist(auth.uid, auth.uname, auth.upassword).then(
+                function (response) {
+                    $scope.userWishlist = response.data;
+                },
+                function (error) {
+                    console.log("Error: " +error.statusCode);
+                    $location.path("/404.html");
+                }
+            )
+        };
+
+        $scope.getSubTotal = function(){
+            var subtotal = 0;
+            for(var i = 0; i < $scope.userCart.length; i++){
+                var product = $scope.userCart[i];
+                subtotal += (product.pprice * product.pquantity);
+            }
+            $scope.cartTotal = subtotal + subtotal * 0.1105 + $scope.shippmentFee;
+            return subtotal;
+        };
+
+
+
+
         getUser(auth);
         getUserAddress(auth);
         getUserOrder(auth);
         getUserPayments(auth);
         getUserCart(auth);
+        getUserWishlist(auth);
+
     }]);

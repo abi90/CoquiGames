@@ -25,7 +25,7 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr>
+			<tr ng-repeat="cart in userCart">
 				<td class="text-center">
 					<a href="product.html">
 
@@ -34,42 +34,15 @@
 					</a>
 				</td>
 				<td class="text-center">
-					<a href="product-full.html">Digital Electro Goods</a>
+					<a href="product-full.html">{{cart.pname}}</a>
 				</td>
 				<td class="text-center">
 					<div class="input-group btn-block">
-						<input type="text" name="quantity" value="1" size="1" class="form-control">
+						<input type="number" class="form-control" name="quantity" data-ng-model="cart.pquantity" min="1" max="99">
 					</div>
 				</td>
-				<td class="text-center">$150.00</td>
-				<td class="text-center">$150.00</td>
-				<td class="text-center">
-					<button type="submit" title="Update" class="btn btn-default tool-tip">
-						<i class="fa fa-refresh"></i>
-					</button>
-					<button type="button" title="Remove" class="btn btn-default tool-tip">
-						<i class="fa fa-times-circle"></i>
-					</button>
-				</td>
-			</tr>
-			<tr>
-				<td class="text-center">
-					<a href="product.html">
-
-						<img src="images/product-images/cart-thumb-img2.jpg" alt="Product Name" title="Product Name" class="img-thumbnail">
-
-					</a>
-				</td>
-				<td class="text-center">
-					<a href="product-full.html">Digital Electro Goods</a>
-				</td>
-				<td class="text-center">
-					<div class="input-group btn-block">
-						<input type="text" name="quantity" value="1" size="1" class="form-control">
-					</div>
-				</td>
-				<td class="text-center">$150.00</td>
-				<td class="text-center">$150.00</td>
+				<td class="text-center">{{cart.pprice | currency}}</td>
+				<td class="text-center">{{cart.pprice * cart.pquantity | currency}}</td>
 				<td class="text-center">
 					<button type="submit" title="Update" class="btn btn-default tool-tip">
 						<i class="fa fa-refresh"></i>
@@ -85,109 +58,18 @@
 				<td colspan="4" class="text-right">
 					<strong>Total :</strong>
 				</td>
-				<td colspan="2" class="text-left">$300</td>
+				<td colspan="2" class="text-left">{{ getSubTotal() | currency }}</td>
 			</tr>
 			</tfoot>
 		</table>
 	</div>
 	<!-- Shopping Cart Table Ends -->
 	<!-- Shipping Section Starts -->
+    <div class="text-center">
 	<section class="registration-area">
 		<div class="row">
-			<!-- Shipping & Shipment Block Starts -->
-			<div class="col-sm-6">
-				<!-- Taxes Block Starts -->
-				<!-- Taxes Block Ends -->
-				<!-- Shipment Information Block Starts -->
-				<div class="panel panel-smart">
-					<div class="panel-heading">
-						<h3 class="panel-title">Shipment Information</h3>
-					</div>
-					<div class="panel-body">
-						<!-- Form Starts -->
-						<form class="form-horizontal" role="form">
-							<div class="form-group">
-								<label for="inputFname" class="col-sm-3 control-label">First Name :</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputFname" placeholder="First Name">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputLname" class="col-sm-3 control-label">Last Name :</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputLname" placeholder="Last Name">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail" class="col-sm-3 control-label">Email :</label>
-								<div class="col-sm-9">
-									<input type="email" class="form-control" id="inputEmail" placeholder="Email">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputPhone" class="col-sm-3 control-label">Phone :</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputPhone" placeholder="Phone">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputAddress1" class="col-sm-3 control-label">Address/1 :</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputAddress1" placeholder="Address/1">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputAddress2" class="col-sm-3 control-label">Address/2 :</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputAddress2" placeholder="Address/2">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputCity" class="col-sm-3 control-label">City :</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputCity" placeholder="City">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputPostCode" class="col-sm-3 control-label">Postal Code :</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputPostCode" placeholder="Postal Code">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputCountry" class="col-sm-3 control-label">Country :</label>
-								<div class="col-sm-9">
-									<select class="form-control" id="inputCountry1">
-										<option>- All Countries -</option>
-										<option>India</option>
-										<option>USA</option>
-										<option>UK</option>
-										<option>China</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputRegion" class="col-sm-3 control-label">Region :</label>
-								<div class="col-sm-9">
-									<select class="form-control" id="inputRegion1">
-										<option>- All Regions -</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-3 col-sm-9">
-									<button type="submit" class="btn btn-black">EDIT</button>
-								</div>
-							</div>
-						</form>
-						<!-- Form Ends -->
-					</div>
-				</div>
-				<!-- Shipment Information Block Ends -->
-			</div>
-			<!-- Shipping & Shipment Block Ends -->
 			<!-- Discount & Conditions Blocks Starts -->
-			<div class="col-sm-6">
+			<div class="col-sm-6 col-md-offset-3" >
 				<!-- Discount Coupon Block Starts -->
 				<!-- Discount Coupon Block Ends -->
 				<!-- Conditions Panel Starts -->
@@ -199,21 +81,17 @@
 					</div>
 					<div class="panel-body">
 						<dl class="dl-horizontal">
-							<dt>Coupon Discount :</dt>
-							<dd>$-25.00</dd>
 							<dt>Subtotal :</dt>
-							<dd>$300.00</dd>
-							<dt>Payment Fee :</dt>
-							<dd>$10.00</dd>
+							<dd>{{ getSubTotal() | currency }}</dd>
 							<dt>Shipment Fee :</dt>
-							<dd>$15.00</dd>
+							<dd>{{shippmentFee | currency}}</dd>
 							<dt>Tax Total :</dt>
-							<dd>$315.00</dd>
+							<dd>{{getSubTotal() * 0.1105 |currency}}</dd>
 						</dl>
 						<hr>
 						<dl class="dl-horizontal total">
 							<dt>Total :</dt>
-							<dd>$325.00</dd>
+							<dd>{{cartTotal | currency}}</dd>
 						</dl>
 						<hr>
 						<div class="text-uppercase clearfix">
@@ -237,6 +115,7 @@
 			<!-- Discount & Conditions Blocks Ends -->
 		</div>
 	</section>
+    </div>
 	<!-- Shipping Section Ends -->
 </div>
 <!-- Main Container Ends -->
