@@ -97,14 +97,16 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             controller: 'AccountController',
             templateUrl: 'views/wishlist.html',
             resolve: {
-                auth: function ($q, authenticationSvc) {
-                    var userInfo = authenticationSvc.getUserInfo();
-                    if (userInfo) {
-                        return $q.when(userInfo);
-                    } else {
-                        return $q.reject({ authenticated: false });
+                auth:
+                    function ($q, authenticationSvc)
+                    {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({ authenticated: false });
+                        }
                     }
-                }
             }
         })
         .when('/search-list', {

@@ -1,5 +1,5 @@
-app.controller('NavBarController', ['$scope', '$rootScope', '$location', 'storewsapi', 'authenticationSvc',
-    function($scope, $rootScope ,$location, storewsapi, authenticationSvc) {
+app.controller('NavBarController', ['$scope', '$rootScope', '$location', 'storewsapi', 'authenticationSvc', 'userwsapi',
+    function($scope, $rootScope ,$location, storewsapi, authenticationSvc,userwsapi) {
         /*$scope.navbarOptions = [
          {
          platformId: "PS4",
@@ -30,9 +30,11 @@ app.controller('NavBarController', ['$scope', '$rootScope', '$location', 'storew
          topgames:["Deals","Action","eSHop","Fighting","Music & Party", "RPG", "Shooter","Simulation", "Strategy", "Sports"]
          }
          ];*/
+
         $scope.navbarOptions;
-        $scope.user;
         $rootScope.Loggedin = false;
+        $scope.user;
+        $scope.CartSize;
 
 
         storewsapi.getPlatforms().then(
@@ -50,17 +52,43 @@ app.controller('NavBarController', ['$scope', '$rootScope', '$location', 'storew
         };
 
         var getUser = function(){
-
-            if (authenticationSvc.getUserInfo())
+            $scope.user = authenticationSvc.getUserInfo();
+            if ($scope.user)
             {
-                $scope.user = authenticationSvc.getUserInfo();
+                $scope.Loggedin=true;
             }
 
         };
 
-        $rootScope.$on('Login',function(){$scope.Loggedin=true});
+        $rootScope.$on('Login',function(){$scope.Loggedin=true; getCartLength();});
 
         $rootScope.$on('unLogin',function(){$scope.Loggedin=false});
+
+        $scope.logoutUser = function () {
+            authenticationSvc.logout();
+            $scope.Loggedin=false;
+        };
+
+        var getCartLength =  function () {
+            var auth = authenticationSvc.getUserInfo();
+            userwsapi.getUserCart(auth.uid, auth.uname, auth.upassword).then(
+                function (response) {
+                    $scope.CartSize = response.data.length;
+                },
+                function (error) {
+                    console.log("Error: " +error.statusCode);
+                    $scope.CartSize =0;
+                }
+            )
+
+            };
+
+            $scope.goToCart = function () {
+                $location.path("/cart.html");
+            };
+
+
+
 
         getUser();
     }]);

@@ -10,93 +10,67 @@
                         <ul class="nav navbar-nav pull-left">
                             <li>
                                 <a href="#/index.html">
-
                                     <i class="fa fa-home hidden-lg hidden-md" title="Home"></i>
-
                                     <span class="hidden-sm hidden-xs">
-
 											Home
-
 										</span>
 
                                 </a>
                             </li>
                             <li ng-show="Loggedin">
                                 <a href="#/wishlist">
-
                                     <i class="fa fa-heart hidden-lg hidden-md" title="Wish List"></i>
-
                                     <span class="hidden-sm hidden-xs">
-
-											Wish List(0)
-
+											Wish List
 										</span>
-
                                 </a>
                             </li>
                             <li ng-show="Loggedin">
                                 <a href="#/account-orders">
-
                                     <i class="fa fa-user hidden-lg hidden-md" title="My Account"></i>
-
                                     <span class="hidden-sm hidden-xs">
-
 											My Account
-
 										</span>
-
                                 </a>
                             </li>
                             <li ng-show="Loggedin">
                                 <a href="#/cart.html">
-
                                     <i class="fa fa-shopping-cart hidden-lg hidden-md" title="Shopping Cart"></i>
-
                                     <span class="hidden-sm hidden-xs">
-
 											Shopping Cart
-
 										</span>
-
                                 </a>
                             </li>
                             <li ng-show="Loggedin">
                                 <a href="#/checkout">
-
                                     <i class="fa fa-crosshairs hidden-lg hidden-md" title="Checkout"></i>
-
                                     <span class="hidden-sm hidden-xs">
-
 											Checkout
-
 										</span>
-
                                 </a>
                             </li>
-                            <li>
+                            <li ng-hide="Loggedin">
                                 <a href="#/register.html">
-
                                     <i class="fa fa-unlock hidden-lg hidden-md" title="Register"></i>
-
                                     <span class="hidden-sm hidden-xs">
-
 											Register
-
 										</span>
-
                                 </a>
                             </li>
-                            <li>
+                            <li ng-hide="Loggedin">
                                 <a href="#/login.html">
-
                                     <i class="fa fa-lock hidden-lg hidden-md" title="Login"></i>
-
                                     <span class="hidden-sm hidden-xs">
-
 											Login
-
 										</span>
-
+                                </a>
+                            </li>
+                            <li ng-show="Loggedin">
+                                <a href="#/login.html" ng-click="logoutUser()">
+                                    <i class="fa fa-unlock hidden-lg hidden-md" title="Logout"></i>
+                                    <span class="hidden-sm hidden-xs">
+											Logout
+										</span>
                                 </a>
                             </li>
                         </ul>
@@ -135,112 +109,13 @@
                 <!-- Shopping Cart Starts -->
                 <div class="col-md-3">
                     <div id="cart" class="btn-group btn-block">
-                        <button type="button" data-toggle="dropdown" class="btn btn-block btn-lg dropdown-toggle">
+                        <button ng-click="goToCart()" type="button" class="btn btn-block btn-lg dropdown-toggle">
                             <i class="fa fa-shopping-cart"></i>
                             <span class="hidden-md">Cart:</span>
-                            <span id="cart-total">2 item(s) - $340.00</span>
-                            <i class="fa fa-caret-down"></i>
+                            <span ng-show="Loggedin" id="cart-total">{{CartSize}} item(s)</span>
+                            <span ng-hide="Loggedin" id=""> EMPTY</span>
                         </button>
-                        <ul class="dropdown-menu pull-right">
-                            <li>
-                                <table class="table hcart">
-                                    <tbody>
-                                    <tr>
-                                        <td class="text-center">
-                                            <a href="#/product.html">
 
-                                                <img src="images/product-images/hcart-thumb1.jpg" alt="image" title="image" class="img-thumbnail img-responsive">
-
-                                            </a>
-                                        </td>
-                                        <td class="text-left">
-                                            <a href="#/product-full.html">
-
-                                                Seeds
-
-                                            </a>
-                                        </td>
-                                        <td class="text-right">x 1</td>
-                                        <td class="text-right">$120.68</td>
-                                        <td class="text-center">
-                                            <a href="#">
-
-                                                <i class="fa fa-times"></i>
-
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <a href="#/product.html">
-
-                                                <img src="images/product-images/hcart-thumb2.jpg" alt="image" title="image" class="img-thumbnail img-responsive">
-
-                                            </a>
-                                        </td>
-                                        <td class="text-left">
-                                            <a href="#/product-full.html">
-
-                                                Organic
-
-                                            </a>
-                                        </td>
-                                        <td class="text-right">x 2</td>
-                                        <td class="text-right">$240.00</td>
-                                        <td class="text-center">
-                                            <a href="#">
-
-                                                <i class="fa fa-times"></i>
-
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </li>
-                            <li>
-                                <table class="table table-bordered total">
-                                    <tbody>
-                                    <tr>
-                                        <td class="text-right">
-                                            <strong>Sub-Total</strong>
-                                        </td>
-                                        <td class="text-left">$1,101.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-right">
-                                            <strong>Eco Tax (-2.00)</strong>
-                                        </td>
-                                        <td class="text-left">$4.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-right">
-                                            <strong>VAT (17.5%)</strong>
-                                        </td>
-                                        <td class="text-left">$192.68</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-right">
-                                            <strong>Total</strong>
-                                        </td>
-                                        <td class="text-left">$1,297.68</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <p class="text-right btn-block1">
-                                    <a href="#/cart.html">
-
-                                        View Cart
-
-                                    </a>
-                                    <a href="#">
-
-                                        Checkout
-
-                                    </a>
-                                </p>
-                            </li>
-                        </ul>
                     </div>
                 </div>
                 <!-- Shopping Cart Ends -->

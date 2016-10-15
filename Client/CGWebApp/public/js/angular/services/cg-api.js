@@ -124,7 +124,7 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
     return userwsapi;
 }]);
 
-app.factory("authenticationSvc", ["$http","$q","$window",function ($http, $q, $window) {
+app.factory("authenticationSvc", ["$http","$q","$window", '$rootScope',function ($http, $q, $window, $rootScope) {
     var userInfo;
 
     function login(uname, upassword) {
@@ -132,12 +132,12 @@ app.factory("authenticationSvc", ["$http","$q","$window",function ($http, $q, $w
 
         $http.post(serviceURL +"/user/login", { uname: uname, upassword: upassword })
             .then(function (result) {
-                userInfo = {
+               userInfo = {
                     uid: result.data.uid,
                     uname: uname,
                     upassword: upassword
                 };
-                $window.sessionStorage["userInfo"] = JSON.toString(userInfo);
+                $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
                 deferred.resolve(userInfo);
             }, function (error) {
                 deferred.reject(error);

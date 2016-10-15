@@ -3,7 +3,7 @@
  */
 app.controller("LoginController", ["$scope", '$rootScope',"$location", "$window", "authenticationSvc",function ($scope, $rootScope,$location, $window, authenticationSvc) {
     $scope.userInfo = null;
-    $rootScope.$emit('unLogin');
+    //$rootScope.$emit('unLogin');
     $scope.login = function () {
         authenticationSvc.login($scope.userName, $scope.password)
             .then(function (result) {

@@ -1,15 +1,15 @@
 /**
  * Created by abi on 10/12/16.
  */
-app.controller('AccountController', ['$scope', '$location', 'authenticationSvc', 'auth', 'userwsapi',
-    function ($scope, $location, authenticationSvc, auth, userwsapi) {
+app.controller('AccountController', ['$scope', '$location', 'authenticationSvc', 'auth', 'userwsapi', '$rootScope',
+    function ($scope, $location, authenticationSvc, auth, userwsapi, $rootScope) {
         $scope.userInfo = auth;
         $scope.userData;
         $scope.userAddress;
         $scope.userOrder;
         $scope.userPayment;
         $scope.userWishlist;
-        $scope.userCart;
+        $rootScope.userCart;
         $scope.shippmentFee = 10;
         $scope.cartTotal = 0;
 
@@ -76,6 +76,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             userwsapi.getUserCart(auth.uid, auth.uname, auth.upassword).then(
                 function (response) {
                     $scope.userCart = response.data;
+                    $rootScope.$emit('Login');
                 },
                 function (error) {
                     console.log("Error: " +error.statusCode);
@@ -105,8 +106,9 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             $scope.cartTotal = subtotal + subtotal * 0.1105 + $scope.shippmentFee;
             return subtotal;
         };
-
-
+        $scope.init = function (auth) {
+            $scope.userInfo = auth;
+        }
 
 
         getUser(auth);
