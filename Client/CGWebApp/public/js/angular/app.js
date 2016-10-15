@@ -145,6 +145,18 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
                 }
             }
         })
+        .when('/account-orderdetails.html/:orderId', {
+            controller: 'OrderController',
+            templateUrl: 'views/account-orderdetails.html',
+            resolve: {
+                orderId: ['$route', function($route) {
+                    var params = $route.current.params;
+                    return params.orderId = params.orderId;
+                }]
+            }
+
+        })
+
         .when('/account-payment', {
             controller: 'AccountController',
             templateUrl: 'views/account-payment.html',

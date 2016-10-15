@@ -36,7 +36,7 @@
                     <tbody>
                     <tr ng-repeat="order in userOrder">
                         <td class="text-center">
-                            <a href="product-full.html">{{order.oid}}</a>
+                            <a ng-href="#/account-orderdetails.html/{{order.oid}}">{{order.oid}}</a>
                         </td>
                         <td class="text-center">{{order.odate | date}}</td>
                         <td class="text-center">{{order.ostatus}}</td>
