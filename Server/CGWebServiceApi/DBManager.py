@@ -17,6 +17,41 @@ def connection():
     return conn
 
 
+def fetch_special_products():
+    try:
+        conn = connection()
+        cur = conn.cursor()
+        cur.execute(query.SELECT_SPECIAL_PRODUCTS)
+
+        columns = [x[0] for x in cur.description]
+        results = []
+        for row in cur.fetchall():
+            results.append(dict(zip(columns, row)))
+        for e in results:
+            print e
+        conn.close()
+        return results
+    except Exception as e:
+        print e
+
+
+def fetch_latest_products():
+    try:
+        conn = connection()
+        cur = conn.cursor()
+        cur.execute(query.SELECT_LATEST_PRODUCTS)
+
+        columns = [x[0] for x in cur.description]
+        results = []
+        for row in cur.fetchall():
+            results.append(dict(zip(columns, row)))
+        for e in results:
+            print e
+        conn.close()
+        return results
+    except Exception as e:
+        print e
+
 def fetch_products():
     try:
         conn = connection()
@@ -34,4 +69,6 @@ def fetch_products():
     except Exception as e:
         print e
 
-fetch_products()
+#fetch_products()
+#fetch_latest_products()
+fetch_special_products()
