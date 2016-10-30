@@ -6,6 +6,7 @@ import store
 
 app = Flask(__name__)
 cors = CORS(app)
+app.config['SECRET_KEY'] = 'ALS"KDSA(D*D^AUCHNJcYAS*^%S^FsaYTF^&As'
 
 
 @app.route("/")

@@ -92,22 +92,23 @@ def fetch_platforms():
     except Exception as e:
         print e
 
-    def fetch_special_products():
-        try:
-            conn = connection()
-            cur = conn.cursor()
-            cur.execute(Query.SELECT_SPECIAL_PRODUCTS)
 
-            columns = [x[0] for x in cur.description]
-            results = []
-            for row in cur.fetchall():
-                results.append(dict(zip(columns, row)))
-            for e in results:
-                print e
-            conn.close()
-            return results
-        except Exception as e:
+def fetch_special_products():
+    try:
+        conn = connection()
+        cur = conn.cursor()
+        cur.execute(Query.SELECT_SPECIAL_PRODUCTS)
+
+        columns = [x[0] for x in cur.description]
+        results = []
+        for row in cur.fetchall():
+            results.append(dict(zip(columns, row)))
+        for e in results:
             print e
+        conn.close()
+        return results
+    except Exception as e:
+        print e
 
 
 def fetch_product(productid):

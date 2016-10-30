@@ -1,4 +1,4 @@
-serviceURL = 'http://cgwsapi.herokuapp.com';
+serviceURL = 'https://cgwsapi.herokuapp.com';
 
 app.factory('storewsapi', ['$http',
     function($http) {

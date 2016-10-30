@@ -1,5 +1,7 @@
-from flask import jsonify, request
+from flask import jsonify, request, g
 from functools import wraps
+from __init__ import app
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
 users = [
     {
@@ -38,6 +40,27 @@ users = [
 ]
 
 
+def generate_auth_token(id, expiration=600):
+    s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+    return s.dumps({'id': id})
+
+
+def verify_auth_token(token, userid):
+    s = Serializer(app.config['SECRET_KEY'])
+    try:
+        data = s.loads(token)
+    except SignatureExpired:
+        return False    # valid token, but expired
+    except BadSignature:
+        return False    # invalid token
+    if data['id'] == userid:
+        return True
+
+    return False
+
+
+
+
 def check_auth(username, password, userid):
     """
     Verifies request username password and path argument userid matches a user in the list
@@ -46,10 +69,20 @@ def check_auth(username, password, userid):
     :param userid:
     :return:
     """
+    # first try to authenticate by token
+
+    if not verify_auth_token(username, userid):
+        # try to authenticate with username/password
+       return False
+
+    return True
+
+    """
     for usr in users:
         if usr['uname'] == username:
             return usr['upassword'] == password and usr['uid'] == userid
     return False
+    """
 
 
 def authenticate():

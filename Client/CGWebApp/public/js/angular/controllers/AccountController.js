@@ -42,7 +42,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                     $scope.userData = response.data;
                 },
                 function (error) {
-                    console.log("Error: " +error.statusCode);
+                    console.log("Error: " + error.statusCode);
                     $location.path("/404.html");
                 }
             )
