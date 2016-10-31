@@ -1,7 +1,9 @@
 from flask import jsonify, request, g
 from functools import wraps
-from __init__ import app
+import __init__ as config
+from DBManager import authenticate_user
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+
 
 users = [
     {
@@ -41,12 +43,12 @@ users = [
 
 
 def generate_auth_token(id, expiration=600):
-    s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+    s = Serializer(config.get_key(), expires_in=expiration)
     return s.dumps({'id': id})
 
 
 def verify_auth_token(token, userid):
-    s = Serializer(app.config['SECRET_KEY'])
+    s = Serializer(config.get_key())
     try:
         data = s.loads(token)
     except SignatureExpired:
@@ -55,10 +57,7 @@ def verify_auth_token(token, userid):
         return False    # invalid token
     if data['id'] == userid:
         return True
-
     return False
-
-
 
 
 def check_auth(username, password, userid):
@@ -70,19 +69,17 @@ def check_auth(username, password, userid):
     :return:
     """
     # first try to authenticate by token
-
+    print 'first try to authenticate by token'
     if not verify_auth_token(username, userid):
         # try to authenticate with username/password
-       return False
+        user = authenticate_user(username, userid, password)
+        if user:
+            return True
+        else:
+            return False
 
     return True
 
-    """
-    for usr in users:
-        if usr['uname'] == username:
-            return usr['upassword'] == password and usr['uid'] == userid
-    return False
-    """
 
 
 def authenticate():
@@ -92,10 +89,7 @@ def authenticate():
     """
     message = {'message': "Authenticate."}
     resp = jsonify(message)
-
     resp.status_code = 401
-    # resp.headers['WWW-Authenticate'] = 'Basic realm="Example"'
-
     return resp
 
 
@@ -115,3 +109,4 @@ def requires_auth(f):
         return f(*args, **kwargs)
 
     return decorated
+

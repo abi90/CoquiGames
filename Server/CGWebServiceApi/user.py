@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, json
-from authentication import requires_auth, users
+from authentication import requires_auth, users, generate_auth_token
 from errors import not_found, bad_request
 
 user_blueprint = Blueprint('user', __name__)
@@ -595,7 +595,8 @@ def get_user_id():
         for usr in users:
             if usr['uname'] == request.json['uname']:
                 if usr['upassword'] == request.json['upassword']:
-                    return jsonify({"uid": usr['uid']})
+                    token = generate_auth_token(usr['uid'])
+                    return jsonify({"uid": usr['uid'], 'token': token})
                 else:
                     # Login Error Response
                     message = {'Message': "Username or Password does not match!"}

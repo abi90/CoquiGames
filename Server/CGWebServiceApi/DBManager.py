@@ -165,6 +165,20 @@ def fetch_platform_special_products(platformid):
     except Exception as e:
         print e
 
+def authenticate_user(username,userid,password):
+    try:
+        conn = connection()
+        cur = conn.cursor()
+        cur.execute(Query.SELECT_ACCOUNT_INFO.format(username,userid,password))
+
+        results = cur.fetchall()
+        print results
+        conn.close()
+        return results
+    except Exception as e:
+        print e
+
+
 
 #fetch_products()
 #fetch_latest_products()
@@ -173,3 +187,4 @@ def fetch_platform_special_products(platformid):
 #fetch_product(2)
 #fetch_platform_latest_products(1)
 #fetch_platform_special_products(4)
+#authenticate_user('gary123',1,'Gary123s')
