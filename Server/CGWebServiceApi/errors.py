@@ -25,3 +25,29 @@ def bad_request():
     resp.status_code = 400
 
     return resp
+
+
+@errors.errorhandler(500)
+def internal_server_error():
+    message = {
+            'status': 500,
+            'message': 'An unexpected error has occurred while processing the request: ' + request.url,
+    }
+    resp = jsonify(message)
+    resp.status_code = 500
+
+    return resp
+
+
+@errors.errorhandler(401)
+def unauthorized():
+    message = {
+            'status': 401,
+            'message': 'The request does not include authentication information: ' + request.url,
+    }
+    resp = jsonify(message)
+    resp.status_code = 401
+
+    return resp
+
+
