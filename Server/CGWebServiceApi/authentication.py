@@ -43,11 +43,23 @@ users = [
 
 
 def generate_auth_token(id, expiration=600):
+    """
+    Generates token with the given id and expiration time
+    :param id:
+    :param expiration:
+    :return:
+    """
     s = Serializer(config.get_key(), expires_in=expiration)
     return s.dumps({'id': id})
 
 
 def verify_auth_token(token, userid):
+    """
+
+    :param token:
+    :param userid:
+    :return:
+    """
     s = Serializer(config.get_key())
     try:
         data = s.loads(token)
@@ -56,8 +68,8 @@ def verify_auth_token(token, userid):
     except BadSignature:
         return False    # invalid token
     if data['id'] == userid:
-        return True
-    return False
+        return True # valid token and request
+    return False # vailid token but invalid request
 
 
 def check_auth(username, password, userid):
@@ -71,7 +83,7 @@ def check_auth(username, password, userid):
     # first try to authenticate by token
     print 'first try to authenticate by token'
     if not verify_auth_token(username, userid):
-        # try to authenticate with username/password
+        # try to authenticate with username/password/id(from url request)
         user = authenticate_user(username, userid, password)
         if user:
             return True
@@ -84,7 +96,7 @@ def check_auth(username, password, userid):
 
 def authenticate():
     """
-
+    Error Message when invalid user credentials or expired token.
     :return:
     """
     message = {'message': "Authenticate."}
@@ -95,9 +107,9 @@ def authenticate():
 
 def requires_auth(f):
     """
-
-    :param f:
-    :return:
+    Wrapper definition for requires_auth. Used in http basic authentication.
+    :param f: function
+    :return: decorated function
     """
     @wraps(f)
     def decorated(*args, **kwargs):
