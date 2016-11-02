@@ -9,7 +9,7 @@ try:
     platform_list = dbm.fetch_platforms()
 except Exception as e:
     print e
-    platform_list =[]
+    platform_list = []
 
 
 """

@@ -171,7 +171,7 @@ def authenticate_user(username, userid, password):
     try:
         conn = connection()
         cur = conn.cursor()
-        cur.execute(Query.SELECT_ACCOUNT_INFO.format(username,userid,password))
+        cur.execute(Query.AUTHENTICATE_USER_WITH_ID.format(username, userid, password))
         results = cur.fetchall()
 
         print results
@@ -183,7 +183,7 @@ def authenticate_user(username, userid, password):
 
 
 def fetch_user_info(userid):
-    return execute_select_query(Query.SELECT_USER_WISH_LIST.format(userid))
+    return execute_select_query(Query.SELECT_USER.format(userid))[0]
 
 
 def fetch_user_wish_list(userid):
@@ -231,6 +231,7 @@ def add_product_to_user_wishlist(productid, userid):
 
 
 def update_user_info(user_firstname, user_lastname, email, phone, dob, userid):
+    print user_firstname, user_lastname, email, phone, dob, userid
     return execute_commit_query(Query.UPDATE_USER.format(user_firstname, user_lastname, email, phone, dob, userid))
 
 
@@ -244,6 +245,14 @@ def deactivate_user_address(userid):
 
 def insert_user_address(active, address_fullname, address_line_1, address_line_2, address_city, address_zip, address_country, address_state, userid):
     return execute_commit_query(Query.INSERT_USER_ADDRESS.format(active, address_fullname, address_line_1, address_line_2, address_city, address_zip, address_country, address_state, userid))
+
+
+def fetch_user_id(username, password):
+    return execute_select_query(Query.AUTHENTICATE_USER_WITHOUT_ID.format(username, password))[0]
+
+
+def fetch_user_cartid(userid):
+    return execute_select_query(Query.SELECT_USER_CARTID.format(userid))[0]
 
 #fetch_latest_products()
 #fetch_special_products()
@@ -271,3 +280,5 @@ def insert_user_address(active, address_fullname, address_line_1, address_line_2
 #add_product_to_user_wishlist(14,1)
 #update_user_info(user_firstname='Luz', user_lastname='Rojas', email='luz.rojas1@upr.edu', phone='787-234-7175', dob='1997-10-12',userid=3)
 #add_product_to_cart(1,20,6)
+#fetch_user_id('gary123', 'Gary123s')
+#fetch_user_cartid(1)

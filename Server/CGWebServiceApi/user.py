@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request, json
 from authentication import requires_auth, users, generate_auth_token
-from errors import not_found, bad_request
+from errors import not_found, bad_request, internal_server_error
+import DBManager as dbm
+import re
 
 user_blueprint = Blueprint('user', __name__)
 
@@ -238,15 +240,15 @@ def user_order(userid):
                             global ordercnt
                             ordercnt += 1
                             order = {
-                                        'oid': ordercnt,
-                                        'odate': request.json['odate'],
-                                        'ostatus': request.json['ostatus'],
-                                        'oproducts': request.json['oproducts'],
-                                        'osubtotal': request.json['osubtotal'],
-                                        'otax': request.json['otax'],
-                                        'ototal': request.json['ototal'],
-                                        'osaddress': request.json['osaddress']
-                                    }
+                                'oid': ordercnt,
+                                'odate': request.json['odate'],
+                                'ostatus': request.json['ostatus'],
+                                'oproducts': request.json['oproducts'],
+                                'osubtotal': request.json['osubtotal'],
+                                'otax': request.json['otax'],
+                                'ototal': request.json['ototal'],
+                                'osaddress': request.json['osaddress']
+                            }
                             for u in user_order_list:
                                 if u['uid'] == userid:
                                     u['uorders'].append(order)
@@ -514,52 +516,77 @@ def delete_cart(userid, productid):
 def user_cart(userid):
     print(user_cart_list)
     if request.method == 'GET':
-        for e in user_cart_list:
-            if e['uid'] == userid:
-                return jsonify(e['cartlist'])
-        return not_found()
+        try:
+            cart = dbm.fetch_user_cart(userid=userid)
+            if cart:
+                return jsonify(cart)
+            return not_found()
+        except Exception as e:
+            print e
+            return internal_server_error()
     elif request.method == 'POST':
         if not request.json:
             return bad_request()
-        for e in user_cart_list:
-            if e['uid'] == userid:
-                return bad_request()
-        user_cart_list.append(request.json)
-        return jsonify(request.json['cartlist'])
+        try:
+            cart = dbm.fetch_user_cart(userid=userid)
+            if not cart:
+                dbm.create_user_cart(userid)
+                cartid = dbm.fetch_user_cartid(userid=userid)
+                for product in request.json['cartlist']:
+                    dbm.add_product_to_cart(cartid=cartid['cartid'], productid=product['pid'],product_qty=product['pquantity'])
+                cart = dbm.fetch_user_cart(userid=userid)
+                return jsonify(cart), 201
+            return bad_request()
+        except Exception as e:
+            print e
+            return internal_server_error()
 
 
 @user_blueprint.route("/<int:userid>", methods=['GET', 'PUT'])
 @requires_auth
 def user(userid):
     if request.method == 'GET':
-        for e in users:
-            if e['uid'] == userid:
-                print(users)
-                return jsonify(
-                    {
-                        'uid': e['uid'],
-                        'ufirstname': e['ufirstname'],
-                        'ulastname': e['ulastname'],
-                        'uemail': e['uemail'],
-                        'uphone': e['uphone'],
-                        'udob': e['udob'],
-                        'uname': e['uname']
-                    }
-                )
-        return not_found()
+        try:
+            cg_user = dbm.fetch_user_info(userid=userid)
+            if cg_user:
+                return jsonify(cg_user)
+            return not_found()
+        except Exception as e:
+            print e
+            return internal_server_error()
     elif request.method == 'PUT':
-        for e in users:
-            if e['uid'] == userid:
-                e['ufirstname'] = request.json['ufirstname']
-                e['ulastname'] = request.json['ulastname']
-                e['uemail'] = request.json['uemail']
-                e['uphone'] = request.json['uphone']
-                e['udob'] = request.json['udob']
-                e['uname'] = request.json['uname']
-                e['upassword'] = request.json['upassword']
-                print(users)
-                return jsonify(request.json)
-        return not_found()
+        try:
+            if request.json:
+                # Verify request parameters
+                try:
+                    errors = []
+
+                    if (request.json['uname'] and request.json['upassword']
+                        and request.json['ufirstname'] and request.json['ulastname']
+                        and request.json['uemail'] and request.json['uphone']
+                        and request.json['udob']):
+                        errors = validate_account(request.json)
+                    if errors:
+                        return jsonify({'Errors': errors}), 400
+                except Exception as ex:
+                    return jsonify({'Error': "Missing Parameter {0}.".format(ex)}), 400
+                # Update user account:
+                if dbm.update_user_account(username=request.json['uname'], upassword=request.json['upassword'], userid=userid):
+                    dbm.update_user_info(user_firstname=request.json['ufirstname'],
+                                         user_lastname=request.json['ulastname'],
+                                         email=request.json['uemail'],
+                                         phone=request.json['uphone'],
+                                         dob=request.json['udob'],
+                                         userid=userid)
+                    response = jsonify(request.json)
+                    response.status_code = 201
+                    return response
+                return not_found()
+            else:
+                bad_request()
+        except Exception as e:
+            print e
+            return internal_server_error()
 
 
 @user_blueprint.route("/", methods=['POST'])
@@ -573,16 +600,16 @@ def post_user():
         global count
         count += 1
         result = {
-                'uid': count,
-                'uadmin': False,
-                'ufirstname': request.json['ufirstname'],
-                'ulastname': request.json['ulastname'],
-                'uemail': request.json['uemail'],
-                'uphone': request.json['uphone'],
-                'udob': request.json['udob'],
-                'uname': request.json['uname'],
-                'upassword': request.json['upassword'],
-            }
+            'uid': count,
+            'uadmin': False,
+            'ufirstname': request.json['ufirstname'],
+            'ulastname': request.json['ulastname'],
+            'uemail': request.json['uemail'],
+            'uphone': request.json['uphone'],
+            'udob': request.json['udob'],
+            'uname': request.json['uname'],
+            'upassword': request.json['upassword'],
+        }
         users.append(result)
         return jsonify(result)
     else:
@@ -592,17 +619,65 @@ def post_user():
 @user_blueprint.route("/login", methods=['POST'])
 def get_user_id():
     if request.json:
-        for usr in users:
-            if usr['uname'] == request.json['uname']:
-                if usr['upassword'] == request.json['upassword']:
-                    token = generate_auth_token(usr['uid'])
-                    return jsonify({"uid": usr['uid'], 'token': token})
-                else:
-                    # Login Error Response
-                    message = {'Message': "Username or Password does not match!"}
-                    resp = jsonify(message)
-                    resp.status_code = 401
-                    return resp
-        return not_found()
+        try:
+            uid = dbm.fetch_user_id(request.json['uname'], request.json['upassword'])
+            if uid:
+                token = generate_auth_token(uid)
+                return jsonify({"uid": uid['uid'], 'token': token})
+            else:
+                # Login Error Response
+                return jsonify({'Message': "Username or Password does not match!"}), 401
+        except Exception as e:
+            print e
+            return bad_request()
     else:
         bad_request()
+
+
+def validate_account(data):
+    """
+    Validates user account data in request.json
+    :param data: request.json
+    :return: list of errors
+    """
+    errors = []
+    # Limit username to only characters and numbers. Starting with a letter.
+    isValidUsername = re.search(r'(^([a-zA-Z]+)[\w]+)$', data['uname'])
+    # username must be greater than 4 characters but less than 20 characters
+    if len(str(data['uname'])) < 4 or len(str(data['uname'])) > 20 or not isValidUsername:
+        errors.append('Invalid username.')
+
+    # A Password must contain atleast an Upper case leter and a number
+    hasupper = re.search('[A-Z]+', data['upassword'])
+    hasdigit = re.search('[\d]+', data['upassword'])
+    # A Password must be 8 characters to 20 characters long
+    if len(str(data['upassword'])) < 8 or len(str(data['upassword'])) > 20 or not hasupper or not hasdigit:
+        errors.append('Invalid password.')
+
+    # Email regex for python
+    isEmail = re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", data['uemail'])
+    if not isEmail:
+        errors.append('Invalid email.')
+
+    # Phone regex for python
+    isPhone = re.search(r'^(\d{3})([-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})$',
+                        data['uphone'])
+    if not isPhone:
+        errors.append('Invalid Phone Number.')
+
+    # Date regex for python
+    isDate = re.search(r'^(\d{4}\-\d{2}\-\d{2})$', data['udob'])
+    if not isDate:
+        errors.append('Invalid DOB.')
+
+    # Validate First Name
+    if len(str(data['ufirstname'])) <= 1 or len(str(data['ufirstname'])) > 255:
+        errors.append('Invalid First Name.')
+
+    # Validate Last Name
+    if len(str(data['ulastname'])) <= 1 or len(str(data['ulastname'])) > 255:
+        errors.append('Invalid Last Name.')
+
+    return errors
+
+

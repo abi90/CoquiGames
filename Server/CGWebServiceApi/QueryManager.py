@@ -57,11 +57,14 @@ INSERT_PRODUCT_RATING = """INSERT INTO rate (productid, rate_date, rate)
 """
 User Queries
 """
-SELECT_ACCOUNT_INFO = """SELECT * FROM account_info
-                          WHERE username = '{0}' AND accountid = {1} AND upassword = crypt('{2}',upassword)"""
+AUTHENTICATE_USER_WITH_ID = """SELECT active FROM account_info
+                          WHERE username = '{0}' AND accountid = (SELECT cg.accountid FROM cg_user AS cg WHERE userid = {1}) AND upassword = crypt('{2}',upassword) AND active = TRUE"""
 
 
-SELECT_USER = """SELECT dob AS udob, email AS uemail, user_firstname AS ufirstname, userid AS uid, user_lastname AS ulastname, username AS uname , phone AS uphone
+AUTHENTICATE_USER_WITHOUT_ID = """SELECT accountid AS uid FROM account_info WHERE username = '{0}' AND upassword = crypt('{1}',upassword) AND active = TRUE"""
+
+
+SELECT_USER = """SELECT to_char(dob, 'YYYY-MM-DD') AS udob, email AS uemail, user_firstname AS ufirstname, userid AS uid, user_lastname AS ulastname, username AS uname , phone AS uphone
                   FROM cg_user NATURAL INNER JOIN account_info
                   WHERE userid = {0}"""
 
@@ -91,11 +94,12 @@ SELECT_USER_CART = """SELECT cc.productid AS pid,p.product_title AS pname, p.pro
                       ORDER BY cc.cartid, cc.insert_date"""
 
 
+SELECT_USER_CARTID = """SELECT cartid FROM cart WHERE userid = {0} AND active = TRUE;"""
+
 
 UPDATE_USER_ACCOUNT = """UPDATE account_info
                           SET username = '{0}', upassword = crypt('{1}',gen_salt('md5'))
                           WHERE accountid = (SELECT u.accountid FROM cg_user AS u WHERE u.userid = {2})"""
-
 
 
 UPDATE_USER_CART = """UPDATE cart_contains AS cc

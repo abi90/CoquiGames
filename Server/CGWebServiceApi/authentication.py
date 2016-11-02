@@ -1,5 +1,6 @@
 from flask import jsonify, request, g
 from functools import wraps
+from errors import unauthorized
 import __init__ as config
 from DBManager import authenticate_user
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
@@ -115,7 +116,7 @@ def requires_auth(f):
     def decorated(*args, **kwargs):
         auth = request.authorization
         if not auth:
-            return authenticate()
+            return unauthorized()
         elif not check_auth(auth.username, auth.password, int(kwargs['userid'])):
             return authenticate()
         return f(*args, **kwargs)
