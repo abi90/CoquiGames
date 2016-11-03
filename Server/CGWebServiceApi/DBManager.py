@@ -15,23 +15,23 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
 urlparse.uses_netloc.append("postgres")
-url = urlparse.urlparse(os.environ["DATABASE_URL"])
+__url__ = urlparse.urlparse(os.environ["DATABASE_URL"])
 
 
-def connection():
+def __connection__():
     conn = psycopg2.connect(
-        database=url.path[1:],
-        user=url.username,
-        password=url.password,
-        host=url.hostname,
-        port=url.port
+        database=__url__.path[1:],
+        user=__url__.username,
+        password=__url__.password,
+        host=__url__.hostname,
+        port=__url__.port
     )
     return conn
 
 
-def execute_select_query(query):
+def __execute_select_query__(query):
     try:
-        conn = connection()
+        conn = __connection__()
         cur = conn.cursor()
         cur.execute(query)
         # List of columns
@@ -55,9 +55,9 @@ def execute_select_query(query):
         print e
 
 
-def execute_select_product_query(query):
+def __execute_select_product_query__(query):
     try:
-        conn = connection()
+        conn = __connection__()
         cur = conn.cursor()
         cur.execute(query)
         # List of columns
@@ -82,9 +82,9 @@ def execute_select_product_query(query):
         print e
 
 
-def execute_commit_query(query):
+def __execute_commit_query__(query):
     try:
-        conn = connection()
+        conn = __connection__()
         cur = conn.cursor()
         cur.execute(query)
         conn.commit()
@@ -96,17 +96,17 @@ def execute_commit_query(query):
 
 
 def fetch_special_products():
-    return execute_select_product_query(Query.SELECT_SPECIAL_PRODUCTS)
+    return __execute_select_product_query__(Query.SELECT_SPECIAL_PRODUCTS)
 
 
 def fetch_latest_products():
-    return execute_select_query(Query.SELECT_LATEST_PRODUCTS)
+    return __execute_select_query__(Query.SELECT_LATEST_PRODUCTS)
 
 
 def fetch_platforms():
     try:
 
-        conn = connection()
+        conn = __connection__()
         cur = conn.cursor()
         cur.execute(Query.SELECT_PLATFORMS)
 
@@ -144,32 +144,32 @@ def fetch_platforms():
 
 
 def fetch_product(productid):
-    return execute_select_product_query(Query.SELECT_PRODUCT_DETAILS.format(productid))[0]
+    return __execute_select_product_query__(Query.SELECT_PRODUCT_DETAILS.format(productid))[0]
 
 
 def fetch_platform_latest_products(platformid):
-    return execute_select_product_query(Query.SELECT_PLATFORM_LATEST_PRODUCTS.format(platformid))
+    return __execute_select_product_query__(Query.SELECT_PLATFORM_LATEST_PRODUCTS.format(platformid))
 
 
 def fetch_platform_special_products(platformid):
-    return execute_select_product_query(Query.SELECT_PLATFORM_SPECIAL_PRODUCTS.format(platformid))
+    return __execute_select_product_query__(Query.SELECT_PLATFORM_SPECIAL_PRODUCTS.format(platformid))
 
 
 def fetch_platform_announcements(platformid):
-    return execute_select_query(Query.SELECT_PLATFORM_ANNOUNCEMENTS.format(platformid))
+    return __execute_select_query__(Query.SELECT_PLATFORM_ANNOUNCEMENTS.format(platformid))
 
 
 def fetch_store_announcements():
-    return execute_select_query(Query.SELECT_STORE_ANNOUNCEMENT)
+    return __execute_select_query__(Query.SELECT_STORE_ANNOUNCEMENT)
 
 
 def insert_product_rating(productid, rate):
-   return execute_commit_query(Query.INSERT_PRODUCT_RATING.format(productid, rate))
+   return __execute_commit_query__(Query.INSERT_PRODUCT_RATING.format(productid, rate))
 
 
 def authenticate_user(username, userid, password):
     try:
-        conn = connection()
+        conn = __connection__()
         cur = conn.cursor()
         cur.execute(Query.AUTHENTICATE_USER_WITH_ID.format(username, userid, password))
         results = cur.fetchall()
@@ -183,76 +183,137 @@ def authenticate_user(username, userid, password):
 
 
 def fetch_user_info(userid):
-    return execute_select_query(Query.SELECT_USER.format(userid))[0]
+    return __execute_select_query__(Query.SELECT_USER.format(userid))[0]
 
 
 def fetch_user_wish_list(userid):
-    return execute_select_query(Query.SELECT_USER_WISH_LIST.format(userid))
+    return __execute_select_query__(Query.SELECT_USER_WISH_LIST.format(userid))
 
 
 def fetch_user_address(userid):
-    return execute_select_query(Query.SELECT_USER_ADDRESS.format(userid))
+    return __execute_select_query__(Query.SELECT_USER_ADDRESS.format(userid))
 
 
 def fetch_user_payment_methods(userid):
-    return execute_select_query(Query.SELECT_USER_CREDIT_CARD.format(userid))
+    return __execute_select_query__(Query.SELECT_USER_CREDIT_CARD.format(userid))
 
 
 def fetch_user_cart(userid):
-    return execute_select_query(Query.SELECT_USER_CART.format(userid))
+    return __execute_select_query__(Query.SELECT_USER_CART.format(userid))
 
 
 def update_user_account(username, upassword, userid):
-    return execute_commit_query(Query.UPDATE_USER_ACCOUNT.format(username,upassword, userid))
+    return __execute_commit_query__(Query.UPDATE_USER_ACCOUNT.format(username, upassword, userid))
 
 
 def update_cart_product_qty(product_qty, productid, userid):
-    return execute_commit_query(Query.UPDATE_USER_CART.format(product_qty,productid, userid))
+    return __execute_commit_query__(Query.UPDATE_USER_CART.format(product_qty, productid, userid))
 
 
 def deactivate_user_cart(cartid, userid):
-    return execute_commit_query(Query.UPDATE_USER_CART_TO_INACTIVE.format(cartid, userid))
+    return __execute_commit_query__(Query.UPDATE_USER_CART_TO_INACTIVE.format(cartid, userid))
 
 
 def deactivate_user_payment_method(userid, payment_methodid):
-    return execute_commit_query(Query.UPDATE_USER_PAYMENT_METHOD_TO_INACTIVE.format(userid,payment_methodid))
+    return __execute_commit_query__(Query.UPDATE_USER_PAYMENT_METHOD_TO_INACTIVE.format(userid, payment_methodid))
 
 
 def insert_user_payment_method(card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid):
-    return execute_commit_query(Query.INSERT_USER_PAYMENT_METHOD.format(card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid,userid))
+    return __execute_commit_query__(Query.INSERT_USER_PAYMENT_METHOD_USING_PREF.format(card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid, userid))
 
 
 def create_user_cart(userid):
-    return execute_commit_query(Query.INSERT_AN_USER_CART.format(userid))
+    return __execute_commit_query__(Query.INSERT_AN_USER_CART.format(userid))
 
 
 def add_product_to_user_wishlist(productid, userid):
-    return execute_commit_query(Query.INSERT_PRODUCT_INTO_WISH_LIST.format(productid, userid))
+    return __execute_commit_query__(Query.INSERT_PRODUCT_INTO_WISH_LIST.format(productid, userid))
 
 
 def update_user_info(user_firstname, user_lastname, email, phone, dob, userid):
     print user_firstname, user_lastname, email, phone, dob, userid
-    return execute_commit_query(Query.UPDATE_USER.format(user_firstname, user_lastname, email, phone, dob, userid))
+    return __execute_commit_query__(Query.UPDATE_USER.format(user_firstname, user_lastname, email, phone, dob, userid))
 
 
 def add_product_to_cart(cartid, productid, product_qty):
-    return execute_commit_query(Query.INSERT_PRODUCT_INTO_CART.format(cartid, productid, product_qty))
+    return __execute_commit_query__(Query.INSERT_PRODUCT_INTO_CART.format(cartid, productid, product_qty))
 
 
 def deactivate_user_address(userid):
-    return execute_commit_query(Query.UPDATE_USER_ADDRESS_TO_INACTIVE.format(userid, userid))
+    return __execute_commit_query__(Query.UPDATE_USER_ADDRESS_TO_INACTIVE.format(userid, userid))
 
 
-def insert_user_address(active, address_fullname, address_line_1, address_line_2, address_city, address_zip, address_country, address_state, userid):
-    return execute_commit_query(Query.INSERT_USER_ADDRESS.format(active, address_fullname, address_line_1, address_line_2, address_city, address_zip, address_country, address_state, userid))
+def insert_user_address(address_fullname, address_line_1, address_line_2, address_city, address_zip, address_country, address_state, userid):
+    return __execute_commit_query__(Query.INSERT_USER_ADDRESS.format(address_fullname, address_line_1, address_line_2, address_city, address_zip, address_country, address_state, userid))
 
 
-def fetch_user_id(username, password):
-    return execute_select_query(Query.AUTHENTICATE_USER_WITHOUT_ID.format(username, password))[0]
+def fetch_user_accountid(username, password):
+    return __execute_select_query__(Query.AUTHENTICATE_USER_WITHOUT_ID.format(username, password))[0]
 
 
 def fetch_user_cartid(userid):
-    return execute_select_query(Query.SELECT_USER_CARTID.format(userid))[0]
+    return __execute_select_query__(Query.SELECT_USER_CARTID.format(userid))[0]
+
+
+def remove_product_from_cart(userid, productid):
+    return __execute_commit_query__(Query.DELETE_PRODUCT_FROM_CART.format(userid, productid))
+
+
+def cart_contains(productid, cartid):
+    return __execute_select_query__(Query.CART_CONTAINS.format(productid, cartid))[0]
+
+
+def remove_from_wish_list(productid,userid):
+    return __execute_commit_query__(Query.DELETE_PRODUCT_FROM_WISH_LIST.format(productid, userid))
+
+
+def wish_list_contains(productid, userid):
+    return __execute_select_query__(Query.WISH_LIST_CONTAINS.format(productid, userid))[0]
+
+
+def user_account_exist(username, email):
+    return __execute_select_query__(Query.EXISTING_ACCOUNT.format(username, email))[0]
+
+
+def insert_account_info(username, upassword):
+    return __execute_commit_query__(Query.INSERT_ACCOUNT_INFO.format(username, upassword))
+
+
+def fetch_accounid(username):
+    return __execute_select_query__(Query.SELECT_ACCOUNTID.format(username))[0]
+
+
+def insert_personal_info(user_firstname, user_lastname, email, phone, dob, accountid):
+    return __execute_commit_query__(Query.INSERT_USER.format(user_firstname, user_lastname, email, phone, dob, accountid))
+
+
+def fetch_userid(accountid):
+    return __execute_select_query__(Query.SELECT_USERID.format(accountid))[0]
+
+
+def fetch_min_address(userid):
+    return __execute_select_query__(Query.SELECT_MIN_ADDRESS_ID.format(userid))[0]
+
+
+def fetch_max_address(userid):
+    return __execute_select_query__(Query.SELECT_MAX_ADDRESS_ID.format(userid))[0]
+
+
+def insert_first_payment_method(card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid, billing_addressid):
+    return __execute_commit_query__(Query.INSERT_USER_PAYMENT_METHOD.format(card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid, billing_addressid))
+
+
+def insert_user_preferences(userid, shipping_addressid, billing_addressid, payment_methodid):
+    return __execute_commit_query__(Query.INSERT_USER_PREFERENCES.format(userid, shipping_addressid, billing_addressid, payment_methodid))
+
+
+def validate_cc(card_type):
+    return __execute_select_query__(Query.VALIDATE_CC.format(card_type))[0]
+
+
+def validate_exp_date(date):
+    return __execute_select_query__(Query.VALIDATE_EXP_DATE.format(date))[0]
+
 
 #fetch_latest_products()
 #fetch_special_products()
@@ -280,5 +341,8 @@ def fetch_user_cartid(userid):
 #add_product_to_user_wishlist(14,1)
 #update_user_info(user_firstname='Luz', user_lastname='Rojas', email='luz.rojas1@upr.edu', phone='787-234-7175', dob='1997-10-12',userid=3)
 #add_product_to_cart(1,20,6)
-#fetch_user_id('gary123', 'Gary123s')
+#fetch_user_accountid('gary123', 'Gary123s')
 #fetch_user_cartid(1)
+#cart_contains(1,2)
+#wish_list_contains(1,1)
+#user_account_exist('gary12', 'gary.oak@upr.edu')

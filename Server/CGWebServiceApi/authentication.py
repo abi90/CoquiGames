@@ -70,7 +70,7 @@ def verify_auth_token(token, userid):
         return False    # invalid token
     if data['id'] == userid:
         return True # valid token and request
-    return False # vailid token but invalid request
+    return False # valid token but invalid request
 
 
 def check_auth(username, password, userid):

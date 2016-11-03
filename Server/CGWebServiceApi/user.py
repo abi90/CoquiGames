@@ -220,6 +220,14 @@ user_wishlist = [
     }
 ]
 
+post_user_keys = ['ufirstname', 'ulastname', 'uemail', 'uphone', 'udob',
+                  'uname', 'upassword', 'upayment', 'ushippingaddress', 'ubillingaddress']
+
+post_address_keys = ['astate', 'aaddress1', 'aaddress2', 'acity', 'acountry', 'afullname', 'azip']
+
+post_payment_keys = ['cname', 'cnumber', 'cexpdate', 'cvc', 'ctype']
+
+cc_regex = r"""^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|3[47][0-9]{13})$"""
 
 @user_blueprint.route("/<int:userid>/order", methods=['GET', 'POST'])
 @requires_auth
@@ -436,142 +444,164 @@ def user_address(userid):
             return response
 
 
-@user_blueprint.route("/<int:userid>/wishlist", methods=['GET', 'PUT', 'POST'])
+@user_blueprint.route("/<int:userid>/wishlist", methods=['GET'])
 @requires_auth
 def user_wish_list(userid):
-    print(user_wishlist)
-    if request.method == 'GET':
-        for e in user_wishlist:
-            if e['uid'] == userid:
-                return jsonify(e['wishlist'])
-        return not_found()
-    elif request.method == 'PUT':
-        for e in user_wishlist:
-            if e['uid'] == userid:
-                user_wishlist.remove(e)
-                user_wishlist.append(e)
-                return jsonify(request.json['wishlist'])
-        return not_found()
-    elif request.method == 'POST':
-        if not request.json:
-            return bad_request()
-        for e in user_wishlist:
-            if e['uid'] == userid:
-                return bad_request()
-        user_wishlist.append(request.json)
-        return jsonify(request.json['wishlist'])
+    try:
+        if request.method == 'GET':
+            wish_list = dbm.fetch_user_wish_list(userid=userid)
+            return jsonify(wish_list)
+    except:
+        return internal_server_error()
 
 
-@user_blueprint.route("/<int:userid>/wishlist/<int:productid>", methods=['DELETE'])
+@user_blueprint.route("/<int:userid>/wishlist/<int:productid>", methods=['DELETE', 'POST'])
 @requires_auth
-def delete_wishlist(userid, productid):
-    print(user_wishlist)
-    for e in user_wishlist:
-        if e['uid'] == userid:
-            for p in e['wishlist']:
-                if p['pid'] == productid:
-                    e['wishlist'].remove(p)
-                    print(user_wishlist)
-                    return jsonify({'message': 'Product {} removed from user {} wish list.'.format(productid, userid)})
-                return not_found()
-        return not_found()
-    return not_found()
+def delete_from_user_wish_list(userid, productid):
+    try:
+        if request.method == 'DELETE':
+            in_wish_list = dbm.wish_list_contains(productid=productid,userid=userid)['product_in_wishlist']
+            if in_wish_list:
+                dbm.remove_from_wish_list(productid=productid,userid=userid)
+                wish_list = dbm.fetch_user_wish_list(userid=userid)
+                # return jsonify({'message': 'Product {0} removed from user {1} wish list.'.format(productid, userid)})
+                return jsonify(wish_list)
+            else:
+                not_found()
+        elif request.method == 'POST':
+            in_wish_list = dbm.wish_list_contains(productid=productid, userid=userid)['product_in_wishlist']
+            if not in_wish_list:
+                dbm.add_product_to_user_wishlist(productid=productid, userid=userid)
+                wish_list = dbm.fetch_user_wish_list(userid=userid)
+                # return jsonify({'message': 'Product {0} added to user {1} wish list.'.format(productid, userid)})
+                return jsonify(wish_list)
+            else:
+                return jsonify({'error': 'Product {0} is already in user {1} wish list.'.format(productid,userid)}), 400
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 
-@user_blueprint.route("/<int:userid>/cart/<int:productid>", methods=['DELETE', 'PUT'])
+@user_blueprint.route("/<int:userid>/cart/<int:productid>", methods=['DELETE', 'PUT', 'POST'])
 @requires_auth
-def delete_cart(userid, productid):
-    print(user_cart_list)
-    if request.method == 'DELETE':
-        for e in user_cart_list:
-            if e['uid'] == userid:
-                for p in e['cartlist']:
-                    if p['pid'] == productid:
-                        e['cartlist'].remove(p)
-                        return jsonify({'message': 'Product {} removed from user {} cart.'.format(productid, userid)})
-                return not_found()
-        return not_found()
-    if request.method == 'PUT':
-        for e in user_cart_list:
-            if e['uid'] == userid:
-                for p in e['cartlist']:
-                    if p['pid'] == productid:
-                        p['pquantity'] = request.json['pquantity']
-                        return jsonify(e['cartlist'])
-                e['cartlist'].append(
-                    {
-                        'pid': request.json['pid'],
-                        'pname': request.json['pname'],
-                        'pprice': request.json['pprice'],
-                        'pptotal': request.json['optotal'],
-                        'pquantity': request.json['pquantity']
-                    }
-                )
-                return jsonify(e['cartlist'])
-        return not_found()
+def edit_cart(userid, productid):
+    try:
+        if request.method == 'DELETE':
+            is_deleted = dbm.remove_product_from_cart(userid=userid, productid=productid)
+            if is_deleted:
+                return jsonify({'Message': 'Product {0} was deleted from user {1} cart'.format(productid, userid)})
+            return not_found()
+        elif request.method == 'PUT':
+            if request.json:
+                if 'pquantity' in request.json:
+                    cartid = dbm.fetch_user_cartid(userid=userid)['cartid']
+                    if cartid:
+                        product_qty = int(request.json['pquantity'])
+                        if product_qty > 0:
+                            cart_contains_product = dbm.cart_contains(productid=productid, cartid=cartid)['product_in_cart']
+                            if cart_contains_product:
+                                has_changed = dbm.update_cart_product_qty(product_qty=product_qty, productid=productid, userid=userid)
+                                if has_changed:
+                                    cart = dbm.fetch_user_cart(userid=userid)
+                                    return jsonify(cart)
+                                return bad_request()
+                            else:
+                                return jsonify({'error': 'Product {0} does not exist in user {1} cart.'.format(
+                                    productid, userid)}), 400
+                        else:
+                            return jsonify({'error': 'Product Quantity must be greater than 0.'}), 400
+                    else:
+                        return jsonify({'error': 'User {0} does not have an active cart.'.format(userid)}), 400
+            return missing_parameters_error()
 
+        elif request.method == 'POST':
+            if request.json:
+                if 'pquantity' in request.json:
+                    cartid = dbm.fetch_user_cartid(userid=userid)['cartid']
+                    if cartid:
+                        product_qty = int(request.json['pquantity'])
+                        if product_qty > 0:
+                            cart_contains_product = dbm.cart_contains(productid=productid, cartid=cartid)['product_in_cart']
+                            if not cart_contains_product:
+                                added_product = dbm.add_product_to_cart(cartid=cartid, productid=productid,
+                                                                        product_qty=product_qty)
+                                if added_product:
+                                    cart = dbm.fetch_user_cart(userid=userid)
+                                    return jsonify(cart)
+                            else:
+                                return jsonify({'error': 'Product {0} is already in user {1} cart.'.format(productid,userid)}), 400
+                        else:
+                            return jsonify({'error': 'Product Quantity must be greater than 0.'}), 400
+                    else:
+                        return jsonify({'error': 'User {0} does not have an active cart.'.format(userid)}), 400
+            return missing_parameters_error()
+
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 @user_blueprint.route("/<int:userid>/cart", methods=['GET', 'POST'])
 @requires_auth
 def user_cart(userid):
-    print(user_cart_list)
-    if request.method == 'GET':
-        try:
+    try:
+        if request.method == 'GET':
             cart = dbm.fetch_user_cart(userid=userid)
             if cart:
                 return jsonify(cart)
             return not_found()
-        except Exception as e:
-            print e
-            return internal_server_error()
-    elif request.method == 'POST':
-        if not request.json:
-            return bad_request()
-        try:
+        elif request.method == 'POST':
+            # Verify that the user does not have an active cart
             cart = dbm.fetch_user_cart(userid=userid)
             if not cart:
+                # Create an empty cart
                 dbm.create_user_cart(userid)
                 cartid = dbm.fetch_user_cartid(userid=userid)
-                for product in request.json['cartlist']:
-                    dbm.add_product_to_cart(cartid=cartid['cartid'], productid=product['pid'],product_qty=product['pquantity'])
-                cart = dbm.fetch_user_cart(userid=userid)
-                return jsonify(cart), 201
-            return bad_request()
-        except Exception as e:
-            print e
-            return internal_server_error()
+                # Verify if request has a cart list
+                if request.json and cartid:
+                    if 'cartlist' in request.json:
+                        # If there's a cart list with the request add them to the created cart
+                        for product in request.json['cartlist']:
+                            if 'cartid' and 'pid' and 'ppquantity' in product:
+                                dbm.add_product_to_cart(cartid=cartid['cartid'], productid=product['pid'], product_qty=product['pquantity'])
+                        # Return the created and filled cart
+                        cart = dbm.fetch_user_cart(userid=userid)
+                        return jsonify(cart), 201
+                    # Invalid request JSON but cart was created
+                    return jsonify(cartid), 201
+                elif cartid:
+                    # If request did not contain a cart list return only the cartid
+                    return jsonify(cartid), 201
+                else:
+                    # Cartid was not created return a bad request
+                    return bad_request()
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 
 @user_blueprint.route("/<int:userid>", methods=['GET', 'PUT'])
 @requires_auth
 def user(userid):
-    if request.method == 'GET':
-        try:
+    try:
+        if request.method == 'GET':
             cg_user = dbm.fetch_user_info(userid=userid)
             if cg_user:
                 return jsonify(cg_user)
             return not_found()
-        except Exception as e:
-            print e
-            return internal_server_error()
-    elif request.method == 'PUT':
-        try:
+        elif request.method == 'PUT':
             if request.json:
-                # Verify request parameters
-                try:
-                    errors = []
-
-                    if (request.json['uname'] and request.json['upassword']
-                        and request.json['ufirstname'] and request.json['ulastname']
-                        and request.json['uemail'] and request.json['uphone']
-                        and request.json['udob']):
-                        errors = validate_account(request.json)
-                    if errors:
-                        return jsonify({'Errors': errors}), 400
-                except Exception as ex:
-                    return jsonify({'Error': "Missing Parameter {0}.".format(ex)}), 400
+                # Verify request json contains needed parameters
+                if ('uname' and 'upassword' and 'ufirstname' and 'ulastname'
+                        and 'uemail' and 'uphone' and 'udob' not in request.json):
+                    return missing_parameters_error()
+                # Verify that parameters are valid
+                errors = validate_account(request.json)
+                if errors:
+                    return jsonify({'Errors': errors}), 400
                 # Update user account:
-                if dbm.update_user_account(username=request.json['uname'], upassword=request.json['upassword'], userid=userid):
+                if dbm.update_user_account(username=request.json['uname'],
+                                           upassword=request.json['upassword'],
+                                           userid=userid):
                     dbm.update_user_info(user_firstname=request.json['ufirstname'],
                                          user_lastname=request.json['ulastname'],
                                          email=request.json['uemail'],
@@ -583,44 +613,113 @@ def user(userid):
                     return response
                 return not_found()
             else:
-                bad_request()
-        except Exception as e:
-            print e
-            return internal_server_error()
+                return bad_request()
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 
 @user_blueprint.route("/", methods=['POST'])
 def post_user():
-    if request.json:
-        for u in users:
-            if u['uemail'] == request.json['uemail'] and u['uname'] == request.json['uname']:
-                response = jsonify({'Message': 'Username or email already taken.'})
-                response.status_code = 400
-                return response
-        global count
-        count += 1
-        result = {
-            'uid': count,
-            'uadmin': False,
-            'ufirstname': request.json['ufirstname'],
-            'ulastname': request.json['ulastname'],
-            'uemail': request.json['uemail'],
-            'uphone': request.json['uphone'],
-            'udob': request.json['udob'],
-            'uname': request.json['uname'],
-            'upassword': request.json['upassword'],
-        }
-        users.append(result)
-        return jsonify(result)
-    else:
-        bad_request()
+    try:
+        if request.json:
+            # Verify request json contains needed parameters
+            for key in post_user_keys:
+                if key not in request.json:
+                    return missing_parameters_error()
+            for key in post_address_keys:
+                if key not in request.json['ushippingaddress'] or key not in request.json['ubillingaddress']:
+                    return missing_parameters_error()
+            for key in post_payment_keys:
+                if key not in request.json['upayment']:
+                    return missing_parameters_error()
+            # Verify that parameters are valid
+            account_errors = validate_account(request.json)
+            if account_errors:
+                return jsonify({'Errors': account_errors}), 400
+            payment_method_errors = validate_payment(request.json['upayment'])
+            if payment_method_errors:
+                return jsonify({'Errors': payment_method_errors}), 400
+            address_errors = validate_address(request.json['ushippingaddress'])
+            if address_errors:
+                return jsonify({'Errors': address_errors}), 400
+            address_errors = validate_address(request.json['ubillingaddress'])
+            if address_errors:
+                return jsonify({'Errors': address_errors}), 400
+            # Verify user account does not exist
+            user_exist = dbm.user_account_exist(username=request.json['uname'],
+                                                email=request.json['uemail'])['user_exist']
+            if not user_exist:
+                # Insert user account:
+                dbm.insert_account_info(username=request.json['uname'], upassword=request.json['upassword'])
+                # Get account id
+                accountid = dbm.fetch_accounid(username=request.json['uname'])['accountid']
+
+                # Insert user information
+                dbm.insert_personal_info(user_firstname=request.json['ufirstname'],
+                                         user_lastname=request.json['ulastname'],
+                                         email=request.json['uemail'],
+                                         phone=request.json['uphone'],
+                                         dob=request.json['udob'],
+                                         accountid=accountid)
+                # Get user id
+                userid = dbm.fetch_userid(accountid)['userid']
+                #  Insert Shipping Address
+                shipping_address = request.json['ushippingaddress']
+                dbm.insert_user_address(address_fullname=shipping_address['afullname'],
+                                        address_line_1=shipping_address['aaddress1'],
+                                        address_line_2=shipping_address['aaddress2'],
+                                        address_city=shipping_address['acity'],
+                                        address_zip=shipping_address['azip'],
+                                        address_country=shipping_address['acountry'],
+                                        address_state=shipping_address['astate'],
+                                        userid=userid)
+                # Get Address id
+                shippin_addressid = dbm.fetch_min_address(userid)['aid']
+                # Insert Billing Address
+                billing_address = request.json['ubillingaddress']
+                dbm.insert_user_address(address_fullname=billing_address['afullname'],
+                                        address_line_1=billing_address['aaddress1'],
+                                        address_line_2=billing_address['aaddress2'],
+                                        address_city=billing_address['acity'],
+                                        address_zip=billing_address['azip'],
+                                        address_country=billing_address['acountry'],
+                                        address_state=billing_address['astate'],
+                                        userid=userid)
+                # Get Address id
+                billing_addressid = dbm.fetch_max_address(userid)['aid']
+                # Insert Payment Method
+                payment_method = request.json['upayment']
+                print payment_method
+                dbm.insert_first_payment_method(card_name=payment_method['cname'],
+                                                card_last_four_digits=payment_method['cnumber'][-4:],
+                                                card_number=payment_method['cnumber'],
+                                                card_exp_date=payment_method['cexpdate'],
+                                                cvc=payment_method['cvc'], card_type=payment_method['ctype'],
+                                                userid=userid,
+                                                billing_addressid=billing_addressid)
+                # Get Payment Method id
+                payment_method = dbm.fetch_user_payment_methods(userid)[0]['cid']
+                # Insert User Preferences
+                dbm.insert_user_preferences(userid=userid,
+                                            shipping_addressid=shippin_addressid,
+                                            billing_addressid=billing_addressid,
+                                            payment_methodid=payment_method)
+                # Return user response
+                cg_user = dbm.fetch_user_info(userid=userid)
+                return jsonify(cg_user), 201
+        else:
+            bad_request()
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 
 @user_blueprint.route("/login", methods=['POST'])
 def get_user_id():
     if request.json:
         try:
-            uid = dbm.fetch_user_id(request.json['uname'], request.json['upassword'])
+            uid = dbm.fetch_user_accountid(request.json['uname'], request.json['upassword'])
             if uid:
                 token = generate_auth_token(uid)
                 return jsonify({"uid": uid['uid'], 'token': token})
@@ -631,7 +730,7 @@ def get_user_id():
             print e
             return bad_request()
     else:
-        bad_request()
+        return missing_parameters_error()
 
 
 def validate_account(data):
@@ -642,32 +741,32 @@ def validate_account(data):
     """
     errors = []
     # Limit username to only characters and numbers. Starting with a letter.
-    isValidUsername = re.search(r'(^([a-zA-Z]+)[\w]+)$', data['uname'])
+    is_valid_username = re.search(r'(^([a-zA-Z]+)[\w]+)$', data['uname'])
     # username must be greater than 4 characters but less than 20 characters
-    if len(str(data['uname'])) < 4 or len(str(data['uname'])) > 20 or not isValidUsername:
+    if len(str(data['uname'])) < 4 or len(str(data['uname'])) > 20 or not is_valid_username:
         errors.append('Invalid username.')
 
     # A Password must contain atleast an Upper case leter and a number
-    hasupper = re.search('[A-Z]+', data['upassword'])
-    hasdigit = re.search('[\d]+', data['upassword'])
+    has_upper = re.search('[A-Z]+', data['upassword'])
+    has_digit = re.search('[\d]+', data['upassword'])
     # A Password must be 8 characters to 20 characters long
-    if len(str(data['upassword'])) < 8 or len(str(data['upassword'])) > 20 or not hasupper or not hasdigit:
+    if len(str(data['upassword'])) < 8 or len(str(data['upassword'])) > 20 or not has_upper or not has_digit:
         errors.append('Invalid password.')
 
     # Email regex for python
-    isEmail = re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", data['uemail'])
-    if not isEmail:
+    is_email = re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", data['uemail'])
+    if not is_email:
         errors.append('Invalid email.')
 
     # Phone regex for python
-    isPhone = re.search(r'^(\d{3})([-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})$',
-                        data['uphone'])
-    if not isPhone:
+    is_phone = re.search(r'^(\d{3})([-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})$',
+                         data['uphone'])
+    if not is_phone:
         errors.append('Invalid Phone Number.')
 
     # Date regex for python
-    isDate = re.search(r'^(\d{4}\-\d{2}\-\d{2})$', data['udob'])
-    if not isDate:
+    is_date = re.search(r'^(\d{4}\-\d{2}\-\d{2})$', data['udob'])
+    if not is_date:
         errors.append('Invalid DOB.')
 
     # Validate First Name
@@ -679,5 +778,89 @@ def validate_account(data):
         errors.append('Invalid Last Name.')
 
     return errors
+
+
+def validate_payment(data):
+    """
+        Validates user payment data in request.json
+        :param data: request.json
+        :return: list of errors
+        """
+    errors = []
+    # Limit Card Name to only 255 characters.
+    if len(str(data['cname'])) <= 1 or len(str(data['cname'])) > 255:
+        errors.append('Invalid Card Name.')
+
+    # Validate with Credit Card regex for python
+    is_valid_cc = re.search(cc_regex, data['cnumber'])
+    if not is_valid_cc:
+        errors.append('Invalid Credit Card.')
+
+    # Validate with Date regex for python
+    is_date = re.search(r'^(\d{4}\-\d{2}\-\d{2})$', data['cexpdate'])
+    if is_date:
+        # Verify that is not expired
+        not_expired = dbm.validate_exp_date(data['cexpdate'])['valid_exp_date']
+        if not not_expired:
+            errors.append('Invalid Expiration Date.')
+    else:
+        errors.append('Invalid Expiration Date.')
+
+    # Validate CVC
+    is_digit = re.search(r'^([\d]+)$', data['cvc'])
+    if len(str(data['cvc'])) < 3 or len(str(data['cvc'])) > 4 or not is_digit:
+        errors.append('Invalid CVC.')
+
+    # Validate Card Type
+    valid_cc = dbm.validate_cc(data['ctype'])['valid_cc']
+    if not valid_cc:
+        errors.append('Invalid Last Name.')
+
+    return errors
+
+
+def validate_address(data):
+    """
+        Validates user address data in request.json
+        :param data: request.json
+        :return: list of errors
+        """
+    errors = []
+    # Limit Address Sate to only 2 characters.
+    if len(str(data['astate'])) < 2 or len(str(data['astate'])) > 2:
+        errors.append('Invalid Card Name.')
+
+    # Limit Address Line 1 to only 255 characters.
+    if len(str(data['aaddress1'])) < 2 or len(str(data['aaddress1'])) > 255:
+        errors.append('Invalid Address Line 1.')
+
+    # Limit Address Line 2 to only 255 characters.
+    if len(str(data['aaddress2'])) > 255:
+        errors.append('Invalid Address Line 2.')
+
+    # Limit Address City to only 255 characters.
+    if len(str(data['acity'])) < 2 or len(str(data['acity'])) > 255:
+        errors.append('Invalid Address Line 2.')
+
+    # Check Country is USA
+    if not (str(data['acountry']).upper() == 'USA'):
+        errors.append('Invalid Country. Only USA is accepted.')
+
+    # Validate Address Full Name
+    if len(str(data['afullname'])) < 2 or len(str(data['afullname'])) > 255:
+        errors.append('Invalid Address Name.')
+
+    # Validate Zip Code
+    is_digit = re.search(r'^([\d]+)$', data['azip'])
+    if len(str(data['azip'])) < 5 or len(str(data['azip'])) > 6 or not is_digit:
+        errors.append('Invalid Zip Code.')
+
+    return errors
+
+
+def missing_parameters_error():
+    return jsonify({'Error': "Missing Parameters in Request JSON."}), 400
+
+
 
 

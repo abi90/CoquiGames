@@ -55,7 +55,7 @@ INSERT_PRODUCT_RATING = """INSERT INTO rate (productid, rate_date, rate)
                             VALUES ({0}, current_date, round(cast({1} AS NUMERIC),2))"""
 
 """
-User Queries
+User Queriess
 """
 AUTHENTICATE_USER_WITH_ID = """SELECT active FROM account_info
                           WHERE username = '{0}' AND accountid = (SELECT cg.accountid FROM cg_user AS cg WHERE userid = {1}) AND upassword = crypt('{2}',upassword) AND active = TRUE"""
@@ -67,7 +67,6 @@ AUTHENTICATE_USER_WITHOUT_ID = """SELECT accountid AS uid FROM account_info WHER
 SELECT_USER = """SELECT to_char(dob, 'YYYY-MM-DD') AS udob, email AS uemail, user_firstname AS ufirstname, userid AS uid, user_lastname AS ulastname, username AS uname , phone AS uphone
                   FROM cg_user NATURAL INNER JOIN account_info
                   WHERE userid = {0}"""
-
 
 
 SELECT_USER_WISH_LIST = """SELECT productid as pid, product_title as pname, product_price as pprice
@@ -82,8 +81,7 @@ SELECT_USER_ADDRESS = """SELECT address_state AS aState, address_line_1 AS aaddr
                       WHERE userid = {0}"""
 
 
-
-SELECT_USER_CREDIT_CARD = """SELECT card_exp_date AS cexpdate, payment_methodid AS cid, card_last_four_digits AS cnumber, card_type AS ctype
+SELECT_USER_CREDIT_CARD = """SELECT to_char(card_exp_date, 'YYYY-MM-DD') AS cexpdate, payment_methodid AS cid, card_last_four_digits AS cnumber, card_type AS ctype
                               FROM payment_method
                               WHERE userid = {0}"""
 
@@ -122,9 +120,9 @@ UPDATE_USER_PAYMENT_METHOD_TO_INACTIVE = """UPDATE payment_method
                                             WHERE userid = {0} AND payment_methodid = {1}"""
 
 
-INSERT_USER_PAYMENT_METHOD = """INSERT INTO payment_method (card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid, billing_addressid, active)
-                                VALUES ('{0}','{1}',crypt('{2}',gen_salt('md5')),to_date('{3}','YYYY-MM-DD'),'{4}','{5}',{6},
-                                (SELECT u.billing_addressid FROM user_preferences u WHERE u.userid = {7}), TRUE)"""
+INSERT_USER_PAYMENT_METHOD_USING_PREF = """INSERT INTO payment_method (card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid, billing_addressid, active)
+                                            VALUES ('{0}','{1}',crypt('{2}',gen_salt('md5')),to_date('{3}','YYYY-MM-DD'),'{4}','{5}',{6},
+                                                      (SELECT u.billing_addressid FROM user_preferences u WHERE u.userid = {7}), TRUE)"""
 
 
 INSERT_AN_USER_CART = """INSERT INTO cart (userid, active, insert_date) values ({0},TRUE ,current_date)"""
@@ -150,7 +148,70 @@ INSERT_USER_ADDRESS = """INSERT INTO address (active, address_fullname, address_
                           VALUES (TRUE, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', {7})"""
 
 
+DELETE_PRODUCT_FROM_CART = """DELETE FROM cart_contains AS cc
+                              WHERE cc.cartid = (SELECT c.cartid FROM cart AS c WHERE c.userid = {0} AND c.active = TRUE)
+                              AND cc.productid = {1}"""
 
+CART_CONTAINS = """SELECT CASE
+                            WHEN {0} IN (SELECT productid FROM cart_contains WHERE cartid = {1}) THEN TRUE
+                            ELSE FALSE
+                          END AS product_in_cart"""
+
+
+DELETE_PRODUCT_FROM_WISH_LIST = """DELETE FROM wishlist_contains WHERE productid = {0} AND userid = {1}"""
+
+
+WISH_LIST_CONTAINS = """SELECT  CASE
+                                  WHEN {0} IN (SELECT productid FROM wishlist_contains WHERE userid = {1}) THEN TRUE
+                                  ELSE FALSE
+                                END AS product_in_wishlist"""
+
+
+EXISTING_ACCOUNT = """SELECT CASE
+                                  WHEN ('{0}') IN (SELECT username FROM account_info) THEN TRUE
+                                  WHEN ('{1}') IN (SELECT email FROM cg_user) THEN TRUE
+                                  ELSE FALSE
+                              END AS user_exist"""
+
+
+INSERT_ACCOUNT_INFO = """INSERT INTO account_info (username, upassword, roleid, active)
+                          VALUES ('{0}', crypt('{1}', gen_salt('md5')), 1, TRUE)"""
+
+
+SELECT_ACCOUNTID = """SELECT accountid FROM account_info WHERE username = '{0}'"""
+
+
+INSERT_USER = """INSERT INTO cg_user (user_firstname, user_lastname, email, phone, dob, active, accountid)
+                  VALUES ('{0}', '{1}', '{2}', '{3}', to_date('{4}', 'YYYY-MM-DD'), TRUE, {5})"""
+
+
+SELECT_USERID = """SELECT userid FROM cg_user WHERE accountid = {0}"""
+
+
+INSERT_USER_PAYMENT_METHOD = """INSERT INTO payment_method (card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid, billing_addressid, active)
+                                            VALUES ('{0}','{1}',crypt('{2}',gen_salt('md5')),to_date('{3}','YYYY-MM-DD'),'{4}','{5}',{6}, {7}, TRUE)"""
+
+
+INSERT_USER_PREFERENCES = """INSERT INTO user_preferences (userid, shipping_addressid, billing_addressid, payment_methodid)
+                              VALUES ({0}, {1}, {2}, {3})"""
+
+
+SELECT_MAX_ADDRESS_ID = """SELECT MAX(addressid) AS aid FROM address WHERE userid = {0}"""
+
+
+SELECT_MIN_ADDRESS_ID = """SELECT MIN(addressid) AS aid FROM address WHERE userid = {0}"""
+
+
+VALIDATE_EXP_DATE = """SELECT CASE
+                                    WHEN to_date('{0}', 'YYYY-MM-DD') > current_date THEN TRUE
+                                    ELSE FALSE
+                            END AS valid_exp_date"""
+
+
+VALIDATE_CC = """SELECT CASE
+                            WHEN '{0}' IN (SELECT card_type FROM card_type WHERE active = TRUE ) THEN TRUE
+                            ELSE FALSE
+                        END AS valid_cc"""
 
 
 
