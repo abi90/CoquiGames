@@ -186,6 +186,10 @@ def fetch_user_info(userid):
     return __execute_select_query__(Query.SELECT_USER.format(userid))[0]
 
 
+def fetch_search_title(title):
+    return __execute_select_product_query__(Query.SELECT_SEARCH_TITLE.format(title))
+
+
 def fetch_user_wish_list(userid):
     return __execute_select_query__(Query.SELECT_USER_WISH_LIST.format(userid))
 
@@ -351,6 +355,38 @@ def fetch_user_preferences(userid):
 def fetch_max_payment_methodid(userid):
     return __execute_select_query__(Query.SELECT_USER_MAX_PAYMENT_ID.format(userid))
 
+
+def advanced_search(data):
+    if 'title' in data:
+        custom_query = Query.SELECT_SEARCH_TITLE.format(data['title'])
+
+        if 'genres' in data:
+            custom_query = custom_query + " AND  genre IN ('{}') ".format("','".join(data['genres']))
+
+        if 'platformid' in data:
+            custom_query = custom_query + ' AND  plaformid = {} '.format(data['platformid'])
+
+        if 'price' in data:
+            custom_query = custom_query + ' AND price BETWEEN {} AND {} '.format(data['price'])
+        print custom_query
+        return __execute_select_product_query__(custom_query)
+    else:
+        custom_query = Query.SELECT_SEARCH_BLANK
+        if 'genre' in data:
+            custom_query = custom_query + "  genre IN ('{}') AND ".format("','".join(data['genres']))
+
+        if 'platformid' in data:
+            custom_query = custom_query + ' plaformid = {} AND '.format(data['platformid'])
+
+        if 'price' in data:
+            custom_query = custom_query + ' price BETWEEN {} AND {} '.format(data['platformid'])
+
+        else:
+            custom_query = custom_query + ' price BETWEEN 0 AND 100000000 '
+        print custom_query
+        return __execute_select_product_query__(custom_query)
+
+advanced_search({'title':'PS4','platformid':1, 'genres':'Console','price':350.99})
 #fetch_latest_products()
 #fetch_special_products()
 #fetch_platforms()

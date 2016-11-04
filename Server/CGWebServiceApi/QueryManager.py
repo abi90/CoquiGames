@@ -125,6 +125,7 @@ INSERT_USER_PAYMENT_METHOD_USING_PREF = """INSERT INTO payment_method (card_name
                                                       (SELECT u.billing_addressid FROM user_preferences u WHERE u.userid = {7}), TRUE)"""
 
 
+
 INSERT_AN_USER_CART = """INSERT INTO cart (userid, active, insert_date) values ({0},TRUE ,current_date)"""
 
 
@@ -249,4 +250,8 @@ SELECT_USER_PREFERENCES = """SELECT * FROM user_preferences WHERE userid = {0}""
 
 SELECT_USER_MAX_PAYMENT_ID = """SELECT max(payment_methodid) as pid FROM payment_method WHERE userid = {0}"""
 
+
+SELECT_SEARCH_TITLE = """SELECT * FROM product_details WHERE lower(title) LIKE lower('%{0}%')"""
+
+SELECT_SEARCH_BLANK = """SELECT * FROM product_details WHERE"""
 
