@@ -242,31 +242,10 @@ def user_order(userid):
         elif request.method == 'POST':
             if not request.json:
                 return bad_request()
-            for e in user_payment_list:
-                if e['uid'] == userid:
-                    for p in e['upayment']:
-                        if p['cid'] == request.json['cid']:
-                            global ordercnt
-                            ordercnt += 1
-                            order = {
-                                'oid': ordercnt,
-                                'odate': request.json['odate'],
-                                'ostatus': request.json['ostatus'],
-                                'oproducts': request.json['oproducts'],
-                                'osubtotal': request.json['osubtotal'],
-                                'otax': request.json['otax'],
-                                'ototal': request.json['ototal'],
-                                'osaddress': request.json['osaddress']
-                            }
-                            for u in user_order_list:
-                                if u['uid'] == userid:
-                                    u['uorders'].append(order)
-                                    return jsonify(u['uorders'])
-                            # User first order
-                            result = {'uid': userid, 'uorders': [order]}
-                            user_order_list.append(result)
-                            return jsonify(result['uorders'])
-                    return bad_request()
+            cartid = dbm.fetch_user_cartid(userid)
+            if cartid:
+                if dbm.deactivate_user_cart(cartid,userid):
+                    print 'on my way'
             return bad_request()
     except Exception as e:
         print e
@@ -314,7 +293,7 @@ def user_payment(userid):
 
 @user_blueprint.route("/<int:userid>/payment/<payment_methodid>", methods=['PUT'])
 @requires_auth
-def update_address(userid, payment_methodid):
+def update_payment(userid, payment_methodid):
     try:
         if request.json:
             payment_keys = post_payment_keys
@@ -612,6 +591,7 @@ def user(userid):
 def post_user():
     try:
         if request.json:
+            # TODO: email user after post
             # Verify request json contains needed parameters
             for key in post_user_keys:
                 if key not in request.json:
