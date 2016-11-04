@@ -235,6 +235,8 @@ SELECT_USER_ORDERS = """SELECT orderid AS oid, to_char(order_date, 'YYYY-MM-DD')
                   JOIN payment_method USING (userid, payment_methodid) JOIN shippment_fee USING (shippment_feeid)
                   WHERE userid = {0}"""
 
+INSERT_ORDER_PLACE = """INSERT INTO orders(cartid, shippment_feeid, order_statusid, shipping_addressid, userid, payment_method, order_date)
+                            VALUES('{0}', '{1}', '{2}' '{3}', '{4}', '{5}', '{6}', '{7}', current_date('{9}', 'YYYY-MM-DD'))"""
 
 UPDATE_USER_PREFERRED_BILLING_ADDR = """UPDATE user_preferences SET billing_addressid = {0} WHERE userid = {1}"""
 
