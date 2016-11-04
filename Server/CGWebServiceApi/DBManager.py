@@ -239,8 +239,8 @@ def add_product_to_cart(cartid, productid, product_qty):
     return __execute_commit_query__(Query.INSERT_PRODUCT_INTO_CART.format(cartid, productid, product_qty))
 
 
-def deactivate_user_address(userid):
-    return __execute_commit_query__(Query.UPDATE_USER_ADDRESS_TO_INACTIVE.format(userid, userid))
+def deactivate_user_address(userid, addressid):
+    return __execute_commit_query__(Query.UPDATE_USER_ADDRESS_TO_INACTIVE.format(userid, addressid))
 
 
 def insert_user_address(address_fullname, address_line_1, address_line_2, address_city, address_zip, address_country, address_state, userid):
@@ -315,6 +315,42 @@ def validate_exp_date(date):
     return __execute_select_query__(Query.VALIDATE_EXP_DATE.format(date))[0]
 
 
+def fetch_order(orderid, userid):
+        order = __execute_select_query__(Query.SELECT_ORDER.format(orderid, userid))[0]
+        if order:
+            products = __execute_select_query__(Query.SELECT_ORDER_PRODUCTS.format(orderid))
+            order['oproducts'] = products
+        return order
+
+
+def fetch_user_orders(userid):
+    orders = __execute_select_query__(Query.SELECT_USER_ORDERS.format(userid))
+    if orders:
+        for order in orders:
+            products = __execute_select_query__(Query.SELECT_ORDER_PRODUCTS.format(order['oid']))
+            order['oproducts'] = products
+    return orders
+
+
+def update_user_preferred_billing(addressid, userid):
+    return __execute_commit_query__(Query.UPDATE_USER_PREFERRED_BILLING_ADDR.format(addressid, userid))
+
+
+def update_user_preferred_shipping(addressid, userid):
+    return __execute_commit_query__(Query.UPDATE_USER_PREFERRED_SHIPPING_ADDR.format(addressid, userid))
+
+
+def update_user_preferred_payment(payment_methodid, userid):
+    return __execute_commit_query__(Query.UPDATE_USER_PREFERRED_PAYMENT.format(payment_methodid, userid))
+
+
+def fetch_user_preferences(userid):
+    return __execute_select_query__(Query.SELECT_USER_PREFERENCES.format(userid))
+
+
+def fetch_max_payment_methodid(userid):
+    return __execute_select_query__(Query.SELECT_USER_MAX_PAYMENT_ID.format(userid))
+
 #fetch_latest_products()
 #fetch_special_products()
 #fetch_platforms()
@@ -346,3 +382,5 @@ def validate_exp_date(date):
 #cart_contains(1,2)
 #wish_list_contains(1,1)
 #user_account_exist('gary12', 'gary.oak@upr.edu')
+#print fetch_order(1,2)
+#print fetch_user_orders(14)

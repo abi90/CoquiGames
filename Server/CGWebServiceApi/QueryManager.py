@@ -25,12 +25,12 @@ SELECT_PLATFORM_CONSOLES = """SELECT P.productid, P.product_title
 
 
 SELECT_PLATFORM_GAME_GENRES = """SELECT DISTINCT G.genre
-                                  FROM product AS P NATURAL JOIN genre AS G
+                                  FROM product AS P JOIN genre AS G USING (genreid)
                                   WHERE categoryid IN (SELECT C.categoryid FROM category AS C WHERE C.category = 'Game') AND P.platformid = {0}"""
 
 
 SELECT_PLATFORM_ACCESORIES = """SELECT DISTINCT G.genre
-                                  FROM product AS P NATURAL JOIN genre AS G
+                                  FROM product AS P JOIN genre AS G USING (genreid)
                                   WHERE categoryid IN (SELECT C.categoryid FROM category AS C WHERE C.category='Accessory')
                                   AND P.platformid = {0}"""
 
@@ -76,7 +76,7 @@ SELECT_USER_WISH_LIST = """SELECT productid as pid, product_title as pname, prod
 
 SELECT_USER_ADDRESS = """SELECT address_state AS aState, address_line_1 AS aaddress1, address_line_2 AS aaddress2, address_city AS acity,
                       address_country AS acountry, active AS acurrent, address_fullname AS afullname, addressid AS aid,
-                      address_zip AS azip, CASE WHEN addressid IN (SELECT addressid FROM payment_method) THEN 'billing' ELSE 'shipping' END AS atype
+                      address_zip AS azip, CASE WHEN addressid IN (SELECT billing_addressid FROM payment_method) THEN 'billing' ELSE 'shipping' END AS atype
                       FROM address
                       WHERE userid = {0}"""
 
@@ -87,7 +87,7 @@ SELECT_USER_CREDIT_CARD = """SELECT to_char(card_exp_date, 'YYYY-MM-DD') AS cexp
 
 
 SELECT_USER_CART = """SELECT cc.productid AS pid,p.product_title AS pname, p.product_price AS pprice, cc.cart_product_qty as pquantity
-                      FROM cart_contains cc NATURAL JOIN product P
+                      FROM cart_contains cc JOIN product P USING (productid)
                       WHERE cc.cartid IN (SELECT c.cartid FROM cart as c WHERE c.userid = {0} AND c.active = TRUE)
                       ORDER BY cc.cartid, cc.insert_date"""
 
@@ -141,7 +141,7 @@ INSERT_PRODUCT_INTO_CART = """INSERT INTO cart_contains (cartid, productid, cart
 
 
 UPDATE_USER_ADDRESS_TO_INACTIVE = """UPDATE address AS a SET active = FALSE
-                                      WHERE a.userid = {0} AND a.active = TRUE AND a.addressid IN (SELECT p.addressid FROM payment_method AS  p WHERE p.userid = {1})"""
+                                      WHERE a.userid = {0} AND a.active = TRUE AND a.addressid = {1}"""
 
 
 INSERT_USER_ADDRESS = """INSERT INTO address (active, address_fullname, address_line_1, address_line_2, address_city, address_zip, address_country, address_state, userid)
@@ -215,7 +215,38 @@ VALIDATE_CC = """SELECT CASE
 
 
 
+SELECT_ORDER = """SELECT orderid AS oid, to_char(order_date, 'YYYY-MM-DD') AS odate, payment_methodid AS cid, order_status_name AS ostatus, osubtotal,
+                  fee AS oshipmment_fee, order_total AS ototal, shipping_addressid, billing_addressid
+                  FROM orders JOIN order_status USING (order_statusid) JOIN order_subtotal USING (orderid)
+                  JOIN payment_method USING (userid, payment_methodid) JOIN shippment_fee USING (shippment_feeid)
+                  WHERE orderid = {0} AND userid = {1}"""
 
 
+SELECT_ORDER_PRODUCTS = """SELECT o.productid AS pid, p.product_title AS pname, o.product_price AS pprice,
+                            o.product_qty AS pquantity, o.product_price * o.product_qty AS ptotal
+                            FROM order_details AS o JOIN product AS p USING (productid)
+                            WHERE o.orderid = {0}"""
+
+
+SELECT_USER_ORDERS = """SELECT orderid AS oid, to_char(order_date, 'YYYY-MM-DD') AS odate, payment_methodid AS cid, order_status_name AS ostatus, osubtotal,
+                  fee AS oshipmment_fee, order_total AS ototal, shipping_addressid, billing_addressid
+                  FROM orders JOIN order_status USING (order_statusid) JOIN order_subtotal USING (orderid)
+                  JOIN payment_method USING (userid, payment_methodid) JOIN shippment_fee USING (shippment_feeid)
+                  WHERE userid = {0}"""
+
+
+UPDATE_USER_PREFERRED_BILLING_ADDR = """UPDATE user_preferences SET billing_addressid = {0} WHERE userid = {1}"""
+
+
+UPDATE_USER_PREFERRED_SHIPPING_ADDR = """UPDATE user_preferences SET shipping_addressid = {0} WHERE userid = {1}"""
+
+
+UPDATE_USER_PREFERRED_PAYMENT = """UPDATE user_preferences SET payment_methodid = {0} WHERE userid = {1}"""
+
+
+SELECT_USER_PREFERENCES = """SELECT * FROM user_preferences WHERE userid = {0}"""
+
+
+SELECT_USER_MAX_PAYMENT_ID = """SELECT max(payment_methodid) as pid FROM payment_method WHERE userid = {0}"""
 
 

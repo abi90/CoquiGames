@@ -229,14 +229,15 @@ post_payment_keys = ['cname', 'cnumber', 'cexpdate', 'cvc', 'ctype']
 
 cc_regex = r"""^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|3[47][0-9]{13})$"""
 
+
 @user_blueprint.route("/<int:userid>/order", methods=['GET', 'POST'])
 @requires_auth
 def user_order(userid):
     try:
         if request.method == 'GET':
-            for e in user_order_list:
-                if e['uid'] == userid:
-                    return jsonify(e['uorders'])
+            orders = dbm.fetch_user_orders(userid)
+            if orders:
+                return jsonify(orders)
             return not_found()
         elif request.method == 'POST':
             if not request.json:
@@ -267,181 +268,168 @@ def user_order(userid):
                             return jsonify(result['uorders'])
                     return bad_request()
             return bad_request()
-    except:
+    except Exception as e:
+        print e
         return bad_request()
 
 
-@user_blueprint.route("/<int:userid>/payment", methods=['GET', 'PUT', 'POST'])
+@user_blueprint.route("/<int:userid>/payment", methods=['GET', 'POST'])
 @requires_auth
 def user_payment(userid):
-    if request.method == 'GET':
-        for e in user_payment_list:
-            if e['uid'] == userid:
-                result = []
-                for p in e['upayment']:
-                    result.append(
-                        {
-                            'cid': p['cid'],
-                            'cnumber': p['cnumber'][-4:],
-                            'cexpdate': p['cexpdate'],
-                            'ctype': p['ctype']
-                        }
-                    )
-                return jsonify(result)
-        return not_found()
-    elif request.method == 'PUT':
-        for e in user_payment_list:
-            if e['uid'] == userid:
-                for p in e['upayment']:
-                    if p['cid'] == request.json['cid']:
-                        e['cname'] = request.json['cname']
-                        e['cnumber'] = request.json['cnumber']
-                        e['cexpdate'] = request.json['cexpdate']
-                        e['cvc'] = request.json['cvc']
-                        e['ctype'] = request.json['ctype']
-                        return jsonify({
-                            'cid': request.json['cid'],
-                            'cnumber': request.json['cnumber'][-4:],
-                            'cexpdate': request.json['cexpdate'],
-                            'ctype': request.json['ctype']
-                        })
-        return not_found()
-    elif request.method == 'POST':
-        global cardcnt
-        if not request.json:
-            return bad_request()
-        for e in user_payment_list:
-            if e['uid'] == userid:
-
-                cardcnt += 1
-                e['upayment'].append(
-                    {
-                        'cid': cardcnt,
-                        'cname': request.json['cname'],
-                        'cnumber': request.json['cnumber'],
-                        'cexpdate': request.json['cexpdate'],
-                        'cvc': request.json['cvc'],
-                        'ctype': request.json['ctype']
-                    }
-                )
-                return jsonify(
-                    {
-                        'cid': cardcnt,
-                        'cnumber': request.json['cnumber'][-4:],
-                        'cexpdate': request.json['cexpdate'],
-                        'ctype': request.json['ctype']
-                    }
-                )
-
-        cardcnt += 1
-        user_payment_list.append(
-            {
-                'uid': userid,
-                'upayment':
-                    [
-                        {
-                            'cid': cardcnt,
-                            'cname': request.json['cname'],
-                            'cnumber': request.json['cnumber'],
-                            'cexpdate': request.json['cexpdate'],
-                            'cvc': request.json['cvc'],
-                            'ctype': request.json['ctype']
-                        }
-                    ]
-            }
-        )
-        return jsonify(
-            {
-                'cid': cardcnt,
-                'cnumber': request.json['cnumber'][-4:],
-                'cexpdate': request.json['cexpdate'],
-                'ctype': request.json['ctype']
-            }
-        )
-
-
-@user_blueprint.route("/<int:userid>/address/<atype>", methods=['PUT'])
-@requires_auth
-def update_address(userid, atype):
-    for e in user_address_list:
-        if e['uid'] == userid:
-            for a in e['uaddress']:
-                if a['atype'] == atype:
-                    global adrscnt
-                    adrscnt += 1
-                    a['acurrent'] = False
-                    e['uaddress'].append({
-                        'aid': adrscnt,
-                        'acurrent': True,
-                        'atype': request.json['atype'],
-                        'afullname': request.json['afullname'],
-                        'aaddress1': request.json['aaddress1'],
-                        'aaddress2': request.json['aaddress2'],
-                        'acity': request.json['acity'],
-                        'azip': request.json['azip'],
-                        'acountry': request.json['acountry'],
-                        'aState': request.json['aState']
-                    })
-                    return jsonify(e['uaddress'])
+    try:
+        if request.method == 'GET':
+            payment_method = dbm.fetch_user_payment_methods(userid)
+            if payment_method:
+                return jsonify(payment_method)
             return not_found()
-    return not_found()
+        elif request.method == 'POST':
+            payment_keys = post_payment_keys
+            payment_keys.append('ppreferred')
+            for key in payment_keys:
+                if key not in request.json:
+                    return missing_parameters_error()
+            billing_addressid = dbm.fetch_user_preferences(userid)
+            if billing_addressid:
+                if dbm.insert_first_payment_method(card_name=request.json['cname'],
+                                                   card_last_four_digits=request.json['cnumber'][-4:],
+                                                   card_number=request.json['cnumber'],
+                                                   card_exp_date=request.json['cexpdate'],
+                                                   cvc=request.json['cvc'], card_type=request.json['ctype'],
+                                                   userid=userid,
+                                                   billing_addressid=billing_addressid):
+                    # Get Payment Method id
+                    new_payment_method = dbm.fetch_max_payment_methodid(userid)
+                    set_preferred = request.json['ppreferred']
+                    if set_preferred:
+                        if not dbm.update_user_preferred_billing(new_payment_method['pid']):
+                            return internal_server_error()
+                    return jsonify(new_payment_method)
+                return internal_server_error()
+            else:
+                return jsonify({'error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
+    except Exception as e:
+        print e
+        return internal_server_error()
+
+
+@user_blueprint.route("/<int:userid>/payment/<payment_methodid>", methods=['PUT'])
+@requires_auth
+def update_address(userid, payment_methodid):
+    try:
+        if request.json:
+            payment_keys = post_payment_keys
+            payment_keys.append('ppreferred')
+            for key in payment_keys:
+                if key not in request.json:
+                    return missing_parameters_error()
+            is_inactive = dbm.deactivate_user_payment_method(userid, payment_methodid)
+            if is_inactive:
+                billing_addressid = dbm.fetch_user_preferences(userid)
+                if billing_addressid:
+                    if dbm.insert_first_payment_method(card_name=request.json['cname'],
+                                                       card_last_four_digits=request.json['cnumber'][-4:],
+                                                       card_number=request.json['cnumber'],
+                                                       card_exp_date=request.json['cexpdate'],
+                                                       cvc=request.json['cvc'], card_type=request.json['ctype'],
+                                                       userid=userid,
+                                                       billing_addressid=billing_addressid):
+                        # Get Payment Method id
+                        new_payment_method = dbm.fetch_max_payment_methodid(userid)
+                        set_preferred = request.json['ppreferred']
+                        if set_preferred:
+                            if not dbm.update_user_preferred_billing(new_payment_method['pid']):
+                                return internal_server_error()
+                        return jsonify(new_payment_method)
+                    return internal_server_error()
+                else:
+                    return jsonify({'error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
+            return not_found()
+        return bad_request()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
+
+@user_blueprint.route("/<int:userid>/address/<int:addressid>", methods=['PUT'])
+@requires_auth
+def update_address(userid, addressid):
+    try:
+        if request.json:
+            put_address_keys = post_address_keys
+            put_address_keys.append('apreferred')
+            put_address_keys.append('atype')
+            for key in put_address_keys:
+                if key not in request.json:
+                    return missing_parameters_error()
+            is_inactive = dbm.deactivate_user_address(userid, addressid)
+            if is_inactive:
+                if dbm.insert_user_address(address_fullname=request.json['afullname'],
+                                           address_line_1=request.json['aaddress1'],
+                                           address_line_2=request.json['aaddress2'],
+                                           address_city=request.json['acity'],
+                                           address_zip=request.json['azip'],
+                                           address_country=request.json['acountry'],
+                                           address_state=request.json['astate'],
+                                           userid=userid):
+                    new_address = dbm.fetch_max_address(userid)
+                    set_preferred = request.json['apreferred']
+                    if set_preferred:
+                        if request.json['atype'] == 'billing':
+                            if not dbm.update_user_preferred_billing(new_address['aid']):
+                                return internal_server_error()
+                        elif request.json['atype'] == 'shipping':
+                            if not dbm.update_user_preferred_shipping(new_address['aid']):
+                                return internal_server_error()
+                    return jsonify(new_address)
+
+                else:
+                    return internal_server_error()
+            return not_found()
+        return bad_request()
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 
 @user_blueprint.route("/<int:userid>/address", methods=['GET', 'POST'])
 @requires_auth
 def user_address(userid):
-    if request.method == 'GET':
-        for e in user_address_list:
-            if e['uid'] == userid:
-                return jsonify(e['uaddress'])
-        return not_found()
-    elif request.method == 'POST':
-        try:
-            if not request.json:
-                return bad_request()
-            for e in user_address_list:
-                if e['uid'] == userid:
-                    return bad_request()
-            global adrscnt
-            temp = adrscnt + 1
-            adrscnt += 2
-            result = {
-                'uid': userid,
-                'uaddress':
-                    [
-                        {
-                            'aid': temp,
-                            'acurrent': True,
-                            'atype': request.json[0]['atype'],
-                            'afullname': request.json[0]['afullname'],
-                            'aaddress1': request.json[0]['aaddress1'],
-                            'aaddress2': request.json[0]['aaddress2'],
-                            'acity': request.json[0]['acity'],
-                            'azip': request.json[0]['azip'],
-                            'acountry': request.json[0]['acountry'],
-                            'aState': request.json[0]['aState']
-                        },
-                        {
-                            'aid': adrscnt,
-                            'acurrent': True,
-                            'atype': request.json[1]['atype'],
-                            'afullname': request.json[1]['afullname'],
-                            'aaddress1': request.json[1]['aaddress1'],
-                            'aaddress2': request.json[1]['aaddress2'],
-                            'acity': request.json[1]['acity'],
-                            'azip': request.json[1]['azip'],
-                            'acountry': request.json[1]['acountry'],
-                            'aState': request.json[1]['aState']
-                        }
-                    ]
-            }
-
-            user_address_list.append(result)
-            return jsonify(result['uaddress'])
-        except Exception as e:
-            response = jsonify({"Error": str(e)})
-            response.status_code = 500
-            return response
+    try:
+        if request.method == 'GET':
+            address = dbm.fetch_user_address(userid)
+            if address:
+                return jsonify(address)
+            return not_found()
+        elif request.method == 'POST':
+            address_keys = post_address_keys
+            address_keys.append('apreferred')
+            address_keys.append('atype')
+            for key in address_keys:
+                if key not in request.json:
+                    return missing_parameters_error()
+            if dbm.insert_user_address(address_fullname=request.json['afullname'],
+                                       address_line_1=request.json['aaddress1'],
+                                       address_line_2=request.json['aaddress2'],
+                                       address_city=request.json['acity'],
+                                       address_zip=request.json['azip'],
+                                       address_country=request.json['acountry'],
+                                       address_state=request.json['astate'],
+                                       userid=userid):
+                new_address = dbm.fetch_max_address(userid)
+                set_preferred = request.json['apreferred']
+                if set_preferred:
+                    if request.json['atype'] == 'billing':
+                        if not dbm.update_user_preferred_billing(new_address['aid']):
+                            return internal_server_error()
+                    elif request.json['atype'] == 'shipping':
+                        if not dbm.update_user_preferred_shipping(new_address['aid']):
+                            return internal_server_error()
+                return jsonify(new_address)
+            else:
+                return internal_server_error()
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 
 @user_blueprint.route("/<int:userid>/wishlist", methods=['GET'])
@@ -540,6 +528,7 @@ def edit_cart(userid, productid):
         print e
         return internal_server_error()
 
+
 @user_blueprint.route("/<int:userid>/cart", methods=['GET', 'POST'])
 @requires_auth
 def user_cart(userid):
@@ -592,7 +581,7 @@ def user(userid):
             if request.json:
                 # Verify request json contains needed parameters
                 if ('uname' and 'upassword' and 'ufirstname' and 'ulastname'
-                        and 'uemail' and 'uphone' and 'udob' not in request.json):
+                    and 'uemail' and 'uphone' and 'udob' not in request.json):
                     return missing_parameters_error()
                 # Verify that parameters are valid
                 errors = validate_account(request.json)
@@ -690,7 +679,6 @@ def post_user():
                 billing_addressid = dbm.fetch_max_address(userid)['aid']
                 # Insert Payment Method
                 payment_method = request.json['upayment']
-                print payment_method
                 dbm.insert_first_payment_method(card_name=payment_method['cname'],
                                                 card_last_four_digits=payment_method['cnumber'][-4:],
                                                 card_number=payment_method['cnumber'],
