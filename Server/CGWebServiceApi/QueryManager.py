@@ -219,7 +219,7 @@ VALIDATE_CC = """SELECT CASE
 SELECT_ORDER = """SELECT orderid AS oid, to_char(order_date, 'YYYY-MM-DD') AS odate, payment_methodid AS cid, order_status_name AS ostatus, osubtotal,
                   fee AS oshipmment_fee, order_total AS ototal, shipping_addressid, billing_addressid
                   FROM orders JOIN order_status USING (order_statusid) JOIN order_subtotal USING (orderid)
-                  JOIN payment_method USING (userid, payment_methodid) JOIN shippment_fee USING (shippment_feeid)
+                  JOIN payment_method USING (userid, payment_methodid) JOIN shipment_fee USING (shipment_feeid)
                   WHERE orderid = {0} AND userid = {1}"""
 
 
@@ -232,11 +232,19 @@ SELECT_ORDER_PRODUCTS = """SELECT o.productid AS pid, p.product_title AS pname, 
 SELECT_USER_ORDERS = """SELECT orderid AS oid, to_char(order_date, 'YYYY-MM-DD') AS odate, payment_methodid AS cid, order_status_name AS ostatus, osubtotal,
                   fee AS oshipmment_fee, order_total AS ototal, shipping_addressid, billing_addressid
                   FROM orders JOIN order_status USING (order_statusid) JOIN order_subtotal USING (orderid)
-                  JOIN payment_method USING (userid, payment_methodid) JOIN shippment_fee USING (shippment_feeid)
+                  JOIN payment_method USING (userid, payment_methodid) JOIN shipment_fee USING (shipment_feeid)
                   WHERE userid = {0}"""
 
-INSERT_ORDER_PLACE = """INSERT INTO orders(cartid, shippment_feeid, order_statusid, shipping_addressid, userid, payment_method, order_date)
-                            VALUES('{0}', '{1}', '{2}' '{3}', '{4}', '{5}', '{6}', '{7}', current_date('{9}', 'YYYY-MM-DD'))"""
+
+INSERT_EMPTY_ORDER = """INSERT INTO orders (cartid, shipment_feeid, order_statusid, shipping_addressid, userid, payment_methodid, order_date, order_total)
+                        VALUES('{0}','{1}', 2, '{2}', '{3}', '{4}', current_date, 0)"""
+
+
+INSERT_ORDER_DETAILS = """INSERT INTO order_details (orderid, productid, product_price, product_qty)
+                          SELECT {0} AS orderid, productid, product_price, cart_product_qty as product_qty
+                          FROM cart_contains JOIN product USING (productid)
+                          WHERE cartid = {1}"""
+
 
 UPDATE_USER_PREFERRED_BILLING_ADDR = """UPDATE user_preferences SET billing_addressid = {0} WHERE userid = {1}"""
 
@@ -255,5 +263,28 @@ SELECT_USER_MAX_PAYMENT_ID = """SELECT max(payment_methodid) as pid FROM payment
 
 SELECT_SEARCH_TITLE = """SELECT * FROM product_details WHERE lower(title) LIKE lower('%{0}%')"""
 
+
 SELECT_SEARCH_BLANK = """SELECT * FROM product_details WHERE"""
+
+
+SELECT_USER_MAX_ORDER_ID = """SELECT max(orderid) FROM orders WHERE userid = {0}"""
+
+
+UPDATE_ORDER_TOTAL = """UPDATE orders
+                        SET order_total = (SELECT order_summary.osubtotal + order_summary.shipmment_fee FROM order_summary WHERE oid = {0})
+                        WHERE orderid = {1}"""
+
+
+VALIDATE_SHIPMENT_FEE = """SELECT CASE WHEN {0} IN (SELECT shipment_feeid FROM shipment_fee WHERE active = TRUE ) THEN TRUE
+                            ELSE FALSE END AS valid_fee"""
+
+
+VALIDATE_ADDRESS_ID = """SELECT CASE WHEN {0} IN (SELECT addressid FROM address WHERE userid = {1} AND active = TRUE) THEN TRUE
+                          ELSE FALSE END AS valid_aid"""
+
+
+VALIDATE_PAYMENT_ID = """SELECT CASE WHEN {0} IN (SELECT payment_methodid FROM payment_method WHERE userid = {1} AND active = TRUE) THEN TRUE
+                          ELSE FALSE END AS valid_pid"""
+
+UPDATE_ORDER_SATUS = """UPDATE orders SET order_statusid = {0} WHERE orderid = {1}"""
 

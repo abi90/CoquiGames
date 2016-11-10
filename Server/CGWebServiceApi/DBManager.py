@@ -186,10 +186,6 @@ def fetch_user_info(userid):
     return __execute_select_query__(Query.SELECT_USER.format(userid))[0]
 
 
-def fetch_search_title(title):
-    return __execute_select_product_query__(Query.SELECT_SEARCH_TITLE.format(title))
-
-
 def fetch_user_wish_list(userid):
     return __execute_select_query__(Query.SELECT_USER_WISH_LIST.format(userid))
 
@@ -356,37 +352,76 @@ def fetch_max_payment_methodid(userid):
     return __execute_select_query__(Query.SELECT_USER_MAX_PAYMENT_ID.format(userid))
 
 
-def advanced_search(data):
+def search_products_by_title(title):
+    return __execute_select_product_query__(Query.SELECT_SEARCH_TITLE.format(title))
+
+
+def advanced_product_search(data):
     if 'title' in data:
         custom_query = Query.SELECT_SEARCH_TITLE.format(data['title'])
 
         if 'genres' in data:
-            custom_query = custom_query + " AND  genre IN ('{}') ".format("','".join(data['genres']))
+            custom_query = custom_query + " AND  genre IN ('{0}') ".format("','".join(data['genres']))
 
         if 'platformid' in data:
-            custom_query = custom_query + ' AND  plaformid = {} '.format(data['platformid'])
+            custom_query = custom_query + ' AND  platformid = {0} '.format(data['platformid'])
 
         if 'price' in data:
-            custom_query = custom_query + ' AND price BETWEEN {} AND {} '.format(data['price'])
+            custom_query = custom_query + ' AND price BETWEEN {0} AND {1} '.format(data['price'][0], data['price'][1])
         print custom_query
         return __execute_select_product_query__(custom_query)
     else:
         custom_query = Query.SELECT_SEARCH_BLANK
         if 'genre' in data:
-            custom_query = custom_query + "  genre IN ('{}') AND ".format("','".join(data['genres']))
+            custom_query += "  genre IN ('{0}') AND ".format("','".join(data['genres']))
 
         if 'platformid' in data:
-            custom_query = custom_query + ' plaformid = {} AND '.format(data['platformid'])
+            custom_query += ' platformid = {0} AND '.format(data['platformid'])
 
         if 'price' in data:
-            custom_query = custom_query + ' price BETWEEN {} AND {} '.format(data['platformid'])
+            custom_query += ' price BETWEEN {0} AND {1} '.format(data['price'][0], data['price'][1])
 
         else:
             custom_query = custom_query + ' price BETWEEN 0 AND 100000000 '
         print custom_query
         return __execute_select_product_query__(custom_query)
 
-advanced_search({'title':'PS4','platformid':1, 'genres':'Console','price':350.99})
+
+def insert_empty_order(cartid, shippment_feeid, shipping_addressid, userid, payment_methodid):
+    return __execute_commit_query__(Query.INSERT_EMPTY_ORDER.format(cartid, shippment_feeid, shipping_addressid, userid, payment_methodid))
+
+
+def insert_order_details(orderid, cartid):
+    return __execute_commit_query__(Query.INSERT_ORDER_DETAILS.format(orderid, cartid))
+
+
+def fetch_max_user_orderid(userid):
+    return __execute_select_query__(Query.SELECT_USER_MAX_ORDER_ID.format(userid))[0]
+
+
+def update_order_total(orderid):
+    return __execute_commit_query__(Query.UPDATE_ORDER_TOTAL.format(orderid, orderid))
+
+
+def validate_shipment_fee(shfeeid):
+    return __execute_select_query__(Query.VALIDATE_SHIPMENT_FEE.format(shfeeid))[0]
+
+
+def validate_address(aid, userid):
+    return __execute_select_query__(Query.VALIDATE_ADDRESS_ID.format(aid,userid))[0]
+
+
+def validate_payment(cid, userid):
+    return __execute_select_query__(Query.VALIDATE_PAYMENT_ID.format(cid, userid))[0]
+
+
+def update_order_status(order_statusid, orderid):
+    return __execute_commit_query__(Query.UPDATE_ORDER_SATUS.format(order_statusid, orderid))
+
+
+#advanced_product_search({'title':'PS4','platformid':1, 'genres':['Console']})
+#advanced_product_search({'platformid':1, 'genres':['Console'],'price':[40,600]})
+#search_products_by_title('Gears of War 4')
 #fetch_latest_products()
 #fetch_special_products()
 #fetch_platforms()

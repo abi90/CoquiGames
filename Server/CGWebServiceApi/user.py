@@ -6,220 +6,6 @@ import re
 
 user_blueprint = Blueprint('user', __name__)
 
-count = 3
-
-adrscnt = 4
-
-ordercnt = 1
-
-cardcnt = 2
-
-user_address_list = [
-    {
-        'uid': 1,
-        'uaddress':
-            [
-                {
-                    'aid': 1,
-                    'acurrent': True,
-                    'atype': 'shipping',
-                    'afullname': 'Gary Oak',
-                    'aaddress1': 'Street Q, APT 3',
-                    'aaddress2': '',
-                    'acity': 'Pallet Town',
-                    'azip': '00335',
-                    'acountry': 'USA',
-                    'aState': 'PR'
-                },
-                {
-                    'aid': 2,
-                    'acurrent': True,
-                    'atype': 'billing',
-                    'afullname': 'Gary Oak',
-                    'aaddress1': 'Street Q, APT 3',
-                    'aaddress2': '',
-                    'acity': 'Pallet Town',
-                    'azip': '00335',
-                    'acountry': 'USA',
-                    'aState': 'PR'
-                }
-            ]
-    },
-    {
-        'uid': 2,
-        'uaddress':
-            [
-                {
-                    'aid': 3,
-                    'acurrent': True,
-                    'atype': 'shipping',
-                    'afullname': 'Gary Oak',
-                    'aaddress1': 'Street Q, APT 3',
-                    'aaddress2': '',
-                    'acity': 'Pallet Town',
-                    'azip': '00335',
-                    'acountry': 'USA',
-                    'aState': 'PR'
-                },
-                {
-                    'aid': 4,
-                    'acurrent': True,
-                    'atype': 'billing',
-                    'afullname': 'Gary Oak',
-                    'aaddress1': 'Street Q, APT 3',
-                    'aaddress2': '',
-                    'acity': 'Pallet Town',
-                    'azip': '00335',
-                    'acountry': 'USA',
-                    'aState': 'PR'
-                }
-            ]
-    }
-]
-
-user_payment_list = [
-    {
-        'uid': 1,
-        'upayment':
-            [
-                {
-                    'cid': 1,
-                    'cname': 'Professor Oak',
-                    'cnumber': '1234-1234-1234-1234',
-                    'cexpdate': '01-2017',
-                    'cvc': '123',
-                    'ctype': 'visa'
-                },
-                {
-                    'cid': 2,
-                    'cname': 'Gary Oak',
-                    'cnumber': '1234-1234-1234-1234',
-                    'cexpdate': '03-2030',
-                    'cvc': '123',
-                    'ctype': 'mastercard'
-                }
-            ]
-    },
-    {
-        'uid': 2,
-        'upayment':
-            [
-                {
-                    'cid': 3,
-                    'cname': 'Delia Ketchum',
-                    'cnumber': '1234-1234-1234-1234',
-                    'cexpdate': '01-2017',
-                    'cvc': '123',
-                    'ctype': 'mastercard'
-                }
-            ]
-    }
-]
-
-user_order_list = [
-    {
-        'uid':1,
-        'uorders':
-            [
-                {
-                    'oid': 1,
-                    'odate':'dd-mm-yyyy',
-                    'ostatus': 'shipped',
-                    'oproducts': [
-                        {
-                            'pid': 1,
-                            'pname': 'Pokemon Rumble',
-                            'pprice': 75.25,
-                            'optotal': 150.5,
-                            'pquantity': 2
-                        },
-                        {
-                            'pid': 1,
-                            'pname': 'Pokemon X',
-                            'pprice': 40,
-                            'optotal': 120,
-                            'pquantity': 3
-                        }
-                    ],
-                    'osubtotal': 270.5,
-                    'otax': 11.5,
-                    'ototal': 301.60,
-                    'osaddress':[
-                        {
-                            'aid': 1,
-                        },
-                        {
-                            'aid': 2,
-                        }
-                    ] ,
-                    'cid': 1
-                }
-            ]
-    }
-]
-
-user_cart_list = [
-    {
-        'uid': 1,
-        'cartlist':
-            [
-                {
-                    'pid': 1,
-                    'pname': 'Pokemon Rumble',
-                    'pprice': 75.25,
-                    'optotal': 150.5,
-                    'pquantity': 2
-                },
-                {
-                    'pid': 1,
-                    'pname': 'Pokemon X',
-                    'pprice': 40,
-                    'optotal': 120,
-                    'pquantity': 3
-                }
-            ]
-    },
-    {
-        'uid': 2,
-        'cartlist':
-            [
-                {
-                    'pid': 1,
-                    'pname': 'Pokemon Rumble',
-                    'pprice': 75.25,
-                    'pptotal': 150.5,
-                    'pquantity': 2
-                },
-                {
-                    'pid': 1,
-                    'pname': 'Pokemon X',
-                    'pprice': 40,
-                    'pptotal': 120,
-                    'pquantity': 3
-                }
-            ]
-    }
-]
-
-user_wishlist = [
-    {
-        'uid': 1,
-        'wishlist':
-            [
-                {
-                    'pid': 2,
-                    'pname': 'Gears of War 4',
-                    'pprice': 59.99
-                },
-                {
-                    'pid': 3,
-                    'pname': 'Dragon Ball Xenoverse 2',
-                    'pprice': 59.99
-                }
-            ]
-    }
-]
-
 post_user_keys = ['ufirstname', 'ulastname', 'uemail', 'uphone', 'udob',
                   'uname', 'upassword', 'upayment', 'ushippingaddress', 'ubillingaddress']
 
@@ -228,6 +14,36 @@ post_address_keys = ['astate', 'aaddress1', 'aaddress2', 'acity', 'acountry', 'a
 post_payment_keys = ['cname', 'cnumber', 'cexpdate', 'cvc', 'ctype']
 
 cc_regex = r"""^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|3[47][0-9]{13})$"""
+
+
+@user_blueprint.route("/<int:userid>/preferences", methods=['GET', 'PUT'])
+@requires_auth
+def user_preferences(userid):
+    try:
+        if request.method == 'GET':
+            preferences = dbm.fetch_user_preferences(userid)
+            if preferences:
+                return jsonify(preferences)
+            return not_found()
+        elif request.method == 'PUT':
+            if 'shipping_addressid' or 'billing_addressid' or 'cid' not in request.json:
+                return missing_parameters_error()
+            errors = validate_user_preferences(request.json, userid)
+            if errors:
+                return jsonify({'errors': errors}), 400
+            if 'shipping_addressid' in request.json:
+                dbm.update_user_preferred_shipping(request.json['shipping_addressid'],userid)
+            if 'billing_addressid' in request.json:
+                dbm.update_user_preferred_billing(request.json['billing_addressid'], userid)
+            if 'cid' in request.json:
+                dbm.update_user_preferred_payment(request.json['cid'], userid)
+            preferences = dbm.fetch_user_preferences(userid)
+            if preferences:
+                return jsonify(preferences)
+            return bad_request()
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 
 @user_blueprint.route("/<int:userid>/order", methods=['GET', 'POST'])
@@ -242,11 +58,38 @@ def user_order(userid):
         elif request.method == 'POST':
             if not request.json:
                 return bad_request()
-            cartid = dbm.fetch_user_cartid(userid)
+            if 'shipment_feeid' and 'aid' and 'cid' not in request.json:
+                return missing_parameters_error()
+            errors = validate_order(request.json, userid)
+            if errors:
+                return jsonify({'errors': errors}), 400
+            # Get User Active Cart
+            cartid = dbm.fetch_user_cartid(userid)['cartid']
             if cartid:
-                if dbm.deactivate_user_cart(cartid,userid):
-                    print 'on my way'
-            return bad_request()
+                # Deactivate cart to avoid errors
+                if dbm.deactivate_user_cart(cartid, userid):
+                    # Create an empty order
+                    if dbm.insert_empty_order(cartid=cartid,
+                                              shippment_feeid=request.json['shipment_feeid'],
+                                              shipping_addressid=request.json['aid'],
+                                              userid=userid,
+                                              payment_methodid=request.json['cid']):
+                        # Get latest order id
+                        orderid = dbm.fetch_max_user_orderid(userid)['orderid']
+                        if orderid:
+                            # Insert products from cart into the order details
+                            if dbm.insert_order_details(orderid, cartid):
+                                # Update order total
+                                if dbm.update_order_total(orderid):
+                                    # Create a new cart to the user:
+                                    dbm.create_user_cart(userid)
+                                    # Update order status to placed
+                                    dbm.update_order_status(1, orderid)
+                                    # Fetch Order
+                                    order = dbm.fetch_order(orderid,userid)
+                                    if order:
+                                        return jsonify(order)
+            return internal_server_error()
     except Exception as e:
         print e
         return bad_request()
@@ -605,16 +448,16 @@ def post_user():
             # Verify that parameters are valid
             account_errors = validate_account(request.json)
             if account_errors:
-                return jsonify({'Errors': account_errors}), 400
+                return jsonify({'errors': account_errors}), 400
             payment_method_errors = validate_payment(request.json['upayment'])
             if payment_method_errors:
-                return jsonify({'Errors': payment_method_errors}), 400
+                return jsonify({'errors': payment_method_errors}), 400
             address_errors = validate_address(request.json['ushippingaddress'])
             if address_errors:
-                return jsonify({'Errors': address_errors}), 400
+                return jsonify({'errors': address_errors}), 400
             address_errors = validate_address(request.json['ubillingaddress'])
             if address_errors:
-                return jsonify({'Errors': address_errors}), 400
+                return jsonify({'errors': address_errors}), 400
             # Verify user account does not exist
             user_exist = dbm.user_account_exist(username=request.json['uname'],
                                                 email=request.json['uemail'])['user_exist']
@@ -828,6 +671,39 @@ def validate_address(data):
 
 def missing_parameters_error():
     return jsonify({'Error': "Missing Parameters in Request JSON."}), 400
+
+
+def validate_order(data, userid):
+    # Vaidate 'shipment_feeid' and 'aid' and 'cid' in data
+    errors = []
+    is_valid_fee = dbm.validate_shipment_fee(data['shipment_feeid'])['valid_fee']
+    if not is_valid_fee:
+        errors.append('Invalid Shipment Fee.')
+    is_valid_aid = dbm.validate_address(data['aid'], userid)['valid_aid']
+    if not is_valid_aid:
+        errors.append('Invalid Address.')
+    is_valid_cid = dbm.validate_payment(data['cid'], userid)['valid_pid']
+    if not is_valid_cid:
+        errors.append('Invalid Payment Method.')
+    return errors
+
+
+def validate_user_preferences(data, userid):
+    # Vaidate 'shipping_addressid' and 'billing_addressid' and 'cid'
+    errors = []
+    if 'shipping_addressid' in data:
+        is_valid_aid = dbm.validate_address(data['shipping_addressid'], userid)['valid_aid']
+        if not is_valid_aid:
+            errors.append('Invalid Shipping Address.')
+    if 'billing_addressid' in data:
+        is_valid_aid = dbm.validate_address(data['billing_addressid'], userid)['valid_aid']
+        if not is_valid_aid:
+            errors.append('Invalid Billing Address.')
+    if 'cid' in data:
+        is_valid_cid = dbm.validate_payment(data['cid'], userid)['valid_pid']
+        if not is_valid_cid:
+            errors.append('Invalid Payment Method.')
+    return errors
 
 
 
