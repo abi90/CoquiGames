@@ -9,7 +9,7 @@
                 <h2 class="main-heading2">
                     {{platform.platform}}
                 </h2>
-                <img ng-src="{{platform.imglogo}}" alt="Image" class="img-responsive img-thumbnail">
+                <img ng-src="{{platform.logoimg}}" alt="Image" class="img-responsive img-thumbnail">
                 <br>
                 <br>
             </div>
@@ -46,12 +46,12 @@
                                     </div>
                                     <div class="caption">
                                         <h4>
-                                            <a href="#/product.html">{{item.Title | limitTo:16}}</a>
+                                            <a href="#/product.html">{{item.title | limitTo:16}}</a>
                                         </h4>
                                         <div class="description"></div>
                                         <div class="price">
-                                            <span class="price-new">{{item.Price | currency}}</span>
-                                            <span ng-if="item.InOffer==true" class="price-old">{{item.OfferPrice | currency}}</span>
+                                            <span class="price-new">{{item.price | currency}}</span>
+                                            <span ng-if="item.inOffer==true" class="price-old">{{item.offerPrice | currency}}</span>
 
 
                                         </div>
@@ -87,12 +87,12 @@
                                     </div>
                                     <div class="caption">
                                         <h4>
-                                            <a href="#/product.html">{{item.Title | limitTo:16}}</a>
+                                            <a href="#/product.html">{{item.title | limitTo:16}}</a>
                                         </h4>
                                         <div class="description"></div>
                                         <div class="price">
-                                            <span class="price-new">{{item.Price | currency}}</span>
-                                            <span ng-if="item.InOffer==true" class="price-old">{{item.OfferPrice | currency}}</span>
+                                            <span class="price-new">{{item.price | currency}}</span>
+                                            <span ng-if="item.inOffer==true" class="price-old">{{item.offerPrice | currency}}</span>
                                         </div>
                                         <div class="cart-button">
                                             <button type="button" class="btn btn-cart">Add to cart

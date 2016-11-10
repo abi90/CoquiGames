@@ -139,21 +139,21 @@
                 <ul class="nav navbar-nav" ng-repeat="option in navbarOptions">
                     <li class="dropdown">
                         <!-- class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="10" -->
-                        <a ng-href="#/platform-home/{{option.PlatformId}}">{{option.platform}}</a>
+                        <a ng-href="#/platform-home/{{option.platformid}}">{{option.platform}}</a>
                         <div class="dropdown-menu">
                             <div class="dropdown-inner">
                                 <ul class="list-unstyled">
                                     <li class="dropdown-header">Platform</li>
                                     <li>
-                                        <a href="/index.html">
-                                            <img ng-src="{{option.imglogo}}" style="with: 150px;height: 150px;">
+                                        <a href="#/platform-home/{{option.platformid}}">
+                                            <img ng-src="{{option.logoimg}}" style="with: 150px;height: 150px;">
                                         </a>
                                     </li>
                                 </ul>
                                 <ul class="list-unstyled">
                                     <li class="dropdown-header">Consoles</li>
                                     <li ng-repeat="console in option.consoles">
-                                        <a tabindex="-1" href="#{{console.id}}">{{console.name}}</a>
+                                        <a tabindex="-1" href="#/product.html/{{console.productid}}">{{console.product_title}}</a>
                                     </li>
                                 </ul>
                                 <ul class="list-unstyled">

@@ -8,12 +8,12 @@
             <!-- Breadcrumb Starts -->
             <ol class="breadcrumb">
                 <li>
-                    <a href="index.html">Home</a>
-                </li>
-                <li>
-                    <a href="category-list.html">Category</a>
+                    <a nghref="#/index.html">Home</a>
                 </li>
                 <li class="active">Product</li>
+                <li>
+                    <a href="#/product.html/{{product.pid}}">{{product.title}}</a>
+                </li>
             </ol>
             <!-- Breadcrumb Ends -->
             <!-- Product Info Starts -->
@@ -42,20 +42,21 @@
                 <!-- Right Starts -->
                 <div class="col-sm-7 product-details">
                     <!-- Product Name Starts -->
-                    <h2>{{product.Title}}</h2>
+                    <h2>{{product.title}}</h2>
                     <!-- Product Name Ends -->
                     <hr>
                     <!-- Manufacturer Starts -->
                     <ul class="list-unstyled manufacturer">
                         <li>
-                            <span>GENRE:</span>{{product.Genre}}</li>
+                            <span>GENRE:</span>{{product.genre}}</li>
                         <li>
-                            <span>rELEASE:</span>{{product.Release | date}}</li>
+                            <span>RELEASE:</span>{{product.release | date}}</li>
                         <li>
-                            <span>Product Code:</span>{{product.Pid}}</li>
+                            <span>Product Code:</span>{{product.pid}}</li>
                         <li>
                             <span>Availability:</span>
-                            <strong class="label label-success">In Stock</strong>
+                            <strong ng-if="product.availability==true" class="label label-success">In Stock</strong>
+                            <strong ng-if="product.availability==false" class="label label-success">Out of Stock</strong>
                         </li>
                     </ul>
                     <!-- Manufacturer Ends -->
@@ -63,7 +64,10 @@
                     <!-- Price Starts -->
                     <div class="price">
                         <span class="price-head">Price :</span>
-                        <span class="price-new">{{product.Price | currency}}</span>
+
+                        <span ng-if="product.inoffer==true" class="price-new">{{product.offerprice | currency}}</span>
+                        <span ng-if="product.inoffer==false" class="price-new">{{product.price | currency}}</span>
+                        <span ng-if="product.inoffer==true" class="price-old">{{product.price | currency}}</span>
                     </div>
                     <!-- Price Ends -->
                     <hr>
@@ -87,9 +91,10 @@
                     <!-- Average user ratings begins -->
                     <div ng-controller="RatingCtrl">
                         <h2>AVERAGE USER RATING</h2>
-                        <span uib-rating ng-model="rate" max="max" read-only="isReadonly"
+                        <span uib-rating ng-model="product.rating | number" max="max" read-only="isReadonly"
                               on-hover="hoveringOver(value)" on-leave="overStar = null" titles="['one','two','three']"
                               aria-labelledby="default-rating">
+
 					</span>
                     </div>
                     <!-- Average user ratings end -->
@@ -101,7 +106,7 @@
             <div class="product-info-box">
                 <h4 class="heading">Description</h4>
                 <div class="content panel-smart">
-                    <p>{{product.Description}}</p>
+                    <span ng-bind-html="product.description | html"></span>
                 </div>
             </div>
             <!-- Product Description Ends -->
@@ -109,7 +114,7 @@
             <div class="product-info-box">
                 <h4 class="heading">Additional Information</h4>
                 <div class="content panel-smart">
-                    <p>{{product.AditionalInfo}}</p>
+                    <span ng-bind-html="product.aditionalinfo | html"></span>
                 </div>
             </div>
             <!-- Additional Information Ends -->

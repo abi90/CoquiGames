@@ -15,4 +15,8 @@ app.controller('RatingCtrl', function ($scope) {
         {stateOn: 'glyphicon-heart'},
         {stateOff: 'glyphicon-off'}
     ];
+
+    $scope.set_rate=function (value) {
+        $.scope.rate = value;
+    }
 });

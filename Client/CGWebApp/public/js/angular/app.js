@@ -217,3 +217,9 @@ app.run(["$rootScope", "$location", function ($rootScope, $location) {
         }
     });
 }]);
+
+app.filter('html',function($sce){
+    return function(input){
+        return $sce.trustAsHtml(input);
+    }
+})
