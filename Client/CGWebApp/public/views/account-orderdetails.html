@@ -72,6 +72,16 @@
 
                 <tr>
                   <td colspan="3" class="text-right">
+                    Shipment Fee:
+                  </td>
+
+                  <td colspan="3" class="text-left">
+                    {{userOrder.oshipmment_fee | currency}}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="3" class="text-right">
                     <strong>Total :</strong>
                   </td>
 
@@ -134,8 +144,10 @@
             <div class="panel-body">
               <p>
                 <label>
-                <img src="images/payment-icon/cirrus.png" alt="PaymentGateway" />
-                </label> **** 1234
+                  <img ng-if="userOrder.payment_method.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
+                  <img ng-if="userOrder.payment_method.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
+                  <img ng-if="userOrder.payment_method.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
+                </label> **** {{userOrder.payment_method.cnumber}}
               </p>
             </div>
           </div>
