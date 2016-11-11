@@ -122,6 +122,13 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+
+    userwsapi.getUserAddressById = function (uid, aid, username, password) {
+        return $http.get(userServiceURL + '/' + uid + '/address/' + aid, { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
     return userwsapi;
 }]);
 

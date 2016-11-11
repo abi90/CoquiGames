@@ -4,42 +4,8 @@
         <!-- Sidebar Starts -->
         <div class="col-md-3">
           <!-- Categories Links Starts -->
-          <h3 class="side-heading">My account</h3>
-          <div class="list-group categories">
-            <a href="#/account-orders.html" class="list-group-item">
-
-						<i class="fa fa-chevron-right"></i>
-
-						Orders
-
-					</a>
-            <a href="#/account-info.html" class="list-group-item">
-
-						<i class="fa fa-chevron-right"></i>
-
-						Account Information
-
-					</a>
-            <a href="#/account-address.html" class="list-group-item">
-
-						<i class="fa fa-chevron-right"></i>
-
-						Address
-
-					</a>
-            <a href="#/account-payment.html" class="list-group-item">
-
-						<i class="fa fa-chevron-right"></i>
-
-						Payment Method
-
-					</a>
-          </div>
+          <my-account-nav info=""></my-account-nav>
           <!-- Categories Links Ends -->
-          <!-- Shopping Options Starts -->
-          <!-- Shopping Options Ends -->
-          <!-- Bestsellers Links Starts -->
-          <!-- Bestsellers Links Ends -->
         </div>
         <!-- Sidebar Ends -->
         <!-- Primary Content Starts -->
@@ -67,15 +33,16 @@
               </br></br>
               <table class="table table-striped">
                 <thead>
-                <th>Produtcs</th>
-                <th>Quantity</th>
-                <th>Price</th>
+                <th class="text-left">Produtcs</th>
+                <th class="text-left">Quantity</th>
+                <th class="text-left">Price</th>
+                <th class="text-left">Total</th>
                 </thead>
                 <tbody>
 
                 <tr ng-repeat="product in userOrder.oproducts">
                   <td class="text-left">
-                    <a ng-href="product.html/{{product.pid}}">{{product.pname}}</a>
+                    <a ng-href="#/product.html/{{product.pid}}">{{product.pname}}</a>
                   </td>
 
                   <td class="text-left">
@@ -83,7 +50,10 @@
                   </td>
 
                   <td class="text-left">
-                    {{product.pprice}}
+                    {{product.pprice | currency}}
+                  </td>
+                  <td class="text-left">
+                    {{product.pprice * product.pquantity | currency}}
                   </td>
                 </tr>
 
@@ -91,22 +61,22 @@
                 <tfoot>
 
                 <tr>
-                  <td colspan="2" class="text-right">
+                  <td colspan="3" class="text-right">
                     Subtotal:
                   </td>
 
-                  <td colspan="2" class="text-left">
-                    {{userOrder.osubtotal}}
+                  <td colspan="3" class="text-left">
+                    {{userOrder.osubtotal | currency}}
                   </td>
                 </tr>
 
                 <tr>
-                  <td colspan="2" class="text-right">
+                  <td colspan="3" class="text-right">
                     <strong>Total :</strong>
                   </td>
 
-                  <td colspan="2" class="text-left">
-                    {{userOrder.ototal}}
+                  <td colspan="3" class="text-left">
+                    {{userOrder.ototal | currency}}
                   </td>
                 </tr>
 
@@ -127,9 +97,10 @@
         </div>
         <div class="panel-body">
           <p>
-            Gary Oak<br>
-            Pallet Town 3245, Route 1<br>
-            Kanto Region, 09901<br>
+            {{userOrder.shipping_address.afullname}}<br>
+            {{userOrder.shipping_address.aaddress1}}<br>
+            {{userOrder.shipping_address.aaddress2}}<br>
+            {{userOrder.shipping_address.acity}} {{userOrder.shipping_address.astate}}, {{userOrder.shipping_address.azip}}<br>
           </p>
         </div>
       </div>
@@ -144,9 +115,10 @@
           </div>
           <div class="panel-body">
             <p>
-              Gary Oak<br>
-              Pallet Town 3245, Route 1<br>
-              Kanto Region, 09901<br>
+              {{userOrder.billing_address.afullname}}<br>
+              {{userOrder.billing_address.aaddress1}}<br>
+              {{userOrder.billing_address.aaddress2}}<br>
+              {{userOrder.billing_address.acity}} {{userOrder.billing_address.astate}}, {{userOrder.billing_address.azip}}<br>
             </p>
           </div>
         </div>
@@ -177,18 +149,16 @@
               </h3>
             </div>
             <div class="panel-body">
-              <p>
+              <dl>
               <dt>Subtotal :</dt>
-              <dd>$314.99</dd>
+              <dd>{{userOrder.osubtotal | currency}}</dd>
               <dt>Shipment Fee :</dt>
-              <dd>$12.99</dd>
-              <dt>Tax Total :</dt>
-              <dd>$354.08</dd>
+              <dd>{{userOrder.oshipmment_fee | currency}}</dd>
               </dl>
               <hr />
               <dl class="dl-horizontal total">
                 <dt>Total :</dt>
-                <dd>$365.70</dd>
+                <dd>{{userOrder.ototal | currency}}</dd>
               </dl>
               <hr />
               </p>

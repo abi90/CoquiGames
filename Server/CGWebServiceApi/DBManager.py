@@ -99,6 +99,10 @@ def fetch_special_products():
     return __execute_select_product_query__(Query.SELECT_SPECIAL_PRODUCTS)
 
 
+def fetch_platform_special_products(productid):
+    return __execute_select_query__(Query.SELECT_PLATFORM_SPECIAL_PRODUCTS.format(productid))
+
+
 def fetch_latest_products():
     return __execute_select_query__(Query.SELECT_LATEST_PRODUCTS)
 
@@ -320,6 +324,9 @@ def fetch_order(orderid, userid):
         if order:
             products = __execute_select_query__(Query.SELECT_ORDER_PRODUCTS.format(orderid))
             order['oproducts'] = products
+            order['shipping_address'] = __execute_select_query__(Query.SELECT_USER_ADDRESS_ID.format(userid,order['shipping_addressid']))[0]
+            order['billing_address'] = __execute_select_query__(Query.SELECT_USER_ADDRESS_ID.format(userid, order['billing_address']))[0]
+
         return order
 
 
@@ -329,6 +336,14 @@ def fetch_user_orders(userid):
         for order in orders:
             products = __execute_select_query__(Query.SELECT_ORDER_PRODUCTS.format(order['oid']))
             order['oproducts'] = products
+            order['shipping_address'] = __execute_select_query__(
+                Query.SELECT_USER_ADDRESS_ID.format(userid, order['shipping_addressid']))[0]
+            order['billing_address'] = __execute_select_query__(
+                Query.SELECT_USER_ADDRESS_ID.format(userid, order['billing_addressid']))[0]
+            order['payment_method'] = __execute_select_query__(Query.SLECT_USER_PAYMENT_BY_ID.format(userid, order['cid']))[0]
+            order.pop('shipping_addressid', None)
+            order.pop('billing_addressid', None)
+            order.pop('cid', None)
     return orders
 
 
@@ -423,7 +438,7 @@ def update_order_status(order_statusid, orderid):
 #advanced_product_search({'platformid':1, 'genres':['Console'],'price':[40,600]})
 #search_products_by_title('Gears of War 4')
 #fetch_latest_products()
-#fetch_special_products()
+#fetch_platform_special_products()
 #fetch_platforms()
 #fetch_product(2)
 #fetch_platform_latest_products(1)
