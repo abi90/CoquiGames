@@ -83,15 +83,6 @@
 						<dl class="dl-horizontal">
 							<dt>Subtotal :</dt>
 							<dd>{{ getSubTotal() | currency }}</dd>
-							<dt>Shipment Fee :</dt>
-							<dd>{{shippmentFee | currency}}</dd>
-							<dt>Tax Total :</dt>
-							<dd>{{getSubTotal() * 0.1105 |currency}}</dd>
-						</dl>
-						<hr>
-						<dl class="dl-horizontal total">
-							<dt>Total :</dt>
-							<dd>{{cartTotal | currency}}</dd>
 						</dl>
 						<hr>
 						<div class="text-uppercase clearfix">
