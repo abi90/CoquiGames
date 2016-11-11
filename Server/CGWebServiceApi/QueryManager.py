@@ -42,7 +42,7 @@ SELECT_PLATFORM_LATEST_PRODUCTS = """SELECT *
                                       ORDER BY to_date(P.release,'YYYY-MM-DD')"""
 
 
-SELECT_PLATFORM_SPECIAL_PRODUCTS = """SELECT * FROM product_details WHERE inoffer = true AND pid = {0}"""
+SELECT_PLATFORM_SPECIAL_PRODUCTS = """SELECT * FROM product_details WHERE inoffer = true AND platformid = {0}"""
 
 
 SELECT_PLATFORM_ANNOUNCEMENTS = """SELECT * FROM platform_announcements WHERE platformid = {0}"""
@@ -81,9 +81,20 @@ SELECT_USER_ADDRESS = """SELECT address_state AS aState, address_line_1 AS aaddr
                       WHERE userid = {0}"""
 
 
-SELECT_USER_CREDIT_CARD = """SELECT to_char(card_exp_date, 'YYYY-MM-DD') AS cexpdate, payment_methodid AS cid, card_last_four_digits AS cnumber, card_type AS ctype
+SELECT_USER_ADDRESS_ID = """SELECT address_state AS aState, address_line_1 AS aaddress1, address_line_2 AS aaddress2, address_city AS acity,
+                      address_country AS acountry, active AS acurrent, address_fullname AS afullname, addressid AS aid,
+                      address_zip AS azip, CASE WHEN addressid IN (SELECT billing_addressid FROM payment_method) THEN 'billing' ELSE 'shipping' END AS atype
+                      FROM address
+                      WHERE userid = {0} AND addressid = {1}"""
+
+
+SELECT_USER_CREDIT_CARD = """SELECT to_char(card_exp_date, 'YYYY-MM') AS cexpdate, payment_methodid AS cid, card_last_four_digits AS cnumber, card_type AS ctype
                               FROM payment_method
                               WHERE userid = {0}"""
+
+SLECT_USER_PAYMENT_BY_ID="""SELECT to_char(card_exp_date, 'YYYY-MM') AS cexpdate, payment_methodid AS cid, card_last_four_digits AS cnumber, card_type AS ctype
+                              FROM payment_method
+                              WHERE userid = {0} AND payment_methodid = {1}"""
 
 
 SELECT_USER_CART = """SELECT cc.productid AS pid,p.product_title AS pname, p.product_price AS pprice, cc.cart_product_qty as pquantity
@@ -267,7 +278,7 @@ SELECT_SEARCH_TITLE = """SELECT * FROM product_details WHERE lower(title) LIKE l
 SELECT_SEARCH_BLANK = """SELECT * FROM product_details WHERE"""
 
 
-SELECT_USER_MAX_ORDER_ID = """SELECT max(orderid) FROM orders WHERE userid = {0}"""
+SELECT_USER_MAX_ORDER_ID = """SELECT max(orderid) AS orderid FROM orders WHERE userid = {0}"""
 
 
 UPDATE_ORDER_TOTAL = """UPDATE orders

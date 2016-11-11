@@ -5,3 +5,4 @@ gunicorn==19.0.0
 itsdangerous==0.24
 python-dateutil
 flask-cors
+psycopg2

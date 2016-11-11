@@ -92,7 +92,7 @@ def user_order(userid):
             return internal_server_error()
     except Exception as e:
         print e
-        return bad_request()
+        return internal_server_error()
 
 
 @user_blueprint.route("/<int:userid>/payment", methods=['GET', 'POST'])
@@ -359,6 +359,11 @@ def user_cart(userid):
             cart = dbm.fetch_user_cart(userid=userid)
             if cart:
                 return jsonify(cart)
+            else:
+                # Verify cart is empty
+                cartid = dbm.fetch_user_cartid(userid)
+                if cartid:
+                    return jsonify([])
             return not_found()
         elif request.method == 'POST':
             # Verify that the user does not have an active cart
