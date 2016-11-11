@@ -41,7 +41,11 @@ def latest_prod(platformid):
         if result:
             return jsonify(result)
         else:
-            return not_found()
+            for p in platform_list:
+                if p['platformid'] == platformid:
+                    return jsonify([])
+        return not_found()
+
     except Exception as e:
         print e
         return internal_server_error()
@@ -68,10 +72,13 @@ def special_products(platformid):
     try:
         result = dbm.fetch_platform_special_products(platformid)
         if result:
-            #result = sorted(result, key=lambda k: parser.parse(k['release']))
             return jsonify(result)
         else:
-            return not_found()
+            for p in platform_list:
+                if p['platformid'] == platformid:
+                    return jsonify([])
+        return not_found()
+
     except Exception as e:
         print e
         return internal_server_error()
