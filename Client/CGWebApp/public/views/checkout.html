@@ -11,134 +11,6 @@
         Checkout
     </h2>
     <!-- Main Heading Ends -->
-
-    <!-- Order Summary Table Starts -->
-    <!--<div class="table-responsive order-summary-table">-->
-    <!--<table class="table table-bordered">-->
-    <!--<thead>-->
-    <!--<tr>-->
-    <!--<th colspan="3" class="text-center" bgcolor="#4BAC52">-->
-    <!--<strong>Order Summary</strong>-->
-    <!--</th>-->
-    <!--</tr>-->
-    <!--</thead>-->
-
-    <!--<tbody>-->
-    <!--<tr>-->
-    <!--<td class="text-center">-->
-    <!--Products-->
-    <!--</td>-->
-    <!--<td class="text-center">-->
-    <!--Quantity-->
-    <!--</td>-->
-    <!--<td class="text-center">-->
-    <!--Price-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td class="text-center">-->
-    <!--<a href="product-full.html">Digital Electro Goods</a>-->
-    <!--</td>-->
-    <!--<td class="text-center">-->
-    <!--2-->
-    <!--</td>-->
-    <!--<td class="text-left">-->
-    <!--$150.00-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td class="text-center">-->
-    <!--<a href="product-full.html">Pokemon Rumble</a>-->
-    <!--</td>-->
-    <!--<td class="text-center">-->
-    <!--1-->
-    <!--</td>-->
-    <!--<td class="text-left">-->
-    <!--$39.99-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</tbody>-->
-    <!--<tfoot>-->
-    <!--<tr>-->
-    <!--<td colspan="2" class="text-right">-->
-    <!--Subtotal:-->
-    <!--</td>-->
-    <!--<td colspan="2" class="text-left">-->
-    <!--$339.99-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td colspan="2" class="text-right">-->
-    <!--<strong>Total :</strong>-->
-    <!--</td>-->
-    <!--<td colspan="2" class="text-left">-->
-    <!--$339.99-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</tfoot>-->
-    <!--</table>-->
-    <!--</div>-->
-    <!--&lt;!&ndash; Order Summary Table Ends &ndash;&gt;-->
-
-
-    <!--&lt;!&ndash;Address Table Starts &ndash;&gt;-->
-    <!--<div class="table-responsive address-table">-->
-    <!--<table class="table table-bordered">-->
-    <!--<thead>-->
-    <!--<th class="text-center" bgcolor="4BAC52" colspan="2">-->
-    <!--Address-->
-    <!--</th>-->
-    <!--</thead>-->
-
-    <!--<tbody>-->
-    <!--<tr>-->
-    <!--<td rowspan="2">-->
-    <!--<input type="radio" name="shipping-address" value="true">-->
-    <!--Gary Oak<br>-->
-    <!--Pallet Town 3245, Route 1<br>-->
-    <!--Kanto Region, 09901<br>-->
-
-    <!--<button type="button">Edit</button>-->
-    <!--</td>-->
-
-    <!--<td>-->
-    <!--<input type="checkbox" name="mailing-address" value="true"> My shipping address is the same as my mailing address<br>-->
-    <!--</td>-->
-    <!--</tr>-->
-
-    <!--<tr>-->
-    <!--<td colspan="2">-->
-    <!--<button type="button">Add New Address</button>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</tbody>-->
-    <!--</table>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;Address Table Ends &ndash;&gt;-->
-
-    <!--&lt;!&ndash;Shipping Table Starts &ndash;&gt;-->
-    <!--<div class="table-responsive shipping-table">-->
-    <!--<table class="table table-bordered">-->
-    <!--<thead>-->
-    <!--<th class="text-center" bgcolor="4BAC52" colspan="2">-->
-    <!--Shipping-->
-    <!--</th>-->
-    <!--</thead>-->
-    <!--<tbody>-->
-    <!--<tr>-->
-    <!--<td>-->
-    <!--<form action="">-->
-    <!--<input type="radio" name="shipping" value="free"> Free Standar Shipping (9 to 15 Business Days)<br>-->
-    <!--<input type="radio" name="shipping" value="standard"> Standard Shipping (7 to 10 Business Days)<br>-->
-    <!--<input type="radio" name="shipping" value="expres"> Express Shipping (2 to 7 Business Days)-->
-    <!--</form>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</tbody>-->
-    <!--</table>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;Shipping Table Ends &ndash;&gt;-->
-
     <section class="overview">
         <div class="row">
             <div class="col-sm-12">
@@ -151,60 +23,32 @@
                     <div class="panel-body">
                         <table class="table table-striped">
                             <thead>
-                            <th>Produtcs</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
+                            <td class="text-left"><b>Product Details</b></td>
+                            <td class="text-left"><b>Quantity</b></td>
+                            <td class="text-left"><b>Price</b></td>
+                            <td class="text-left"><b>Item Total</b></td>
                             </thead>
                             <tbody>
 
-                            <tr>
+                            <tr ng-repeat="cart in userCart">
                                 <td class="text-left">
-                                    <a href="product-full.html">Digital Electro Goods</a>
+                                    <a ng-href="#/product.html/{{cart.pid}}">{{cart.pname}}</a>
                                 </td>
-
-                                <td class="text-left">
-                                    2
-                                </td>
-
-                                <td class="text-left">
-                                    $150.00
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="text-left">
-                                    <a href="product-full.html">Pokemon Rumble</a>
-                                </td>
-
-                                <td class="text-left">
-                                    1
-                                </td>
-
-                                <td class="text-left">
-                                    $39.99
-                                </td>
+                                <td class="text-left">{{cart.pquantity | number}}</td>
+                                <td class="text-left">{{cart.pprice | currency}}</td>
+                                <td class="text-left">{{cart.pprice * cart.pquantity | currency}}</td>
                             </tr>
 
                             </tbody>
                             <tfoot>
 
                             <tr>
-                                <td colspan="2" class="text-right">
-                                    Subtotal:
+                                <td colspan="3" class="text-right">
+                                    <strong>Subtotal :</strong>
                                 </td>
 
-                                <td colspan="2" class="text-left">
-                                    $339.99
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="2" class="text-right">
-                                    <strong>Total :</strong>
-                                </td>
-
-                                <td colspan="2" class="text-left">
-                                    $339.99
+                                <td colspan="3" class="text-left">
+                                    {{getSubTotal() | currency}}
                                 </td>
                             </tr>
 
@@ -237,13 +81,12 @@
                         </p>
 
                         <p>
-                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Edit</button>
+                            <button type="button" class="btn btn-black" ng-click="shoPreferredShpAddModal()">Change Address</button>
                         </p>
 
-                        <!--Modal-->
+                        <!--Modal Starts
                         <div class="modal fade" id="myModal" role="dialog">
                             <div class="modal-dialog">
-                                <!-- Modal content-->
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -368,11 +211,8 @@
                             </div>
 
                         </div>
+                        -->
 
-                        <p>
-                            <input type="checkbox" name="mailing-address" value="true"> My mailing address is the same as my shipping address<br>
-
-                        </p>
                     </div>
                 </div>
                 <!-- Address Panel Ends -->
@@ -388,40 +228,28 @@
                         <!-- Form Starts -->
                         <fieldset class="form-group">
 
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadio" id="Visa" value="option1">
-                                    <img src="images/payment-icon/visa.png" alt="PaymentGateway" />  Visa
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadio" id="MasterCard" value="option2">
-                                    <img src="images/payment-icon/cirrus.png" alt="PaymentGateway" />  Cirrus
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">
-                                    <img src="images/payment-icon/americanexpress.png" alt="PaymentGateway" />  American Express
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">
-                                    <img src="images/payment-icon/mastercard.png" alt="PaymentGateway" />  Master Card
-                                </label>
-                            </div>
-
-
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadio" id="AmericanExpress" value="option3">
-                                    <img src="images/payment-icon/paypal.png" alt="PaymentGateway" />  PayPal
-                                </label>
+                            <div class="form-check" >
+                                <form class="form-check-label">
+                                    <label class="form-check-input" name="optionsRadio" id="Visa" value="{{selectedPayment.cid}}">
+                                    <img ng-if="selectedPayment.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
+                                    <img ng-if="selectedPayment.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
+                                    <img ng-if="selectedPayment.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
+                                    <b>Ending in {{selectedPayment.cnumber}}</b>
+                                    </label>
+                                </form>
+                                <br>
+                                <!-- Simple dropdown -->
+                                <span uib-dropdown on-toggle="toggled(open)">
+                                    <a href id="simple-dropdown" uib-dropdown-toggle>Change</a>
+                                    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                                        <li role="menuitem" ng-repeat="pay in userPayment"><a>
+                                            <img ng-if="pay.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
+                                            <img ng-if="pay.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
+                                            <img ng-if="pay.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
+                                            <b>Ending in {{pay.cnumber}}</b></a>
+                                        </li>
+                                    </ul>
+                                </span>
                             </div>
 
                         </fieldset>
@@ -446,9 +274,9 @@
                         <form class="form-horizontal" role="form">
                             <div class="form-check">
                                 <form action="">
-                                    <input type="radio" name="shipping" value="free"> Free Standard Shipping (9 to 15 Business Days) - $0.00<br>
-                                    <input type="radio" name="shipping" value="standard"> Standard Shipping (7 to 10 Business Days) - $5.99<br>
-                                    <input type="radio" name="shipping" value="expres"> Express Shipping (2 to 7 Business Days) - $12.99
+                                    <select class="form-control" autocomplete="on" id="" ng-model="shipmentFeeId">
+                                        <option ng-repeat="fee in shippmentFees" value="{{fee.shipment_feeid}}" >{{fee.fee | currency}} - {{fee.fee_description}}</option>
+                                    </select>
                                 </form>
                             </div>
                         </form>
@@ -456,26 +284,6 @@
                     </div>
                 </div>
                 <!-- Shipping Block Ends -->
-
-                <!-- Coupon Block Starts -->
-                <div class="panel panel-smart">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Add a gift card or promotion code
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <!-- Form Starts -->
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="promotioncode" placeholder="Enter code">
-                            <span class="input-group-btn">
-												<button type="button" class="btn btn-default"> Apply </button>
-											</span>
-                        </div>
-                        <!-- Form Ends -->
-                    </div>
-                </div>
-                <!-- Coupon Block Ends -->
 
                 <!-- Total Panel Starts -->
                 <div class="panel panel-smart">
@@ -486,28 +294,24 @@
                     </div>
                     <div class="panel-body">
                         <dl class="dl-horizontal">
-                            <dt>Coupon Discount :</dt>
-                            <dd>$-25.00</dd>
                             <dt>Subtotal :</dt>
-                            <dd>$314.99</dd>
+                            <dd>{{getSubTotal() | currency}}</dd>
                             <dt>Shipment Fee :</dt>
-                            <dd>$12.99</dd>
-                            <dt>Tax Total :</dt>
-                            <dd>$354.08</dd>
+                            <dd>{{getShipmentFee().fee | currency}}</dd>
                         </dl>
                         <hr />
                         <dl class="dl-horizontal total">
                             <dt>Total :</dt>
-                            <dd>$365.70</dd>
+                            <dd>{{getSubTotal() + getShipmentFee().fee | currency}}</dd>
                         </dl>
                         <hr />
                         <div class="text-uppercase clearfix">
-                            <a href="#" class="btn btn-default pull-left">
+                            <a href="#/cart.html" class="btn btn-main pull-left">
                                 <span class="hidden-xs">Go back to cart</span>
-                                <span class="visible-xs">Continue</span>
+                                <span class="visible-xs">Continue Shopping</span>
                             </a>
-                            <a href="#" class="btn btn-default pull-right">
-                                Continue to Payment
+                            <a href="#/account-orders" class="btn btn-main pull-right">
+                                Place Order
                             </a>
                         </div>
                     </div>

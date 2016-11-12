@@ -129,6 +129,34 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+
+    userwsapi.getUserPreferences= function (uid, username, password) {
+        return $http.get(userServiceURL + '/' + uid + '/preferences', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+
+    userwsapi.getUserBillingAddress= function (uid, username, password) {
+        return $http.get(userServiceURL + '/' + uid + '/billing_address', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+
+    userwsapi.getUserShippingAddress= function (uid, username, password) {
+        return $http.get(userServiceURL + '/' + uid + '/shipping_address', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+
+    userwsapi.getShipmentFees= function () {
+        return $http.get(userServiceURL + '/shipmentfees')
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
     return userwsapi;
 }]);
 

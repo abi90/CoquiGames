@@ -56,7 +56,7 @@
 			<tfoot>
 			<tr>
 				<td colspan="4" class="text-right">
-					<strong>Total :</strong>
+					<strong>Subtotal :</strong>
 				</td>
 				<td colspan="2" class="text-left">{{ getSubTotal() | currency }}</td>
 			</tr>
@@ -77,23 +77,18 @@
 				<!-- Total Panel Starts -->
 				<div class="panel panel-smart">
 					<div class="panel-heading">
-						<h3 class="panel-title">Total</h3>
+						<h3 class="panel-title">Subtotal ({{userCart.length}} items): {{ getSubTotal() | currency }}</h3>
 					</div>
 					<div class="panel-body">
-						<dl class="dl-horizontal">
-							<dt>Subtotal :</dt>
-							<dd>{{ getSubTotal() | currency }}</dd>
-						</dl>
-						<hr>
 						<div class="text-uppercase clearfix">
-							<a href="#/index.html" class="btn btn-default pull-left">
+							<a href="#/index.html" class="btn btn-main pull-left">
 
 								<span href="#/index.html" class="hidden-xs">Continue Shopping</span>
 
 								<span class="visible-xs" href="#/index.html">Continue</span>
 
 							</a>
-							<a href="#/checkout" class="btn btn-default pull-right">
+							<a href="#/checkout" class="btn btn-main pull-right">
 
 								Checkout
 

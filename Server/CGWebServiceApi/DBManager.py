@@ -340,7 +340,7 @@ def fetch_user_orders(userid):
                 Query.SELECT_USER_ADDRESS_ID.format(userid, order['shipping_addressid']))[0]
             order['billing_address'] = __execute_select_query__(
                 Query.SELECT_USER_ADDRESS_ID.format(userid, order['billing_addressid']))[0]
-            order['payment_method'] = __execute_select_query__(Query.SLECT_USER_PAYMENT_BY_ID.format(userid, order['cid']))[0]
+            order['payment_method'] = __execute_select_query__(Query.SELECT_USER_PAYMENT_BY_ID.format(userid, order['cid']))[0]
             order.pop('shipping_addressid', None)
             order.pop('billing_addressid', None)
             order.pop('cid', None)
@@ -360,7 +360,19 @@ def update_user_preferred_payment(payment_methodid, userid):
 
 
 def fetch_user_preferences(userid):
-    return __execute_select_query__(Query.SELECT_USER_PREFERENCES.format(userid))
+    preferences = __execute_select_query__(Query.SELECT_USER_PREFERENCES.format(userid))[0]
+    if preferences:
+        preferences['shipping_address'] = __execute_select_query__(
+            Query.SELECT_USER_ADDRESS_ID.format(userid, preferences['shipping_addressid']))[0]
+        preferences['billing_address'] = __execute_select_query__(
+            Query.SELECT_USER_ADDRESS_ID.format(userid, preferences['billing_addressid']))[0]
+        preferences['payment_method'] = __execute_select_query__(
+            Query.SELECT_USER_PAYMENT_BY_ID.format(userid, preferences['payment_methodid']))[0]
+        preferences.pop('shipping_addressid', None)
+        preferences.pop('billing_addressid', None)
+        preferences.pop('payment_methodid', None)
+        preferences.pop('userid', None)
+    return preferences
 
 
 def fetch_max_payment_methodid(userid):
@@ -432,6 +444,18 @@ def validate_payment(cid, userid):
 
 def update_order_status(order_statusid, orderid):
     return __execute_commit_query__(Query.UPDATE_ORDER_SATUS.format(order_statusid, orderid))
+
+
+def fetch_shipment_fees():
+    return __execute_select_query__(Query.SELECT_SHIPMENT_FEE)
+
+
+def fetch_user_billing_address(userid):
+    return __execute_select_query__(Query.SELECT_USER_BILLING_ADDRESS.format(userid))
+
+
+def fetch_user_shipping_address(userid):
+    return __execute_select_query__(Query.SELECT_USER_SHIPPING_ADDRESS.format(userid))
 
 
 #advanced_product_search({'title':'PS4','platformid':1, 'genres':['Console']})

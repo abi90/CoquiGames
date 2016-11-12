@@ -254,6 +254,32 @@ def user_address(userid):
         return internal_server_error()
 
 
+@user_blueprint.route("/<int:userid>/billing_address", methods=['GET'])
+@requires_auth
+def user_billing_address(userid):
+    try:
+        address = dbm.fetch_user_billing_address(userid)
+        if address:
+            return jsonify(address)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
+
+@user_blueprint.route("/<int:userid>/shipping_address", methods=['GET'])
+@requires_auth
+def user_shipping_address(userid):
+    try:
+        address = dbm.fetch_user_shipping_address(userid)
+        if address:
+            return jsonify(address)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
+
 @user_blueprint.route("/<int:userid>/wishlist", methods=['GET'])
 @requires_auth
 def user_wish_list(userid):
@@ -547,6 +573,18 @@ def get_user_id():
             return bad_request()
     else:
         return missing_parameters_error()
+
+
+@user_blueprint.route("/shipmentfees", methods=['GET'])
+def shipment_fees():
+    try:
+        result = dbm.fetch_shipment_fees()
+        if result:
+            return jsonify(result)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 
 def validate_account(data):

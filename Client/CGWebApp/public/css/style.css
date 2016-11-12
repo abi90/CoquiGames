@@ -222,7 +222,7 @@ hr{
 }
 #cart .btn .fa-shopping-cart{
     color:#4bac52;
-    line-height:none;
+    line-height: none;
     font-size:22px;
     margin-right:10px;
     vertical-align: top;
@@ -1199,3 +1199,17 @@ li a:hover, .dropdown:hover .dropbtn {
 .dropdown:hover .dropdown-menu{
     display: block;
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.personal-info{
+    font-size: larger;
+}
+
