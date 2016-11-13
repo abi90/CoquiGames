@@ -88,8 +88,8 @@
                 <!-- Search Starts -->
                 <div class="col-md-3">
                     <div id="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-lg" placeholder="Search">
+                        <div class="input-group" ng-submit="redirect()">
+                            <input ng-model="title"  type="text" class="form-control input-lg" placeholder="Search">
                             <span class="input-group-btn">
                     <button class="btn btn-lg" type="button" ng-click="redirect()">
                       <i class="fa fa-search"></i>

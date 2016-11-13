@@ -24,6 +24,16 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
                 }]
             }
         })
+        .when('/search/:title', {
+            controller: 'SearchController',
+            templateUrl: 'views/search-list.html',
+            resolve: {
+                title: ['$route', function($route){
+                    var params = $route.current.params;
+                    return params.title =  params.title;
+                }]
+            }
+        })
         .when('/404.html', {
             controller: '',
             templateUrl: 'views/404.html'

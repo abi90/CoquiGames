@@ -1,260 +1,234 @@
 <!-- Main Container Starts -->
 <div id="main-container" class="container">
-      <div class="row">
+    <div class="row">
         <!-- Sidebar Starts -->
         <div class="col-md-3">
-          <!-- Shopping Options Starts -->
-          <h3 class="side-heading">FILTERS</h3>
-          <div class="list-group">
-            <div class="list-group-item">PLATFORM</div>
-            <div class="list-group-item">
-              <div class="filter-group">
-                <label class="radio">
-                  <input name="filter-manuf" type="radio" value="mr1" checked="checked">PS4</label>
-                <label class="radio">
-                  <input name="filter-manuf" type="radio" value="mr2">XBOX ONE</label>
-                <label class="radio">
-                  <input name="filter-manuf" type="radio" value="mr3">3DS</label>
-              </div>
+            <!-- Shopping Options Starts -->
+            <h3 class="side-heading">FILTERS</h3>
+            <div class="list-group">
+                <div class="list-group-item">PLATFORM</div>
+                <div class="list-group-item">
+                    <div class="filter-group">
+                        <label class="radio" ng-repeat="platform in platforms">
+                            <input name="filter-plat"
+                                   ng-click="selectPlatform(platform.platformid)"
+                                   value="{{platform.platformid}}"
+                                   type="radio"
+                                   ng-checked="platform.platformid === platformSelection">
+                            {{platform.platform}}
+                        </label>
+                    </div>
+                </div>
+                <div class="list-group-item">GENRES</div>
+                <div class="list-group-item">
+                    <div class="filter-group">
+                        <label class="checkbox" ng-repeat="g in genres">
+                            <input name="filter-gnr"
+                                   ng-click="toggleSelection(g)"
+                                   type="checkbox"
+                                   value="{{g}}"
+                                   ng-checked="genresSelection.indexOf(g) != -1">
+                            {{g}}
+                        </label>
+                    </div>
+                </div>
+                <div class="list-group-item">PRICE RANGE</div>
+                <div class="list-group-item">
+                    <div class="filter-group">
+                        <label class="radio" ng-repeat="p in priceRanges">
+                            <input name="filter-prc"
+                                   type="radio"
+                                   ng-click="selectPriceRange(p)"
+                                   ng-checked="p===priceRangeSelection"
+                                   value="{{p}}">
+                            {{p.from | currency}} - {{p.to | currency}}
+                        </label>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <button type="button" class="btn btn-main" ng-click="filterAction()">Filter</button>
+                </div>
             </div>
-            <div class="list-group-item">CONSOLES</div>
-            <div class="list-group-item">
-              <div class="filter-group">
-                <label class="checkbox">
-                  <input name="filter1" type="checkbox" value="br1" checked="checked">Action</label>
-                <label class="checkbox">
-                  <input name="filter2" type="checkbox" value="br2">Shooter</label>
-                <label class="checkbox">
-                  <input name="filter2" type="checkbox" value="br2">LOL</label>
-              </div>
-            </div>
-            <div class="list-group-item">GENERS</div>
-            <div class="list-group-item">
-              <div class="filter-group">
-                <label class="checkbox">
-                  <input name="filter1" type="checkbox" value="br1" checked="checked">Action</label>
-                <label class="checkbox">
-                  <input name="filter2" type="checkbox" value="br2">Shooter</label>
-                <label class="checkbox">
-                  <input name="filter2" type="checkbox" value="br2">LOL</label>
-              </div>
-            </div>
-            <div class="list-group-item">Price</div>
-            <div class="list-group-item">
-              <div class="filter-group">
-                <label class="radio">
-                  <input name="filter-manuf" type="radio" value="mr1" checked="checked">$0.00 - 5.00</label>
-                <label class="radio">
-                  <input name="filter-manuf" type="radio" value="mr2">$6.00 - 11.00</label>
-                <label class="radio">
-                  <input name="filter-manuf" type="radio" value="mr3">$12.00 - $17.00</label>
-              </div>
-            </div>
-            <div class="list-group-item">
-              <button type="button" class="btn btn-main">Filter</button>
-            </div>
-          </div>
-          <!-- Shopping Options Ends -->
-          <!-- Bestsellers Links Starts -->
-          <div class="product-col">
-            <div class="image"></div>
-          </div>
-          <!-- Bestsellers Links Ends -->
+            <!-- Shopping Options Ends -->
         </div>
         <!-- Sidebar Ends -->
         <!-- Primary Content Starts -->
         <div class="col-md-9">
-          <!-- Breadcrumb Starts -->
-          <ol class="breadcrumb">
-            <li>
-              <a href="index.html">Home</a>
-            </li>
-            <li class="active">Search</li>
-          </ol>
-          <!-- Breadcrumb Ends -->
-          <!-- Product Filter Starts -->
-          <div class="product-filter">
+            <!-- Breadcrumb Starts -->
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#/index.html">Home</a>
+                </li>
+                <li class="active">Search</li>
+                <li class="active">{{title}}</li>
+            </ol>
+            <!-- Breadcrumb Ends -->
+            <!-- Product Filter Starts -->
+            <div class="product-filter">
+                <div class="row">
+                    <div class="col-md-2" ng-if="list==true">
+                        <div class="display">
+                            <a ng-click="listView()" class="active">
+                                <i class="fa fa-th-list" title="List View"></i>
+                            </a>
+                            <a ng-click="gridView()">
+                                <i class="fa fa-th" title="Grid View"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2" ng-if="list==false">
+                        <div class="display">
+                            <a ng-click="listView()">
+                                <i class="fa fa-th-list" title="List View"></i>
+                            </a>
+                            <a ng-click="gridView()" class="active">
+                                <i class="fa fa-th" title="Grid View"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <label class="control-label">Sort</label>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <select class="form-control" ng-model="propertyName">
+                            <option value="Title" selected="selected">Title</option>
+                            <option value="A-Z">A-Z</option>
+                            <option value="Z-A">Z-A</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <select class="form-control" ng-model="propertyName">
+                            <option value="Price" selected="selected">Price</option>
+                            <option value="lowest">Lowest First</option>
+                            <option value="highest">Highest First</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 text-right">
+                        <label class="control-label">Show</label>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <select class="form-control" ng-model="qty.max">
+                            <option selected="selected" value="9">9</option>
+                            <option value="18">18</option>
+                            <option value="21">21</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Filter Ends -->
+            <!-- Product List Display Starts -->
+            <div class="row" ng-if="list==true">
+                <!-- Product #1 Starts -->
+                <div class="col-xs-12" ng-repeat="product in results | limitTo: qty.max | orderBy:orderByFunc:format">
+                    <div class="product-col list clearfix">
+                        <div class="image">
+                            <img src="images/product-images/10.jpg" alt="product" class="img-responsive">
+                        </div>
+                        <div class="caption">
+                            <h4>
+                                <a ng-href="#/product.html/{{product.pid}}">{{product.title}}</a>
+                            </h4>
+                            <div class="description">
+                                <span ng-bind-html="product.description | filter:html | limitTo: 300"></span>
+                                {{product.description .length > 300 ? '...' : ''}}
+                            </div>
+                            <div class="price">
+                                <span ng-if="product.inoffer==true" class="price-new">{{product.offerprice | currency}}</span>
+                                <span ng-if="product.inoffer==false" class="price-new">{{product.price | currency}}</span>
+                                <span ng-if="product.inoffer==true" class="price-old">{{product.price | currency}}</span>
+                            </div>
+                            <div class="cart-button button-group">
+                                <button type="button" title="Wishlist" class="btn btn-wishlist">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                                <button type="button" class="btn btn-cart">Add to cart
+                                    <i class="fa fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                            <!--Hack to change format value-->
+                            <div style="color: white">{{format}}</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product #1 Ends -->
+            </div>
+            <!-- Product List Display Ends -->
+            <!-- Product Grid Display Starts -->
+            <div class="row" ng-if="list==false">
+                <!-- Product #1 Starts -->
+                <div class="col-md-4 col-sm-6" ng-repeat="product in results | limitTo: qty.max | orderBy:orderByFunc:format">
+                    <div class="product-col">
+                        <div class="image">
+                            <img src="images/product-images/15.jpg" alt="product" class="img-responsive">
+                        </div>
+                        <div class="caption">
+                            <h4>
+                                <a ng-href="#/product.html/{{product.pid}}">{{product.title | limitTo: 23}}
+                                    {{product.title.length > 23 ? '...' : ''}}</a>
+                            </h4>
+                            <div class="description">
+                                <span ng-bind-html="product.description | filter: html | limitTo: 10 "></span>
+                                {{product.description .length > 10 ? '...' : ''}}
+                            </div>
+                            <div class="price">
+                                <span ng-if="product.inoffer==true" class="price-new">{{product.offerprice | currency}}</span>
+                                <span ng-if="product.inoffer==false" class="price-new">{{product.price | currency}}</span>
+                                <span ng-if="product.inoffer==true" class="price-old">{{product.price | currency}}</span>
+                            </div>
+                            <div class="cart-button button-group">
+                                <button type="button" title="Wishlist" class="btn btn-wishlist">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                                <button type="button" class="btn btn-cart">Add to cart
+                                    <i class="fa fa-shopping-cart"></i>
+                                </button>
+                                <!--Hack to change format value-->
+                                <div style="color: white">{{format}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product #1 Ends -->
+            </div>
+            <!-- Product Grid Display Ends -->
+            <!-- Pagination & Results Starts -->
             <div class="row">
-              <div class="col-md-4">
-                <div class="display">
-                  <a href="#/search-list" class="active">
-
-									<i class="fa fa-th-list" title="List View"></i>
-
-								</a>
-                  <a href="#/search-grid">
-
-									<i class="fa fa-th" title="Grid View"></i>
-
-								</a>
+                <!-- Pagination Starts -->
+                <div class="col-sm-6 pagination-block">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#">«</a>
+                        </li>
+                        <li class="active">
+                            <a href="#">1</a>
+                        </li>
+                        <li>
+                            <a href="#">2</a>
+                        </li>
+                        <li>
+                            <a href="#">3</a>
+                        </li>
+                        <li>
+                            <a href="#">4</a>
+                        </li>
+                        <li>
+                            <a href="#">5</a>
+                        </li>
+                        <li>
+                            <a href="#">»</a>
+                        </li>
+                    </ul>
                 </div>
-              </div>
-              <div class="col-md-2 text-right">
-                <label class="control-label">Sort</label>
-              </div>
-              <div class="col-md-3 text-right">
-                <select class="form-control">
-                  <option value="Title" selected="selected">Title</option>
-                  <option value="NAZ">A - Z</option>
-                  <option value="NZA">Z - A</option>
-                </select>
-              </div>
-              <div class="col-md-1 text-right">
-                <label class="control-label">Show</label>
-              </div>
-              <div class="col-md-2 text-right">
-                <select class="form-control">
-                  <option value="1">10</option>
-                  <option value="2">20</option>
-                  <option value="2">50</option>
-                  <option value="3" selected="selected">3</option>
-                </select>
-              </div>
+                <!-- Pagination Ends -->
+                <!-- Results Starts -->
+                <div class="col-sm-6 results">Showing 1 to 3 of 12 (4 Pages)</div>
+                <!-- Results Ends -->
             </div>
-          </div>
-          <!-- Product Filter Ends -->
-          <!-- Product List Display Starts -->
-          <div class="row">
-            <!-- Product #1 Starts -->
-            <div class="col-xs-12">
-              <div class="product-col list clearfix">
-                <div class="image">
-                  <img src="images/product-images/10.jpg" alt="product" class="img-responsive">
-                </div>
-                <div class="caption">
-                  <h4>
-                    <a href="product-full.html">Digital Electro Goods</a>
-                  </h4>
-                  <div class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the
-                    1500s, when an unknown printer took a galley of type and scrambled it to
-                    make a type specimen book.</div>
-                  <div class="price">
-                    <p class="price-tax">Ex Tax: $279.99</p>
-                    <span class="price-new">$199.50</span>
-                    <span class="price-old">$249.50</span>
-                  </div>
-                  <div class="cart-button button-group">
-                    <button type="button" title="Wishlist" class="btn btn-wishlist">
-                      <i class="fa fa-heart"></i>
-                    </button>
-                    <button type="button" title="Compare" class="btn btn-compare">
-                      <i class="fa fa-bar-chart-o"></i>
-                    </button>
-                    <button type="button" class="btn btn-cart">Add to cart
-                      <i class="fa fa-shopping-cart"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Product #1 Ends -->
-            <!-- Product #2 Starts -->
-            <div class="col-xs-12">
-              <div class="product-col list clearfix">
-                <div class="image">
-                  <img src="images/product-images/11.jpg" alt="product" class="img-responsive">
-                </div>
-                <div class="caption">
-                  <h4>
-                    <a href="product-full.html">Digital Electro Goods</a>
-                  </h4>
-                  <div class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the
-                    1500s, when an unknown printer took a galley of type and scrambled it to
-                    make a type specimen book.</div>
-                  <div class="price">
-                    <p class="price-tax">Ex Tax: $279.99</p>
-                    <span class="price-new">$199.50</span>
-                    <span class="price-old">$249.50</span>
-                  </div>
-                  <div class="cart-button button-group">
-                    <button type="button" title="Wishlist" class="btn btn-wishlist">
-                      <i class="fa fa-heart"></i>
-                    </button>
-                    <button type="button" title="Compare" class="btn btn-compare">
-                      <i class="fa fa-bar-chart-o"></i>
-                    </button>
-                    <button type="button" class="btn btn-cart">Add to cart
-                      <i class="fa fa-shopping-cart"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Product #2 Ends -->
-            <!-- Product #3 Starts -->
-            <div class="col-xs-12">
-              <div class="product-col list clearfix">
-                <div class="image">
-                  <img src="images/product-images/12.jpg" alt="product" class="img-responsive">
-                </div>
-                <div class="caption">
-                  <h4>
-                    <a href="product-full.html">Digital Electro Goods</a>
-                  </h4>
-                  <div class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the
-                    1500s, when an unknown printer took a galley of type and scrambled it to
-                    make a type specimen book.</div>
-                  <div class="price">
-                    <p class="price-tax">Ex Tax: $279.99</p>
-                    <span class="price-new">$199.50</span>
-                    <span class="price-old">$249.50</span>
-                  </div>
-                  <div class="cart-button button-group">
-                    <button type="button" title="Wishlist" class="btn btn-wishlist">
-                      <i class="fa fa-heart"></i>
-                    </button>
-                    <button type="button" title="Compare" class="btn btn-compare">
-                      <i class="fa fa-bar-chart-o"></i>
-                    </button>
-                    <button type="button" class="btn btn-cart">Add to cart
-                      <i class="fa fa-shopping-cart"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Product #3 Ends -->
-          </div>
-          <!-- Product List Display Ends -->
-          <!-- Pagination & Results Starts -->
-          <div class="row">
-            <!-- Pagination Starts -->
-            <div class="col-sm-6 pagination-block">
-              <ul class="pagination">
-                <li>
-                  <a href="#">«</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li>
-                  <a href="#">»</a>
-                </li>
-              </ul>
-            </div>
-            <!-- Pagination Ends -->
-            <!-- Results Starts -->
-            <div class="col-sm-6 results">Showing 1 to 3 of 12 (4 Pages)</div>
-            <!-- Results Ends -->
-          </div>
-          <!-- Pagination & Results Ends -->
+            <!-- Pagination & Results Ends -->
         </div>
         <!-- Primary Content Ends -->
-      </div>
     </div>
+</div>
 <!-- Main Container Ends -->

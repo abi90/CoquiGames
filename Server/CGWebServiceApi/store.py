@@ -134,20 +134,33 @@ def store_platforms():
 @store_blueprint.route("/search", methods=['POST'])
 def search():
     try:
-        products = dbm.fetch_latest_products()
-        result = []
-        if request.json:
-            for p in products:
-                if match(p, request.json):
-                    result.append(p)
-            if result:
-                if request.json['Sort'] == 'A-Z':
-                    result = sorted(result, key=lambda k: k['Title'])
-                elif request.json['Sort'] == 'Z-A':
-                    result = sorted(result, key=lambda k: k['Title'], reverse=True)
-                return jsonify(result[:request.json['Max']])
+        if 'title' in request.json:
+
+            products = dbm.search_products_by_title(request.json['title'])
+            result = []
+
+            if 'platformid' or 'genres' or 'price' in request.json:
+                # Filter results by title
+                for p in products:
+                    if match(p, request.json):
+                        result.append(p)
             else:
-                not_found()
+                result = products
+
+            if result:
+                # Sort Results
+                if 'sort' in request.json:
+                    if request.json['sort'] == 'A-Z':
+                        result = sorted(result, key=lambda k: k['title'])
+                    elif request.json['sort'] == 'Z-A':
+                        result = sorted(result, key=lambda k: k['title'], reverse=True)
+                # Return Results
+                if 'max' in request.json:
+                    return jsonify(result[:request.json['max']])
+                else:
+                    return jsonify(result)
+            else:
+                return not_found()
         else:
             return bad_request()
     except Exception as e:
@@ -192,11 +205,28 @@ def home_specials_prod():
         return internal_server_error()
 
 
-def match(prod, request):
-    result = prod['PlatformId'] == request['PlatformId']
-    result = result and prod['Genre'] in request['Genre']
-    result = result and prod['Category'] in request['Category']
-    result = result and (prod['Price'] >= request['Price']['From'] or prod['Price'] <= request['Price']['To'])
-    if request['InOffer'] == "True":
-        result = result and prod['InOffer']
+@store_blueprint.route("/genres", methods=['GET'])
+def genres():
+    try:
+        result = dbm.fetch_store_genres();
+        if result:
+            return jsonify(result)
+        else:
+            return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
+
+def match(prod, data):
+    result = True
+    if 'genres' in data:
+        result = result and prod['genre'] in data['genres']
+    if 'platformid' in data:
+        result = result and (str(prod['platformid']) == str(data['platformid']))
+    if 'price' in data:
+        result = result and (float(data['price']['from']) <= float(prod['price']) <= float(data['price']['to']))
+    if 'category' in data:
+        result = result and prod['category'] in data['category']
     return result
+

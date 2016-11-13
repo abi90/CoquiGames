@@ -74,6 +74,29 @@ app.factory('storewsapi', ['$http',
                     .success(function (data) {return data;})
                     .error(function (error) {return error;});
             };
+        storewsapi.getGenres =
+            function () {
+                return $http.get(storeServiceURL+'/genres')
+                    .success(function (data) {return data;})
+                    .error(function (error) {return error;});
+            };
+
+        storewsapi.searchByTitle =
+            function (title)
+            {
+                return $http.post(storeServiceURL+'/search', {title: title})
+                    .success(function (data) {return data;})
+                    .error(function (error) {return error;});
+            };
+
+
+        storewsapi.search =
+            function (data)
+            {
+                return $http.post(storeServiceURL+'/search', data)
+                    .success(function (data) {return data;})
+                    .error(function (error) {return error;});
+            };
 
         return storewsapi;
     }]);

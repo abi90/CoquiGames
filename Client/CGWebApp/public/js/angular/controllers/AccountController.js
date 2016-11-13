@@ -15,6 +15,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         $scope.shipmentFee;
         $scope.shipmentFeeId = 0;
         $scope.selectedPayment = {};
+        $scope.selectedShippingAddress = {};
         $scope.userPreferences;
 
         // Local Functions
@@ -84,6 +85,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                 function (response) {
                     $scope.userPreferences = response.data;
                     $scope.selectedPayment = $scope.userPreferences.payment_method;
+                    $scope.selectedShippingAddress = $scope.userPreferences.shipping_address;
                 },
                 function (error) {
                     console.log("Error: " +error.statusCode);

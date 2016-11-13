@@ -32,14 +32,17 @@ app.controller('NavBarController', ['$scope', '$rootScope', '$location', 'storew
          ];*/
 
         $scope.navbarOptions;
+        $rootScope.platforms;
         $rootScope.Loggedin = false;
         $scope.user;
         $scope.CartSize;
+        $scope.title = '';
 
 
         storewsapi.getPlatforms().then(
             function (response) {
                 $scope.navbarOptions = response.data;
+                $rootScope.platforms = response.data;
             },
             function (error) {
                 console.log(error);
@@ -48,7 +51,7 @@ app.controller('NavBarController', ['$scope', '$rootScope', '$location', 'storew
         );
 
         $scope.redirect = function(){
-            $location.url("search-grid");
+            $location.url("search/"+$scope.title);
         };
 
         var getUser = function(){

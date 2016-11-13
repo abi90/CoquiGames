@@ -334,4 +334,7 @@ SELECT_USER_BILLING_ADDRESS = """SELECT address_state AS aState, address_line_1 
                       WHERE userid = {0} AND  addressid IN (SELECT billing_addressid FROM payment_method)"""
 
 
+SELECT_STORE_GENRES = """SELECT genre FROM genre WHERE active = TRUE"""
+
+
 

@@ -458,6 +458,14 @@ def fetch_user_shipping_address(userid):
     return __execute_select_query__(Query.SELECT_USER_SHIPPING_ADDRESS.format(userid))
 
 
+def fetch_store_genres():
+    dict = __execute_select_query__(Query.SELECT_STORE_GENRES)
+    result = []
+    for e in dict:
+        result.append(e['genre'])
+    return result
+
+
 #advanced_product_search({'title':'PS4','platformid':1, 'genres':['Console']})
 #advanced_product_search({'platformid':1, 'genres':['Console'],'price':[40,600]})
 #search_products_by_title('Gears of War 4')
