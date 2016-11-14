@@ -1,0 +1,68 @@
+<div class="popeye-modal-container">
+    <div class="popeye-modal modal-content">
+        <div class="modal-header">
+            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <h4 class="modal-title">Add Payment Method</h4>
+        </div>
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <form role="form">
+                    <!-- Credit Card Information Starts -->
+                    <div class="row">
+                        <label for="txtAddress1" class="col-sm-3 control-label">Name on Card:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txtAddress1" placeholder="Name on Card">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="txtAddress2" class="col-sm-3 control-label">Card Number:</label>
+                        <div class="col-sm-9">
+                            <input type='number' pattern="[0-9]{13,16}" autocomplete="on" maxlength="16" class="form-control" id="txtAddress2" placeholder="Card Number">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="drpCardNumber" class="col-sm-3 control-label">Expiration Date :</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" autocomplete="on" id="drpCardNumber">
+                                <option value=''>Month</option>
+                                <option value='01'>Janaury</option>
+                                <option value='02'>February</option>
+                                <option value='03'>March</option>
+                                <option value='04'>April</option>
+                                <option value='05'>May</option>
+                                <option value='06'>June</option>
+                                <option value='07'>July</option>
+                                <option value='08'>August</option>
+                                <option value='09'>September</option>
+                                <option value='10'>October</option>
+                                <option value='11'>November</option>
+                                <option value='12'>December</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <select class="form-control" autocomplete="on" id="drpCardYear">
+                                <option value=''>Year</option>
+                                <option value='2016'>2016</option>
+                                <option value='2016'>2017</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="txtCVC" class="col-sm-3 control-label">CVC :</label>
+                        <div class="col-sm-9">
+                            <input type="number" pattern="[0-9]{3}" autocomplete="off" maxlength="3" class="form-control" id="txtCVC" placeholder="CVC">
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <!-- Credit Card Information Ends -->
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer row">
+            <div class="form-group">
+                <button type="button" class="btn btn-black" ng-click="$close()">Done</button>
+            </div>
+        </div>
+    </div>
+</div>
