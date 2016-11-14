@@ -1,0 +1,52 @@
+<div class="popeye-modal-container">
+    <div class="popeye-modal modal-content">
+        <div class="modal-header">
+            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <h4 class="modal-title">Edit Personal Information</h4>
+        </div>
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <!-- Personal Information Starts -->
+                <div class="row">
+                    <label for="txtFname" class="col-sm-3 control-label">First Name :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtFname" placeholder="First Name">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtLname" class="col-sm-3 control-label">Last Name :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtLname" placeholder="Last Name">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtDateOfBirth" class="col-sm-3 control-label">Date of Birth :</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" id="txtDateOfBirth" placeholder="Date of Birth">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtEmail" class="col-sm-3 control-label">Email :</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" id="txtEmail" placeholder="Email">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtPhone" class="col-sm-3 control-label">Phone :</label>
+                    <div class="col-sm-9">
+                        <input type="tel" pattern="^(\d{4}\-\d{2}\-\d{2})$" class="form-control" id="txtPhone" placeholder="Phone">
+                        <br>
+                    </div>
+                </div>
+                <!-- Personal Information Ends -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-black" ng-click="$close()">Done</button>
+        </div>
+    </div>
+</div>
