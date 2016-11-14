@@ -1215,4 +1215,12 @@ input[type="number"] {
 .my-account-select{
     width: 150px;
 }
+.navbar-brand {
+    padding: 0px; /* firefox bug fix */
+}
+.navbar-brand>img {
+    height: 100%;
+    padding: 15px; /* firefox bug fix */
+    width: 75px;
+}
 

@@ -1,8 +1,8 @@
 /**
  * Created by abi on 11/12/16.
  */
-app.controller("SearchController", ["$scope", "$location", "storewsapi", "title", '$rootScope',
-    function ($scope, $location, storewsapi, title, $rootScope) {
+app.controller("SearchController", ["$scope", "$location", "storewsapi", "title", '$rootScope', 'Popeye', 'orderByFilter',
+    function ($scope, $location, storewsapi, title, $rootScope, Popeye, orderBy) {
         //Scope Variables
         $scope.title = title;
         $scope.results = [];
@@ -18,40 +18,21 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
             {from: 300, to: 9999.99}
         ];
         $scope.genresSelection = [];
-        $scope.qty = {max: 9};
         $scope.propertyName = 'Title';
         $scope.format = false;
         $scope.platformSelection = -1;
         $scope.priceRangeSelection = {from: -1, to: -1};
+        $scope.currentPage = 1;
+        $scope.qty = {max: 9};
 
 
         $scope.orderByFunc = function(product){
-            if($scope.propertyName == 'highest'){
-                $scope.format = true;
+            if($scope.propertyName == 'highest' || $scope.propertyName == 'lowest' || $scope.propertyName == 'Price'){
                 return parseFloat(product.price);
             }
-            else if($scope.propertyName == 'lowest'){
-                $scope.format = false;
-                return parseFloat(product.price);
-            }
-            else if($scope.propertyName == 'A-Z')
+            else if($scope.propertyName == 'A-Z' || $scope.propertyName == 'Z-A' || $scope.propertyName == 'Title')
             {
-                $scope.format = false;
                 return product.title;
-            }
-            else if($scope.propertyName == 'Z-A')
-            {
-                $scope.format = true;
-                return product.title;
-            }
-            else if($scope.propertyName == 'Title')
-            {
-                $scope.format = false;
-                return product.title;
-            }
-            if($scope.propertyName == 'Price'){
-                $scope.format = false;
-                return parseFloat(product.price);
             }
 
         };
@@ -61,7 +42,8 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
             if(title.length > 0){
                 storewsapi.searchByTitle(title).then(
                     function (response) {
-                        $scope.results = response.data
+                        $scope.results = response.data;
+                        sliceResults();
                     },
                     function (error) {
                         console.log(error.toString());
@@ -75,6 +57,7 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
             }
 
         };
+
         var getGenres = function () {
             storewsapi.getGenres().then(
                 function (response) {
@@ -85,6 +68,21 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
                     $scope.genres = [];
                 }
             )
+
+        };
+
+        var sliceResults= function () {
+            if($scope.propertyName == 'highest' || $scope.propertyName == 'Z-A' || $scope.propertyName == 'Price'){
+                $scope.format = true;
+            }
+            else if($scope.propertyName == 'lowest' || $scope.propertyName == 'A-Z' || $scope.propertyName == 'Title'){
+                $scope.format = false;
+            }
+
+            var begin = (($scope.currentPage-1)*$scope.qty.max);
+            var end = begin + $scope.qty.max;
+            $scope.results = orderBy($scope.results, $scope.orderByFunc, $scope.format);
+            $scope.FilteredResults = $scope.results.slice(begin, end);
 
         };
 
@@ -113,7 +111,7 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
             }
         };
 
-        $scope.filterAction = function () {
+        $scope.filterAction = function (){
             var data = {title: title};
             if($scope.priceRangeSelection.to > 0){
                 data['price'] = $scope.priceRangeSelection;
@@ -127,7 +125,8 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
             console.log(data)
             storewsapi.search(data).then(
                     function (response) {
-                        $scope.results = response.data
+                        $scope.results = response.data;
+                        sliceResults();
                     },
                     function (error) {
                         console.log(error.toString());
@@ -143,6 +142,15 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
         $scope.selectPriceRange = function(p){
             $scope.priceRangeSelection = p;
         };
+
+        $scope.updateFilter = function () {
+            sliceResults();
+        };
+
+        $scope.$watch("currentPage + numPerPage", function () {
+            sliceResults();
+        });
+
 
 
         //Get Results on startup

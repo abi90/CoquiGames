@@ -8,13 +8,13 @@
                 <div class="col-sm-8 col-xs-12">
                     <div class="header-links">
                         <ul class="nav navbar-nav pull-left">
+                            <a href="#/index.html" class="navbar-brand navbar-left hidden-lg hidden-md"><img src="images/small-logo.png" height="100" width="60"></a>
                             <li>
                                 <a href="#/index.html">
                                     <i class="fa fa-home hidden-lg hidden-md" title="Home"></i>
                                     <span class="hidden-sm hidden-xs">
 											Home
 										</span>
-
                                 </a>
                             </li>
                             <li ng-show="Loggedin">
@@ -86,29 +86,41 @@
         <div class="container">
             <div class="row">
                 <!-- Search Starts -->
-                <div class="col-md-3">
-                    <div id="search">
-                        <div class="input-group" ng-submit="redirect()">
-                            <input ng-model="title"  type="text" class="form-control input-lg" placeholder="Search">
+                <div class="col-xs-offset-1 col-xs-10 hidden-lg hidden-sm hidden-md ">
+                    <div id="small-search">
+                        <div class="input-group">
+                            <input ng-model="title" type="text" class="form-control input-lg" placeholder="Search">
                             <span class="input-group-btn">
-                    <button class="btn btn-lg" type="button" ng-click="redirect()">
-                      <i class="fa fa-search"></i>
-                    </button>
-                  </span>
+                                <button class="btn btn-lg btn-black" style="color: #4bac52" type="button" ng-click="redirect()">
+                                  <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 hidden-xs">
+                    <div id="search">
+                        <div class="input-group">
+                            <input ng-model="title" ng-submit="redirect()" type="text" class="form-control input-lg" placeholder="Search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-lg" type="button" ng-click="redirect()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </div>
                 <!-- Search Ends -->
                 <!-- Logo Starts -->
-                <div class="col-md-6">
+                <div class="col-md-6 hidden-xs">
                     <div id="logo">
                         <a href="#/index.html"><img src="images/logo.png" title="Spice Shoppe" alt="Spice Shoppe" class="img-responsive"></a>
                     </div>
                 </div>
-                <!-- Logo Starts -->
+                <!-- Logo Ends -->
                 <!-- Shopping Cart Starts -->
                 <div class="col-md-3">
-                    <div id="cart" class="btn-group btn-block">
+                    <div id="cart" class="btn-group btn-block hidden-xs">
                         <button ng-click="goToCart()" type="button" class="btn btn-block btn-lg dropdown-toggle">
                             <i class="fa fa-shopping-cart"></i>
                             <span class="hidden-md">Cart:</span>
@@ -140,7 +152,7 @@
                     <li class="dropdown">
                         <!-- class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="10" -->
                         <a ng-href="#/platform-home/{{option.platformid}}">{{option.platform}}</a>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu hidden-xs">
                             <div class="dropdown-inner">
                                 <ul class="list-unstyled">
                                     <li class="dropdown-header">Platform</li>
