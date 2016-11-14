@@ -107,10 +107,11 @@
         </div>
         <div class="panel-body">
           <p>
-            {{userOrder.shipping_address.afullname}}<br>
-            {{userOrder.shipping_address.aaddress1}}<br>
-            {{userOrder.shipping_address.aaddress2}}<br>
-            {{userOrder.shipping_address.acity}} {{userOrder.shipping_address.astate}}, {{userOrder.shipping_address.azip}}<br>
+            {{userOrder.shipping_address.afullname}}
+            <br>{{userOrder.shipping_address.aaddress1}}
+            <br ng-if="userOrder.shipping_address.aaddress2.length > 0">{{userOrder.shipping_address.aaddress2}}
+            <br>{{userOrder.shipping_address.acity}} {{userOrder.shipping_address.astate}}, {{userOrder.shipping_address.azip}}
+            <br>{{userOrder.shipping_address.acountry}}
           </p>
         </div>
       </div>
@@ -125,10 +126,11 @@
           </div>
           <div class="panel-body">
             <p>
-              {{userOrder.billing_address.afullname}}<br>
-              {{userOrder.billing_address.aaddress1}}<br>
-              {{userOrder.billing_address.aaddress2}}<br>
-              {{userOrder.billing_address.acity}} {{userOrder.billing_address.astate}}, {{userOrder.billing_address.azip}}<br>
+              {{userOrder.billing_address.afullname}}
+              <br>{{userOrder.billing_address.aaddress1}}
+              <br ng-if="userOrder.billing_address.aaddress2.length > 0">{{userOrder.billing_address.aaddress2}}
+              <br>{{userOrder.billing_address.acity}} {{userOrder.billing_address.astate}}, {{userOrder.billing_address.azip}}
+              <br>{{userOrder.billing_address.acountry}}
             </p>
           </div>
         </div>
@@ -162,16 +164,16 @@
             </div>
             <div class="panel-body">
               <dl>
-              <dt>Subtotal :</dt>
-              <dd>{{userOrder.osubtotal | currency}}</dd>
-              <dt>Shipment Fee :</dt>
-              <dd>{{userOrder.oshipmment_fee | currency}}</dd>
+                <dt>Subtotal :</dt>
+                <dd>{{userOrder.osubtotal | currency}}</dd>
+                <dt>Shipment Fee :</dt>
+                <dd>{{userOrder.oshipmment_fee | currency}}</dd>
               </dl>
               <hr />
-              <dl class="dl-horizontal total">
-                <dt>Total :</dt>
-                <dd>{{userOrder.ototal | currency}}</dd>
-              </dl>
+                <dl class="total">
+                  <dt>Total :</dt>
+                  <dd>{{userOrder.ototal | currency}}</dd>
+                </dl>
               <hr />
               </p>
             </div>

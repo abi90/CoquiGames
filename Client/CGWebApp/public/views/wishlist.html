@@ -1,64 +1,85 @@
 <!-- Main Container Starts -->
-	<div id="main-container" class="container">
-	<!-- Breadcrumb Starts -->
-		<ol class="breadcrumb">
-			<li><a href="index.html">Home</a></li>
-			<li class="active">Wish List</li>
-		</ol>
-	<!-- Breadcrumb Ends -->
-	<!-- Main Heading Starts -->
-		<h2 class="main-heading text-center">
-			Wish List
-		</h2>
-	<!-- Main Heading Ends -->
-	<!-- Wish List Cart Table Starts -->
-		<div class="table-responsive shopping-cart-table">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<td class="text-center">
-							Image
-						</td>
-						<td class="text-center">
-							Product Details
-						</td>
-						<td class="text-center">
-							Price
-						</td>
-						<td class="text-center">
-							Action
-						</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="wish in userWishlist">
-						<td class="text-center">
-							<a href="product.html">
-								<img src="images/product-images/cart-thumb-img1.jpg" alt="Product Name" title="Product Name" class="img-thumbnail" />
-							</a>
-						</td>
-						<td class="text-center">
-							<a ng-href="#/product.html/{{wish.pid}}">{{wish.pname}}</a>
-						</td>
-						<td class="text-center">
-							{{wish.pprice}}
-						</td>
-						<td class="text-center">
-							<button type="submit" title="Update" class="btn btn-default tool-tip">
-								<i class="fa fa-shopping-cart"></i>
-							</button>
-							<button type="button" title="Remove" class="btn btn-default tool-tip">
-								<i class="fa fa-times-circle"></i>
-							</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>				
-		</div>
-
-		<!-- Inser deleted code here -->
-
-	
-	<!-- Shipping Section Ends -->
-	</div>
+<div id="main-container" class="container">
+    <!-- Breadcrumb Starts -->
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Wish List</li>
+    </ol>
+    <!-- Breadcrumb Ends -->
+    <!-- Main Heading Starts -->
+    <h2 class="main-heading text-center">
+        Wish List
+    </h2>
+    <!-- Main Heading Ends -->
+    <!-- Wish List Cart Table Starts -->
+    <div class="table-responsive shopping-cart-table" ng-if="userWishlist.length > 0">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td class="text-center">
+                    Image
+                </td>
+                <td class="text-center">
+                    Product Details
+                </td>
+                <td class="text-center">
+                    Price
+                </td>
+                <td class="text-center">
+                    Action
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="wish in userWishlist">
+                <td class="text-center">
+                    <a href="product.html">
+                        <img src="images/product-images/cart-thumb-img1.jpg" alt="Product Name" title="Product Name" class="img-thumbnail" />
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-href="#/product.html/{{wish.pid}}">{{wish.pname}}</a>
+                </td>
+                <td class="text-center">
+                    {{wish.pprice}}
+                </td>
+                <td class="text-center">
+                    <button type="submit" title="Update" class="btn btn-default tool-tip">
+                        <i class="fa fa-shopping-cart"></i>
+                    </button>
+                    <button type="button" title="Remove" class="btn btn-default tool-tip">
+                        <i class="fa fa-times-circle"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Wish List Cart Table Starts -->
+    <!-- Empty Wish List Section Starts -->
+    <div class="text-center" ng-if="userWishlist.length <= 0">
+        <section class="registration-area">
+            <div class="row">
+                <div class="col-sm-6 col-md-offset-3" >
+                    <!-- Message Panel Starts -->
+                    <div class="panel panel-smart">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Your Wish List is Empty!</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            <div class="text-uppercase clearfix">
+                                <a href="#/index.html" class="btn btn-main text-center">
+                                    <span href="#/index.html" class="hidden-xs">Continue Shopping</span>
+                                    <span class="visible-xs" href="#/index.html">Continue</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Message Panel Ends -->
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Empty Wish List Section Ends -->
+</div>
 <!-- Main Container Ends -->

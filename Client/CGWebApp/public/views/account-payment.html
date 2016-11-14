@@ -27,22 +27,34 @@
                     <form class="form-horizontal" role="form">
                         <!-- Personal Information Starts -->
                         <div class="form-group" ng-repeat="pay in userPayment">
-                            <div class="col-sm-2">
+                            <div class="col-md-offset-1 col-md-1 col-sm-1 col-xs-2">
                                 <img ng-if="pay.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
                                 <img ng-if="pay.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
                                 <img ng-if="pay.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
                             </div>
-                            <div class="col-sm-3">
-                                <label class="control-label" id="" placeholder="Full Name">Ending in {{pay.cnumber}}</label>
+                            <div class="col-md-2 col-sm-2 col-xs-3">
+                                <label class="control-label">Ending in {{pay.cnumber}}</label>
                             </div>
-                            <div class="col-sm-3">
-                                <label class="control-label" id="inputCompany" placeholder="Full Name">Expires {{pay.cexpdate | date}}</label>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <label class="control-label">Expires {{pay.cexpdate | date}}</label>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-md-2 col-sm-2 col-xs-3">
                                 <button type="submit" class="btn btn-black">CHANGE</button>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-3" ng-if="pay.preferred == true">
+                                <label class="control-label">[*Preferred*]</label>
                             </div>
                             <!-- Password Area Ends -->
                             <!-- Registration Form Starts -->
+                        </div>
+                    </form>
+                    <br>
+                    <div class="panel-heading">
+                    </div>
+                    <br>
+                    <form class="form-group">
+                        <div class="col-md-offset-4 col-md-1 col-sm-1 col-xs-2">
+                            <button type="submit " class="btn btn-black">ADD A NEW PAYMENT METHOD</button>
                         </div>
                     </form>
                 </div>

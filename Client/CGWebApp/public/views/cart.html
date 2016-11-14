@@ -12,7 +12,7 @@
 	<h2 class="main-heading text-center">Shopping Cart</h2>
 	<!-- Main Heading Ends -->
 	<!-- Shopping Cart Table Starts -->
-	<div class="table-responsive shopping-cart-table">
+	<div class="table-responsive shopping-cart-table" ng-if="userCart.length >0">
 		<table class="table table-bordered">
 			<thead>
 			<tr>
@@ -64,16 +64,12 @@
 		</table>
 	</div>
 	<!-- Shopping Cart Table Ends -->
-	<!-- Shipping Section Starts -->
-    <div class="text-center">
+	<!-- Checkout Section Starts -->
+    <div class="text-center" ng-if="userCart.length >0">
 	<section class="registration-area">
 		<div class="row">
-			<!-- Discount & Conditions Blocks Starts -->
+			<!-- Total Blocks Starts -->
 			<div class="col-sm-6 col-md-offset-3" >
-				<!-- Discount Coupon Block Starts -->
-				<!-- Discount Coupon Block Ends -->
-				<!-- Conditions Panel Starts -->
-				<!-- Conditions Panel Ends -->
 				<!-- Total Panel Starts -->
 				<div class="panel panel-smart">
 					<div class="panel-heading">
@@ -82,26 +78,46 @@
 					<div class="panel-body">
 						<div class="text-uppercase clearfix">
 							<a href="#/index.html" class="btn btn-main pull-left">
-
 								<span href="#/index.html" class="hidden-xs">Continue Shopping</span>
-
-								<span class="visible-xs" href="#/index.html">Continue</span>
-
+								<span class="visible-xs" href="#/index.html">Checkout</span>
 							</a>
 							<a href="#/checkout" class="btn btn-main pull-right">
-
 								Checkout
-
 							</a>
 						</div>
 					</div>
 				</div>
 				<!-- Total Panel Ends -->
 			</div>
-			<!-- Discount & Conditions Blocks Ends -->
+			<!-- Total Blocks Ends -->
 		</div>
 	</section>
     </div>
-	<!-- Shipping Section Ends -->
+	<!-- Checkout Section Ends -->
+	<!-- Empty Cart Section Starts -->
+	<div class="text-center" ng-if="userCart.length <= 0">
+		<section class="registration-area">
+			<div class="row">
+				<div class="col-sm-6 col-md-offset-3" >
+					<!-- Message Panel Starts -->
+					<div class="panel panel-smart">
+						<div class="panel-heading">
+							<h3 class="panel-title">Your Cart is Empty!</h3>
+						</div>
+						<div class="panel-body text-center">
+							<div class="text-uppercase clearfix">
+								<a href="#/index.html" class="btn btn-main text-center">
+									<span href="#/index.html" class="hidden-xs">Continue Shopping</span>
+									<span class="visible-xs" href="#/index.html">Continue</span>
+								</a>
+							</div>
+						</div>
+					</div>
+					<!-- Message Panel Ends -->
+				</div>
+			</div>
+		</section>
+	</div>
+	<!-- Empty Cart Section Ends -->
 </div>
 <!-- Main Container Ends -->

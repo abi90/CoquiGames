@@ -11,7 +11,7 @@
         Checkout
     </h2>
     <!-- Main Heading Ends -->
-    <section class="overview">
+    <section class="overview" ng-if="userCart.length > 0">
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-smart">
@@ -23,35 +23,30 @@
                     <div class="panel-body">
                         <table class="table table-striped">
                             <thead>
-                            <td class="text-left"><b>Product Details</b></td>
-                            <td class="text-left"><b>Quantity</b></td>
-                            <td class="text-left"><b>Price</b></td>
-                            <td class="text-left"><b>Item Total</b></td>
+                                <td class="text-left"><b>Product Details</b></td>
+                                <td class="text-left"><b>Quantity</b></td>
+                                <td class="text-left"><b>Price</b></td>
+                                <td class="text-left"><b>Item Total</b></td>
                             </thead>
                             <tbody>
-
-                            <tr ng-repeat="cart in userCart">
-                                <td class="text-left">
-                                    <a ng-href="#/product.html/{{cart.pid}}">{{cart.pname}}</a>
-                                </td>
-                                <td class="text-left">{{cart.pquantity | number}}</td>
-                                <td class="text-left">{{cart.pprice | currency}}</td>
-                                <td class="text-left">{{cart.pprice * cart.pquantity | currency}}</td>
-                            </tr>
-
+                                <tr ng-repeat="cart in userCart">
+                                    <td class="text-left">
+                                        <a ng-href="#/product.html/{{cart.pid}}">{{cart.pname}}</a>
+                                    </td>
+                                    <td class="text-left">{{cart.pquantity | number}}</td>
+                                    <td class="text-left">{{cart.pprice | currency}}</td>
+                                    <td class="text-left">{{cart.pprice * cart.pquantity | currency}}</td>
+                                </tr>
                             </tbody>
                             <tfoot>
-
-                            <tr>
-                                <td colspan="3" class="text-right">
-                                    <strong>Subtotal :</strong>
-                                </td>
-
-                                <td colspan="3" class="text-left">
-                                    {{getSubTotal() | currency}}
-                                </td>
-                            </tr>
-
+                                <tr>
+                                    <td colspan="3" class="text-right">
+                                        <strong>Subtotal :</strong>
+                                    </td>
+                                    <td colspan="3" class="text-left">
+                                        {{getSubTotal() | currency}}
+                                    </td>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -59,9 +54,8 @@
             </div>
         </div>
     </section>
-
     <!-- Payment & Address Section Starts -->
-    <section class="registration-area">
+    <section class="registration-area" ng-if="userCart.length > 0">
         <div class="row">
             <!-- Payment & Address Block Starts -->
             <div class="col-sm-6">
@@ -75,148 +69,18 @@
                     </div>
                     <div class="panel-body">
                         <p>
-                            Gary Oak<br>
-                            Pallet Town 3245, Route 1<br>
-                            Kanto Region, 09901<br>
+                            <b>{{selectedShippingAddress.afullname}}</b>
+                            <br>{{selectedShippingAddress.aaddress1}}
+                            <br ng-if="selectedShippingAddress.address2.length > 0">{{selectedShippingAddress.address2}}
+                            <br>{{selectedShippingAddress.acity}}, {{selectedShippingAddress.astate}} {{selectedShippingAddress.azip}}
+                            <br>{{selectedShippingAddress.acountry}}<br>
                         </p>
-
                         <p>
                             <button type="button" class="btn btn-black" ng-click="shoPreferredShpAddModal()">Change Address</button>
                         </p>
-
-                        <!--Modal Starts
-                        <div class="modal fade" id="myModal" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Edit Address</h4>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <form role="form">
-                                            <div class="form-group">
-
-                                                <label for="name">
-                                                        <span class="">
-                                                            First name:
-                                                        </span>
-                                                </label>
-                                                <input type="text" class="form-control" id="name" placeholder="First name">
-
-                                                <br>
-
-                                                <label for="lastname">
-                                                        <span class="">
-                                                            Last name:
-                                                        </span>
-                                                </label>
-                                                <input type="text" class="form-control" id="lastname" placeholder="Last name">
-
-                                                <br>
-
-                                                <label for="add1">
-                                                        <span class="">
-                                                            Address field 1:
-                                                        </span>
-                                                </label>
-                                                <input type="text" class="form-control" id="add1" placeholder="Address">
-
-                                                <br>
-
-                                                <label for="add2">
-                                                        <span class="">
-                                                            Address field 2:
-                                                        </span>
-                                                </label>
-                                                <input type="text" class="form-control" id="add2" placeholder="Address">
-
-                                                <br>
-
-                                                <label for="city">
-                                                        <span class="">
-                                                            City:
-                                                        </span>
-                                                </label>
-                                                <input type="text" class="form-control" id="city" placeholder="City">
-
-                                                <br>
-
-                                                <label for="state">
-                                                        <span class="">
-                                                            State / Province / Region:
-                                                        </span>
-                                                </label>
-                                                <input type="text" class="form-control" id="state" placeholder="State / Province / Region">
-
-                                                <br>
-
-                                                <label for="">
-                                                        <span class="">
-                                                           Country:
-                                                        </span>
-                                                </label>
-                                                <br>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Country
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#">Action</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                        <a class="dropdown-item" href="#">Something else here</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Separated link</a>
-                                                    </div>
-                                                </div>
-
-                                                <br><br>
-
-                                                <label for="zipcode">
-                                                        <span class="">
-                                                            Postal / Zip Code:
-                                                        </span>
-                                                </label>
-                                                <input type="text" class="form-control" id="zipcode" placeholder="Postal / Zip Code">
-
-                                                <br>
-
-                                                <label for="email">
-                                                        <span class="">
-                                                            Email:
-                                                        </span>
-                                                </label>
-                                                <input type="text" class="form-control" id="email" placeholder="Email">
-
-                                                <br>
-
-                                                <label for="phone">
-                                                        <span class="">
-                                                            Phone number:
-                                                        </span>
-                                                </label>
-                                                <input type="text" class="form-control" id="phone" placeholder="Phone number">
-
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        -->
-
                     </div>
                 </div>
                 <!-- Address Panel Ends -->
-
                 <!-- Payment Method Block Starts -->
                 <div class="panel panel-smart">
                     <div class="panel-heading">
@@ -231,10 +95,10 @@
                             <div class="form-check" >
                                 <form class="form-check-label">
                                     <label class="form-check-input" name="optionsRadio" id="Visa" value="{{selectedPayment.cid}}">
-                                    <img ng-if="selectedPayment.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
-                                    <img ng-if="selectedPayment.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
-                                    <img ng-if="selectedPayment.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
-                                    <b>Ending in {{selectedPayment.cnumber}}</b>
+                                        <img ng-if="selectedPayment.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
+                                        <img ng-if="selectedPayment.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
+                                        <img ng-if="selectedPayment.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
+                                        <b>Ending in {{selectedPayment.cnumber}}</b>
                                     </label>
                                 </form>
                                 <br>
@@ -242,16 +106,17 @@
                                 <span uib-dropdown on-toggle="toggled(open)">
                                     <a href id="simple-dropdown" uib-dropdown-toggle>Change</a>
                                     <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
-                                        <li role="menuitem" ng-repeat="pay in userPayment"><a>
-                                            <img ng-if="pay.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
-                                            <img ng-if="pay.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
-                                            <img ng-if="pay.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
-                                            <b>Ending in {{pay.cnumber}}</b></a>
+                                        <li role="menuitem" ng-repeat="pay in userPayment">
+                                            <a>
+                                                <img ng-if="pay.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
+                                                <img ng-if="pay.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
+                                                <img ng-if="pay.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
+                                                <b>Ending in {{pay.cnumber}}</b>
+                                            </a>
                                         </li>
                                     </ul>
                                 </span>
                             </div>
-
                         </fieldset>
                         <!-- Form Ends -->
                     </div>
@@ -322,5 +187,30 @@
         </div>
     </section>
     <!-- Shipping Section Ends -->
+    <!-- Empty Cart Section Starts -->
+    <div class="text-center" ng-if="userCart.length <= 0">
+        <section class="registration-area">
+            <div class="row">
+                <div class="col-sm-6 col-md-offset-3" >
+                    <!-- Message Panel Starts -->
+                    <div class="panel panel-smart">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Your Cart is Empty!</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            <div class="text-uppercase clearfix">
+                                <a href="#/index.html" class="btn btn-main text-center">
+                                    <span href="#/index.html" class="hidden-xs">Continue Shopping</span>
+                                    <span class="visible-xs" href="#/index.html">Continue</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Message Panel Ends -->
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Empty Cart Section Ends -->
 </div>
 <!-- Main Container Ends -->
