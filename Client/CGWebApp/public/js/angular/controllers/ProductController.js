@@ -9,7 +9,16 @@ app.controller('ProductController', ['$scope', '$location', 'storewsapi','produc
             $scope.product = response.data;
         },
         function (error) {
-            console.log(JSON.stringify(error));
+            console.log(error.toString());
             $location.path("/404.html");
         });
+    storewsapi.relatedProducts($scope.productId ).then(
+        function(response) {
+            $scope.relatedPrds = response.data;
+        },
+        function (error) {
+            console.log(error.toString());
+            $scope.relatedPrds = [];
+        }
+    );
 }]);

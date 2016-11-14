@@ -13,7 +13,7 @@ app.controller("LoginController", ["$scope", '$rootScope',"$location", "$window"
             }, function (error) {
                 $window.alert("Invalid credentials");
                 $rootScope.$emit('unLogin');
-                console.log(error);
+                console.log(error.toString());
             });
     };
 

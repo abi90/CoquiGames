@@ -45,9 +45,9 @@ def __execute_select_query__(query):
 
         # Encode unicode special characters into xml special characters
         # This is done because the content will be displayed in an html client
-        for e in results:
+        #for e in results:
             #e = dict((k, v.encode('ascii', 'xmlcharrefreplace').replace('\n', '<br />')) for (k, v) in e.items())
-            print e
+            #print e
 
         conn.close()
         return results
@@ -74,7 +74,7 @@ def __execute_select_product_query__(query):
         for e in results:
             e['description'] = e['description'].encode('ascii', 'xmlcharrefreplace').replace('\n', '<br />')
             e['aditionalinfo'] = e['aditionalinfo'].encode('ascii', 'xmlcharrefreplace').replace('\n', '<br />')
-            print e
+            #print e
 
         conn.close()
         return results
@@ -139,8 +139,8 @@ def fetch_platforms():
             for row in cur.fetchall():
                 r['gamegen'].append(str(row[0]))
 
-        for e in results:
-            print e
+        #for e in results:
+            #print e
         conn.close()
         return results
     except Exception as e:
@@ -466,39 +466,15 @@ def fetch_store_genres():
     return result
 
 
-#advanced_product_search({'title':'PS4','platformid':1, 'genres':['Console']})
-#advanced_product_search({'platformid':1, 'genres':['Console'],'price':[40,600]})
-#search_products_by_title('Gears of War 4')
-#fetch_latest_products()
-#fetch_platform_special_products()
-#fetch_platforms()
-#fetch_product(2)
-#fetch_platform_latest_products(1)
-#fetch_platform_special_products(4)
-#authenticate_user('gary123',1,'Gary123s')
-#print 'executing'
-#insert_product_rating(1,5)
-#print 'Done'
-#fetch_platform_announcements(1)
-#fetch_store_announcements()
-#fetch_user_info(1)
-#fetch_user_wish_list(1)
-#fetch_user_address(1)
-#fetch_user_payment_methods(1)
-#fetch_user_cart(1)
-#update_user_account('gary123', 'Gary123s',1)
-#update_cart_product_qty(100,2,1)
-#deactivate_user_payment_method(1,5)
-#insert_user_payment_method('Test Test', '1234','1234-1234-1234-1234', '2018-01-02', '123', 'Master Card', 1)
-#deactivate_user_cart(5,3)
-#create_user_cart(3)
-#add_product_to_user_wishlist(14,1)
-#update_user_info(user_firstname='Luz', user_lastname='Rojas', email='luz.rojas1@upr.edu', phone='787-234-7175', dob='1997-10-12',userid=3)
-#add_product_to_cart(1,20,6)
-#fetch_user_accountid('gary123', 'Gary123s')
-#fetch_user_cartid(1)
-#cart_contains(1,2)
-#wish_list_contains(1,1)
-#user_account_exist('gary12', 'gary.oak@upr.edu')
-#print fetch_order(1,2)
-#print fetch_user_orders(14)
+def fetch_related_products(pid):
+    return __execute_select_query__(Query.SELECT_RELATED_PRODUCTS.format(pid, pid))
+
+
+def fetch_home_top():
+    return __execute_select_query__(Query.SELECT_HOME_TOP_PRODUCTS)
+
+
+def fetch_platform_top(platformid):
+    return __execute_select_query__(Query.SELECT_PLATFORM_TOP_PRODUCTS.format(platformid))
+
+

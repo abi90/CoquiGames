@@ -6,43 +6,6 @@ from DBManager import authenticate_user
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
 
-users = [
-    {
-        'uid': 1,
-        'uadmin': False,
-        'ufirstname': 'Gary',
-        'ulastname': 'Oak',
-        'uemail': 'gary.oak@upr.edu',
-        'uphone': '787-893-9067',
-        'udob': '31-12-1996',
-        'uname': 'gary123',
-        'upassword': 'Gary123s'
-    },
-    {
-        'uid': 2,
-        'uadmin': False,
-        'ufirstname': 'Ash',
-        'ulastname': 'Ketchum',
-        'uemail': 'ash.ketchum@upr.edu',
-        'uphone': '787-893-9067',
-        'udob': '03-12-1996',
-        'uname': 'ash123',
-        'upassword': 'Ash123s'
-    },
-    {
-        'uid': 3,
-        'uadmin': True,
-        'ufirstname': 'Elsa',
-        'ulastname': 'Pito',
-        'uemail': 'elsa.pito@upr.edu',
-        'uphone': '787-893-9067',
-        'udob': '03-12-1996',
-        'uname': 'elsa123',
-        'upassword': 'secret'
-    }
-]
-
-
 def generate_auth_token(id, expiration=600):
     """
     Generates token with the given id and expiration time
@@ -68,7 +31,7 @@ def verify_auth_token(token, userid):
         return False    # valid token, but expired
     except BadSignature:
         return False    # invalid token
-    if data['id'] == userid:
+    if data['id']['uid'] == int(userid):
         return True # valid token and request
     return False # valid token but invalid request
 
@@ -83,7 +46,7 @@ def check_auth(username, password, userid):
     """
     # first try to authenticate by token
     print 'first try to authenticate by token'
-    if not verify_auth_token(username, userid):
+    if not verify_auth_token(password, userid):
         # try to authenticate with username/password/id(from url request)
         user = authenticate_user(username, userid, password)
         if user:

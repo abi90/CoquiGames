@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, json
-from authentication import requires_auth, users, generate_auth_token
+from authentication import requires_auth, generate_auth_token
 from errors import not_found, bad_request, internal_server_error
 import DBManager as dbm
 import re

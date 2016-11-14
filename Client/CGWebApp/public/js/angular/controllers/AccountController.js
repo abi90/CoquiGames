@@ -20,55 +20,58 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
 
         // Local Functions
         var getUserAddress = function (auth) {
-            userwsapi.getUserAddress(auth.uid, auth.uname, auth.upassword).then(
+            userwsapi.getUserAddress(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userAddress = response.data;
                 },
                 function (error) {
-                    console.log("Error: " +error.statusCode);
-                    $location.path("/404.html");
+                    console.log("Error: " + error.toString());
+                    $scope.logout();
                 }
             )
         };
 
         var getUser = function (auth) {
-            userwsapi.getUser(auth.uid, auth.uname, auth.upassword).then(
+            userwsapi.getUser(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userData = response.data;
                 },
                 function (error) {
                     console.log("Error: " + error.statusCode);
                     $location.path("/404.html");
+                    $scope.logout();
                 }
             )
         };
 
         var getUserOrder = function (auth) {
-            userwsapi.getUserOrders(auth.uid, auth.uname, auth.upassword).then(
+            userwsapi.getUserOrders(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userOrder = response.data;
                 },
                 function (error) {
                     console.log("Error: " +error.statusCode);
                     $location.path("/404.html");
+                    $scope.logout();
                 }
             )
         };
 
         var getUserPayments = function (auth) {
-            userwsapi.getUserPayment(auth.uid, auth.uname, auth.upassword).then(
+            userwsapi.getUserPayment(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userPayment = response.data;
                 },
                 function (error) {
                     console.log("Error: " +error.statusCode);
                     $location.path("/404.html");
+                    $scope.logout();
                 }
             )
         };
 
         var getUserCart= function (auth) {
-            userwsapi.getUserCart(auth.uid, auth.uname, auth.upassword).then(
+            userwsapi.getUserCart(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userCart = response.data;
                     $rootScope.$emit('Login');
@@ -76,12 +79,13 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                 function (error) {
                     console.log("Error: " +error.statusCode);
                     $location.path("/404.html");
+                    $scope.logout();
                 }
             )
         };
 
         var getUserPreferences= function (auth) {
-            userwsapi.getUserPreferences(auth.uid, auth.uname, auth.upassword).then(
+            userwsapi.getUserPreferences(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userPreferences = response.data;
                     $scope.selectedPayment = $scope.userPreferences.payment_method;
@@ -89,19 +93,21 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                 },
                 function (error) {
                     console.log("Error: " +error.statusCode);
-                    //$location.path("/404.html");
+                    $location.path("/404.html");
+                    $scope.logout();
                 }
             )
         };
 
         var getUserWishList= function (auth) {
-            userwsapi.getUserWishlist(auth.uid, auth.uname, auth.upassword).then(
+            userwsapi.getUserWishlist(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userWishlist = response.data;
                 },
                 function (error) {
                     console.log("Error: " +error.statusCode);
                     $location.path("/404.html");
+                    $scope.logout();
                 }
             )
         };
@@ -115,12 +121,13 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                    function (error) {
                        console.log("Error: " +error.statusCode);
                        $location.path("/404.html");
+                       $scope.logout();
                    }
                )
         };
 
         var getUserBillingAddress= function (auth) {
-            userwsapi.getUserBillingAddress(auth.uid, auth.uname, auth.upassword).then(
+            userwsapi.getUserBillingAddress(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userBillingAddress = response.data;
                 },
@@ -128,19 +135,21 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                     console.log(error);
                     console.log("Error: " + response.data);
                     $scope.userBillingAddress = [];
+                    $scope.logout();
                 }
             )
 
         };
 
         var getUserShippingAddress= function (auth) {
-            userwsapi.getUserShippingAddress(auth.uid, auth.uname, auth.upassword).then(
+            userwsapi.getUserShippingAddress(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userShippingAddress = response.data;
                 },
                 function (error) {
                     console.log("Error: " + error.statusCode);
                     $scope.userShippingAddress = [];
+                    $scope.logout();
                 }
             )
 
@@ -444,5 +453,6 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         getUserPreferences(auth);
         getUserShippingAddress(auth);
         getUserBillingAddress(auth);
+
 
     }]);

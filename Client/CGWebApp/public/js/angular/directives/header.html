@@ -86,10 +86,10 @@
         <div class="container">
             <div class="row">
                 <!-- Search Starts -->
-                <div class="col-xs-offset-1 col-xs-10 hidden-lg hidden-sm hidden-md ">
+                <div class="col-xs-offset-1 col-xs-10 hidden-lg hidden-sm hidden-md">
                     <div id="small-search">
                         <div class="input-group">
-                            <input ng-model="title" type="text" class="form-control input-lg" placeholder="Search">
+                            <input ng-model="title" type="text" class="form-control input-lg" placeholder="Search" ng-keypress="($event.charCode==13)? redirect() : return" type="text">
                             <span class="input-group-btn">
                                 <button class="btn btn-lg btn-black" style="color: #4bac52" type="button" ng-click="redirect()">
                                   <i class="fa fa-search"></i>
@@ -101,7 +101,7 @@
                 <div class="col-md-3 hidden-xs">
                     <div id="search">
                         <div class="input-group">
-                            <input ng-model="title" ng-submit="redirect()" type="text" class="form-control input-lg" placeholder="Search">
+                            <input ng-model="title" ng-keypress="($event.charCode==13)? redirect() : return" type="text" class="form-control input-lg" placeholder="Search">
                             <span class="input-group-btn">
                                 <button class="btn btn-lg" type="button" ng-click="redirect()">
                                     <i class="fa fa-search"></i>
@@ -114,7 +114,7 @@
                 <!-- Logo Starts -->
                 <div class="col-md-6 hidden-xs">
                     <div id="logo">
-                        <a href="#/index.html"><img src="images/logo.png" title="Spice Shoppe" alt="Spice Shoppe" class="img-responsive"></a>
+                        <a href="#/index.html"><img src="images/logo.png" title="Spice Shoppe" alt="CoquiGames" class="img-responsive"></a>
                     </div>
                 </div>
                 <!-- Logo Ends -->

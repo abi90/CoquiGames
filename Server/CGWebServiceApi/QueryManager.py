@@ -338,3 +338,19 @@ SELECT_STORE_GENRES = """SELECT genre FROM genre WHERE active = TRUE"""
 
 
 
+SELECT_RELATED_PRODUCTS = """SELECT * FROM product_details
+                                WHERE (genre, category, platformid) IN
+                                (
+                                  SELECT genre, category, platformid
+                                  FROM product_details WHERE pid = {0}
+                                )
+                                AND pid <> {1}"""
+
+
+SELECT_HOME_TOP_PRODUCTS = """SELECT * FROM product_details ORDER BY rating DESC LIMIT 30"""
+
+
+SELECT_PLATFORM_TOP_PRODUCTS = """SELECT * FROM product_details WHERE platformid = {0} ORDER BY rating DESC LIMIT 30"""
+
+
+

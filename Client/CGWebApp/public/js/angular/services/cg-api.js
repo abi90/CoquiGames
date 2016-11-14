@@ -98,6 +98,30 @@ app.factory('storewsapi', ['$http',
                     .error(function (error) {return error;});
             };
 
+
+        storewsapi.relatedProducts =
+            function (pid) {
+                return $http.get(storeServiceURL+'/product/'+pid+'/related')
+                    .success(function (data) {return data;})
+                    .error(function (error) {return error;});
+            };
+
+
+        storewsapi.topPlatProducts =
+            function (pid) {
+                return $http.get(storeServiceURL+'/platform/'+pid+'/top')
+                    .success(function (data) {return data;})
+                    .error(function (error) {return error;});
+            };
+
+
+        storewsapi.topProducts =
+            function () {
+                return $http.get(storeServiceURL+'/top')
+                    .success(function (data) {return data;})
+                    .error(function (error) {return error;});
+            };
+
         return storewsapi;
     }]);
 
@@ -194,7 +218,8 @@ app.factory("authenticationSvc", ["$http","$q","$window", '$rootScope',function 
                userInfo = {
                     uid: result.data.uid,
                     uname: uname,
-                    upassword: upassword
+                    upassword: result.data.token,
+                    token: result.data.token
                 };
                 $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
                 deferred.resolve(userInfo);

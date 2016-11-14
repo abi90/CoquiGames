@@ -13,7 +13,7 @@ except Exception as e:
 
 
 """
-GET Product
+GET Product and related products
 """
 
 
@@ -28,6 +28,15 @@ def get_product(productid):
         print e
         return internal_server_error()
 
+
+@store_blueprint.route("/product/<int:productid>/related", methods=['GET'])
+def related_products(productid):
+    try:
+        results = dbm.fetch_related_products(productid)
+        return jsonify(results)
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 """
 Products Methods by Platform
@@ -84,6 +93,16 @@ def special_products(platformid):
         return internal_server_error()
 
 
+@store_blueprint.route("/platform/<int:platformid>/top", methods=['GET'])
+def platform_top(platformid):
+    try:
+        top = dbm.fetch_platform_top(platformid)
+        return jsonify(top)
+    except Exception as e:
+        print e
+        return internal_server_error()
+
+
 @store_blueprint.route("/platform/<int:platformid>/announcements", methods=['GET'])
 def announcement_by_platform(platformid):
     try:
@@ -120,6 +139,16 @@ def rating(productid):
 """
 GET's for Store Home Page
 """
+
+
+@store_blueprint.route("/top", methods=['GET'])
+def store_top():
+    try:
+        top = dbm.fetch_home_top()
+        return jsonify(top)
+    except Exception as e:
+        print e
+        return internal_server_error()
 
 
 @store_blueprint.route("/platforms", methods=['GET'])

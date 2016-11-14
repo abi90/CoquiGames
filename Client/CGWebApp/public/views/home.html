@@ -105,6 +105,48 @@
                 <!-- Products Row Ends -->
             </section>
             <!-- Specials Products Ends -->
+            <!-- Top Products Starts -->
+            <section class="product-carousel" ng-if="specials.length <= 0 || latest.length <= 0">
+                <!-- Heading Starts -->
+                <h2 class="product-head">Top Products</h2>
+                <!-- Heading Ends -->
+                <!-- Products Row Starts -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- Product Carousel Starts -->
+                        <data-owl-carousel class="owl-carousel" data-options="{navigation: false, pagination: false, rewindNav: true}">
+                            <div owl-carousel-item="" ng-repeat="item in ::top" class="item" >
+                                <div class="product-col">
+                                    <div class="image">
+                                        <img src="images/product-images/1.jpg" alt="product" class="img-responsive">
+                                    </div>
+                                    <div class="caption">
+                                        <h4>
+                                            <a ng-href="#/product.html/{{item.pid}}">{{item.title | limitTo:16}}</a>
+                                        </h4>
+                                        <div class="description"></div>
+                                        <div class="price">
+                                            <span ng-if="item.inoffer==true" class="price-new">{{item.offerprice | currency}}</span>
+                                            <span ng-if="item.inoffer==false" class="price-new">{{item.price | currency}}</span>
+                                            <span ng-if="item.inoffer==true" class="price-old">{{item.price | currency}}</span>
+
+
+                                        </div>
+                                        <div class="cart-button">
+                                            <button type="button" class="btn btn-cart">Add to cart
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </data-owl-carousel>
+                        <!-- Product Carousel Ends -->
+                    </div>
+                </div>
+                <!-- Products Row Ends -->
+            </section>
+            <!-- Top Products Ends -->
         </div>
         <!-- Primary Content Ends -->
     </div>
