@@ -2,7 +2,7 @@
 <div id="main-container" class="container">
     <div class="row">
         <!-- Sidebar Starts -->
-        <div class="col-md-3 hidden-xs hidden-sm">
+        <div class="col-md-3 hidden-xs hidden-sm" ng-if="results.length > 0">
             <!-- Shopping Options Starts -->
             <h3 class="side-heading">Filter Results</h3>
             <div class="list-group">
@@ -64,7 +64,7 @@
             </ol>
             <!-- Breadcrumb Ends -->
             <!-- Product Filter Starts -->
-            <div class="product-filter">
+            <div class="product-filter" ng-if="results.length > 0">
                 <div class="row">
                     <div class="col-md-2 hidden-xs hidden-sm" ng-if="list==true">
                         <div class="display">
@@ -194,7 +194,7 @@
             </div>
             <!-- Product Grid Display Ends -->
             <!-- Pagination & Results Starts -->
-            <div class="row">
+            <div class="row" ng-if="results.length > 0">
                 <!-- Pagination Starts -->
                 <div class="col-sm-6 pagination-block">
                     <ul uib-pagination class="pagination"
@@ -208,6 +208,16 @@
                 <!-- Pagination Ends -->
             </div>
             <!-- Pagination & Results Ends -->
+            <!-- No Results Starts -->
+            <div class="row" ng-if="results.length <= 0">
+                <div class="col-sm-6">
+                    <dl class="dl-horizontal total">
+                        <dt>No results for :</dt>
+                        <dd style="color: #4bac52">{{title}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <!-- No Results Ends -->
         </div>
         <!-- Primary Content Ends -->
     </div>
