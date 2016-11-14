@@ -16,9 +16,11 @@
 		<table class="table table-bordered">
 			<thead>
 			<tr>
-				<td class="text-center">Image</td>
-				<td class="text-center">Product Details</td>
-				<td class="text-center">Quantity</td>
+				<td class="text-center hidden-xs">Image</td>
+				<td class="text-center hidden-xs">Product Details</td>
+				<td class="text-center hidden-lg hidden-md hidden-sm">Details</td>
+				<td class="text-center hidden-xs">Quantity</td>
+				<td class="text-center hidden-lg hidden-md hidden-sm">Qty</td>
 				<td class="text-center">Price</td>
 				<td class="text-center">Total</td>
 				<td class="text-center">Action</td>
@@ -26,15 +28,18 @@
 			</thead>
 			<tbody>
 			<tr ng-repeat="cart in userCart">
-				<td class="text-center">
+				<td class="text-center hidden-xs">
 					<a href="product.html">
 
 						<img src="images/product-images/cart-thumb-img1.jpg" alt="Product Name" title="Product Name" class="img-thumbnail">
 
 					</a>
 				</td>
-				<td class="text-center">
+				<td class="text-center hidden-xs">
 					<a ng-href="#/product.html/{{cart.pid}}">{{cart.pname}}</a>
+				</td>
+				<td class="text-center hidden-lg hidden-md hidden-sm">
+					<a ng-href="#/product.html/{{cart.pid}}">{{cart.pname | limitTo:4}}{{cart.pname.length > 4 ? '...':''}}</a>
 				</td>
 				<td class="text-center">
 					<div class="input-group btn-block">
@@ -44,9 +49,6 @@
 				<td class="text-center">{{cart.pprice | currency}}</td>
 				<td class="text-center">{{cart.pprice * cart.pquantity | currency}}</td>
 				<td class="text-center">
-					<button type="submit" title="Update" class="btn btn-default tool-tip">
-						<i class="fa fa-refresh"></i>
-					</button>
 					<button type="button" title="Remove" class="btn btn-default tool-tip">
 						<i class="fa fa-times-circle"></i>
 					</button>

@@ -60,18 +60,6 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
                 }
             }
         })
-        .when('/category-grid.html', {
-            controller: 'HomeController',
-            templateUrl: 'views/category-grid.html'
-        })
-        .when('/category-list.html', {
-            controller: 'HomeController',
-            templateUrl: 'views/category-list.html'
-        })
-        .when('/compare.html', {
-            controller: 'HomeController',
-            templateUrl: 'views/compare.html'
-        })
         .when('/contact.html', {
             controller: 'HomeController',
             templateUrl: 'views/contact.html'
@@ -91,17 +79,9 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             }
 
         })
-        .when('/product-full.html', {
-            controller: 'HomeController',
-            templateUrl: 'views/product-full.html'
-        })
         .when('/register.html', {
             controller: 'HomeController',
             templateUrl: 'views/register.html'
-        })
-        .when('/typography.html', {
-            controller: 'HomeController',
-            templateUrl: 'views/typography.html'
         })
         .when('/wishlist', {
             controller: 'AccountController',
@@ -118,14 +98,6 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
                         }
                     }
             }
-        })
-        .when('/search-list', {
-            controller: 'HomeController',
-            templateUrl: 'views/search-list.html'
-        })
-        .when('/search-grid', {
-            controller: 'HomeController',
-            templateUrl: 'views/search-list.html'
         })
         .when('/account-info', {
             controller: 'AccountController',
@@ -166,7 +138,6 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             }
 
         })
-
         .when('/account-payment', {
             controller: 'AccountController',
             templateUrl: 'views/account-payment.html',
@@ -223,7 +194,7 @@ app.run(["$rootScope", "$location", function ($rootScope, $location) {
 
     $rootScope.$on("$routeChangeError", function (event, current, previous, eventObj) {
         if (eventObj.authenticated === false) {
-            $location.path("/login");
+            $location.path("/login.html");
         }
     });
 }]);

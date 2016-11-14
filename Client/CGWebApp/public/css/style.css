@@ -1212,4 +1212,7 @@ input[type="number"] {
 .personal-info{
     font-size: larger;
 }
+.my-account-select{
+    width: 150px;
+}
 

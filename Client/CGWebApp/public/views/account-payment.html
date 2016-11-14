@@ -39,7 +39,7 @@
                                 <label class="control-label">Expires {{pay.cexpdate | date}}</label>
                             </div>
                             <div class="col-md-2 col-sm-2 col-xs-3">
-                                <button type="submit" class="btn btn-black">CHANGE</button>
+                                <button type="submit" class="btn btn-black" ng-click="shoAddPaymentModal()">CHANGE</button>
                             </div>
                             <div class="col-md-3 col-sm-2 col-xs-3" ng-if="pay.preferred == true">
                                 <label class="control-label">[*Preferred*]</label>
@@ -54,7 +54,7 @@
                     <br>
                     <form class="form-group">
                         <div class="col-md-offset-4 col-md-1 col-sm-1 col-xs-2">
-                            <button type="submit " class="btn btn-black">ADD A NEW PAYMENT METHOD</button>
+                            <button type="submit " ng-click="shoAddPaymentModal()" class="btn btn-black">ADD A NEW PAYMENT METHOD</button>
                         </div>
                     </form>
                 </div>

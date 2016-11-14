@@ -23,14 +23,18 @@
             <h2 class="main-heading2">Orders</h2>
             <!-- Main Heading Ends -->
             <!-- Category Intro Content Starts -->
-            <div class="table-responsive shopping-cart-table">
+            <div class="table table-responsive shopping-cart-table">
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <td class="text-center">Order Number</td>
-                        <td class="text-center">Order Date</td>
-                        <td class="text-center">Order Status</td>
-                        <td class="text-center">Order Total</td>
+                        <td class="text-center hidden-xs">Order Number</td>
+                        <td class="text-center hidden-xs">Order Date</td>
+                        <td class="text-center hidden-xs">Order Status</td>
+                        <td class="text-center hidden-xs">Order Total</td>
+                        <td class="text-center hidden-lg hidden-md hidden-sm">Number</td>
+                        <td class="text-center hidden-lg hidden-md hidden-sm">Date</td>
+                        <td class="text-center hidden-lg hidden-md hidden-sm">Status</td>
+                        <td class="text-center hidden-lg hidden-md hidden-sm">Total</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,7 +42,8 @@
                         <td class="text-center">
                             <a ng-href="#/account-orderdetails.html/{{order.oid}}">{{order.oid}}</a>
                         </td>
-                        <td class="text-center">{{order.odate | date}}</td>
+                        <td class="text-center hidden-xs">{{order.odate | date}}</td>
+                        <td class="text-center hidden-lg hidden-md hidden-sm">{{order.odate}}</td>
                         <td class="text-center">{{order.ostatus}}</td>
                         <td class="text-center">{{order.ototal}}</td>
                     </tr>

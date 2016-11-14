@@ -190,6 +190,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             }
         };
 
+        // Modals functions:
         $scope.shoPreferredShpAddModal = function() {
 
             // Open a modal to show the user address
@@ -219,6 +220,217 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
 
             });
         };
+
+        $scope.shoEditShpAddModal = function() {
+
+            // Open a modal to edit ship add
+            var modal = Popeye.openModal({
+                controller: 'AccountController',
+                templateUrl: "js/angular/modals/edit-shipping-address.html",
+                resolve: {
+                    auth: function ($q, authenticationSvc) {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({authenticated: false});
+                        }
+                    }
+                }
+            });
+
+            // Show a spinner while modal is resolving dependencies
+            $scope.showLoading = true;
+            modal.resolved.then(function() {
+                $scope.showLoading = false;
+            });
+
+            // Update user selected address after modal is closed
+            modal.closed.then(function() {
+
+            });
+        };
+
+        $scope.shoAddShpAddModal = function() {
+
+            // Open a modal to add a ship add
+            var modal = Popeye.openModal({
+                controller: 'AccountController',
+                templateUrl: "js/angular/modals/add-shipping-address.html",
+                resolve: {
+                    auth: function ($q, authenticationSvc) {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({authenticated: false});
+                        }
+                    }
+                }
+            });
+
+            // Show a spinner while modal is resolving dependencies
+            $scope.showLoading = true;
+            modal.resolved.then(function() {
+                $scope.showLoading = false;
+            });
+
+            // Update user selected address after modal is closed
+            modal.closed.then(function() {
+
+            });
+        };
+
+        $scope.shoAddBilAddModal = function() {
+
+            // Open a modal to add a bil address
+            var modal = Popeye.openModal({
+                controller: 'AccountController',
+                templateUrl: "js/angular/modals/add-billing-address.html",
+                resolve: {
+                    auth: function ($q, authenticationSvc) {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({authenticated: false});
+                        }
+                    }
+                }
+            });
+
+            // Show a spinner while modal is resolving dependencies
+            $scope.showLoading = true;
+            modal.resolved.then(function() {
+                $scope.showLoading = false;
+            });
+
+            // Update user selected address after modal is closed
+            modal.closed.then(function() {
+
+            });
+        };
+
+        $scope.shoEditBilAddModal = function() {
+
+            // Open a modal to edit user bil add
+            var modal = Popeye.openModal({
+                controller: 'AccountController',
+                templateUrl: "js/angular/modals/edit-billing-address.html",
+                resolve: {
+                    auth: function ($q, authenticationSvc) {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({authenticated: false});
+                        }
+                    }
+                }
+            });
+
+            // Show a spinner while modal is resolving dependencies
+            $scope.showLoading = true;
+            modal.resolved.then(function() {
+                $scope.showLoading = false;
+            });
+
+            // Update user selected address after modal is closed
+            modal.closed.then(function() {
+
+            });
+        };
+
+        $scope.shoChangePassModal = function() {
+
+            // Open a modal to change user password
+            var modal = Popeye.openModal({
+                controller: 'AccountController',
+                templateUrl: "js/angular/modals/change-password.html",
+                resolve: {
+                    auth: function ($q, authenticationSvc) {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({authenticated: false});
+                        }
+                    }
+                }
+            });
+
+            // Show a spinner while modal is resolving dependencies
+            $scope.showLoading = true;
+            modal.resolved.then(function() {
+                $scope.showLoading = false;
+            });
+
+            // Update user selected address after modal is closed
+            modal.closed.then(function() {
+
+            });
+        };
+
+        $scope.shoEditPersonalInfoModal = function() {
+
+            // Open a modal to edit user info
+            var modal = Popeye.openModal({
+                controller: 'AccountController',
+                templateUrl: "js/angular/modals/edit-personal-info.html",
+                resolve: {
+                    auth: function ($q, authenticationSvc) {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({authenticated: false});
+                        }
+                    }
+                }
+            });
+
+            // Show a spinner while modal is resolving dependencies
+            $scope.showLoading = true;
+            modal.resolved.then(function() {
+                $scope.showLoading = false;
+            });
+
+            // Update user selected address after modal is closed
+            modal.closed.then(function() {
+
+            });
+        };
+
+        $scope.shoAddPaymentModal = function() {
+
+            // Open a modal to show the let the user add a Payment Method
+            var modal = Popeye.openModal({
+                controller: 'AccountController',
+                templateUrl: "js/angular/modals/add-payment.html",
+                resolve: {
+                    auth: function ($q, authenticationSvc) {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({authenticated: false});
+                        }
+                    }
+                }
+            });
+
+            // Show a spinner while modal is resolving dependencies
+            $scope.showLoading = true;
+            modal.resolved.then(function() {
+                $scope.showLoading = false;
+            });
+
+            // Update user payments after modal is closed
+            modal.closed.then(function() {
+
+            });
+        };
+
 
 
         // Get User Data on startup

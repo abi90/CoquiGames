@@ -1,6 +1,6 @@
 <!-- Categories Links Starts -->
-<h3 class="side-heading">My account</h3>
-<div class="list-group categories">
+<h3 class="side-heading hidden-xs">My account</h3>
+<div class="list-group categories hidden-xs">
     <a href="#/account-orders" class="list-group-item">
         <i class="fa fa-chevron-right"></i>
         Orders
@@ -19,3 +19,30 @@
     </a>
 </div>
 <!-- Categories Links Ends -->
+<!-- Payment Dropdown  Starts-->
+
+<span uib-dropdown on-toggle="toggled(open)">
+    <h3 class="side-heading hidden-lg hidden-md hidden-sm" href id="simple-dropdown" uib-dropdown-toggle>My account</h3>
+        <ul class="list-group categories hidden-lg hidden-md hidden-sm" uib-dropdown-menu aria-labelledby="">
+            <li role="menuitem" class="list-group categories hidden-lg hidden-md hidden-sm">
+                <a href="#/account-orders" class="col-lg-12 list-group-item">
+                    <i class="fa fa-chevron-right"></i>
+                    Orders
+                </a>
+                <a href="#/account-info" class="col-lg-12 list-group-item">
+                    <i class="fa fa-chevron-right"></i>
+                    Account Information
+                </a>
+                <a href="#/account-address" class="col-lg-12 list-group-item">
+                    <i class="fa fa-chevron-right"></i>
+                    Address
+                </a>
+                <a href="#/account-payment" class="col-lg-12 list-group-item">
+                    <i class="fa fa-chevron-right"></i>
+                    Payment Method
+                </a>
+            </li>
+        </ul>
+</span>
+
+<!-- Payment Dropdown  Ends-->
