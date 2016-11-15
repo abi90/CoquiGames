@@ -677,6 +677,12 @@ hr{
     right:20px;
 }
 
+@media screen and (min-width: 1200px) {
+    .owl-controls .owl-buttons .owl-prev{
+        right: 60px;
+    }
+}
+
 
 /* Category Intro Content Styles Starts */
 
