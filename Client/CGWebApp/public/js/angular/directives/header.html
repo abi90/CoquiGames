@@ -101,7 +101,7 @@
                 <div class="col-md-3 hidden-xs">
                     <div id="search">
                         <div class="input-group">
-                            <input ng-model="title" ng-submit="redirect()" type="text" class="form-control input-lg" placeholder="Search">
+                            <input ng-model="title" ng-keypress="($event.charCode==13)? redirect() : return" type="text" class="form-control input-lg" placeholder="Search">
                             <span class="input-group-btn">
                                 <button class="btn btn-lg" type="button" ng-click="redirect()">
                                     <i class="fa fa-search"></i>

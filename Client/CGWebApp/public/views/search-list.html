@@ -92,14 +92,14 @@
                         <label class="control-label">Sort</label>
                     </div>
                     <div class="col-md-2 col-sm-3 col-xs-3 text-right">
-                        <select class="form-control" ng-click="updateFilter()" ng-model="propertyName">
+                        <select class="form-control" ng-click="updateFilter()" ng-model="propertyName.name">
                             <option value="Title" selected="selected">Title</option>
                             <option value="A-Z">A-Z</option>
                             <option value="Z-A">Z-A</option>
                         </select>
                     </div>
                     <div class="col-md-2 col-sm-3 col-xs-3 text-right">
-                        <select class="form-control" ng-click="updateFilter()" ng-model="propertyName">
+                        <select class="form-control" ng-click="updateFilter()" ng-model="propertyName.name">
                             <option value="Price" selected="selected">Price</option>
                             <option value="lowest">Lowest First</option>
                             <option value="highest">Highest First</option>
@@ -198,7 +198,7 @@
                 <!-- Pagination Starts -->
                 <div class="col-sm-6 pagination-block">
                     <ul uib-pagination class="pagination"
-                        ng-model="currentPage"
+                        ng-model="currentPage.number"
                         total-items="results.length"
                         items-per-page="qty.max"
                         boundary-links="false">
