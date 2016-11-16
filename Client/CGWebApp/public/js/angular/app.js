@@ -131,9 +131,15 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             controller: 'OrderController',
             templateUrl: 'views/account-orderdetails.html',
             resolve: {
-                orderId: ['$route', function($route) {
-                    var params = $route.current.params;
-                    return params.orderId = params.orderId;
+                orderId: ['$route', '$q', 'authenticationSvc', function($route, $q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    if (userInfo) {
+                        var params = $route.current.params;
+                        params.orderId = params.orderId;
+                        return $q.when(params.orderId);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
                 }]
             }
 
@@ -179,6 +185,21 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
                     }
                 }
             }
+        })
+        .when('/admin-users', {
+            controller: 'AdminUsersController',
+            templateUrl: 'views/admin-users.html',
+            resolve: {
+                auth:  function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    if (userInfo.roleid === 3){
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }
+            }
+
         })
         .otherwise({
             redirectTo: '/'

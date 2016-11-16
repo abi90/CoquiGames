@@ -1,0 +1,186 @@
+<!-- Main Container Starts -->
+<div id="main-container" class="container">
+    <!-- Breadcrumb Starts -->
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Users</li>
+    </ol>
+    <!-- Breadcrumb Ends -->
+    <!-- Main Heading Starts -->
+    <h2 class="main-heading text-center">
+        CoquiGames Users
+    </h2>
+    <!-- Main Heading Ends -->
+    <!-- Search Filter Starts -->
+    <div>
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon btn-black"><i class="fa fa-search"></i></div>
+
+                    <input type="text" class="form-control" placeholder="Search User" ng-model="searchUser">
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Search Filter Ends -->
+    <!-- Users Table Starts -->
+    <div class="table table-responsive shopping-cart-table">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td class="text-center">
+                    <a ng-click="sortType = 'accountid'; sortReverse = !sortReverse">Account ID
+                        <span
+                                ng-show="sortType == 'accountid' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'accountid' && !sortReverse"
+                                class="fa fa-caret-up">
+                    </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'username'; sortReverse = !sortReverse">Username
+                        <span
+                                ng-show="sortType == 'username' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'username' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'user_email'; sortReverse = !sortReverse">Email
+                        <span
+                                ng-show="sortType == 'user_email' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'user_email' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'user_firstname'; sortReverse = !sortReverse">First Name
+                        <span
+                                ng-show="sortType == 'user_firstname' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'user_firstname' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'user_lastname'; sortReverse = !sortReverse">Last Name
+                        <span
+                                ng-show="sortType == 'user_lastname' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'user_lastname' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'roleid'; sortReverse = !sortReverse">Role
+                        <span
+                                ng-show="sortType == 'roleid' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'roleid' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'active'; sortReverse = !sortReverse">Active
+                        <span
+                                ng-show="sortType == 'active' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'active' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    Action
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="u in users | orderBy:sortType:sortReverse | filter:searchUser">
+                <td class="text-center">
+                    {{u.accountid}}
+                </td>
+                <td class="text-center">
+                    {{u.username}}
+                </td>
+                <td class="text-center">
+                    {{u.user_email}}
+                </td>
+                <td class="text-center">
+                    {{u.user_firstname}}
+                </td>
+                <td class="text-center">
+                    {{u.user_lastname}}
+                </td>
+                <td class="text-center" ng-if="u.roleid===3">
+                    Admin
+                </td>
+                <td class="text-center" ng-if="u.roleid===1">
+                    Customer
+                </td>
+                <td class="text-center">
+                    {{u.active}}
+                </td>
+                <td class="text-center">
+                    <button type="submit" title="Edit" class="btn btn-default tool-tip">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button type="button" title="Remove" class="btn btn-default tool-tip">
+                        <i class="fa fa-times-circle"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Users Table Ends -->
+    <!-- Add Admin Section Starts -->
+    <div class="text-center">
+        <section class="registration-area">
+            <div class="row">
+                <div class="col-sm-6 col-md-offset-3" >
+                    <!-- Message Panel Starts -->
+                    <div class="panel panel-smart">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Add a New Admin User.</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            <div class="text-uppercase clearfix">
+                                <a href="#/index.html" class="btn btn-main text-center">
+                                    <span href="#/index.html" class="hidden-xs">Add Admin</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Message Panel Ends -->
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Add Admin Section Ends -->
+</div>
+<!-- Main Container Ends -->

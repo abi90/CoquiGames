@@ -58,10 +58,17 @@ INSERT_PRODUCT_RATING = """INSERT INTO rate (productid, rate_date, rate)
 User Queriess
 """
 AUTHENTICATE_USER_WITH_ID = """SELECT active FROM account_info
-                          WHERE username = '{0}' AND accountid = (SELECT cg.accountid FROM cg_user AS cg WHERE userid = {1}) AND upassword = crypt('{2}',upassword) AND active = TRUE"""
+                          WHERE username = '{0}'
+                          AND accountid = (SELECT cg.accountid FROM cg_user AS cg WHERE userid = {1})
+                          AND upassword = crypt('{2}',upassword)
+                          AND active = TRUE"""
 
 
-AUTHENTICATE_USER_WITHOUT_ID = """SELECT accountid AS uid FROM account_info WHERE username = '{0}' AND upassword = crypt('{1}',upassword) AND active = TRUE"""
+AUTHENTICATE_USER_WITHOUT_ID = """SELECT accountid AS uid, roleid
+                                  FROM account_info
+                                  WHERE active = TRUE
+                                  AND upassword = crypt('{1}', upassword)
+                                  AND username = '{0}'"""
 
 
 SELECT_USER = """SELECT to_char(dob, 'YYYY-MM-DD') AS udob, email AS uemail, user_firstname AS ufirstname, userid AS uid, user_lastname AS ulastname, username AS uname , phone AS uphone
@@ -351,6 +358,17 @@ SELECT_HOME_TOP_PRODUCTS = """SELECT * FROM product_details ORDER BY rating DESC
 
 
 SELECT_PLATFORM_TOP_PRODUCTS = """SELECT * FROM product_details WHERE platformid = {0} ORDER BY rating DESC LIMIT 30"""
+
+
+AUTHENTICATE_ADMIN_USER = """SELECT active FROM account_info
+                          WHERE roleid = 3 AND active = TRUE
+                          AND upassword = crypt('{0}',upassword)
+                          AND username = '{1}'
+                          """
+
+SELECT_USERS = """SELECT a.accountid, a.username, b.email AS user_email, b.user_firstname, b.user_lastname, a.roleid ,a.active
+                  FROM account_info AS a JOIN cg_user AS b USING (accountid)
+                  ORDER BY a.active, a.username"""
 
 
 

@@ -3,6 +3,7 @@ from flask_cors import CORS
 import errors
 import user
 import store
+import admin
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -23,4 +24,5 @@ def create_app():
     app.register_blueprint(errors.errors)
     app.register_blueprint(store.store_blueprint, url_prefix='/store')
     app.register_blueprint(user.user_blueprint, url_prefix='/user')
+    app.register_blueprint(admin.admin_blueprint, url_prefix='/admin')
     return app

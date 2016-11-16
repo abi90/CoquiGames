@@ -1,5 +1,5 @@
 app.controller('NavBarController', ['$scope', '$rootScope', '$location', 'storewsapi', 'authenticationSvc', 'userwsapi',
-    function($scope, $rootScope ,$location, storewsapi, authenticationSvc,userwsapi) {
+    function($scope, $rootScope ,$location, storewsapi, authenticationSvc, userwsapi) {
         /*$scope.navbarOptions = [
          {
          platformId: "PS4",
@@ -63,7 +63,7 @@ app.controller('NavBarController', ['$scope', '$rootScope', '$location', 'storew
 
         };
 
-        $rootScope.$on('Login',function(){$scope.Loggedin=true; getCartLength();});
+        $rootScope.$on('Login',function(){$scope.Loggedin=true; getCartLength(); getUser();});
 
         $rootScope.$on('unLogin',function(){$scope.Loggedin=false});
 

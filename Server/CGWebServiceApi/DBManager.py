@@ -478,3 +478,18 @@ def fetch_platform_top(platformid):
     return __execute_select_query__(Query.SELECT_PLATFORM_TOP_PRODUCTS.format(platformid))
 
 
+def authenticate_admin(username, password):
+    try:
+        conn = __connection__()
+        cur = conn.cursor()
+        cur.execute(Query.AUTHENTICATE_ADMIN_USER.format(password, username))
+        results = cur.fetchall()
+        conn.close()
+        return results
+    except Exception as e:
+        print e
+
+
+def fetch_users():
+    return __execute_select_query__(Query.SELECT_USERS)
+

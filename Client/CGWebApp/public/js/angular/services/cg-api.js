@@ -215,11 +215,12 @@ app.factory("authenticationSvc", ["$http","$q","$window", '$rootScope',function 
 
         $http.post(serviceURL +"/user/login", { uname: uname, upassword: upassword })
             .then(function (result) {
-               userInfo = {
+                userInfo = {
                     uid: result.data.uid,
                     uname: uname,
                     upassword: result.data.token,
-                    token: result.data.token
+                    token: result.data.token,
+                    roleid: result.data.roleid
                 };
                 $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
                 deferred.resolve(userInfo);
@@ -263,4 +264,19 @@ app.factory("authenticationSvc", ["$http","$q","$window", '$rootScope',function 
         logout: logout,
         getUserInfo: getUserInfo
     };
+}]);
+
+app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
+
+    var userServiceURL = serviceURL + '/admin';
+
+    var adminwsapi = {};
+
+    adminwsapi.getUsers= function (username, password) {
+        return $http.get(userServiceURL + '/users', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    return adminwsapi;
 }]);

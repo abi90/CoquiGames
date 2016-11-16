@@ -2,7 +2,7 @@ from flask import jsonify, request, g
 from functools import wraps
 from errors import unauthorized
 import __init__ as config
-from DBManager import authenticate_user
+from DBManager import authenticate_user, authenticate_admin
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
 
@@ -45,7 +45,6 @@ def check_auth(username, password, userid):
     :return:
     """
     # first try to authenticate by token
-    print 'first try to authenticate by token'
     if not verify_auth_token(password, userid):
         # try to authenticate with username/password/id(from url request)
         user = authenticate_user(username, userid, password)
@@ -55,7 +54,6 @@ def check_auth(username, password, userid):
             return False
 
     return True
-
 
 
 def authenticate():
@@ -86,3 +84,57 @@ def requires_auth(f):
 
     return decorated
 
+
+def verify_admin_token(token):
+    """
+
+    :param token:
+    :param userid:
+    :return:
+    """
+    s = Serializer(config.get_key())
+    try:
+        data = s.loads(token)
+    except SignatureExpired:
+        return False    # valid token, but expired
+    except BadSignature:
+        return False    # invalid
+    if int(data['id']['roleid']) == 3:
+        return True # valid token and request
+    return False # valid token but invalid request
+
+
+def check_admin(username, password):
+    """
+        Verifies request username password matches an admin user
+        :param username:
+        :param password:
+        :param userid:
+        :return:
+        """
+    # first try to authenticate by token
+    if not verify_admin_token(password):
+        # try to authenticate with username/password/id(from url request)
+        user = authenticate_admin(username, password)
+        if user:
+            return True
+        else:
+            return False
+    return True
+
+
+def admin_verification(function):
+    """
+    Wrapper definition for requires_auth. Used in http basic authentication.
+    :param function: function
+    :return: decorated function
+    """
+    @wraps(function)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth:
+            return unauthorized()
+        elif not check_admin(auth.username, auth.password):
+            return authenticate()
+        return function(*args, **kwargs)
+    return decorated

@@ -17,7 +17,7 @@
 										</span>
                                 </a>
                             </li>
-                            <li ng-show="Loggedin">
+                            <li ng-show="Loggedin && user.roleid == 1">
                                 <a href="#/wishlist">
                                     <i class="fa fa-heart hidden-lg hidden-md" title="Wish List"></i>
                                     <span class="hidden-sm hidden-xs">
@@ -25,7 +25,7 @@
 										</span>
                                 </a>
                             </li>
-                            <li ng-show="Loggedin">
+                            <li ng-show="Loggedin && user.roleid == 1">
                                 <a href="#/account-orders">
                                     <i class="fa fa-user hidden-lg hidden-md" title="My Account"></i>
                                     <span class="hidden-sm hidden-xs">
@@ -33,7 +33,7 @@
 										</span>
                                 </a>
                             </li>
-                            <li ng-show="Loggedin">
+                            <li ng-show="Loggedin && user.roleid == 1">
                                 <a href="#/cart.html">
                                     <i class="fa fa-shopping-cart hidden-lg hidden-md" title="Shopping Cart"></i>
                                     <span class="hidden-sm hidden-xs">
@@ -41,11 +41,19 @@
 										</span>
                                 </a>
                             </li>
-                            <li ng-show="Loggedin">
+                            <li ng-show="Loggedin && user.roleid == 1">
                                 <a href="#/checkout">
                                     <i class="fa fa-crosshairs hidden-lg hidden-md" title="Checkout"></i>
                                     <span class="hidden-sm hidden-xs">
 											Checkout
+										</span>
+                                </a>
+                            </li>
+                            <li ng-show="Loggedin && user.roleid == 3">
+                                <a href="#/admin-users">
+                                    <i class="fa fa-user hidden-lg hidden-md" title="Users"></i>
+                                    <span class="hidden-sm hidden-xs">
+											Users
 										</span>
                                 </a>
                             </li>
@@ -89,7 +97,7 @@
                 <div class="col-xs-offset-1 col-xs-10 hidden-lg hidden-sm hidden-md ">
                     <div id="small-search">
                         <div class="input-group">
-                            <input ng-model="title" type="text" class="form-control input-lg" placeholder="Search">
+                            <input ng-model="title" type="text" class="form-control input-lg" placeholder="Search" ng-keypress="($event.charCode==13)? redirect() : return">
                             <span class="input-group-btn">
                                 <button class="btn btn-lg btn-black" style="color: #4bac52" type="button" ng-click="redirect()">
                                   <i class="fa fa-search"></i>
@@ -124,7 +132,7 @@
                         <button ng-click="goToCart()" type="button" class="btn btn-block btn-lg dropdown-toggle">
                             <i class="fa fa-shopping-cart"></i>
                             <span class="hidden-md">Cart:</span>
-                            <span ng-show="Loggedin" id="cart-total">{{CartSize}} item(s)</span>
+                            <span ng-show="Loggedin && user.authInfo.roleid ==1" id="cart-total">{{CartSize}} item(s)</span>
                             <span ng-hide="Loggedin" id=""> EMPTY</span>
                         </button>
 
