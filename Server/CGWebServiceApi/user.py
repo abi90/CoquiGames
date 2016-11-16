@@ -564,7 +564,7 @@ def get_user_id():
             uid = dbm.fetch_user_accountid(request.json['uname'], request.json['upassword'])
             if uid:
                 token = generate_auth_token(uid)
-                return jsonify({"uid": uid['uid'], 'token': token})
+                return jsonify({"uid": uid['uid'], 'token': token, 'roleid': uid['roleid']})
             else:
                 # Login Error Response
                 return jsonify({'Message': "Username or Password does not match!"}), 401
