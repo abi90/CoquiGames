@@ -21,22 +21,18 @@
                 <!-- Left Starts -->
                 <div class="col-sm-5 images-block">
                     <p>
-                        <img ng-src="{{product.photolink}}" width="358" height="384" alt="Image" class="img-responsive thumbnail">
+                        <a rel="{{product.pid}}" fancyboxable="{{product.pid}}" ng-href="{{product.photolink}}">
+                            <img ng-src="{{product.photolink}}" width="358" height="384" alt="Image" class="img-responsive thumbnail">
+                        </a>
                     </p>
                     <ul class="list-unstyled list-inline">
-                        <li>
-                            <img src="images/product-images/thumb1.jpg" alt="Image" class="img-responsive thumbnail">
-                        </li>
-                        <li>
-                            <img src="images/product-images/thumb2.jpg" alt="Image" class="img-responsive thumbnail">
-                        </li>
-                        <li>
-                            <img src="images/product-images/thumb3.jpg" alt="Image" class="img-responsive thumbnail">
-                        </li>
-                        <li>
-                            <img src="images/product-images/thumb4.jpg" alt="Image" class="img-responsive thumbnail">
+                        <li ng-repeat="a in altImgs">
+                            <a rel="alt_group" fancyboxable ng-href="{{a.product_img}}">
+                                <img ng-src="{{a.product_img}}" alt="Image" class="img-responsive thumbnail">
+                            </a>
                         </li>
                     </ul>
+                    <fancybox box-for="[rel=alt_group]" options="altgroup"></fancybox>
                 </div>
                 <!-- Left Ends -->
                 <!-- Right Starts -->
@@ -130,7 +126,7 @@
                     <div class="col-md-4 col-sm-6" ng-repeat="product in relatedPrds">
                         <div class="product-col">
                             <div class="image">
-                                <img src="images/product-images/15.jpg" alt="product" class="img-responsive">
+                                <img ng-src="{{product.photolink}}" alt="{{product.title}}" class="img-responsive">
                             </div>
                             <div class="caption">
                                 <h4>
@@ -160,11 +156,12 @@
                         </div>
                     </div>
                     <!-- Product #1 Ends -->
-                <!-- Products Row Ends -->
+                    <!-- Products Row Ends -->
+                </div>
+                <!-- Related Products Ends -->
             </div>
-            <!-- Related Products Ends -->
+            <!-- Primary Content Ends -->
         </div>
-        <!-- Primary Content Ends -->
     </div>
 </div>
 <!-- Main Container Ends -->

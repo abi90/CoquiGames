@@ -42,7 +42,7 @@
                             <div owl-carousel-item="" ng-repeat="item in ::platformLatest" class="item" >
                                 <div class="product-col">
                                     <div class="image">
-                                        <img src="images/product-images/1.jpg" alt="product" class="img-responsive">
+                                        <img ng-src="{{item.photolink}}" alt="{{item.title}}" class="img-responsive">
                                     </div>
                                     <div class="caption">
                                         <h4>
@@ -84,7 +84,7 @@
                             <div owl-carousel-item="" ng-repeat="item in ::platformSpecials" class="item" >
                                 <div class="product-col">
                                     <div class="image">
-                                        <img src="images/product-images/1.jpg" alt="product" class="img-responsive">
+                                        <img ng-src="{{item.photolink}}" alt="{{item.title}}" class="img-responsive">
                                     </div>
                                     <div class="caption">
                                         <h4>
@@ -126,7 +126,7 @@
                             <div owl-carousel-item="" ng-repeat="item in ::platformTop" class="item" >
                                 <div class="product-col">
                                     <div class="image">
-                                        <img src="images/product-images/1.jpg" alt="product" class="img-responsive">
+                                        <img ng-src="{{item.photolink}}" alt="{{item.title}}" class="img-responsive">
                                     </div>
                                     <div class="caption">
                                         <h4>

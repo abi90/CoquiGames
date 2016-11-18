@@ -437,6 +437,8 @@ hr{
 .product-col.list .image{
     padding:20px 30px 10px 0;
     float:left;
+    max-height: 320px;
+    max-width: 200px;
 }
 .product-col .caption{
     padding: 20px 0;
@@ -782,6 +784,8 @@ hr{
     padding-top:10px;
 }
 .product-info .images-block{
+    max-width: 100%;
+    max-height: 100%;
 }
 .product-info .images-block .thumbnail{
     padding:10px;

@@ -122,6 +122,14 @@ app.factory('storewsapi', ['$http',
                     .error(function (error) {return error;});
             };
 
+        storewsapi.getProductAltImg =
+            function (id)
+            {
+                return $http.get(storeServiceURL+'/product/'+id+'/altimgs')
+                    .success(function (data) {return data;})
+                    .error(function (error) {return error;});
+            };
+
         return storewsapi;
     }]);
 

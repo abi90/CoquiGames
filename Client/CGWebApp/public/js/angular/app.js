@@ -1,4 +1,4 @@
-var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize','$base64', 'pathgather.popeye', 'ui.bootstrap',]);
+var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize','$base64', 'pathgather.popeye', 'ui.bootstrap', 'fancyboxplus',]);
 
 app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
 

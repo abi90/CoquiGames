@@ -21,4 +21,13 @@ app.controller('ProductController', ['$scope', '$location', 'storewsapi','produc
             $scope.relatedPrds = [];
         }
     );
+    storewsapi.getProductAltImg($scope.productId).then(
+        function (response){
+            $scope.altImgs = response.data;
+        },
+        function (err)
+        {
+            console.log(err.data.toString());
+            $scope.altImgs = [];
+        });
 }]);
