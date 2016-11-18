@@ -38,6 +38,16 @@ def related_products(productid):
         print e
         return internal_server_error()
 
+
+@store_blueprint.route("/product/<int:productid>/altimgs", methods=['GET'])
+def get_product_alt_imgs(productid):
+    try:
+        imgs = dbm.fetch_product_alt_img(productid)
+        return jsonify(imgs)
+    except Exception as e:
+        print e
+        return internal_server_error()
+
 """
 Products Methods by Platform
 """

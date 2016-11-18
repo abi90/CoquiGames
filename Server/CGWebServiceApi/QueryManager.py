@@ -371,4 +371,7 @@ SELECT_USERS = """SELECT a.accountid, a.username, b.email AS user_email, b.user_
                   ORDER BY a.active, a.username"""
 
 
+SELECT_PRODUCT_ALT_IMGS = """SELECT pi.product_img FROM product_img AS pi WHERE pi.productid = {0} AND pi.cover = FALSE"""
+
+
 

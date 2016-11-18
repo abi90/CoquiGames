@@ -493,3 +493,7 @@ def authenticate_admin(username, password):
 def fetch_users():
     return __execute_select_query__(Query.SELECT_USERS)
 
+
+def fetch_product_alt_img(pid):
+    return __execute_select_query__(Query.SELECT_PRODUCT_ALT_IMGS.format(pid))
+
