@@ -435,7 +435,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             });
 
             // Update user payments after modal is closed
-            modal.closed.then(function() {
+            modal.closed.then(function(){
 
             });
         };

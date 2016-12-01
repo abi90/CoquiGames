@@ -26,7 +26,7 @@ def user_preferences(userid):
                 return jsonify(preferences)
             return not_found()
         elif request.method == 'PUT':
-            if 'shipping_addressid' or 'billing_addressid' or 'cid' not in request.json:
+            if ('shipping_addressid' or 'billing_addressid' or 'cid') not in request.json:
                 return missing_parameters_error()
             errors = validate_user_preferences(request.json, userid)
             if errors:
@@ -42,7 +42,7 @@ def user_preferences(userid):
                 return jsonify(preferences)
             return bad_request()
     except Exception as e:
-        print e
+        print e.message
         return internal_server_error()
 
 
@@ -63,35 +63,14 @@ def user_order(userid):
             errors = validate_order(request.json, userid)
             if errors:
                 return jsonify({'errors': errors}), 400
-            # Get User Active Cart
-            cartid = dbm.fetch_user_cartid(userid)['cartid']
-            if cartid:
-                # Deactivate cart to avoid errors
-                if dbm.deactivate_user_cart(cartid, userid):
-                    # Create an empty order
-                    if dbm.insert_empty_order(cartid=cartid,
-                                              shippment_feeid=request.json['shipment_feeid'],
-                                              shipping_addressid=request.json['aid'],
-                                              userid=userid,
-                                              payment_methodid=request.json['cid']):
-                        # Get latest order id
-                        orderid = dbm.fetch_max_user_orderid(userid)['orderid']
-                        if orderid:
-                            # Insert products from cart into the order details
-                            if dbm.insert_order_details(orderid, cartid):
-                                # Update order total
-                                if dbm.update_order_total(orderid):
-                                    # Create a new cart to the user:
-                                    dbm.create_user_cart(userid)
-                                    # Update order status to placed
-                                    dbm.update_order_status(1, orderid)
-                                    # Fetch Order
-                                    order = dbm.fetch_order(orderid,userid)
-                                    if order:
-                                        return jsonify(order)
+            orderid = dbm.process_order(userid, request.json)
+            if orderid:
+                # Fetch Order
+                order = dbm.fetch_order(orderid, userid)
+                return jsonify(order)
             return internal_server_error()
     except Exception as e:
-        print e
+        print e.message
         return internal_server_error()
 
 
@@ -110,27 +89,17 @@ def user_payment(userid):
             for key in payment_keys:
                 if key not in request.json:
                     return missing_parameters_error()
-            billing_addressid = dbm.fetch_user_preferences(userid)
+            errors = validate_payment(request.json)
+            if errors:
+                return jsonify({'Errors': errors}), 400
+            billing_addressid = dbm.fetch_user_preferences(userid)['billing_address']['aid']
             if billing_addressid:
-                if dbm.insert_first_payment_method(card_name=request.json['cname'],
-                                                   card_last_four_digits=request.json['cnumber'][-4:],
-                                                   card_number=request.json['cnumber'],
-                                                   card_exp_date=request.json['cexpdate'],
-                                                   cvc=request.json['cvc'], card_type=request.json['ctype'],
-                                                   userid=userid,
-                                                   billing_addressid=billing_addressid):
-                    # Get Payment Method id
-                    new_payment_method = dbm.fetch_max_payment_methodid(userid)
-                    set_preferred = request.json['ppreferred']
-                    if set_preferred:
-                        if not dbm.update_user_preferred_billing(new_payment_method['pid']):
-                            return internal_server_error()
-                    return jsonify(new_payment_method)
-                return internal_server_error()
+                pid = dbm.create_user_payment_method(userid, request.json, billing_addressid)
+                return jsonify({'payment_methodid': pid}), 201
             else:
                 return jsonify({'error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
     except Exception as e:
-        print e
+        print e.message
         return internal_server_error()
 
 
@@ -144,31 +113,18 @@ def update_payment(userid, payment_methodid):
             for key in payment_keys:
                 if key not in request.json:
                     return missing_parameters_error()
-            is_inactive = dbm.deactivate_user_payment_method(userid, payment_methodid)
-            if is_inactive:
-                billing_addressid = dbm.fetch_user_preferences(userid)
-                if billing_addressid:
-                    if dbm.insert_first_payment_method(card_name=request.json['cname'],
-                                                       card_last_four_digits=request.json['cnumber'][-4:],
-                                                       card_number=request.json['cnumber'],
-                                                       card_exp_date=request.json['cexpdate'],
-                                                       cvc=request.json['cvc'], card_type=request.json['ctype'],
-                                                       userid=userid,
-                                                       billing_addressid=billing_addressid):
-                        # Get Payment Method id
-                        new_payment_method = dbm.fetch_max_payment_methodid(userid)
-                        set_preferred = request.json['ppreferred']
-                        if set_preferred:
-                            if not dbm.update_user_preferred_billing(new_payment_method['pid']):
-                                return internal_server_error()
-                        return jsonify(new_payment_method)
-                    return internal_server_error()
-                else:
-                    return jsonify({'error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
-            return not_found()
+            errors = validate_payment(request.json)
+            if errors:
+                return jsonify({'Errors': errors}), 400
+            billing_addressid = dbm.fetch_user_preferences(userid)['billing_address']['aid']
+            if billing_addressid:
+                pid = dbm.update_payment_method(userid, payment_methodid, request.json, billing_addressid)
+                return jsonify({'payment_methodid': pid}), 201
+            else:
+                return jsonify({'error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
         return bad_request()
     except Exception as e:
-        print e
+        print e.message
         return internal_server_error()
 
 
@@ -183,33 +139,14 @@ def update_address(userid, addressid):
             for key in put_address_keys:
                 if key not in request.json:
                     return missing_parameters_error()
-            is_inactive = dbm.deactivate_user_address(userid, addressid)
-            if is_inactive:
-                if dbm.insert_user_address(address_fullname=request.json['afullname'],
-                                           address_line_1=request.json['aaddress1'],
-                                           address_line_2=request.json['aaddress2'],
-                                           address_city=request.json['acity'],
-                                           address_zip=request.json['azip'],
-                                           address_country=request.json['acountry'],
-                                           address_state=request.json['astate'],
-                                           userid=userid):
-                    new_address = dbm.fetch_max_address(userid)
-                    set_preferred = request.json['apreferred']
-                    if set_preferred:
-                        if request.json['atype'] == 'billing':
-                            if not dbm.update_user_preferred_billing(new_address['aid']):
-                                return internal_server_error()
-                        elif request.json['atype'] == 'shipping':
-                            if not dbm.update_user_preferred_shipping(new_address['aid']):
-                                return internal_server_error()
-                    return jsonify(new_address)
-
-                else:
-                    return internal_server_error()
-            return not_found()
+            errors = validate_address(request.json)
+            if errors:
+                return jsonify({'Errors': errors}), 400
+            new_addres_id = dbm.update_user_address(userid, addressid, request.json)
+            return jsonify({'aid': new_addres_id}), 201
         return bad_request()
     except Exception as e:
-        print e
+        print e.message
         return internal_server_error()
 
 
@@ -229,28 +166,13 @@ def user_address(userid):
             for key in address_keys:
                 if key not in request.json:
                     return missing_parameters_error()
-            if dbm.insert_user_address(address_fullname=request.json['afullname'],
-                                       address_line_1=request.json['aaddress1'],
-                                       address_line_2=request.json['aaddress2'],
-                                       address_city=request.json['acity'],
-                                       address_zip=request.json['azip'],
-                                       address_country=request.json['acountry'],
-                                       address_state=request.json['astate'],
-                                       userid=userid):
-                new_address = dbm.fetch_max_address(userid)
-                set_preferred = request.json['apreferred']
-                if set_preferred:
-                    if request.json['atype'] == 'billing':
-                        if not dbm.update_user_preferred_billing(new_address['aid']):
-                            return internal_server_error()
-                    elif request.json['atype'] == 'shipping':
-                        if not dbm.update_user_preferred_shipping(new_address['aid']):
-                            return internal_server_error()
-                return jsonify(new_address)
-            else:
-                return internal_server_error()
+            errors = validate_address(request.json)
+            if errors:
+                return jsonify({'Errors': errors}), 400
+            new_address_id = dbm.create_user_address(userid, request.json)
+            return jsonify({'aid': new_address_id}), 201
     except Exception as e:
-        print e
+        print e.message
         return internal_server_error()
 
 
@@ -300,7 +222,6 @@ def delete_from_user_wish_list(userid, productid):
             if in_wish_list:
                 dbm.remove_from_wish_list(productid=productid,userid=userid)
                 wish_list = dbm.fetch_user_wish_list(userid=userid)
-                # return jsonify({'message': 'Product {0} removed from user {1} wish list.'.format(productid, userid)})
                 return jsonify(wish_list)
             else:
                 not_found()
@@ -493,67 +414,15 @@ def post_user():
             user_exist = dbm.user_account_exist(username=request.json['uname'],
                                                 email=request.json['uemail'])['user_exist']
             if not user_exist:
-                # Insert user account:
-                dbm.insert_account_info(username=request.json['uname'], upassword=request.json['upassword'])
-                # Get account id
-                accountid = dbm.fetch_accounid(username=request.json['uname'])['accountid']
+                # Register user and return user data as response
+                userid = dbm.register_user(request.json)
 
-                # Insert user information
-                dbm.insert_personal_info(user_firstname=request.json['ufirstname'],
-                                         user_lastname=request.json['ulastname'],
-                                         email=request.json['uemail'],
-                                         phone=request.json['uphone'],
-                                         dob=request.json['udob'],
-                                         accountid=accountid)
-                # Get user id
-                userid = dbm.fetch_userid(accountid)['userid']
-                #  Insert Shipping Address
-                shipping_address = request.json['ushippingaddress']
-                dbm.insert_user_address(address_fullname=shipping_address['afullname'],
-                                        address_line_1=shipping_address['aaddress1'],
-                                        address_line_2=shipping_address['aaddress2'],
-                                        address_city=shipping_address['acity'],
-                                        address_zip=shipping_address['azip'],
-                                        address_country=shipping_address['acountry'],
-                                        address_state=shipping_address['astate'],
-                                        userid=userid)
-                # Get Address id
-                shippin_addressid = dbm.fetch_min_address(userid)['aid']
-                # Insert Billing Address
-                billing_address = request.json['ubillingaddress']
-                dbm.insert_user_address(address_fullname=billing_address['afullname'],
-                                        address_line_1=billing_address['aaddress1'],
-                                        address_line_2=billing_address['aaddress2'],
-                                        address_city=billing_address['acity'],
-                                        address_zip=billing_address['azip'],
-                                        address_country=billing_address['acountry'],
-                                        address_state=billing_address['astate'],
-                                        userid=userid)
-                # Get Address id
-                billing_addressid = dbm.fetch_max_address(userid)['aid']
-                # Insert Payment Method
-                payment_method = request.json['upayment']
-                dbm.insert_first_payment_method(card_name=payment_method['cname'],
-                                                card_last_four_digits=payment_method['cnumber'][-4:],
-                                                card_number=payment_method['cnumber'],
-                                                card_exp_date=payment_method['cexpdate'],
-                                                cvc=payment_method['cvc'], card_type=payment_method['ctype'],
-                                                userid=userid,
-                                                billing_addressid=billing_addressid)
-                # Get Payment Method id
-                payment_method = dbm.fetch_user_payment_methods(userid)[0]['cid']
-                # Insert User Preferences
-                dbm.insert_user_preferences(userid=userid,
-                                            shipping_addressid=shippin_addressid,
-                                            billing_addressid=billing_addressid,
-                                            payment_methodid=payment_method)
-                # Return user response
                 cg_user = dbm.fetch_user_info(userid=userid)
                 return jsonify(cg_user), 201
         else:
-            bad_request()
+            return bad_request()
     except Exception as e:
-        print e
+        print e.message
         return internal_server_error()
 
 
@@ -561,10 +430,11 @@ def post_user():
 def get_user_id():
     if request.json:
         try:
-            uid = dbm.fetch_user_accountid(request.json['uname'], request.json['upassword'])
+            uid = dbm.fetch_user_id(request.json['uname'], request.json['upassword'])
             if uid:
-                token = generate_auth_token(uid)
-                return jsonify({"uid": uid['uid'], 'token': token, 'roleid': uid['roleid']})
+                user = uid[0]
+                token = generate_auth_token(user)
+                return jsonify({"uid": user['uid'], 'token': token, 'roleid': user['roleid']})
             else:
                 # Login Error Response
                 return jsonify({'Message': "Username or Password does not match!"}), 401
@@ -651,7 +521,7 @@ def validate_payment(data):
         errors.append('Invalid Credit Card.')
 
     # Validate with Date regex for python
-    is_date = re.search(r'^(\d{4}\-\d{2}\-\d{2})$', data['cexpdate'])
+    is_date = re.search(r'^(\d{4}\-\d{2})$', data['cexpdate'])
     if is_date:
         # Verify that is not expired
         not_expired = dbm.validate_exp_date(data['cexpdate'])['valid_exp_date']
@@ -668,7 +538,7 @@ def validate_payment(data):
     # Validate Card Type
     valid_cc = dbm.validate_cc(data['ctype'])['valid_cc']
     if not valid_cc:
-        errors.append('Invalid Last Name.')
+        errors.append('Invalid Card Type.')
 
     return errors
 
