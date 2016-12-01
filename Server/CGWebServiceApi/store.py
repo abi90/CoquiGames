@@ -207,6 +207,27 @@ def search():
         return internal_server_error()
 
 
+
+@store_blueprint.route("/advanced_search", methods=['POST'])
+def search():
+    try:
+        if 'platform' and 'genre' and 'category' in request.json:
+
+            products = dbm.advanced_search(request.json['platform'],request.json('genre'),request.json('category'))
+
+            if products:
+
+              return jsonify(products)
+
+            else:
+                return not_found()
+        else:
+            return bad_request()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
+
 @store_blueprint.route("/announcements", methods=['GET'])
 def home_announcements():
     try:
