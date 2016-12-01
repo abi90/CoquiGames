@@ -57,6 +57,32 @@
 										</span>
                                 </a>
                             </li>
+                            <li ng-show="Loggedin && user.roleid == 3">
+                                <a href="#/admin-users">
+                                    <i class="fa fa-user hidden-lg hidden-md" title="Products"></i>
+                                    <span class="hidden-sm hidden-xs">
+											Products
+										</span>
+                                </a>
+                            </li>
+                            <li ng-show="Loggedin && user.roleid == 3">
+                                <a href="#/admin-users">
+                                    <i class="fa fa-user hidden-lg hidden-md" title="Orders"></i>
+                                    <span class="hidden-sm hidden-xs">
+											Orders
+										</span>
+                                </a>
+                            </li>
+
+                            <li ng-show="Loggedin && user.roleid == 3">
+                                <a href="#/admin-users">
+                                    <i class="fa fa-user hidden-lg hidden-md" title="Anouncements"></i>
+                                    <span class="hidden-sm hidden-xs">
+											Anouncements
+										</span>
+                                </a>
+                            </li>
+
                             <li ng-hide="Loggedin">
                                 <a href="#/register.html">
                                     <i class="fa fa-unlock hidden-lg hidden-md" title="Register"></i>
