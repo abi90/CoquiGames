@@ -336,7 +336,7 @@ SELECT_USER_SHIPPING_ADDRESS = """SELECT address_state AS aState, address_line_1
                         WHEN  addressid IN (SELECT up.shipping_addressid FROM user_preferences up) THEN TRUE
                         ELSE FALSE END AS apreferred
                       FROM address
-                      WHERE userid = %s AND  addressid NOT IN (SELECT billing_addressid FROM payment_method)"""
+                      WHERE userid = %s AND  addressid NOT IN (SELECT billing_addressid FROM payment_method) AND address.active = TRUE"""
 
 
 SELECT_USER_BILLING_ADDRESS = """SELECT address_state AS aState, address_line_1 AS aaddress1, address_line_2 AS aaddress2, address_city AS acity,
@@ -346,7 +346,7 @@ SELECT_USER_BILLING_ADDRESS = """SELECT address_state AS aState, address_line_1 
                         WHEN  addressid IN (SELECT up.shipping_addressid FROM user_preferences up) THEN TRUE
                         ELSE FALSE END AS apreferred
                       FROM address
-                      WHERE userid = %s AND  addressid IN (SELECT billing_addressid FROM payment_method)"""
+                      WHERE userid = %s AND  addressid IN (SELECT billing_addressid FROM payment_method) AND address.active = TRUE"""
 
 
 SELECT_STORE_GENRES = """SELECT genre FROM genre WHERE active = TRUE"""
