@@ -218,6 +218,28 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };
+    /*
+     $http({
+     url: 'http://localhost:8080/example/teste',
+     dataType: 'json',
+     method: 'POST',
+     data: '',
+     headers: {
+     "Content-Type": "application/json"
+     }
+
+     })*/
+    userwsapi.postUserAddress= function (uid, username, password, address) {
+        return $http({
+            method: 'PUT',
+            url: userServiceURL + '/' + uid + '/address/' + address.aid,
+            dataType: 'json',
+            data: address,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
 
     return userwsapi;
 }]);

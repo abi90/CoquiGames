@@ -113,17 +113,17 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         };
 
         var getShipmentFees= function () {
-               userwsapi.getShipmentFees().then(
-                   function (response) {
-                       $scope.shippmentFees = response.data;
-                       $scope.shipmentFee = $scope.shippmentFees[0];
-                   },
-                   function (error) {
-                       console.log("Error: " +error.statusCode);
-                       $location.path("/404.html");
-                       $scope.logout();
-                   }
-               )
+            userwsapi.getShipmentFees().then(
+                function (response) {
+                    $scope.shippmentFees = response.data;
+                    $scope.shipmentFee = $scope.shippmentFees[0];
+                },
+                function (error) {
+                    console.log("Error: " +error.statusCode);
+                    $location.path("/404.html");
+                    $scope.logout();
+                }
+            )
         };
 
         var getUserBillingAddress= function (auth) {
@@ -251,7 +251,23 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
 
             // Update user selected address after modal is closed
             modal.closed.then(function(value) {
-                    console.log(JSON.stringify(value));
+                console.log(JSON.stringify(value));
+                if(shipping_address===value){
+                    //console.log("Equals");
+                }
+                else
+                {
+                    //console.log("Not equals");
+                    userwsapi.postUserAddress(auth.uid, auth.uname, auth.token, value)
+                        .then(function (response) {
+
+                        }, function (error) {
+                            //console.log(JSON.stringify(error));
+                        });
+                }
+
+                getUserShippingAddress(auth);
+                getUserBillingAddress(auth);
             });
         };
 

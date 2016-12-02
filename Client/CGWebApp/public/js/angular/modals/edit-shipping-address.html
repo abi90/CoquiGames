@@ -1,7 +1,7 @@
 <div class="popeye-modal-container">
     <div class="popeye-modal modal-content">
         <div class="modal-header">
-            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
             <h4 class="modal-title">Edit Shipping Address</h4>
         </div>
         <div class="modal-dialog">
@@ -18,35 +18,40 @@
                 <div class="row">
                     <label for="txtSAddress1" class="col-sm-3 control-label">Address/1 :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSAddress1" placeholder="Address/1">
+                        <input type="text" class="form-control" id="txtSAddress1" placeholder="Address/1"
+                               ng-model="selectedShippingAddress.aaddress1">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="txtSAddress2" class="col-sm-3 control-label">Address/2 :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSAddress2" placeholder="Address/2">
+                        <input type="text" class="form-control" id="txtSAddress2" placeholder="Address/2"
+                               ng-model="selectedShippingAddress.aaddress2">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="txtSCity" class="col-sm-3 control-label">City :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSCity" placeholder="City">
+                        <input type="text" class="form-control" id="txtSCity" placeholder="City"
+                               ng-model="selectedShippingAddress.acity">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="txtSPostCode" class="col-sm-3 control-label">Zip :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSPostCode" placeholder="Postal Code">
+                        <input type="text" class="form-control" id="txtSPostCode" placeholder="Postal Code"
+                               ng-model="selectedShippingAddress.azip">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="drpSState" class="col-sm-3 control-label">State :</label>
                     <div class="col-sm-9">
-                        <select class="form-control" id="drpSState" autocomplete="on">
+                        <select class="form-control" id="drpSState" autocomplete="on"
+                                ng-model="selectedShippingAddress.astate">
                             <option value="">State</option>
                             <option value="PR">PR</option>
                             <option value="AK">AK</option>
@@ -107,16 +112,24 @@
                 <div class="row">
                     <label for="drpSCountry" class="col-sm-3 control-label">Country :</label>
                     <div class="col-sm-9">
-                        <select class="form-control" id="drpSCountry" autocomplete="on">
+                        <select class="form-control" id="drpSCountry" autocomplete="on"
+                                ng-model="selectedShippingAddress.acountry">
                             <option value="USA">USA</option>
                         </select>
                         <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="Preferred" class="col-sm-3 control-label">Set as Preferred :</label>
+                    <div class="col-sm-9">
+                        <input id="Preferred" type="checkbox" ng-model="selectedShippingAddress.apreferred">
                     </div>
                 </div>
                 <!-- Delivery Information Ends -->
             </div>
         </div>
         <div class="modal-footer">
+            <button type="button" class="btn btn-black" ng-click="cancel()">Cancel</button>
             <button type="button" class="btn btn-black" ng-click="close()">Done</button>
         </div>
     </div>
