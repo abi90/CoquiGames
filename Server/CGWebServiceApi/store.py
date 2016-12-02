@@ -209,11 +209,11 @@ def search():
 
 
 @store_blueprint.route("/advanced_search", methods=['POST'])
-def search():
+def advanced_search():
     try:
         if 'platform' and 'genre' and 'category' in request.json:
 
-            products = dbm.advanced_search(request.json['platform'],request.json('genre'),request.json('category'))
+            products = dbm.advanced_search(request.json['platformid'],request.json['genre'],request.json['category'])
 
             if products:
 

@@ -294,7 +294,7 @@ SELECT_USER_MAX_PAYMENT_ID = """SELECT max(payment_methodid) as pid FROM payment
 
 SELECT_SEARCH_TITLE = """SELECT * FROM product_details WHERE lower(title) LIKE lower(%s)"""
 
-SELECT_SEARCH_NAVBAR = """ SELECT * FROM product_details WHERE platform = %s and genre = %s and category = %s """
+SELECT_SEARCH_NAVBAR = """ SELECT * FROM product_details WHERE platformid = %s and genre = %s and category = %s """
 
 
 SELECT_SEARCH_BLANK = """SELECT * FROM product_details WHERE"""

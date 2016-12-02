@@ -230,7 +230,6 @@ def delete_from_user_wish_list(userid, productid):
             if not in_wish_list:
                 dbm.add_product_to_user_wishlist(productid=productid, userid=userid)
                 wish_list = dbm.fetch_user_wish_list(userid=userid)
-                # return jsonify({'message': 'Product {0} added to user {1} wish list.'.format(productid, userid)})
                 return jsonify(wish_list)
             else:
                 return jsonify({'error': 'Product {0} is already in user {1} wish list.'.format(productid,userid)}), 400

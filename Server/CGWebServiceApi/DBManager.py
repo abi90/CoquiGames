@@ -412,7 +412,7 @@ def search_products_by_title(title):
     return __execute_select_product_query__(Query.SELECT_SEARCH_TITLE, ('%{0}%'.format(title),))
 
 def advanced_search(platform,genre,category):
-    return __execute_select_product_query__(Query.SELECT_SEARCH_NAVBAR, (platform,genre,category))
+    return __execute_select_product_query__(Query.SELECT_SEARCH_NAVBAR, (platform, genre, category))
 
 
 def insert_empty_order(cartid, shippment_feeid, shipping_addressid, userid, payment_methodid):
