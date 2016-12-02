@@ -88,7 +88,7 @@ SELECT_USER_ADDRESS = """SELECT address_state AS aState, address_line_1 AS aaddr
                         WHEN  addressid IN (SELECT up.shipping_addressid FROM user_preferences up) THEN TRUE
                         ELSE FALSE END AS apreferred
                       FROM address
-                      WHERE userid = %s"""
+                      WHERE address.userid = %s AND address.active = TRUE"""
 
 
 SELECT_USER_ADDRESS_ID = """SELECT address_state AS aState, address_line_1 AS aaddress1, address_line_2 AS aaddress2, address_city AS acity,
