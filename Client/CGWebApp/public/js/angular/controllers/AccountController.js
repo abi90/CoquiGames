@@ -119,7 +119,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                     $scope.shipmentFee = $scope.shippmentFees[0];
                 },
                 function (error) {
-                    console.log("Error: " +error.statusCode);
+                    console.log("Error: " + JSON.stringify(error));
                     $location.path("/404.html");
                     $scope.logout();
                 }
@@ -133,7 +133,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                 },
                 function (error) {
                     console.log(error);
-                    console.log("Error: " + response.data);
+                    console.log("Error: " + JSON.stringify(error.data));
                     $scope.userBillingAddress = [];
                     $scope.logout();
                 }
