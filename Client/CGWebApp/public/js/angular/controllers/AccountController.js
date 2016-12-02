@@ -230,20 +230,15 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             });
         };
 
-        $scope.shoEditShpAddModal = function() {
+        $scope.shoEditShpAddModal = function(shipping_address) {
 
             // Open a modal to edit ship add
             var modal = Popeye.openModal({
-                controller: 'AccountController',
+                controller: 'EditSAModalController as modalCtrl',
                 templateUrl: "js/angular/modals/edit-shipping-address.html",
                 resolve: {
-                    auth: function ($q, authenticationSvc) {
-                        var userInfo = authenticationSvc.getUserInfo();
-                        if (userInfo) {
-                            return $q.when(userInfo);
-                        } else {
-                            return $q.reject({authenticated: false});
-                        }
+                    shipping_address: function () {
+                        return shipping_address;
                     }
                 }
             });
@@ -255,8 +250,8 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             });
 
             // Update user selected address after modal is closed
-            modal.closed.then(function() {
-
+            modal.closed.then(function(value) {
+                    console.log(JSON.stringify(value));
             });
         };
 

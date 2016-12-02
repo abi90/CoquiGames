@@ -10,7 +10,8 @@
                 <div class="row">
                     <label for="txtSAddFname" class="col-sm-3 control-label">Full Name :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSAddFname" placeholder="Full Name">
+                        <input type="text" class="form-control" id="txtSAddFname" placeholder="Full Name"
+                               ng-model="selectedShippingAddress.afullname">
                         <br>
                     </div>
                 </div>
@@ -116,7 +117,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-black" ng-click="$close()">Done</button>
+            <button type="button" class="btn btn-black" ng-click="close()">Done</button>
         </div>
     </div>
 </div>
