@@ -17,3 +17,15 @@ def get_users():
     except Exception as e:
         print e
         return internal_server_error()
+
+@admin_blueprint.route("/products", methods=['GET'])
+@admin_verification
+def get_products():
+    try:
+        products = dbm.fetch_all_products()
+        if products:
+            return jsonify(products)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()

@@ -174,6 +174,9 @@ def fetch_platforms():
 def fetch_product(productid):
     return __execute_select_product_query__(Query.SELECT_PRODUCT_DETAILS, (productid,))[0]
 
+def fetch_all_products():
+    return __execute_select_product_query__(Query.SELECT_ALL_PRODUCTS, ())
+
 
 def fetch_platform_latest_products(platformid):
     return __execute_select_product_query__(Query.SELECT_PLATFORM_LATEST_PRODUCTS, (platformid,))
