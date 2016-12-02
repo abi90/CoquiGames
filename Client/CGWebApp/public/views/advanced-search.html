@@ -1,0 +1,174 @@
+<!-- Main Container Starts -->
+<div id="main-container" class="container">
+    <div class="row">
+        <!-- Primary Content Starts -->
+        <div class="col-md-9">
+            <!-- Breadcrumb Starts -->
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#/index.html">Home</a>
+                </li>
+                <li class="active">Search</li>
+                <li class="active">{{title}}</li>
+            </ol>
+            <!-- Breadcrumb Ends -->
+            <!-- Product Filter Starts -->
+            <div class="product-filter" ng-if="results.length > 0">
+                <div class="row">
+                    <div class="col-md-2 hidden-xs hidden-sm" ng-if="list==true">
+                        <div class="display">
+                            <a ng-click="listView()" class="active">
+                                <i class="fa fa-th-list" title="List View"></i>
+                            </a>
+                            <a ng-click="gridView()">
+                                <i class="fa fa-th" title="Grid View"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2 hidden-xs hidden-sm" ng-if="list==false">
+                        <div class="display">
+                            <a ng-click="listView()">
+                                <i class="fa fa-th-list" title="List View"></i>
+                            </a>
+                            <a ng-click="gridView()" class="active">
+                                <i class="fa fa-th" title="Grid View"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-1 col-xs-1 text-right">
+                        <label class="control-label">Sort</label>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-3 text-right">
+                        <select class="form-control" ng-click="updateFilter()" ng-model="propertyName.name">
+                            <option value="Title" selected="selected">Title</option>
+                            <option value="A-Z">A-Z</option>
+                            <option value="Z-A">Z-A</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-3 text-right">
+                        <select class="form-control" ng-click="updateFilter()" ng-model="propertyName.name">
+                            <option value="Price" selected="selected">Price</option>
+                            <option value="lowest">Lowest First</option>
+                            <option value="highest">Highest First</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 col-sm-2 col-xs-1 text-right">
+                        <label class="control-label">Show</label>
+                    </div>
+                    <div class="col-md-2 col-sm-1 col-xs-2 text-right">
+                        <select class="form-control" ng-click="updateFilter()" ng-model="qty.max">
+                            <option selected="selected" value="9">9</option>
+                            <option value="18">18</option>
+                            <option value="21">21</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Filter Ends -->
+            <!-- Product List Display Starts -->
+            <div class="row" ng-if="list==true">
+                <!-- Product #1 Starts -->
+                <div class="col-xs-12" ng-repeat="product in FilteredResults">
+                    <div class="product-col list clearfix">
+                        <div class="image">
+                            <img src="images/product-images/10.jpg" alt="product" class="img-responsive">
+                        </div>
+                        <div class="caption">
+                            <h4>
+                                <a ng-href="#/product.html/{{product.pid}}">{{product.title}}</a>
+                            </h4>
+                            <div class="description">
+                                <span ng-bind-html="product.description | filter:html | limitTo: 300"></span>
+                                {{product.description .length > 300 ? '...' : ''}}
+                            </div>
+                            <div class="price">
+                                <span ng-if="product.inoffer==true" class="price-new">{{product.offerprice | currency}}</span>
+                                <span ng-if="product.inoffer==false" class="price-new">{{product.price | currency}}</span>
+                                <span ng-if="product.inoffer==true" class="price-old">{{product.price | currency}}</span>
+                            </div>
+                            <div class="cart-button button-group">
+                                <button type="button" title="Wishlist" class="btn btn-wishlist">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                                <button type="button" class="btn btn-cart">Add to cart
+                                    <i class="fa fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                            <!--Hack to change format value-->
+                            <div style="color: white">{{format}}</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product #1 Ends -->
+            </div>
+            <!-- Product List Display Ends -->
+            <!-- Product Grid Display Starts -->
+            <div class="row" ng-if="list==false">
+                <!-- Product #1 Starts -->
+                <div class="col-md-4 col-sm-6" ng-repeat="product in FilteredResults">
+                    <div class="product-col">
+                        <div class="image">
+                            <img src="images/product-images/15.jpg" alt="product" class="img-responsive">
+                        </div>
+                        <div class="caption">
+                            <h4>
+                                <a ng-href="#/product.html/{{product.pid}}">{{product.title | limitTo: 23}}
+                                    {{product.title.length > 23 ? '...' : ''}}</a>
+                            </h4>
+                            <div class="description">
+                                <span ng-bind-html="product.description | filter: html | limitTo: 10 "></span>
+                                {{product.description .length > 10 ? '...' : ''}}
+                            </div>
+                            <div class="price">
+                                <span ng-if="product.inoffer==true" class="price-new">{{product.offerprice | currency}}</span>
+                                <span ng-if="product.inoffer==false" class="price-new">{{product.price | currency}}</span>
+                                <span ng-if="product.inoffer==true" class="price-old">{{product.price | currency}}</span>
+                            </div>
+                            <div class="cart-button button-group">
+                                <button type="button" title="Wishlist" class="btn btn-wishlist">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                                <button type="button" class="btn btn-cart">Add to cart
+                                    <i class="fa fa-shopping-cart"></i>
+                                </button>
+                                <!--Hack to change format value-->
+                                <div style="color: white">{{format}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product #1 Ends -->
+            </div>
+            <!-- Product Grid Display Ends -->
+            <!-- Pagination & Results Starts -->
+            <div class="row" ng-if="results.length > 0">
+                <!-- Pagination Starts -->
+                <div class="col-sm-6 pagination-block">
+                    <ul uib-pagination class="pagination"
+                        ng-model="currentPage.number"
+                        total-items="results.length"
+                        items-per-page="qty.max"
+                        boundary-links="false">
+
+                    </ul>
+                </div>
+                <!-- Pagination Ends -->
+            </div>
+            <!-- Pagination & Results Ends -->
+            <!-- No Results Starts -->
+            <div class="row" ng-if="results.length <= 0">
+                <div class="col-sm-6">
+                    <dl class="dl-horizontal total">
+                        <dt>No results for :</dt>
+                        <dd style="color: #4bac52">{{title}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <!-- No Results Ends -->
+        </div>
+        <!-- Primary Content Ends -->
+    </div>
+</div>
+<!-- Main Container Ends -->

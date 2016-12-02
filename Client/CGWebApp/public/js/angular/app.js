@@ -34,6 +34,18 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
                 }]
             }
         })
+
+        .when('/advanced-search/:platformid/:genre/:category', {
+            controller: 'NavBarController',
+            templateUrl: 'views/advanced-search.html',
+            resolve: {
+                data: ['$route', function($route){
+                    var params = $route.current.params;
+                    return params.data =  {"platformid":params.platformid,"genre":params.genre,"category":params.category};
+                }]
+            }
+        })
+
         .when('/404.html', {
             controller: '',
             templateUrl: 'views/404.html'
