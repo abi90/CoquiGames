@@ -160,17 +160,20 @@ def user_address(userid):
                 return jsonify(address)
             return not_found()
         elif request.method == 'POST':
-            address_keys = post_address_keys
-            address_keys.append('apreferred')
-            address_keys.append('atype')
-            for key in address_keys:
-                if key not in request.json:
-                    return missing_parameters_error()
-            errors = validate_address(request.json)
-            if errors:
-                return jsonify({'Errors': errors}), 400
-            new_address_id = dbm.create_user_address(userid, request.json)
-            return jsonify({'aid': new_address_id}), 201
+            if request.json:
+                address_keys = post_address_keys
+                address_keys.append('apreferred')
+                address_keys.append('atype')
+                for key in address_keys:
+                    if key not in request.json:
+                        return missing_parameters_error()
+                errors = validate_address(request.json)
+                if errors:
+                    return jsonify({'Errors': errors}), 400
+                new_address_id = dbm.create_user_address(userid, request.json)
+                return jsonify({'aid': new_address_id}), 201
+            else:
+                return missing_parameters_error()
     except Exception as e:
         print e.message
         return internal_server_error()

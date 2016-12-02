@@ -86,7 +86,7 @@ SELECT_USER_ADDRESS = """SELECT address_state AS aState, address_line_1 AS aaddr
                       address_zip AS azip, CASE WHEN addressid IN (SELECT billing_addressid FROM payment_method) THEN 'billing' ELSE 'shipping' END AS atype,
                       CASE WHEN addressid IN (SELECT up.billing_addressid FROM user_preferences up) THEN TRUE
                         WHEN  addressid IN (SELECT up.shipping_addressid FROM user_preferences up) THEN TRUE
-                        ELSE FALSE END AS preferred
+                        ELSE FALSE END AS apreferred
                       FROM address
                       WHERE userid = %s"""
 
@@ -96,20 +96,20 @@ SELECT_USER_ADDRESS_ID = """SELECT address_state AS aState, address_line_1 AS aa
                       address_zip AS azip, CASE WHEN addressid IN (SELECT billing_addressid FROM payment_method) THEN 'billing' ELSE 'shipping' END AS atype,
                       CASE WHEN addressid IN (SELECT up.billing_addressid FROM user_preferences up) THEN TRUE
                         WHEN  addressid IN (SELECT up.shipping_addressid FROM user_preferences up) THEN TRUE
-                        ELSE FALSE END AS preferred
+                        ELSE FALSE END AS apreferred
                       FROM address
                       WHERE userid = %s AND addressid = %s"""
 
 
 SELECT_USER_CREDIT_CARD = """SELECT to_char(card_exp_date, 'YYYY-MM') AS cexpdate, payment_methodid AS cid, card_last_four_digits AS cnumber, card_type AS ctype,
                               CASE WHEN payment_methodid IN (SELECT up.payment_methodid FROM user_preferences up) THEN TRUE
-                              ELSE FALSE END AS preferred
+                              ELSE FALSE END AS ppreferred
                               FROM payment_method
                               WHERE userid = %s"""
 
 SELECT_USER_PAYMENT_BY_ID= """SELECT to_char(card_exp_date, 'YYYY-MM') AS cexpdate, payment_methodid AS cid, card_last_four_digits AS cnumber, card_type AS ctype,
                               CASE WHEN payment_methodid IN (SELECT up.payment_methodid FROM user_preferences up) THEN TRUE
-                              ELSE FALSE END AS preferred
+                              ELSE FALSE END AS ppreferred
                               FROM payment_method
                               WHERE userid = %s AND payment_methodid = %s"""
 
@@ -334,7 +334,7 @@ SELECT_USER_SHIPPING_ADDRESS = """SELECT address_state AS aState, address_line_1
                       address_zip AS azip, 'shipping' AS atype,
                       CASE WHEN addressid IN (SELECT up.billing_addressid FROM user_preferences up) THEN TRUE
                         WHEN  addressid IN (SELECT up.shipping_addressid FROM user_preferences up) THEN TRUE
-                        ELSE FALSE END AS preferred
+                        ELSE FALSE END AS apreferred
                       FROM address
                       WHERE userid = %s AND  addressid NOT IN (SELECT billing_addressid FROM payment_method)"""
 
@@ -344,7 +344,7 @@ SELECT_USER_BILLING_ADDRESS = """SELECT address_state AS aState, address_line_1 
                       address_zip AS azip, 'billing' AS atype,
                       CASE WHEN addressid IN (SELECT up.billing_addressid FROM user_preferences up) THEN TRUE
                         WHEN  addressid IN (SELECT up.shipping_addressid FROM user_preferences up) THEN TRUE
-                        ELSE FALSE END AS preferred
+                        ELSE FALSE END AS apreferred
                       FROM address
                       WHERE userid = %s AND  addressid IN (SELECT billing_addressid FROM payment_method)"""
 
