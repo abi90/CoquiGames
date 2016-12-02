@@ -31,7 +31,7 @@
                             <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="address in userShippingAddress">
                                 <p> <strong>{{address.afullname}}</strong>
                                     <br>{{address.aaddress1}}
-                                    <br ng-if="address.aaddress2.length > 0">{{address.aaddress2}}
+                                    <br ng-if="address.aaddress2.length < 0">{{address.aaddress2}}
                                     <br>{{address.acity}}, {{address.astate}} {{address.azip}}
                                     <br>{{address.acountry}}<br>
                                     <strong ng-if="address.apreferred == true">[ * Preferred * ]</strong>
@@ -68,7 +68,7 @@
                             <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="address in userBillingAddress">
                                 <p> <strong>{{address.afullname}}</strong>
                                     <br>{{address.aaddress1}}
-                                    <br ng-if="address.aaddress2.length > 0">{{address.aaddress2}}
+                                    <br ng-if="address.aaddress2.length < 0">{{address.aaddress2}}
                                     <br>{{address.acity}}, {{address.astate}} {{address.azip}}
                                     <br>{{address.acountry}}<br>
                                     <strong ng-if="address.apreferred == true">[ * Preferred * ]</strong>
