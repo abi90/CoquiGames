@@ -252,20 +252,15 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             // Update user selected address after modal is closed
             modal.closed.then(function(value) {
                 console.log(JSON.stringify(value));
-                if(shipping_address===value){
-                    //console.log("Equals");
-                }
-                else
-                {
-                    //console.log("Not equals");
+                var changed = shipping_address===value;
+                if(!changed){
                     userwsapi.postUserAddress(auth.uid, auth.uname, auth.token, value)
                         .then(function (response) {
 
                         }, function (error) {
-                            //console.log(JSON.stringify(error));
+
                         });
                 }
-
                 getUserShippingAddress(auth);
                 getUserBillingAddress(auth);
             });
