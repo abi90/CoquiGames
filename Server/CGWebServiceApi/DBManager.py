@@ -752,6 +752,35 @@ def create_user_address(userid, address_data):
         raise
 
 
+def deactivate_user(userid):
+    """
+    Deactivate user account
+    :param userid: user id
+    :return: las record updated
+    """
+    try:
+        conn = __connection__()
+        cur = conn.cursor()
+        cur.execute(Query.DEACTIVATE_USER, (userid,))
+        columns = [x[0] for x in cur.description]
+        aid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
+        cur.execute(Query.DEACTIVATE_ACCOUNT, (aid,))
+        columns = [x[0] for x in cur.description]
+        done = [dict(zip(columns, row)) for row in cur.fetchall()]
+        return done
+    except:
+        if conn:
+            if not conn.closed:
+                conn.rollback()
+                conn.close()
+        raise
+
+
+
+
+
+
+
 
 
 

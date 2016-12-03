@@ -384,9 +384,9 @@ SELECT_PRODUCT_ALT_IMGS = """SELECT pi.product_img FROM product_img AS pi WHERE 
 SELECT_ALL_PRODUCTS = """SELECT * FROM product_details"""
 
 
-DEACTIVATE_ACCOUNT = """UPDATE account_info SET account_info.active = FALSE WHERE account_info.accountid = %s;"""
+DEACTIVATE_ACCOUNT = """UPDATE account_info SET account_info.active = FALSE WHERE account_info.accountid = %s RETURNING *;"""
 
-DEACTIVATE_USER = """UPDATE cg_user SET cg_user.active = FALSE WHERE cg_user.accountid = %s;"""
+DEACTIVATE_USER = """UPDATE cg_user SET cg_user.active = FALSE WHERE cg_user.userid = %s RETURNING cg_user.accountid;"""
 
 
 

@@ -90,16 +90,16 @@ app.controller('NavBarController', ['$scope', '$rootScope', '$location', 'storew
                 $location.path("/cart.html");
             };
 
-         $scope.advancedSearch = function(platformid, genre, category) {
+         $scope.adSearch = function(platformid, genre, category) {
 
              data = {'platformid': platformid,
                       'genre': genre,
                       'category' : category};
              console.log(JSON.stringify(data));
 
-             storewsapi.advancedSearch(data).then(
+             storewsapi.adSearch(data).then(
                  function (response){
-                     $location.path("/advanced_search/:"+platformid+"/:"+genre+"/:"+category+"/");
+                     $location.path("/advanced_search/"+platformid+"/"+genre+"/"+category+"/");
                  },
                  function(error){
 

@@ -18,6 +18,7 @@ def get_users():
         print e
         return internal_server_error()
 
+
 @admin_blueprint.route("/products", methods=['GET'])
 @admin_verification
 def get_products():
@@ -29,6 +30,7 @@ def get_products():
     except Exception as e:
         print e
         return internal_server_error()
+
 
 @admin_blueprint.route("/deactivate/<int:userid>", methods=['PUT'])
 @admin_verification

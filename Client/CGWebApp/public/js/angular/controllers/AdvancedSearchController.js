@@ -13,7 +13,7 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
         $scope.format = false;
         $scope.currentPage = {number: 1};
         $scope.qty = {max: 9};
-        
+
         $scope.orderByFunc = function(product){
             if($scope.propertyName.name == 'highest' || $scope.propertyName.name == 'lowest' || $scope.propertyName.name == 'Price'){
                 if(product.inoffer){
