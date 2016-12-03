@@ -752,7 +752,7 @@ def create_user_address(userid, address_data):
         raise
 
 
-def deactivate_user(userid):
+def deactivate_user(accountid):
     """
     Deactivate user account
     :param userid: user id
@@ -761,7 +761,7 @@ def deactivate_user(userid):
     try:
         conn = __connection__()
         cur = conn.cursor()
-        cur.execute(Query.DEACTIVATE_USER, (userid,))
+        cur.execute(Query.DEACTIVATE_USER, (accountid,))
         columns = [x[0] for x in cur.description]
         aid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
         cur.execute(Query.DEACTIVATE_ACCOUNT, (aid,))
