@@ -386,7 +386,10 @@ SELECT_ALL_PRODUCTS = """SELECT * FROM product_details"""
 
 DEACTIVATE_ACCOUNT = """UPDATE account_info SET account_info.active = FALSE WHERE account_info.accountid = %s RETURNING *;"""
 
-DEACTIVATE_USER = """UPDATE cg_user SET cg_user.active = FALSE WHERE cg_user.userid = %s RETURNING cg_user.accountid;"""
+
+DEACTIVATE_USER = """UPDATE cg_user SET cg_user.active = FALSE WHERE cg_user.accountid = %s RETURNING *;"""
 
 
+INSERT_ADMIN_USER = """INSERT INTO account_info (username, upassword, roleid, active)
+                          VALUES (%s, crypt(%s, gen_salt('md5')), 1, TRUE) RETURNING accountid"""
 
