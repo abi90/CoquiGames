@@ -286,6 +286,9 @@ UPDATE_USER_PREFERRED_SHIPPING_ADDR = """UPDATE user_preferences SET shipping_ad
 UPDATE_USER_PREFERRED_PAYMENT = """UPDATE user_preferences SET payment_methodid = %s WHERE userid = %s RETURNING *"""
 
 
+UPDATE_USER_PASSWORD = """update account_info set upassword = crypt(%s, gen_salt('md5')) where accountid = %s RETURNING *"""
+
+
 SELECT_USER_PREFERENCES = """SELECT * FROM user_preferences WHERE userid = %s"""
 
 

@@ -32,11 +32,26 @@ def get_products():
         return internal_server_error()
 
 
-@admin_blueprint.route("/deactivate/<int:userid>", methods=['PUT'])
+@admin_blueprint.route("/account/<int:accountid>/deactivate", methods=['PUT'])
 @admin_verification
-def deactivate_user(userid):
+def deactivate_user(accountid):
     try:
-        print userid
+        result = dbm.deactivate_user(accountid)
+        return jsonify(result)
+    except Exception as e:
+        print e.message
+        return internal_server_error()
+
+@admin_blueprint.route("/account/<int:accountid>/password", methods=['PUT'])
+@admin_verification
+def deactivate_user(accountid):
+    try:
+        if request.json:
+            result = dbm.update_user_password(accountid, request.json['upassword'])
+            return jsonify(result)
+        else:
+            return bad_request
+
     except Exception as e:
         print e.message
         return internal_server_error()

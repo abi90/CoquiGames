@@ -599,6 +599,20 @@ def process_order(userid, order_data):
         raise
 
 
+def update_user_password(accountid, upassword):
+    """
+    Update User Password
+    :param accountid:
+    :param upassword:
+    :return:
+    """
+    return __execute_commit_query__(Query.UPDATE_USER_PASSWORD, (accountid, upassword))
+
+
+
+
+
+
 def update_payment_method(userid, payment_methodid, card_data, billing_addressid):
     """
     Update Payment Method
