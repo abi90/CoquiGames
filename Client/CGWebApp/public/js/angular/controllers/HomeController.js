@@ -4,6 +4,11 @@ app.controller('HomeController', ['$scope', 'storewsapi',
         $scope.latest;
         $scope.specials;
         $scope.top;
+        $scope.slides = [];
+        $scope.myInterval = 5000;
+        $scope.nowWrapSlides = true;
+        $scope.active ;
+
 
         storewsapi.getLatestProducts().then(
             function(response) {
@@ -13,6 +18,23 @@ app.controller('HomeController', ['$scope', 'storewsapi',
                 console.log(error.toString());
                 $scope.latest = [];
             });
+
+        storewsapi.getHomeAnnouncements().then(
+            function(response){
+                $scope.slides = response.data;
+                $scope.active = 0;
+            },
+            function(error){
+                console.log(error.toString());
+                $scope.slides = [];
+            }
+
+
+        );
+
+
+
+
 
         storewsapi.getInOfferProducts().then(
             function(response) {

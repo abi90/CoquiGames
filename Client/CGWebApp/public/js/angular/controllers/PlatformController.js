@@ -1,6 +1,10 @@
 app.controller("PlatformController", ["$scope", "$location", "storewsapi", "platformId", function ($scope, $location, storewsapi, platformId) {
 
     $scope.platformId = platformId;
+    $scope.slides = [];
+    $scope.myInterval = 5000;
+    $scope.nowWrapSlides = true;
+    $scope.active ;
 
     var getPlatform = function () {
 
@@ -25,6 +29,19 @@ app.controller("PlatformController", ["$scope", "$location", "storewsapi", "plat
                 $scope.platformLatest = [];
             });
     };
+
+    storewsapi.getPlatformAnnouncements($scope.platformId).then(
+        function(response){
+            $scope.slides = response.data;
+            $scope.active =0;
+        },
+        function(error){
+            console.log(error.toString());
+            $scope.slides = [];
+        }
+
+
+    );
 
     var getPlatformSpecialProducts = function () {
 

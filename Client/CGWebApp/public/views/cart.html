@@ -28,10 +28,10 @@
 			</thead>
 			<tbody>
 			<tr ng-repeat="cart in userCart">
-				<td class="text-center hidden-xs">
+				<td class="text-center hidden-xs cart-img">
 					<a href="product.html">
 
-						<img src="images/product-images/cart-thumb-img1.jpg" alt="Product Name" title="Product Name" class="img-thumbnail">
+						<img ng-src={{cart.cover}} alt="Product Name" title="Product Name" class="img-thumbnail" width="147" height="193">
 
 					</a>
 				</td>

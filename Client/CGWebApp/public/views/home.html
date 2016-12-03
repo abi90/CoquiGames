@@ -7,13 +7,13 @@
         <div class="container">
             <!-- Slider Section Starts -->
             <div class="slider">
-                <div ng-controller="CarouselDemoCtrl">
+                <div ng-if="slides.length > 0">
                     <div style="">
                         <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
-                            <div class="" uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
-                                <img ng-src="{{slide.image}}" class="img-responsive" style="margin:auto;">
+                            <div class="" uib-slide ng-repeat="slide in slides track by $index" index="$index">
+                                <img ng-src="{{slide.sa_img}}" class="img-responsive" style="margin:auto;">
                                 <div class="carousel-caption">
-                                    <p>{{slide.text}}</p>
+                                    <p>{{slide.sa_title}}</p>
                                 </div>
                             </div>
                         </div>
