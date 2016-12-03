@@ -35,8 +35,8 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             }
         })
 
-        .when('/advanced-search/:platformid/:genre/:category', {
-            controller: 'NavBarController',
+        .when('/advanced_search/:platformid/:genre/:category', {
+            controller: 'AdvancedSearchController',
             templateUrl: 'views/advanced-search.html',
             resolve: {
                 data: ['$route', function($route){

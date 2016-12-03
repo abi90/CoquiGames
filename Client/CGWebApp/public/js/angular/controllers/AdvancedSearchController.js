@@ -2,7 +2,7 @@
  * Created by felix on 12/1/16.
  */
 
-app.controller("SearchController", ["$scope", "$location", "storewsapi", "data", '$rootScope', 'orderByFilter',
+app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi", "data", '$rootScope', 'orderByFilter',
     function ($scope, $location, storewsapi, platformid,genre,category, $rootScope, Popeye, orderBy) {
 
         //Scope Variables

@@ -114,9 +114,9 @@ SELECT_USER_PAYMENT_BY_ID= """SELECT to_char(card_exp_date, 'YYYY-MM') AS cexpda
                               WHERE userid = %s AND payment_methodid = %s"""
 
 
-SELECT_USER_CART = """SELECT cc.productid AS pid,p.product_title AS pname, p.product_price AS pprice, cc.cart_product_qty as pquantity
-                      FROM cart_contains cc JOIN product P USING (productid)
-                      WHERE cc.cartid IN (SELECT c.cartid FROM cart as c WHERE c.userid = %s AND c.active = TRUE)
+SELECT_USER_CART = """SELECT cc.productid AS pid,p.product_title AS pname, p.product_price AS pprice, cc.cart_product_qty as pquantity, pi.product_img AS cover
+                      FROM cart_contains cc JOIN product P USING (productid) JOIN product_img pi USING (productid)
+                      WHERE cc.cartid IN (SELECT c.cartid FROM cart as c WHERE c.userid = %s AND c.active = TRUE) AND pi.cover = TRUE
                       ORDER BY cc.cartid, cc.insert_date"""
 
 
@@ -382,6 +382,11 @@ SELECT_USERS = """SELECT a.accountid, a.username, b.email AS user_email, b.user_
 SELECT_PRODUCT_ALT_IMGS = """SELECT pi.product_img FROM product_img AS pi WHERE pi.productid = %s AND pi.cover = FALSE"""
 
 SELECT_ALL_PRODUCTS = """SELECT * FROM product_details"""
+
+
+DEACTIVATE_ACCOUNT = """UPDATE account_info SET account_info.active = FALSE WHERE account_info.accountid = %s;"""
+
+DEACTIVATE_USER = """UPDATE cg_user SET cg_user.active = FALSE WHERE cg_user.accountid = %s;"""
 
 
 

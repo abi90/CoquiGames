@@ -89,7 +89,7 @@ app.factory('storewsapi', ['$http',
                     .error(function (error) {return error;});
             };
 
-        storewsapi.advancedSearch =
+        storewsapi.adSearch =
             function (data)
             {
                 return $http.post(storeServiceURL+'/advanced_search', data)

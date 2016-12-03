@@ -199,19 +199,19 @@
                                 <ul class="list-unstyled">
                                     <li class="dropdown-header">Consoles</li>
                                     <li ng-repeat="console in option.consoles">
-                                        <a tabindex="-1"  ng-click="advancedSearch(option.platformid,'Console','Console')">{{console.product_title}}</a>
+                                        <a tabindex="-1"  href="#/product.html/{{console.productid}}">{{console.product_title}}</a>
                                     </li>
                                 </ul>
                                 <ul class="list-unstyled">
                                     <li class="dropdown-header">Accesories</li>
                                     <li ng-repeat="c in option.accesories track by $index">
-                                        <a tabindex="-1" ng-click="advancedSearch(option.platformid,c,'Accessory')">{{c}}</a>
+                                        <a tabindex="-1" ng-click="adSearch(option.platformid, c,'Accessory')">{{c}}</a>
                                     </li>
                                 </ul>
                                 <ul class="list-unstyled">
                                     <li class="dropdown-header">Games</li>
                                     <li ng-repeat="c in option.gamegen track by $index">
-                                        <a tabindex="-1" ng-click="advancedSearch(option.platformid,c,'Game')">{{c}}</a>
+                                        <a tabindex="-1" ng-click="adSearch(option.platformid, c,'Game')">{{c}}</a>
                                     </li>
                                 </ul>
                             </div>

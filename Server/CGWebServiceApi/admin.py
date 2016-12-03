@@ -29,3 +29,12 @@ def get_products():
     except Exception as e:
         print e
         return internal_server_error()
+
+@admin_blueprint.route("/deactivate/<int:userid>", methods=['PUT'])
+@admin_verification
+def deactivate_user(userid):
+    try:
+        print userid
+    except Exception as e:
+        print e.message
+        return internal_server_error()
