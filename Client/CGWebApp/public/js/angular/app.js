@@ -39,9 +39,9 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             controller: 'AdvancedSearchController',
             templateUrl: 'views/advanced-search.html',
             resolve: {
-                data: ['$route', function($route){
+                search_data: ['$route', function($route){
                     var params = $route.current.params;
-                    return params.data =  {"platformid":params.platformid,"genre":params.genre,"category":params.category};
+                    return params.search_data =  {"platformid": params.platformid, "genre": params.genre, "category": params.category};
                 }]
             }
         })

@@ -2,19 +2,18 @@
  * Created by felix on 12/1/16.
  */
 
-app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi", "data", '$rootScope', 'orderByFilter',
-    function ($scope, $location, storewsapi, platformid,genre,category, $rootScope, Popeye, orderBy) {
+app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi", "search_data", '$rootScope', 'orderByFilter',
+    function ($scope, $location, storewsapi, search_data, $rootScope, orderBy) {
 
         //Scope Variables
-        $scope.data = data
+        $scope.data = search_data;
         $scope.results = [];
         $scope.list = true;
         $scope.propertyName = {name: 'Title'};
         $scope.format = false;
         $scope.currentPage = {number: 1};
         $scope.qty = {max: 9};
-
-
+        
         $scope.orderByFunc = function(product){
             if($scope.propertyName.name == 'highest' || $scope.propertyName.name == 'lowest' || $scope.propertyName.name == 'Price'){
                 if(product.inoffer){
@@ -31,14 +30,15 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
 
         //Local functions
         var searchByData = function (data) {
-            if(data.length > 0){
-                storewsapi.searchByData(data).then(
+            var isValid = data.category.length >0 && data.genre.length>0 && data.platformid > 0;
+            if(isValid){
+                storewsapi.adSearch(data).then(
                     function (response) {
                         $scope.results = response.data;
                         sliceResults();
                     },
                     function (error) {
-                        console.log(error.toString());
+                        console.log(JSON.stringify(error));
                         $scope.results = [];
                     }
                 );
@@ -49,8 +49,6 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
             }
 
         };
-
-
 
         var sliceResults= function () {
             if($scope.propertyName.name == 'highest' || $scope.propertyName.name == 'Z-A' || $scope.propertyName.name == 'Price'){
@@ -67,7 +65,6 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
 
         };
 
-
         //Scope Functions
         $scope.gridView = function () {
             $scope.list = false;
@@ -76,8 +73,6 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
         $scope.listView = function () {
             $scope.list = true;
         };
-
-
 
 
         $scope.updateFilter = function () {
@@ -89,10 +84,8 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
         });
 
 
-
         //Get Results on startup
-        searchByTitle(title);
-        getGenres();
+        searchByData($scope.data);
 
 
 
