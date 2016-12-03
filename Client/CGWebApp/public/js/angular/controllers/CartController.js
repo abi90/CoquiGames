@@ -4,11 +4,12 @@
 /**
  * Created by abi on 10/12/16.
  */
-app.controller('CartController', ['$scope', '$location', 'authenticationSvc', 'userwsapi', '$rootScope',
-    function ($scope, $location, authenticationSvc, userwsapi, $rootScope) {
+app.controller('CartController', ['$scope', '$location', 'auth', 'authenticationSvc', 'userwsapi', '$rootScope',
+    function ($scope, $location,auth,authenticationSvc, userwsapi, $rootScope) {
 
-        $scope.userCart;
+        $rootScope.userCart;
         $scope.cartTotal;
+        console.log("mierda");
 
         var getUserCart= function () {
             var auth = authenticationSvc.getUserInfo();
@@ -38,6 +39,36 @@ app.controller('CartController', ['$scope', '$location', 'authenticationSvc', 'u
 
         };
 
+        $scope.changeProductQty = function(product){
+            if(product.pquantity>0 || product.pquantity < 99){
+                var auth = authenticationSvc.getUserInfo();
+                userwsapi.putUserCart(auth.uid,auth.uname,auth.upassword,product).then(
+                    function(response){
+                        getUserCart();
+                    },
+                    function(error){
+                        getUserCart()
+                    });
+            }
+            console.log(JSON.stringify(product));
+
+        };
+
+        $scope.removeProduct = function(pid) {
+            var auth = authenticationSvc.getUserInfo();
+            userwsapi.delUserCart(auth.uid,auth.uname,auth.upassword,pid).then(
+
+                function(response){
+                    getUserCart();
+                },
+                function(error){
+                    getUserCart();
+                }
+
+            );
+        }
+
         getUserCart();
+
 
     }]);

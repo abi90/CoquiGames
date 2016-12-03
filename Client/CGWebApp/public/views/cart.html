@@ -43,13 +43,13 @@
 				</td>
 				<td class="text-center">
 					<div class="input-group btn-block">
-						<input type="number" class="form-control" name="quantity" data-ng-model="cart.pquantity" min="1" max="99">
+						<input type="number" class="form-control" name="quantity" ng-model="cart.pquantity" ng-change="changeProductQty(cart)" min="1" max="99">
 					</div>
 				</td>
 				<td class="text-center">{{cart.pprice | currency}}</td>
 				<td class="text-center">{{cart.pprice * cart.pquantity | currency}}</td>
 				<td class="text-center">
-					<button type="button" title="Remove" class="btn btn-default tool-tip">
+					<button type="button" title="Remove" ng-click="removeProduct(cart.pid)" class="btn btn-default tool-tip">
 						<i class="fa fa-times-circle"></i>
 					</button>
 				</td>
