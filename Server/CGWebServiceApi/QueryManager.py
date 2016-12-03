@@ -76,9 +76,9 @@ SELECT_USER = """SELECT to_char(dob, 'YYYY-MM-DD') AS udob, email AS uemail, use
                   WHERE userid = %s"""
 
 
-SELECT_USER_WISH_LIST = """SELECT productid as pid, product_title as pname, product_price as pprice
-                          FROM wishlist_contains NATURAL INNER JOIN product
-                          WHERE userid = %s"""
+SELECT_USER_WISH_LIST = """SELECT wi.productid as pid, p.product_title as pname, p.product_price as pprice, pi.product_img as cover
+                          FROM wishlist_contains wi JOIN product p USING (productid) JOIN product_img pi USING(productid)
+                          WHERE wi.userid = %s"""
 
 
 SELECT_USER_ADDRESS = """SELECT address_state AS aState, address_line_1 AS aaddress1, address_line_2 AS aaddress2, address_city AS acity,
