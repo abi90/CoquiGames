@@ -254,7 +254,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                 console.log(JSON.stringify(value));
                 var changed = shipping_address===value;
                 if(!changed){
-                    userwsapi.postUserAddress(auth.uid, auth.uname, auth.token, value)
+                    userwsapi.putUserAddress(auth.uid, auth.uname, auth.token, value)
                         .then(function (response) {
 
                         }, function (error) {

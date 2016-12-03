@@ -790,6 +790,33 @@ def deactivate_user(accountid):
         raise
 
 
+def add_admin_user(user_data):
+    """
+
+    :param user_data:
+    :return:
+    """
+    try:
+        conn = __connection__()
+        cur = conn.execute(Query.INSERT_ADMIN_USER, (user_data['uname'], user_data['upassword']))
+        columns = [x[0] for x in cur.description]
+        aid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
+        # Add user information
+        cur.execute(Query.INSERT_USER,
+                    (user_data['ufirstname'], user_data['ulastname'],
+                     user_data['uemail'], user_data['uphone'], user_data['udob'],
+                     aid))
+        columns = [x[0] for x in cur.description]
+        result = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
+        return result
+    except:
+        if conn:
+            if not conn.closed:
+                conn.rollback()
+                conn.close()
+        raise
+
+
 
 
 

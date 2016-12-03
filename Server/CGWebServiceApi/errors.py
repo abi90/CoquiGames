@@ -51,3 +51,7 @@ def unauthorized():
     return resp
 
 
+def missing_parameters_error():
+    return jsonify({'Error': "Missing Parameters in Request JSON."}), 400
+
+

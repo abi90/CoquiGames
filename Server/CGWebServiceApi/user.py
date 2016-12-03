@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify, request, json
+from flask import Blueprint, jsonify, request
 from authentication import requires_auth, generate_auth_token
-from errors import not_found, bad_request, internal_server_error
+from errors import not_found, bad_request, internal_server_error, missing_parameters_error
 import DBManager as dbm
 import re
 
@@ -584,10 +584,6 @@ def validate_address(data):
         errors.append('Invalid Zip Code.')
 
     return errors
-
-
-def missing_parameters_error():
-    return jsonify({'Error': "Missing Parameters in Request JSON."}), 400
 
 
 def validate_order(data, userid):

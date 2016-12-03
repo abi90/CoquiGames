@@ -219,7 +219,7 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
-    userwsapi.postUserAddress= function (uid, username, password, address) {
+    userwsapi.putUserAddress= function (uid, username, password, address) {
         return $http({
             method: 'PUT',
             url: userServiceURL + '/' + uid + '/address/' + address.aid,
@@ -227,6 +227,60 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             data: address,
             headers: {'Content-Type': 'application/json',
                 'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    userwsapi.postUserCart= function (uid, username, password, product) {
+        return $http({
+            method: 'POST',
+            url: userServiceURL + '/' + uid + '/cart/' + product.pid,
+            dataType: 'json',
+            data: product,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    userwsapi.putUserCart= function (uid, username, password, product) {
+        return $http({
+            method: 'PUT',
+            url: userServiceURL + '/' + uid + '/cart/' + product.pid,
+            dataType: 'json',
+            data: product,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    userwsapi.delUserCart= function (uid, username, password, pid) {
+        return $http({
+            method: 'DELETE',
+            url: userServiceURL + '/' + uid + '/cart/' + pid,
+            headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    userwsapi.postUserWishList= function (uid, username, password, pid) {
+        return $http({
+            method: 'POST',
+            url: userServiceURL + '/' + uid + '/wishlist/' + pid,
+            dataType: 'json',
+            data: product,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    userwsapi.delUserWishList= function (uid, username, password, pid) {
+        return $http({
+            method: 'DELETE',
+            url: userServiceURL + '/' + uid + '/wishlist/' + pid,
+            headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };
