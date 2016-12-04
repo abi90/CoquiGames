@@ -13,7 +13,6 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         $rootScope.userCart;
         $scope.shippmentFees;
         $scope.shipmentFee;
-        $scope.shipmentFeeId = 0;
         $scope.selectedPayment = {};
         $scope.selectedShippingAddress = {};
         $scope.userPreferences;
@@ -184,20 +183,6 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             $scope.userInfo = auth;
         };
 
-        $scope.getShipmentFee = function () {
-            try {
-                for (var i = 0; i < $scope.shippmentFees.length; i++) {
-                    if ($scope.shipmentFeeId == $scope.shippmentFees[i].shipment_feeid) {
-                        $scope.shipmentFee = $scope.shippmentFees[i];
-                        return $scope.shipmentFee;
-                    }
-                }
-                return $scope.shipmentFee;
-            }catch (err){
-                console.log("Error while updating shipment fee.");
-                return $scope.shipmentFee;
-            }
-        };
 
         // Modals functions:
         $scope.shoPreferredShpAddModal = function() {
@@ -446,6 +431,24 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             });
         };
 
+
+        $scope.placeOrder = function () {
+            order = {
+                "shipment_feeid": $scope.shipmentFee.shipment_feeid,
+                "aid": $scope.selectedShippingAddress.aid,
+                "cid": $scope.selectedPayment.cid,
+            };
+
+            userwsapi.postUserOrder(auth.uid, auth.uname, auth.token, order).then(
+                function (response) {
+                    console.log(JSON.stringify(response));
+                    $location.path('/account-orders')
+                },
+                function (err) {
+                    console.log(JSON.stringify(err));
+                }
+            );
+        };
 
 
         // Get User Data on startup

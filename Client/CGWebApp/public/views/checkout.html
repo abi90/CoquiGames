@@ -105,7 +105,7 @@
                                 <!-- Simple dropdown -->
                                 <span uib-dropdown on-toggle="toggled(open)">
                                     <a href id="simple-dropdown" uib-dropdown-toggle>Change</a>
-                                    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                                    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown" ng-value="selectedPayment">
                                         <li role="menuitem" ng-repeat="pay in userPayment">
                                             <a>
                                                 <img ng-if="pay.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
@@ -139,8 +139,8 @@
                         <form class="form-horizontal" role="form">
                             <div class="form-check">
                                 <form action="">
-                                    <select class="form-control" autocomplete="on" id="" ng-model="shipmentFeeId">
-                                        <option ng-repeat="fee in shippmentFees" value="{{fee.shipment_feeid}}" >{{fee.fee | currency}} - {{fee.fee_description}}</option>
+                                    <select class="form-control" autocomplete="on" ng-model="shipmentFee"
+                                            ng-options="(fee.fee | currency:'$') + ' - ' + fee.fee_description for fee in shippmentFees">
                                     </select>
                                 </form>
                             </div>
@@ -162,12 +162,12 @@
                             <dt>Subtotal :</dt>
                             <dd>{{getSubTotal() | currency}}</dd>
                             <dt>Shipment Fee :</dt>
-                            <dd>{{getShipmentFee().fee | currency}}</dd>
+                            <dd>{{shipmentFee.fee | currency}}</dd>
                         </dl>
                         <hr />
                         <dl class="dl-horizontal total">
                             <dt>Total :</dt>
-                            <dd>{{getSubTotal() + getShipmentFee().fee | currency}}</dd>
+                            <dd>{{getSubTotal() + $scope.shipmentFee.fee | currency}}</dd>
                         </dl>
                         <hr />
                         <div class="text-uppercase clearfix">
@@ -175,7 +175,7 @@
                                 <span class="hidden-xs">Go back to cart</span>
                                 <span class="visible-xs">Continue Shopping</span>
                             </a>
-                            <a href="#/account-orders" class="btn btn-main pull-right">
+                            <a class="btn btn-main pull-right" ng-click="placeOrder()">
                                 Place Order
                             </a>
                         </div>
