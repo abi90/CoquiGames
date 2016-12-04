@@ -9,7 +9,6 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         $scope.userAddress;
         $scope.userOrder;
         $scope.userPayment;
-        $scope.userWishlist;
         $rootScope.userCart;
         $scope.shippmentFees;
         $scope.shipmentFee;
@@ -98,19 +97,6 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             )
         };
 
-        var getUserWishList= function (auth) {
-            userwsapi.getUserWishlist(auth.uid, auth.uname, auth.token).then(
-                function (response) {
-                    $scope.userWishlist = response.data;
-                },
-                function (error) {
-                    console.log("Error: " +error.statusCode);
-                    $location.path("/404.html");
-                    $scope.logout();
-                }
-            )
-        };
-
         var getShipmentFees= function () {
             userwsapi.getShipmentFees().then(
                 function (response) {
@@ -181,6 +167,24 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
 
         $scope.init = function (auth) {
             $scope.userInfo = auth;
+        };
+
+        $scope.placeOrder = function () {
+            order = {
+                "shipment_feeid": $scope.shipmentFee.shipment_feeid,
+                "aid": $scope.selectedShippingAddress.aid,
+                "cid": $scope.selectedPayment.cid,
+            };
+
+            userwsapi.postUserOrder(auth.uid, auth.uname, auth.token, order).then(
+                function (response) {
+                    console.log(JSON.stringify(response));
+                    $location.path('/account-orders')
+                },
+                function (err) {
+                    console.log(JSON.stringify(err));
+                }
+            );
         };
 
 
@@ -432,24 +436,6 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         };
 
 
-        $scope.placeOrder = function () {
-            order = {
-                "shipment_feeid": $scope.shipmentFee.shipment_feeid,
-                "aid": $scope.selectedShippingAddress.aid,
-                "cid": $scope.selectedPayment.cid,
-            };
-
-            userwsapi.postUserOrder(auth.uid, auth.uname, auth.token, order).then(
-                function (response) {
-                    console.log(JSON.stringify(response));
-                    $location.path('/account-orders')
-                },
-                function (err) {
-                    console.log(JSON.stringify(err));
-                }
-            );
-        };
-
 
         // Get User Data on startup
         getUser(auth);
@@ -457,7 +443,6 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         getUserOrder(auth);
         getUserPayments(auth);
         getUserCart(auth);
-        getUserWishList(auth);
         getShipmentFees();
         getUserPreferences(auth);
         getUserShippingAddress(auth);
