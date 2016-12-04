@@ -59,6 +59,18 @@ def get_categories():
         print e
         return internal_server_error()
 
+@admin_blueprint.route("/announcements", methods=['GET'])
+@admin_verification
+def get_announcements():
+    try:
+        announcements = dbm.fetch_all_announcements()
+        if announcements:
+            return jsonify(announcements)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
 
 @admin_blueprint.route("/account/<int:accountid>/deactivate", methods=['PUT'])
 @admin_verification

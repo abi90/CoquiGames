@@ -829,7 +829,8 @@ def fetch_all_platforms():
 def fetch_all_categories():
     return __execute_commit_query__(Query.SELECT_ALL_CATEGORIES, ())
 
-
+def fetch_all_announcements():
+    return __execute_commit_query__(Query.SELECT_ALL_ANNOUNCEMENTS, ())
 
 
 
