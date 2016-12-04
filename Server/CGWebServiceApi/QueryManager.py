@@ -402,3 +402,5 @@ SELECT_ALL_ORDERS = """SELECT o.orderid, o.userid, u.user_firstname, u.user_last
                         JOIN order_status AS s USING(order_statusid)"""
 
 SELECT_ESRB_RATING = """SELECT * from esrb_rating"""
+
+SELECT_ALL_PLATFORMS = """SELECT * FROM platform"""

@@ -35,6 +35,18 @@ def get_products():
         print e
         return internal_server_error()
 
+@admin_blueprint.route("/platforms", methods=['GET'])
+@admin_verification
+def get_platforms():
+    try:
+        platforms = dbm.fetch_all_platforms()
+        if platforms:
+            return jsonify(platforms)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
 
 @admin_blueprint.route("/account/<int:accountid>/deactivate", methods=['PUT'])
 @admin_verification
