@@ -130,15 +130,12 @@ def announcement_by_platform(platformid):
 def rating(productid):
     try:
         if request.json:
-            try:
-                if dbm.insert_product_rating(productid=productid,rate=request.json['Rating']):
+
+                if dbm.insert_product_rating(productid=productid,rate=request.json['rating']):
                     response = jsonify({"Message": "Completed"})
                     response.status_code = 201
                     return response
                 return not_found()
-            except Exception as e:
-                print e
-                bad_request()
         else:
             return bad_request()
     except Exception as e:

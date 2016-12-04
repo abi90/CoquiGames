@@ -1,4 +1,4 @@
-app.controller('RatingCtrl', function ($scope) {
+app.controller('RatingCtrl', ['$scope', 'storewsapi', function ($scope, storewsapi) {
     $scope.rate = 0;
     $scope.max = 5;
     $scope.isReadonly = false;
@@ -16,7 +16,8 @@ app.controller('RatingCtrl', function ($scope) {
         {stateOff: 'glyphicon-off'}
     ];
 
-    $scope.set_rate=function (value) {
-        $.scope.rate = value;
-    }
-});
+    $scope.set_rate=function (pid, rating) {
+        $scope.isReadonly = true;
+        storewsapi.putProductRating(pid, {"rating": rating}).then(function (){},function () {}, {});
+    };
+}]);
