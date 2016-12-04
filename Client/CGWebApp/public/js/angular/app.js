@@ -1,4 +1,4 @@
-var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize','$base64', 'pathgather.popeye', 'ui.bootstrap', 'fancyboxplus',]);
+var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize','$base64', 'pathgather.popeye', 'ui.bootstrap', 'fancyboxplus']);
 
 app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
 
@@ -20,7 +20,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             resolve: {
                 platformId: ['$route', function($route){
                     var params = $route.current.params;
-                    return params.platformId =  params.platformId;
+                    return params.platformId;
                 }]
             }
         })
@@ -30,7 +30,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             resolve: {
                 title: ['$route', function($route){
                     var params = $route.current.params;
-                    return params.title =  params.title;
+                    return params.title;
                 }]
             }
         })
@@ -86,7 +86,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             resolve: {
                 productId: ['$route', function($route) {
                     var params = $route.current.params;
-                    return params.productId = params.productId;
+                    return params.productId;
                 }]
             }
 
@@ -96,7 +96,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             templateUrl: 'views/register.html'
         })
         .when('/wishlist', {
-            controller: 'AccountController',
+            controller: 'WishListController',
             templateUrl: 'views/wishlist.html',
             resolve: {
                 auth:
@@ -147,7 +147,6 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
                     var userInfo = authenticationSvc.getUserInfo();
                     if (userInfo) {
                         var params = $route.current.params;
-                        params.orderId = params.orderId;
                         return $q.when(params.orderId);
                     } else {
                         return $q.reject({ authenticated: false });
@@ -269,4 +268,4 @@ app.filter('html',function($sce){
     return function(input){
         return $sce.trustAsHtml(input);
     }
-})
+});

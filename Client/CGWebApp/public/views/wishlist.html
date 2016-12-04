@@ -2,7 +2,7 @@
 <div id="main-container" class="container">
     <!-- Breadcrumb Starts -->
     <ol class="breadcrumb">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="#/index.html">Home</a></li>
         <li class="active">Wish List</li>
     </ol>
     <!-- Breadcrumb Ends -->
@@ -34,7 +34,7 @@
             <tr ng-repeat="wish in userWishlist">
                 <td class="text-center hidden-xs cart-img">
                     <a href="product.html">
-                        <img ng-src={{wish.cover}} alt="Product Name" title="Product Name" class="img-thumbnail"width="147" height="193" />
+                        <img ng-src={{wish.cover}} alt="Product Name" title="Product Name" class="img-thumbnail" width="147" height="193" />
                     </a>
                 </td>
                 <td class="text-center hidden-xs">
@@ -47,10 +47,10 @@
                     {{wish.pprice}}
                 </td>
                 <td class="text-center">
-                    <button type="submit" title="Update" class="btn btn-default tool-tip">
+                    <button type="submit" title="Add To Cart" class="btn btn-default tool-tip" ng-click="addToCart(wish.pid)">
                         <i class="fa fa-shopping-cart"></i>
                     </button>
-                    <button type="button" title="Remove" class="btn btn-default tool-tip">
+                    <button type="button" title="Remove from Wish List" class="btn btn-default tool-tip" ng-click="deleteFromWishList(wish.pid)">
                         <i class="fa fa-times-circle"></i>
                     </button>
                 </td>
