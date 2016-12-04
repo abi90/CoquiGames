@@ -289,7 +289,6 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             method: 'POST',
             url: userServiceURL + '/' + uid + '/wishlist/' + pid,
             dataType: 'json',
-            data: product,
             headers: {'Content-Type': 'application/json',
                 'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
             .success(function (data) {return data;})

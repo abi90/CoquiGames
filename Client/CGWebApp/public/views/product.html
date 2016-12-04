@@ -77,10 +77,10 @@
                             <input type="text" name="quantity" value="1" size="2" id="input-quantity" class="form-control">
                         </div>
                         <div class="cart-button button-group">
-                            <button type="button" title="Wishlist" class="btn btn-wishlist">
+                            <button type="button" title="Wishlist" class="btn btn-wishlist" ng-click="addProductToWishList()">
                                 <i class="fa fa-heart"></i>
                             </button>
-                            <button type="button" class="btn btn-cart">Add to cart
+                            <button type="button" class="btn btn-cart" ng-click="addProductToCart()">Add to cart
                                 <i class="fa fa-shopping-cart"></i>
                             </button>
                         </div>
@@ -146,10 +146,10 @@
                                     <span ng-if="product.inoffer==true" class="price-old">{{product.price | currency}}</span>
                                 </div>
                                 <div class="cart-button button-group">
-                                    <button type="button" title="Wishlist" class="btn btn-wishlist">
+                                    <button type="button" title="Wishlist" class="btn btn-wishlist" ng-click="addRelatedProductToWishLis(product.pid)">
                                         <i class="fa fa-heart"></i>
                                     </button>
-                                    <button type="button" class="btn btn-cart">Add to cart
+                                    <button type="button" class="btn btn-cart" ng-click="addRelatedProductToCart(product.pid)">Add to cart
                                         <i class="fa fa-shopping-cart"></i>
                                     </button>
                                     <!--Hack to change format value-->
