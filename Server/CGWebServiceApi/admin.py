@@ -6,6 +6,9 @@ import DBManager as dbm
 
 admin_blueprint = Blueprint('admin', __name__)
 
+product_keys = ['title', 'release', 'price', 'platformid',
+                'genre', 'esrb', 'description', 'aditionalinfo', 'category']
+
 
 @admin_blueprint.route("/users", methods=['GET'])
 @admin_verification
@@ -89,4 +92,24 @@ def get_orders():
         return not_found()
     except Exception as e:
         print e
+        return internal_server_error()
+
+
+@admin_blueprint.route("/product", methods=['POST'])
+@admin_verification
+def create_product():
+    try:
+        if request.json:
+            for key in product_keys:
+                if key not in request.json:
+                    return missing_parameters_error()
+            errors = validate_account(request.json)
+            if errors:
+                return jsonify({'errors': errors}), 400
+            result = dbm.add_admin_user(request.json)
+            return jsonify(result)
+        else:
+            return bad_request
+    except Exception as e:
+        print e.message
         return internal_server_error()
