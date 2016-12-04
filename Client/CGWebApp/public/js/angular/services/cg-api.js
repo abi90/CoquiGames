@@ -413,7 +413,7 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
 
     adminwsapi.postAdminUser= function (username, password, uid, upassword) {
         return $http({
-            method: 'PUT',
+            method: 'POST',
             url: adminServiceURL + '/account/' + uid + '/password',
             dataType: 'json',
             data: {"upasword": upassword},
