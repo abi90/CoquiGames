@@ -137,6 +137,14 @@ app.factory('storewsapi', ['$http',
                     .error(function (error) {return error;});
             };
 
+        storewsapi.putProductRating=
+            function (id, rating)
+            {
+                return $http.put(storeServiceURL+'/product/'+id+'/rating', rating)
+                    .success(function (data) {return data;})
+                    .error(function (error) {return error;});
+            };
+
         return storewsapi;
     }]);
 
@@ -361,26 +369,61 @@ app.factory("authenticationSvc", ["$http","$q","$window", '$rootScope',function 
 
 app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
 
-    var userServiceURL = serviceURL + '/admin';
+    var adminServiceURL = serviceURL + '/admin';
 
     var adminwsapi = {};
 
     adminwsapi.getUsers= function (username, password) {
-        return $http.get(userServiceURL + '/users', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+        return $http.get(adminServiceURL + '/users', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };
     adminwsapi.getAllProducts= function (username, password) {
-        return $http.get(userServiceURL + '/products', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+        return $http.get(adminServiceURL + '/products', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };
 
     adminwsapi.getOrders= function (username, password) {
-        return $http.get(userServiceURL + '/orders', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+        return $http.get(adminServiceURL + '/orders', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };
+
+    adminwsapi.postAdminUser= function (username, password, newUser) {
+        return $http({
+            method: 'POST',
+            url: adminServiceURL + '/',
+            dataType: 'json',
+            data: newUser,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.deactivateUser= function (username, password, uid) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/account/' + uid + '/deactivate',
+            headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.postAdminUser= function (username, password, uid, upassword) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/account/' + uid + '/password',
+            dataType: 'json',
+            data: {"upasword": upassword},
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+
 
     return adminwsapi;
 }]);
