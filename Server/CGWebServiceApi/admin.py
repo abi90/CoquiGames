@@ -77,3 +77,16 @@ def create_admin():
     except Exception as e:
         print e.message
         return internal_server_error()
+
+
+@admin_blueprint.route("/orders", methods=['GET'])
+@admin_verification
+def get_orders():
+    try:
+        orders = dbm.fetch_all_orders()
+        if orders:
+            return jsonify(orders)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()

@@ -817,6 +817,9 @@ def add_admin_user(user_data):
         raise
 
 
+def fetch_all_orders():
+    return __execute_select_query__(Query.SELECT_ALL_ORDERS, ())
+
 
 
 
