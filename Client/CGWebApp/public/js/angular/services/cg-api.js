@@ -411,9 +411,9 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
-    adminwsapi.postAdminUser= function (username, password, uid, upassword) {
+    adminwsapi.changeUserPassword= function (username, password, uid, upassword) {
         return $http({
-            method: 'POST',
+            method: 'PUT',
             url: adminServiceURL + '/account/' + uid + '/password',
             dataType: 'json',
             data: {"upasword": upassword},
