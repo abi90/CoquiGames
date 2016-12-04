@@ -390,8 +390,8 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
-    adminwsapi.get= function (username, password) {
-        return $http.getESRBRating(adminServiceURL + '/product/rating', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+    adminwsapi.getESRBRating= function (username, password) {
+        return $http.get(adminServiceURL + '/product/rating', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };
