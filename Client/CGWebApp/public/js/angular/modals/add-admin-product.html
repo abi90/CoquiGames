@@ -1,0 +1,59 @@
+<div class="popeye-modal-container">
+    <div class="popeye-modal modal-content">
+        <div class="modal-header">
+            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <h4 class="modal-title">Add New Product</h4>
+        </div>
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <!-- Product Information Starts -->
+                <div class="row">
+                    <label for="txtTitle" class="col-sm-3 control-label">Title :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtTitle" placeholder="Title">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtReleaseDate" class="col-sm-3 control-label">Release Date :</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" id="txtReleaseDate" placeholder="Release Date">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtProductPrice" class="col-sm-3 control-label">Product Price :</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="txtProductPrice" placeholder="Product Price">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtProductQuantity" class="col-sm-3 control-label">Product Quantity :</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="txtProductQuantity" placeholder="Product Quantity">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtDescription" class="col-sm-3 control-label">Product Description :</label>
+                    <div class="col-sm-9">
+                        <textarea cols="50" rows="4" id="txtDescription" placeholder="Product Description"></textarea>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtAdditional" class="col-sm-3 control-label">Additional Information :</label>
+                    <div class="col-sm-9">
+                        <textarea cols="50" rows="4" id="txtAdditional" placeholder="Product Additional Information"></textarea>
+                        <br>
+                    </div>
+                </div>
+                <!-- Product Information ends -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-black" ng-click="$close()">Add</button>
+        </div>
+    </div>
+</div>

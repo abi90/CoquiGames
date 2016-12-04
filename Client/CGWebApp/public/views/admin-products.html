@@ -1,0 +1,184 @@
+<!-- Main Container Starts -->
+<div id="main-container" class="container">
+    <!-- Breadcrumb Starts -->
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Products</li>
+    </ol>
+    <!-- Breadcrumb Ends -->
+    <!-- Main Heading Starts -->
+    <h2 class="main-heading text-center">
+        CoquiGames Products
+    </h2>
+    <!-- Main Heading Ends -->
+    <!-- Search Filter Starts -->
+    <div>
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon btn-black"><i class="fa fa-search"></i></div>
+                    <input type="text" class="form-control" placeholder="Search Product" ng-model="searchProduct">
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Search Filter Ends -->
+    <!-- Product Table Starts -->
+    <div class="table table-responsive shopping-cart-table">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td class="text-center">
+                    <a ng-click="sortType = 'pid'; sortReverse = !sortReverse">Product ID
+                        <span
+                                ng-show="sortType == 'pid' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'pid' && !sortReverse"
+                                class="fa fa-caret-up">
+                    </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
+                        <span
+                                ng-show="sortType == 'title' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'title' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'genre'; sortReverse = !sortReverse">Genre
+                        <span
+                                ng-show="sortType == 'genre' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'genre' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'category'; sortReverse = !sortReverse">Category
+                        <span
+                                ng-show="sortType == 'category' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'category' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'price'; sortReverse = !sortReverse">Price
+                        <span
+                                ng-show="sortType == 'price' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'price' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'release'; sortReverse = !sortReverse">Release
+                        <span
+                                ng-show="sortType == 'release' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'release' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'availability'; sortReverse = !sortReverse">Availability
+                        <span
+                                ng-show="sortType == 'availability' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'availability' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    Action
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="u in products | orderBy:sortType:sortReverse | filter:searchProduct">
+                <td class="text-center">
+                    {{u.pid}}
+                </td>
+                <td class="text-center">
+                    {{u.title}}
+                </td>
+                <td class="text-center">
+                    {{u.genre}}
+                </td>
+                <td class="text-center">
+                    {{u.category}}
+                </td>
+                <td class="text-center">
+                    {{u.price}}
+                </td>
+                <td class="text-center">
+                    {{u.release}}
+                </td>
+                <td class="text-center">
+                    {{u.availability}}
+                </td>
+                <td class="text-center">
+                    <button type="submit" title="Edit" class="btn btn-default tool-tip">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button type="button" title="Remove" class="btn btn-default tool-tip">
+                        <i class="fa fa-times-circle"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Product Table Ends -->
+    <!-- Add Products Section Starts -->
+    <div class="text-center">
+        <section class="registration-area">
+            <div class="row">
+                <div class="col-sm-6 col-md-offset-3" >
+                    <!-- Message Panel Starts -->
+                    <div class="panel panel-smart">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Add a New Product</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            <!--<div class="text-uppercase clearfix">-->
+                            <!--<a href="#/modals/add-admin-user.html" class="btn btn-main text-center">-->
+                            <!--<span class="hidden-xs" ng-click="shoAddAdminModal()">Add Admin</span>-->
+                            <button type="submit" title="Add" class="btn btn-default tool-tip" ng-click="shoAddNewProductModal()">
+                                <!--<i class="fa fa-times-circle"></i>--> Add Products
+                            </button>
+                            <!--</a>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <!-- Message Panel Ends -->
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Add Admin Section Ends -->
+</div>
+<!-- Main Container Ends -->

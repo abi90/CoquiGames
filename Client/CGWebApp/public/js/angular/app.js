@@ -215,6 +215,39 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
         })
         .otherwise({
             redirectTo: '/'
+        })
+    .when('/admin-orders', {
+        controller: 'AdminOrdersController',
+        templateUrl: 'views/admin-orders.html',
+        resolve: {
+            auth:  function($q, authenticationSvc) {
+                var userInfo = authenticationSvc.getUserInfo();
+                if (userInfo.roleid === 3){
+                    return $q.when(userInfo);
+                } else {
+                    return $q.reject({ authenticated: false });
+                }
+            }
+        }
+
+    })
+        .when('/admin-products', {
+            controller: 'AdminProductsController',
+            templateUrl: 'views/admin-products.html',
+            resolve: {
+                auth:  function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    if (userInfo.roleid === 3){
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }
+            }
+
+        })
+        .otherwise({
+            redirectTo: '/'
         });
 
 }]);

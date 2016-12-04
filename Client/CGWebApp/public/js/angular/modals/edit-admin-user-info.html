@@ -1,0 +1,31 @@
+<div class="popeye-modal-container">
+    <div class="popeye-modal modal-content">
+        <div class="modal-header">
+            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <h4 class="modal-title">Edit User Info</h4>
+        </div>
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <!-- Password change Starts -->
+                <div class="row">
+                    <label for="txtPassword" class="col-sm-3 control-label">New Password :</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="txtPassword" autocomplete="off" placeholder="Password">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtRePassword" class="col-sm-3 control-label">Re-Password :</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="txtRePassword" autocomplete="off" placeholder="Re-Password">
+                        <br>
+                    </div>
+                </div>
+                <!-- Password Change Ends -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-black" ng-click="$close()">Done</button>
+        </div>
+    </div>
+</div>

@@ -370,6 +370,17 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };
+    adminwsapi.getAllProducts= function (username, password) {
+        return $http.get(userServiceURL + '/products', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.getOrders= function (username, password) {
+        return $http.get(userServiceURL + '/orders', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
 
     return adminwsapi;
 }]);

@@ -1,0 +1,79 @@
+<div class="popeye-modal-container">
+    <div class="popeye-modal modal-content">
+        <div class="modal-header">
+            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <h4 class="modal-title">Add New Administrator</h4>
+        </div>
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <!-- Personal Information Starts -->
+                <h3 class="panel-inner">Personal Information</h3>
+                <br>
+                <div class="row">
+                    <label for="txtFname" class="col-sm-3 control-label">First Name :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtFname" placeholder="First Name">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtLname" class="col-sm-3 control-label">Last Name :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtLname" placeholder="Last Name">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtDateOfBirth" class="col-sm-3 control-label">Date of Birth :</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" id="txtDateOfBirth" placeholder="Date of Birth">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtEmail" class="col-sm-3 control-label">Email :</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" id="txtEmail" placeholder="Email">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtPhone" class="col-sm-3 control-label">Phone :</label>
+                    <div class="col-sm-9">
+                        <input type="tel" pattern="^(\d{4}\-\d{2}\-\d{2})$" class="form-control" id="txtPhone" placeholder="Phone">
+                        <br>
+                    </div>
+                </div>
+                <!-- Personal Information Ends -->
+                <h3 class="panel-inner">Account Information</h3>
+                <br>
+                <!--Username & Password begins -->
+                <div class="row">
+                    <label for="txtUname" class="col-sm-3 control-label">Username:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtUname" placeholder="Username">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtPassword" class="col-sm-3 control-label">Password :</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="txtPassword" autocomplete="off" placeholder="Password">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtRePassword" class="col-sm-3 control-label">Re-Password :</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="txtRePassword" autocomplete="off" placeholder="Re-Password">
+                        <br>
+                    </div>
+                </div>
+                <!-- Username & password ends -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-black" ng-click="$close()">Add</button>
+        </div>
+    </div>
+</div>

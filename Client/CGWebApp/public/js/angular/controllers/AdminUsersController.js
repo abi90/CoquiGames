@@ -8,6 +8,7 @@ app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'au
         $scope.sortType = 'active';
         $scope.sortReverse = false;
         $scope.searchUser = '';
+        $scope.selectedUser;
 
         // Get list of users from the WS API
         adminwsapi.getUsers(auth.uname, auth.token).then(
@@ -20,6 +21,66 @@ app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'au
             }
         );
 
+        $scope.shoEditUserInfoModal = function() {
+            //$scope.selectedUser = u;
+
+            // Open a modal for admin to edit user info
+            var modal = Popeye.openModal({
+                controller: 'AdminUsersController',
+                templateUrl: "js/angular/modals/edit-admin-user-info.html",
+                resolve: {
+                    auth: function ($q, authenticationSvc) {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({authenticated: false});
+                        }
+                    }
+                }
+            });
+
+            // Show a spinner while modal is resolving dependencies
+            $scope.showLoading = true;
+            modal.resolved.then(function() {
+                $scope.showLoading = false;
+            });
+
+            // Update user selected address after modal is closed
+            modal.closed.then(function() {
+
+            });
+        };
+
+        $scope.shoAddAdminModal = function() {
+
+            // Open a modal for admin to edit user info
+            var modal = Popeye.openModal({
+                controller: 'AdminUsersController',
+                templateUrl: "js/angular/modals/add-admin-user.html",
+                resolve: {
+                    auth: function ($q, authenticationSvc) {
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo) {
+                            return $q.when(userInfo);
+                        } else {
+                            return $q.reject({authenticated: false});
+                        }
+                    }
+                }
+            });
+
+            // Show a spinner while modal is resolving dependencies
+            $scope.showLoading = true;
+            modal.resolved.then(function() {
+                $scope.showLoading = false;
+            });
+
+            // Update user selected address after modal is closed
+            modal.closed.then(function() {
+
+            });
+        };
 
 
 
