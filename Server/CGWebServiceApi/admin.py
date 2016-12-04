@@ -59,7 +59,7 @@ def change_password(accountid):
         return internal_server_error()
 
 
-@admin_blueprint.route("/admin", methods=['POST'])
+@admin_blueprint.route("/", methods=['POST'])
 @admin_verification
 def create_admin():
     try:
