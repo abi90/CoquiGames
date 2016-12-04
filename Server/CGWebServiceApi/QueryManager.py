@@ -410,3 +410,5 @@ SELECT_ALL_CATEGORIES = """ SELECT * FROM category"""
 SELECT_ALL_ANNOUNCEMENTS = """SELECT paid AS aid, pa_title AS a_title, pa_img AS a_img, platformid, active FROM platform_announcements
                                UNION
                                SELECT said AS aid,sa_title AS a_title ,sa_img AS a_img ,NULL AS platformid, activ FROM store_announcement"""
+
+DEACTIVATE_PLATFORM = """UPDATE platform SET active = FALSE WHERE platformid = %s RETURNING *"""

@@ -162,3 +162,12 @@ def get_ratings():
         print e
         return internal_server_error()
 
+@admin_blueprint.route("/platform/<int:platformid>/deactivate", methods=['PUT'])
+@admin_verification
+def deactivate_platform_admi(platformid):
+    try:
+        result = dbm.deactivate_platform(platformid)
+        return jsonify(result)
+    except Exception as e:
+        print e.message
+        return internal_server_error()

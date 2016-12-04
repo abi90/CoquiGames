@@ -789,6 +789,26 @@ def deactivate_user(accountid):
                 conn.close()
         raise
 
+def deactivate_platform(platformid):
+    """
+    Deactivate platform
+    :param platformid: platform id
+    :return: las record updated
+    """
+    try:
+        conn = __connection__()
+        cur = conn.cursor()
+        cur.execute(Query.DEACTIVATE_PLATFORM, (platformid,))
+        columns = [x[0] for x in cur.description]
+        done = [dict(zip(columns, row)) for row in cur.fetchall()]
+        return done
+    except:
+        if conn:
+            if not conn.closed:
+                conn.rollback()
+                conn.close()
+        raise
+
 
 def add_admin_user(user_data):
     """
