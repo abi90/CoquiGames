@@ -826,6 +826,9 @@ def fetch_esrb_ratings():
 def fetch_all_platforms():
     return __execute_select_query__(Query.SELECT_ALL_PLATFORMS, ())
 
+def fetch_all_categories():
+    return __execute_commit_query__(Query.SELECT_ALL_CATEGORIES, ())
+
 
 
 

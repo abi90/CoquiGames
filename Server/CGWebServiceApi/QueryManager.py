@@ -404,3 +404,5 @@ SELECT_ALL_ORDERS = """SELECT o.orderid, o.userid, u.user_firstname, u.user_last
 SELECT_ESRB_RATING = """SELECT * from esrb_rating"""
 
 SELECT_ALL_PLATFORMS = """SELECT * FROM platform"""
+
+SELECT_ALL_CATEGORIES = """ SELECT * FROM category"""
