@@ -400,3 +400,5 @@ INSERT_ADMIN_USER = """INSERT INTO account_info (username, upassword, roleid, ac
 SELECT_ALL_ORDERS = """SELECT o.orderid, o.userid, u.user_firstname, u.user_lastname, u.email, o.order_date, o.order_total, s.order_status_name
                         FROM orders AS o JOIN cg_user as u USING (userid)
                         JOIN order_status AS s USING(order_statusid)"""
+
+SELECT_ESRB_RATING = """SELECT * from esrb_rating"""

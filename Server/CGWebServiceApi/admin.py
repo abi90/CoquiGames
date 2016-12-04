@@ -113,3 +113,16 @@ def create_product():
     except Exception as e:
         print e.message
         return internal_server_error()
+
+@admin_blueprint.route("/product/rating", methods=['GET'])
+@admin_verification
+def get_ratings():
+    try:
+        rating = dbm.fetch_esrb_ratings()
+        if rating:
+            return jsonify(rating)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
