@@ -35,7 +35,7 @@ def get_products():
         print e
         return internal_server_error()
 
-@admin_blueprint.route("/platforms", methods=['GET'])
+@admin_blueprint.route("/product/platforms", methods=['GET'])
 @admin_verification
 def get_platforms():
     try:
@@ -47,7 +47,7 @@ def get_platforms():
         print e
         return internal_server_error()
 
-@admin_blueprint.route("/categories", methods=['GET'])
+@admin_blueprint.route("/product/categories", methods=['GET'])
 @admin_verification
 def get_categories():
     try:
