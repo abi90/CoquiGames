@@ -148,7 +148,7 @@ app.controller('ProductController',
             }
         };
 
-        $scope.addRelatedProductToWishLis = function (pid) {
+        $scope.addRelatedProductToWishList = function (pid) {
             var userInfo = authenticationSvc.getUserInfo();
             if(userInfo){
                 userwsapi.getUserCart(userInfo.uid, userInfo.uname, userInfo.upassword)

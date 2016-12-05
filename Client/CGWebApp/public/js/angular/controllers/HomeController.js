@@ -8,7 +8,7 @@ app.controller('HomeController',
         $scope.slides = [];
         $scope.myInterval = 5000;
         $scope.nowWrapSlides = true;
-        $scope.active ;
+        $scope.active = 0;
 
         storewsapi.getLatestProducts().then(
             function(response) {
