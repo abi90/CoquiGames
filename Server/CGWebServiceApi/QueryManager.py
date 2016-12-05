@@ -384,7 +384,7 @@ SELECT_USERS = """SELECT a.accountid, a.username, b.email AS user_email, b.user_
 
 SELECT_PRODUCT_ALT_IMGS = """SELECT pi.product_img FROM product_img AS pi WHERE pi.productid = %s AND pi.cover = FALSE"""
 
-SELECT_ALL_PRODUCTS = """SELECT * FROM product_details"""
+SELECT_ALL_PRODUCTS = """SELECT * FROM admin_product_details"""
 
 
 DEACTIVATE_ACCOUNT = """UPDATE account_info SET account_info.active = FALSE WHERE account_info.accountid = %s RETURNING *;"""
@@ -416,3 +416,7 @@ DEACTIVATE_PLATFORM = """UPDATE platform SET active = FALSE WHERE platformid = %
 SELECT_GENRES = """SELECT genre FROM genre"""
 
 DEACTIVATE_PRODUCT = """UPDATE product SET active = FALSE WHERE productid = %s RETURNING *"""
+
+
+SELECT_IDS = """SELECT c.categoryid, e.esrbid, g.genreid FROM category c, esrb_rating e, genre g WHERE c.category = %s AND e.esrb_rate = %s AND g.genre=%s"""
+

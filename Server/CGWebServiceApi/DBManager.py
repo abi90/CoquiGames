@@ -867,7 +867,48 @@ def fetch_all_genre():
 
 def deactivate_product(productid):
     return __execute_commit_query__(Query.DEACTIVATE_PRODUCT, (productid,))
+"""
+def create_product(new_product):
+    try:
 
+         test= {
+    "aditionalinfo": "Four USB 2.0 connector slots are included. The new console is backward compatible with Wii games and Wii accessories.<br />IBM Power-based multi-core microprocessor.<br />Up to four Wii Remote (or Wii Remote Plus) controllers can be connected at once. The new console supports all Wii controllers and input devices, including the Nunchuk&#8482; controller, Classic Controller, Classic Controller Pro and Wii Balance Board.<br />Approximately 1.8 inches tall, 6.8 inches wide and 10.5 inches long.<br />Uses AV Multi Out connector. Six-channel PCM linear output through HDMI.<br />",
+    "availability": true,
+    "category": "Console",
+    "description": "Nintendo Wii U Basic Set WUPSWAAB Video Game Consoles ",
+    "esrb": "everyone",
+    "genre": "Console",
+    "inoffer": false,
+    "offerprice": 0,
+    "photolink": "images/product-covers/wiiu32black.jpg",
+    "pid": 18,
+    "platformid": 3,
+    "price": 299.99,
+    "productqty": 100000,
+    "rating": 0,
+    "release": "2012-11-25",
+    "title": "Nintendo WiiU 32GB - Black"
+  }
+
+        conn = __connection__()
+        cur = conn.execute(Query.INSERT_ADMIN_USER, (user_data['uname'], user_data['upassword']))
+        columns = [x[0] for x in cur.description]
+        aid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
+        # Add user information
+        cur.execute(Query.INSERT_USER,
+                    (user_data['ufirstname'], user_data['ulastname'],
+                     user_data['uemail'], user_data['uphone'], user_data['udob'],
+                     aid))
+        columns = [x[0] for x in cur.description]
+        result = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
+        return result
+    except:
+        if conn:
+            if not conn.closed:
+                conn.rollback()
+                conn.close()
+        raise
+"""
 
 
 
