@@ -1,8 +1,9 @@
 /**
  * Created by jesmarie on 10-12-16.
  */
-app.controller('ProductController', ['$scope', '$location', 'storewsapi', 'authenticationSvc', 'userwsapi','productId',
-    function($scope, $location, storewsapi, authenticationSvc, userwsapi, productId) {
+app.controller('ProductController',
+    ['$scope', '$location', 'storewsapi', 'authenticationSvc', 'userwsapi','productId', '$rootScope',
+    function($scope, $location, storewsapi, authenticationSvc, userwsapi, productId, $rootScope) {
         $scope.productId = productId;
 
         storewsapi.getProduct($scope.productId).then(
@@ -60,6 +61,7 @@ app.controller('ProductController', ['$scope', '$location', 'storewsapi', 'authe
                                     userInfo.upassword,{"pid": $scope.productId,"pquantity":1})
                                     .then(function (response) {},function (err){});
                             }
+                            $rootScope.$emit('uCart');
                         },
                         function () {
                             $location.path('/404.html');
@@ -97,10 +99,12 @@ app.controller('ProductController', ['$scope', '$location', 'storewsapi', 'authe
                                     userInfo.upassword,{"pid": pid,"pquantity":1})
                                     .then(function (response) {},function (err){});
                             }
+                            $rootScope.$emit('uCart');
                         },
                         function () {
                             $location.path('/404.html');
                         }
+
                     );
             }
             else{

@@ -158,7 +158,7 @@
                         <button ng-click="goToCart()" type="button" class="btn btn-block btn-lg dropdown-toggle">
                             <i class="fa fa-shopping-cart"></i>
                             <span class="hidden-md">Cart:</span>
-                            <span ng-show="Loggedin && user.authInfo.roleid ==1" id="cart-total">{{CartSize}} item(s)</span>
+                            <span ng-show="Loggedin && user.roleid ==1" id="cart-total">{{CartSize}} item(s)</span>
                             <span ng-hide="Loggedin" id=""> EMPTY</span>
                         </button>
 

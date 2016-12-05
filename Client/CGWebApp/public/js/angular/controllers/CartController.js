@@ -4,12 +4,12 @@
 /**
  * Created by abi on 10/12/16.
  */
-app.controller('CartController', ['$scope', '$location', 'auth', 'authenticationSvc', 'userwsapi', '$rootScope',
+app.controller('CartController',
+    ['$scope', '$location', 'auth', 'authenticationSvc', 'userwsapi', '$rootScope',
     function ($scope, $location,auth,authenticationSvc, userwsapi, $rootScope) {
 
         $rootScope.userCart;
         $scope.cartTotal;
-        console.log("mierda");
 
         var getUserCart= function () {
             var auth = authenticationSvc.getUserInfo();
@@ -49,8 +49,7 @@ app.controller('CartController', ['$scope', '$location', 'auth', 'authentication
                     function(error){
                         getUserCart()
                     });
-            }
-            console.log(JSON.stringify(product));
+            };
 
         };
 
@@ -60,6 +59,7 @@ app.controller('CartController', ['$scope', '$location', 'auth', 'authentication
 
                 function(response){
                     getUserCart();
+                    $rootScope.$emit('uCart');
                 },
                 function(error){
                     getUserCart();

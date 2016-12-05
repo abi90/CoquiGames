@@ -1,8 +1,9 @@
 /**
  * Created by abi on 12/4/16.
  */
-app.controller('WishListController',['$scope', '$location', 'auth', 'authenticationSvc','userwsapi', '$rootScope',
-    function ($scope, $location, auth, authenticationSvc, userwsapi, $rootScope) {
+app.controller('WishListController',
+    ['$rootScope','$scope', '$location', 'auth', 'authenticationSvc','userwsapi',
+    function ($rootScope, $scope, $location, auth, authenticationSvc, userwsapi) {
         var getWishList = function(){
             return userwsapi.getUserWishlist(auth.uid, auth.uname, auth.token)
                 .then(
@@ -11,12 +12,13 @@ app.controller('WishListController',['$scope', '$location', 'auth', 'authenticat
                     },
                     function () {
                         $location.path("/404.html");
-                        $scope.logout();
+                        $rootScope.$emit('unLogin');
                     }
                 );
         };
 
-        $scope.addToCart = function (pid) {
+        $scope.addToCartFromWishList = function (pid) {
+            $rootScope.$emit('uCart');
             var userInfo = authenticationSvc.getUserInfo();
             if(userInfo){
                 userwsapi.getUserCart(userInfo.uid,userInfo.uname, userInfo.upassword).then(
@@ -39,6 +41,7 @@ app.controller('WishListController',['$scope', '$location', 'auth', 'authenticat
                             userwsapi.postUserCart(userInfo.uid,userInfo.uname, userInfo.upassword,{"pid":pid,"pquantity":1})
                                 .then(function (response) {},function (err){});
                         }
+                        $rootScope.$emit('uCart');
                     },
                     function () {
                         $location.path('/404.html');
@@ -60,7 +63,7 @@ app.controller('WishListController',['$scope', '$location', 'auth', 'authenticat
                         },
                         function () {
                             $location.path("/404.html");
-                            $scope.logout();
+                            $scope.$emit('unLogin');
                         }
                     );
             }

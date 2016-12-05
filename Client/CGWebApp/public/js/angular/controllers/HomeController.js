@@ -1,5 +1,6 @@
-app.controller('HomeController', ['$scope', 'storewsapi', 'authenticationSvc','userwsapi','$location',
-    function($scope, storewsapi, authenticationSvc,userwsapi, $location) {
+app.controller('HomeController',
+    ['$scope', 'storewsapi', 'authenticationSvc','userwsapi','$location', '$rootScope',
+    function($scope, storewsapi, authenticationSvc,userwsapi, $location, $rootScope) {
 
         $scope.latest;
         $scope.specials;
@@ -72,6 +73,7 @@ app.controller('HomeController', ['$scope', 'storewsapi', 'authenticationSvc','u
                             userwsapi.postUserCart(userInfo.uid,userInfo.uname, userInfo.upassword,{"pid":pid,"pquantity":1})
                                 .then(function (response) {},function (err){});
                         }
+                        $rootScope.$emit('uCart');
                     },
                     function () {
                         $location.path('/404.html');
