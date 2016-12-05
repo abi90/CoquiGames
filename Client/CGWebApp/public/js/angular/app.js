@@ -112,7 +112,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             }
         })
         .when('/account-info', {
-            controller: 'AccountController',
+            controller: 'UserInfoController',
             templateUrl: 'views/account-info.html',
             resolve: {
                 auth: function ($q, authenticationSvc) {
