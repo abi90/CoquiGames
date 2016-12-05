@@ -4,7 +4,7 @@
 /**
  * Created by abi on 10/12/16.
  */
-app.controller('AccountController', ['$scope', '$location', 'authenticationSvc', 'auth', 'userwsapi', '$rootScope', 'Popeye',
+app.controller('UserCheckoutController', ['$scope', '$location', 'authenticationSvc', 'auth', 'userwsapi', '$rootScope', 'Popeye',
     function ($scope, $location, authenticationSvc, auth, userwsapi, $rootScope, Popeye){
 
         // Local Functions
@@ -32,7 +32,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             )
         };
 
-        var getUserPreferences= function (auth) {
+        var getUserPreferences= function () {
             userwsapi.getUserPreferences(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userPreferences = response.data;
@@ -75,16 +75,15 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             order = {
                 "shipment_feeid": $scope.shipmentFee.shipment_feeid,
                 "aid": $scope.selectedShippingAddress.aid,
-                "cid": $scope.selectedPayment.cid,
+                "cid": $scope.selectedPayment.cid
             };
 
             userwsapi.postUserOrder(auth.uid, auth.uname, auth.token, order).then(
-                function (response) {
-                    console.log(JSON.stringify(response));
+                function () {
                     $location.path('/account-orders')
                 },
-                function (err) {
-                    console.log(JSON.stringify(err));
+                function () {
+                    logout();
                 }
             );
         };

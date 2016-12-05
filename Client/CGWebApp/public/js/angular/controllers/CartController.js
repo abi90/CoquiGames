@@ -8,8 +8,8 @@ app.controller('CartController',
     ['$scope', '$location', 'auth', 'authenticationSvc', 'userwsapi', '$rootScope',
     function ($scope, $location,auth,authenticationSvc, userwsapi, $rootScope) {
 
-        $rootScope.userCart;
-        $scope.cartTotal;
+        $rootScope.userCart = [];
+        $scope.cartTotal = 0;
 
         var getUserCart= function () {
             var auth = authenticationSvc.getUserInfo();
@@ -18,9 +18,9 @@ app.controller('CartController',
                     function (response) {
                         $scope.userCart = response.data;
                     },
-                    function (error) {
-                        console.log("Error: " + error.statusCode);
-                        $location.path("/404.html");
+                    function () {
+                        $rootScope.$emit('unLogin');
+                        authenticationSvc.logout();
                     }
                 )
             }
@@ -33,7 +33,7 @@ app.controller('CartController',
                     var product = $scope.userCart[i];
                     subtotal += (product.pprice * product.pquantity);
                 }
-                $scope.cartTotal = subtotal + subtotal * 0.1105 + $scope.shippmentFee;
+                $scope.cartTotal = subtotal + $scope.shippmentFee;
                 return subtotal;
             }
 
@@ -43,32 +43,31 @@ app.controller('CartController',
             if(product.pquantity>0 || product.pquantity < 99){
                 var auth = authenticationSvc.getUserInfo();
                 userwsapi.putUserCart(auth.uid,auth.uname,auth.upassword,product).then(
-                    function(response){
+                    function(){
+                        $rootScope.$emit('uCart');
                         getUserCart();
                     },
-                    function(error){
+                    function(){
+                        $rootScope.$emit('uCart');
                         getUserCart()
                     });
-            };
-
+            }
         };
 
         $scope.removeProduct = function(pid) {
             var auth = authenticationSvc.getUserInfo();
             userwsapi.delUserCart(auth.uid,auth.uname,auth.upassword,pid).then(
-
-                function(response){
+                function(){
                     getUserCart();
                     $rootScope.$emit('uCart');
                 },
-                function(error){
+                function(){
+                    $rootScope.$emit('uCart');
                     getUserCart();
                 }
-
             );
-        }
+        };
 
         getUserCart();
-
 
     }]);
