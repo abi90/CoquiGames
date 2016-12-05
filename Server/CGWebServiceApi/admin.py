@@ -59,6 +59,18 @@ def get_categories():
         print e
         return internal_server_error()
 
+@admin_blueprint.route("/product/genres", methods=['GET'])
+@admin_verification
+def get_genre():
+    try:
+        genre = dbm.fetch_all_genre()
+        if genre:
+            return jsonify(genre)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
 @admin_blueprint.route("/announcements", methods=['GET'])
 @admin_verification
 def get_announcements():

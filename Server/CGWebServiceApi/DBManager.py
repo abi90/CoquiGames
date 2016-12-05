@@ -852,6 +852,8 @@ def fetch_all_categories():
 def fetch_all_announcements():
     return __execute_commit_query__(Query.SELECT_ALL_ANNOUNCEMENTS, ())
 
+def fetch_all_genre():
+    return __execute_commit_query__(Query.SELECT_GENRES, ())
 
 
 
