@@ -170,7 +170,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             }
         })
         .when('/checkout', {
-            controller: 'AccountController',
+            controller: 'UserCheckoutController',
             templateUrl: 'views/checkout.html',
             resolve: {
                 auth: function ($q, authenticationSvc) {
