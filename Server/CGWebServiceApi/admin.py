@@ -35,6 +35,7 @@ def get_products():
         print e
         return internal_server_error()
 
+
 @admin_blueprint.route("/product/platforms", methods=['GET'])
 @admin_verification
 def get_platforms():
@@ -46,6 +47,7 @@ def get_platforms():
     except Exception as e:
         print e
         return internal_server_error()
+
 
 @admin_blueprint.route("/product/categories", methods=['GET'])
 @admin_verification
@@ -70,6 +72,7 @@ def get_genre():
     except Exception as e:
         print e
         return internal_server_error()
+
 
 @admin_blueprint.route("/announcements", methods=['GET'])
 @admin_verification
@@ -162,6 +165,7 @@ def create_product():
         print e.message
         return internal_server_error()
 
+
 @admin_blueprint.route("/product/rating", methods=['GET'])
 @admin_verification
 def get_ratings():
@@ -174,11 +178,23 @@ def get_ratings():
         print e
         return internal_server_error()
 
+
 @admin_blueprint.route("/platform/<int:platformid>/deactivate", methods=['PUT'])
 @admin_verification
 def deactivate_platform_admi(platformid):
     try:
         result = dbm.deactivate_platform(platformid)
+        return jsonify(result)
+    except Exception as e:
+        print e.message
+        return internal_server_error()
+
+
+@admin_blueprint.route("/product/<int:productid>/deactivate", methods=['PUT'])
+@admin_verification
+def deactivate_product(productid):
+    try:
+        result = dbm.deactivate_product(productid)
         return jsonify(result)
     except Exception as e:
         print e.message

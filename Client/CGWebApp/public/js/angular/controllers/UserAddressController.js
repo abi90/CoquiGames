@@ -48,36 +48,6 @@ app.controller('UserAddressController',
         };
 
         // Modals functions:
-        $scope.shoPreferredShpAddModal = function() {
-
-            // Open a modal to show the user address
-            var modal = Popeye.openModal({
-                controller: 'AccountController',
-                templateUrl: "js/angular/modals/change_shipping_address_modal.html",
-                resolve: {
-                    auth: function ($q, authenticationSvc) {
-                        var userInfo = authenticationSvc.getUserInfo();
-                        if (userInfo) {
-                            return $q.when(userInfo);
-                        } else {
-                            return $q.reject({authenticated: false});
-                        }
-                    }
-                }
-            });
-
-            // Show a spinner while modal is resolving dependencies
-            $scope.showLoading = true;
-            modal.resolved.then(function() {
-                $scope.showLoading = false;
-            });
-
-            // Update user selected address after modal is closed
-            modal.closed.then(function() {
-
-            });
-        };
-
         $scope.shoEditShpAddModal = function(shipping_address) {
 
             // Open a modal to edit ship add

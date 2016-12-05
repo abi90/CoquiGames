@@ -414,3 +414,5 @@ SELECT_ALL_ANNOUNCEMENTS = """SELECT paid AS aid, pa_title AS a_title, pa_img AS
 DEACTIVATE_PLATFORM = """UPDATE platform SET active = FALSE WHERE platformid = %s RETURNING *"""
 
 SELECT_GENRES = """SELECT genre FROM genre"""
+
+DEACTIVATE_PRODUCT = """UPDATE product SET active = FALSE WHERE productid = %s RETURNING *"""

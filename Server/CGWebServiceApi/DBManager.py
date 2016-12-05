@@ -840,20 +840,33 @@ def add_admin_user(user_data):
 def fetch_all_orders():
     return __execute_select_query__(Query.SELECT_ALL_ORDERS, ())
 
+
 def fetch_esrb_ratings():
     return __execute_select_query__(Query.SELECT_ESRB_RATING, ())
+
 
 def fetch_all_platforms():
     return __execute_select_query__(Query.SELECT_ALL_PLATFORMS, ())
 
+
 def fetch_all_categories():
-    return __execute_commit_query__(Query.SELECT_ALL_CATEGORIES, ())
+    return __execute_select_query__(Query.SELECT_ALL_CATEGORIES, ())
+
 
 def fetch_all_announcements():
-    return __execute_commit_query__(Query.SELECT_ALL_ANNOUNCEMENTS, ())
+    return __execute_select_query__(Query.SELECT_ALL_ANNOUNCEMENTS, ())
+
 
 def fetch_all_genre():
-    return __execute_commit_query__(Query.SELECT_GENRES, ())
+    return __execute_select_query__(Query.SELECT_GENRES, ())
+
+
+def fetch_all_genre():
+    return __execute_select_query__(Query.SELECT_GENRES, ())
+
+
+def deactivate_product(productid):
+    return __execute_commit_query__(Query.DEACTIVATE_PRODUCT, (productid,))
 
 
 
