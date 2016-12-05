@@ -405,7 +405,7 @@ SELECT_ESRB_RATING = """SELECT * from esrb_rating"""
 
 SELECT_ALL_PLATFORMS = """SELECT * FROM platform"""
 
-SELECT_ALL_CATEGORIES = """ SELECT * FROM category"""
+SELECT_ALL_CATEGORIES = """ SELECT category FROM category"""
 
 SELECT_ALL_ANNOUNCEMENTS = """SELECT paid AS aid, pa_title AS a_title, pa_img AS a_img, platformid, active FROM platform_announcements
                                UNION
