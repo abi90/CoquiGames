@@ -420,3 +420,14 @@ DEACTIVATE_PRODUCT = """UPDATE product SET active = FALSE WHERE productid = %s R
 
 SELECT_IDS = """SELECT c.categoryid, e.esrbid, g.genreid FROM category c, esrb_rating e, genre g WHERE c.category = %s AND e.esrb_rate = %s AND g.genre=%s"""
 
+
+INSERT_PRODUCT = """INSERT INTO product (categoryid, genreid, esrbid, platformid, product_price,
+                     release_date, product_qty, product_description, prodcut_additional_info,
+                     active, product_title) VALUES (%s,%s,%s,%s,%s,to_date(%s,'YYYY-MM-DD'),%s,%s,%s,%s,%s) RETURNING productid"""
+
+
+INSERT_PRODUCT_OFFER = """INSERT INTO offer (productid, offer_price, offer_start_date, offer_end_date) VALUES (%s, %s, to_date(%s,'YYYY-MM-DD'), to_date(%s,'YYYY-MM-DD')) RETURNING *"""
+
+
+INSERT_PRODUCT_COVER = """INSERT INTO product_img (productid, product_img, cover) VALUES (%s, %s, TRUE) RETURNING *"""
+

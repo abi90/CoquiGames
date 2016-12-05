@@ -867,40 +867,35 @@ def fetch_all_genre():
 
 def deactivate_product(productid):
     return __execute_commit_query__(Query.DEACTIVATE_PRODUCT, (productid,))
-"""
+
+
 def create_product(new_product):
+    """
+    Creates a new product
+    :param new_product: product data
+    :return: product id
+    """
     try:
-
-         test= {
-    "aditionalinfo": "Four USB 2.0 connector slots are included. The new console is backward compatible with Wii games and Wii accessories.<br />IBM Power-based multi-core microprocessor.<br />Up to four Wii Remote (or Wii Remote Plus) controllers can be connected at once. The new console supports all Wii controllers and input devices, including the Nunchuk&#8482; controller, Classic Controller, Classic Controller Pro and Wii Balance Board.<br />Approximately 1.8 inches tall, 6.8 inches wide and 10.5 inches long.<br />Uses AV Multi Out connector. Six-channel PCM linear output through HDMI.<br />",
-    "availability": true,
-    "category": "Console",
-    "description": "Nintendo Wii U Basic Set WUPSWAAB Video Game Consoles ",
-    "esrb": "everyone",
-    "genre": "Console",
-    "inoffer": false,
-    "offerprice": 0,
-    "photolink": "images/product-covers/wiiu32black.jpg",
-    "pid": 18,
-    "platformid": 3,
-    "price": 299.99,
-    "productqty": 100000,
-    "rating": 0,
-    "release": "2012-11-25",
-    "title": "Nintendo WiiU 32GB - Black"
-  }
-
         conn = __connection__()
-        cur = conn.execute(Query.INSERT_ADMIN_USER, (user_data['uname'], user_data['upassword']))
+        cur = conn.execute(Query.SELECT_IDS, (new_product['category'], new_product['esrb'], new_product['genre']))
         columns = [x[0] for x in cur.description]
-        aid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
-        # Add user information
-        cur.execute(Query.INSERT_USER,
-                    (user_data['ufirstname'], user_data['ulastname'],
-                     user_data['uemail'], user_data['uphone'], user_data['udob'],
-                     aid))
+        attributes = [dict(zip(columns, row)) for row in cur.fetchall()][0]
+        # Add product information
+        cur.execute(Query.INSERT_PRODUCT, (attributes['categoryid'], attributes['genreid'], attributes['esrbid'],
+                                           new_product['platformid'], new_product['price'], new_product['release'],
+                                           new_product['productqty'], new_product['description'],
+                                           new_product['aditionalinfo'], new_product['active'], new_product['title']))
         columns = [x[0] for x in cur.description]
-        result = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
+        result = [dict(zip(columns, row)) for row in cur.fetchall()][0]['productid']
+
+        # Insert offer price
+        if new_product['inoffer']== True and new_product['offerprice'] > 0:
+            cur.execute(Query.INSERT_PRODUCT_OFFER, (result, new_product['offerprice'], new_product['offer_start_date'],
+                                                     new_product['offer_end_date']))
+            cur.fetchall()
+        # Insert Product Cover
+        cur.execute(Query.INSERT_PRODUCT_COVER, (result, new_product['photolink']))
+        cur.fetchall()
         return result
     except:
         if conn:
@@ -908,7 +903,7 @@ def create_product(new_product):
                 conn.rollback()
                 conn.close()
         raise
-"""
+
 
 
 

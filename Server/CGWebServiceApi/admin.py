@@ -154,10 +154,7 @@ def create_product():
             for key in product_keys:
                 if key not in request.json:
                     return missing_parameters_error()
-            errors = validate_account(request.json)
-            if errors:
-                return jsonify({'errors': errors}), 400
-            result = dbm.add_admin_user(request.json)
+            result = dbm.create_product(request.json)
             return jsonify(result)
         else:
             return bad_request
