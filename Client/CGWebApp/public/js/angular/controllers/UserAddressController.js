@@ -13,8 +13,10 @@ app.controller('UserAddressController',
 
             authenticationSvc.logout()
                 .then(function () {
+                    $rootScope.$emit('unLogin');
                     $location.path("/login.html");
                 }, function () {
+                    $rootScope.$emit('unLogin');
                     $location.path("/login.html");
                 });
         };

@@ -126,7 +126,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             }
         })
         .when('/account-orders', {
-            controller: 'AccountController',
+            controller: 'UserOrdersController',
             templateUrl: 'views/account-orders.html',
             resolve: {
                 auth: function ($q, authenticationSvc) {
@@ -156,7 +156,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
 
         })
         .when('/account-payment', {
-            controller: 'AccountController',
+            controller: 'UserPaymentController',
             templateUrl: 'views/account-payment.html',
             resolve: {
                 auth: function ($q, authenticationSvc) {
@@ -184,7 +184,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             }
         })
         .when('/account-address', {
-            controller: 'AccountController',
+            controller: 'UserAddressController',
             templateUrl: 'views/account-address.html',
             resolve: {
                 auth: function ($q, authenticationSvc) {

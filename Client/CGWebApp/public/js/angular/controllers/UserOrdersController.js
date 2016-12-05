@@ -15,12 +15,10 @@ app.controller('UserOrdersController', ['$scope', '$location', 'authenticationSv
 
             authenticationSvc.logout()
                 .then(function () {
-                    $scope.userData = null;
-                    $scope.userOrder = [];
+                    $rootScope.$emit('unLogin');
                     $location.path("/login.html");
                 }, function () {
-                    $scope.userData = null;
-                    $scope.userOrder = [];
+                    $rootScope.$emit('unLogin');
                     $location.path("/login.html");
                 });
         };
