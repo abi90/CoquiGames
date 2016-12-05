@@ -72,7 +72,7 @@ app.controller('UserCheckoutController', ['$scope', '$location', 'authentication
         };
 
         $scope.placeOrder = function () {
-            order = {
+            var order = {
                 "shipment_feeid": $scope.shipmentFee.shipment_feeid,
                 "aid": $scope.selectedShippingAddress.aid,
                 "cid": $scope.selectedPayment.cid
