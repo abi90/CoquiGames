@@ -145,6 +145,18 @@ def get_orders():
         print e
         return internal_server_error()
 
+@admin_blueprint.route("/orders/status", methods=['GET'])
+@admin_verification
+def get_all_status():
+    try:
+        status = dbm.fetch_all_status()
+        if status:
+            return jsonify(status)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
 
 @admin_blueprint.route("/product", methods=['POST'])
 @admin_verification

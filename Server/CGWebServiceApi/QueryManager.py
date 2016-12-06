@@ -431,3 +431,5 @@ INSERT_PRODUCT_OFFER = """INSERT INTO offer (productid, offer_price, offer_start
 
 INSERT_PRODUCT_COVER = """INSERT INTO product_img (productid, product_img, cover) VALUES (%s, %s, TRUE) RETURNING *"""
 
+SELECT_ALL_STATUS = """SELECT * FROM order_status"""
+
