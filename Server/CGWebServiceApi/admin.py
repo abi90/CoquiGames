@@ -92,7 +92,7 @@ def get_announcements():
 def deactivate_user(accountid):
     try:
         result = dbm.deactivate_user(accountid)
-        return jsonify(result)
+        return jsonify({"mesagge": result})
     except Exception as e:
         print e.message
         return internal_server_error()
@@ -104,7 +104,7 @@ def change_password(accountid):
     try:
         if request.json:
             result = dbm.update_user_password(accountid, request.json['upassword'])
-            return jsonify(result)
+            return jsonify({"mesagge": result})
         else:
             return bad_request
 
@@ -125,7 +125,7 @@ def create_admin():
             if errors:
                 return jsonify({'errors': errors}), 400
             result = dbm.add_admin_user(request.json)
-            return jsonify(result)
+            return jsonify({"uid": result})
         else:
             return bad_request
     except Exception as e:
@@ -155,7 +155,7 @@ def create_product():
                 if key not in request.json:
                     return missing_parameters_error()
             result = dbm.create_product(request.json)
-            return jsonify(result)
+            return jsonify({"pid": result})
         else:
             return bad_request
     except Exception as e:
@@ -181,7 +181,7 @@ def get_ratings():
 def deactivate_platform_admi(platformid):
     try:
         result = dbm.deactivate_platform(platformid)
-        return jsonify(result)
+        return jsonify({"mesagge": result})
     except Exception as e:
         print e.message
         return internal_server_error()
@@ -192,7 +192,7 @@ def deactivate_platform_admi(platformid):
 def deactivate_product(productid):
     try:
         result = dbm.deactivate_product(productid)
-        return jsonify(result)
+        return jsonify({"mesagge": result})
     except Exception as e:
         print e.message
         return internal_server_error()

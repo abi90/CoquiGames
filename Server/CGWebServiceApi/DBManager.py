@@ -781,6 +781,9 @@ def deactivate_user(accountid):
         cur.execute(Query.DEACTIVATE_ACCOUNT, (aid,))
         columns = [x[0] for x in cur.description]
         done = [dict(zip(columns, row)) for row in cur.fetchall()]
+        conn.commit()
+        cur.close()
+        conn.close()
         return done
     except:
         if conn:
@@ -801,6 +804,9 @@ def deactivate_platform(platformid):
         cur.execute(Query.DEACTIVATE_PLATFORM, (platformid,))
         columns = [x[0] for x in cur.description]
         done = [dict(zip(columns, row)) for row in cur.fetchall()]
+        conn.commit()
+        cur.close()
+        conn.close()
         return done
     except:
         if conn:
@@ -828,6 +834,9 @@ def add_admin_user(user_data):
                      aid))
         columns = [x[0] for x in cur.description]
         result = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
+        conn.commit()
+        cur.close()
+        conn.close()
         return result
     except:
         if conn:
@@ -877,7 +886,8 @@ def create_product(new_product):
     """
     try:
         conn = __connection__()
-        cur = conn.execute(Query.SELECT_IDS, (new_product['category'], new_product['esrb'], new_product['genre']))
+        cur = conn.cursor()
+        cur.execute(Query.SELECT_IDS, (new_product['category'], new_product['esrb'], new_product['genre']))
         columns = [x[0] for x in cur.description]
         attributes = [dict(zip(columns, row)) for row in cur.fetchall()][0]
         # Add product information
@@ -896,6 +906,9 @@ def create_product(new_product):
         # Insert Product Cover
         cur.execute(Query.INSERT_PRODUCT_COVER, (result, new_product['photolink']))
         cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
         return result
     except:
         if conn:
