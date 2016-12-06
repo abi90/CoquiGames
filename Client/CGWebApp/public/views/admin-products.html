@@ -141,7 +141,7 @@
                     {{u.availability}}
                 </td>
                 <td class="text-center">
-                    <button type="submit" title="Edit" class="btn btn-default tool-tip">
+                    <button type="submit" title="Edit" class="btn btn-default tool-tip" ng-click="shoEditNewProductModal(u)">
                         <i class="fa fa-edit"></i>
                     </button>
                     <button type="button" title="Remove" class="btn btn-default tool-tip">
@@ -164,14 +164,9 @@
                             <h3 class="panel-title">Add a New Product</h3>
                         </div>
                         <div class="panel-body text-center">
-                            <!--<div class="text-uppercase clearfix">-->
-                            <!--<a href="#/modals/add-admin-user.html" class="btn btn-main text-center">-->
-                            <!--<span class="hidden-xs" ng-click="shoAddAdminModal()">Add Admin</span>-->
                             <button type="submit" title="Add" class="btn btn-default tool-tip" ng-click="shoAddNewProductModal()">
-                                <!--<i class="fa fa-times-circle"></i>--> Add Products
+                                Add Products
                             </button>
-                            <!--</a>-->
-                            <!--</div>-->
                         </div>
                     </div>
                     <!-- Message Panel Ends -->

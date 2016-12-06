@@ -1,8 +1,8 @@
 <div class="popeye-modal-container">
     <div class="popeye-modal modal-content">
         <div class="modal-header">
-            <a class="popeye-close-modal" href ng-click="$close()"></a>
-            <h4 class="modal-title">Add New Product</h4>
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
+            <h4 class="modal-title">Add Product</h4>
         </div>
         <div class="modal-dialog">
             <div class="modal-body">
@@ -10,50 +10,170 @@
                 <div class="row">
                     <label for="txtTitle" class="col-sm-3 control-label">Title :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtTitle" placeholder="Title">
+                        <input type="text" class="form-control" id="txtTitle" ng-model="selectedProduct.title" placeholder="Title">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="txtReleaseDate" class="col-sm-3 control-label">Release Date :</label>
                     <div class="col-sm-9">
-                        <input type="date" class="form-control" id="txtReleaseDate" placeholder="Release Date">
+                        <input type="text" datetime="yyyy-MM-dd" class="form-control" id="txtReleaseDate" ng-model="selectedProduct.release" placeholder="Release Date">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="txtProductPrice" class="col-sm-3 control-label">Product Price :</label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control" id="txtProductPrice" placeholder="Product Price">
+                        <input type="number" class="form-control" id="txtProductPrice" ng-model="selectedProduct.price" placeholder="Product Price">
                         <br>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="txtProductQuantity" class="col-sm-3 control-label">Product Quantity :</label>
+                    <label for="txtProductRating" class="col-sm-3 control-label">Rating :</label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control" id="txtProductQuantity" placeholder="Product Quantity">
+                        <input type="text" class="form-control" id="txtProductRating" ng-model="selectedProduct.rating" placeholder="Rating">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="txtDescription" class="col-sm-3 control-label">Product Description :</label>
                     <div class="col-sm-9">
-                        <textarea cols="50" rows="4" id="txtDescription" placeholder="Product Description"></textarea>
+                        <textarea cols="50" rows="4" id="txtDescription" ng-model="selectedProduct.description" placeholder="Product Description"></textarea>
+                        <br>
                         <br>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="txtAdditional" class="col-sm-3 control-label">Additional Information :</label>
+                    <label for="txtAdditional" class="col-sm-3 control-label">Additional Info :</label>
                     <div class="col-sm-9">
-                        <textarea cols="50" rows="4" id="txtAdditional" placeholder="Product Additional Information"></textarea>
+                        <textarea cols="50" rows="4" id="txtAdditional" ng-model="selectedProduct.aditionalinfo" placeholder="Additional Info"></textarea>
                         <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtphoto" class="col-sm-3 control-label">Photolink :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtphoto" ng-model="selectedProduct.photolink" placeholder="PhotoLink">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtProductqty" class="col-sm-3 control-label">Quantity :</label>
+                    <div class="col-sm-9">
+                        <input id="txtProductqty" class="form-control" type="text" ng-model="selectedProduct.productqty">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtAvailability" class="col-sm-3 control-label">Availability :</label>
+                    <div class="col-sm-9">
+                        <input id="txtAvailability" type="checkbox" ng-model="selectedProduct.availability">
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtActive" class="col-sm-3 control-label">Active :</label>
+                    <div class="col-sm-9">
+                        <input id="txtActive" type="checkbox" ng-model="selectedProduct.active">
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtInOffer" class="col-sm-3 control-label">In Offer :</label>
+                    <div class="col-sm-9">
+                        <input id="txtInOffer" type="checkbox" ng-model="selectedProduct.inoffer">
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtOfferStart" class="col-sm-3 control-label">Offer Start Date :</label>
+                    <div class="col-sm-9">
+                        <input id="txtOfferStart" class="form-control" type="text" datetime="yyyy-MM-dd" ng-model="selectedProduct.offer_start_date" placeholder="yyyy-MM-dd">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                <label for="txtOfferEnd" class="col-sm-3 control-label">Offer End Date :</label>
+                <div class="col-sm-9">
+                    <input id="txtOfferEnd" type="text" class="form-control" datetime="yyyy-MM-dd" ng-model="selectedProduct.offer_end_date" placeholder="yyyy-MM-dd">
+                    <br>
+                </div>
+            </div>
+                <div class="row">
+                    <label for="txtOfferPrice" class="col-sm-3 control-label">Offer Price :</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="txtOfferPrice" ng-model="selectedProduct.offerprice" placeholder="Offer Price">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 control-label">Platform :</label>
+                    <div class="col-sm-9">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-check">
+                                <form action="">
+                                    <select class="form-control" autocomplete="on" ng-model="selectedProduct.platformid"
+                                            ng-options="platform.platformid as platform.platform for platform in platforms">
+                                    </select>
+                                </form>
+                            </div>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 control-label">Category :</label>
+                    <div class="col-sm-9">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-check">
+                                <form action="">
+                                    <select class="form-control" autocomplete="on" ng-model="selectedProduct.category"
+                                            ng-options="category.category as category.category for category in categories">
+                                    </select>
+                                </form>
+                            </div>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 control-label">Genre :</label>
+                    <div class="col-sm-9">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-check">
+                                <form action="">
+                                    <select class="form-control" autocomplete="on" ng-model="selectedProduct.genre"
+                                            ng-options="genre.genre as genre.genre for genre in genres">
+                                    </select>
+                                </form>
+                            </div>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 control-label">ESRB Rating :</label>
+                    <div class="col-sm-9">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-check">
+                                <form action="">
+                                    <select class="form-control" autocomplete="on" ng-model="selectedProduct.esrb"
+                                            ng-options="esrb.esrb_rate as esrb.esrb_rate for esrb in ratings">
+                                    </select>
+                                </form>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <!-- Product Information ends -->
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-black" ng-click="$close()">Add</button>
+            <button type="button" class="btn btn-black" ng-click="submit()">Add</button>
         </div>
     </div>
 </div>

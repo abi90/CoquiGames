@@ -389,8 +389,45 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    //NOT FUNCTIONING YET!!!!!!!!!!!!!!!!!!!!!!
+    adminwsapi.getOrderStatus= function (username, password) {
+        return $http.get(adminServiceURL + '/orders/status', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
     adminwsapi.getESRBRating= function (username, password) {
         return $http.get(adminServiceURL + '/product/rating', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.getPlatforms= function (username, password) {
+        return $http.get(adminServiceURL + '/product/platforms', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.getCategories= function (username, password) {
+        return $http.get(adminServiceURL + '/product/categories', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.getGenres= function (username, password) {
+        return $http.get(adminServiceURL + '/product/genres', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.postAdminProduct= function (username, password, newProduct) {
+        return $http({
+            method: 'POST',
+            url: adminServiceURL + '/product',
+            dataType: 'json',
+            data: newProduct,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
             .success(function (data) {return data;})
             .error(function (error) {return error;});
     };

@@ -1,11 +1,14 @@
 /**
+ * Created by jesmarie on 12-05-16.
+ */
+/**
  * Created by jesmarie on 12-04-16.
  */
 /**
  * Created by abi on 12/1/16.
  */
-app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'product', 'adminwsapi',
-    function ($scope, authenticationSvc, $rootScope, Popeye, product, adminwsapi){
+app.controller('AdminAddProductController', [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'adminwsapi',
+    function ($scope, authenticationSvc, $rootScope, Popeye, adminwsapi){
 
         $scope.auth = authenticationSvc.getUserInfo();
 
@@ -51,39 +54,39 @@ app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  
 
 
         var tempProduct = {
-            "availability": product.availability,
-            "aditionalinfo": product.aditionalinfo,
-            "category": product.category,
-            "description": product.description,
-            "esrb": product.esrb,
-            "genre": product.genre,
-            "inoffer": product.inoffer,
-            "offerprice": product.offerprice,
-            "photolink": product.photolink,
-            "pid": product.pid,
-            "platformid": product.platformid,
-            "price": product.price,
-            "rating": product.rating,
-            "release": product.release,
-            "title": product.title,
-            "productqty": product.productqty,
-            "offer_start_date": product.offer_start_date,
-            "offer_end_date": product.offer_end_date,
-            "active": product.active
+            "availability": false,
+            "aditionalinfo": null,
+            "category": null,
+            "description": null,
+            "esrb": null,
+            "genre": null,
+            "inoffer": false,
+            "offerprice": null,
+            "photolink": null,
+            "pid": null,
+            "platformid": null,
+            "price": null,
+            "rating": null,
+            "release": null,
+            "title": null,
+            "productqty": 0,
+            "offer_start_date": null,
+            "offer_end_date": null,
+            "active": false
         };
 
 
         $scope.selectedProduct = tempProduct;
         $scope.userInfo = authenticationSvc.getUserInfo();
 
-        $scope.close = function() {
+        $scope.submit = function() {
             $scope.selectedProduct = tempProduct;
             return Popeye.closeCurrentModal($scope.selectedProduct);
         };
 
         $scope.cancel = function () {
-            $scope.selectedProduct= product;
-            return Popeye.closeCurrentModal(product);
+            $scope.selectedProduct= tempProduct;
+            return Popeye.closeCurrentModal(null);
         };
 
     }]);

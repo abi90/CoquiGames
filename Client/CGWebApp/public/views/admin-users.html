@@ -144,7 +144,7 @@
                     {{u.active}}
                 </td>
                 <td class="text-center">
-                    <button type="submit" title="Edit" class="btn btn-default tool-tip">
+                    <button type="submit" title="Edit" class="btn btn-default tool-tip" ng-click="shoEditUserInfoModal()">
                         <i class="fa fa-edit"></i>
                     </button>
                     <button type="button" title="Remove" class="btn btn-default tool-tip">
@@ -167,10 +167,8 @@
                             <h3 class="panel-title">Add a New Admin User.</h3>
                         </div>
                         <div class="panel-body text-center">
-                            <div class="text-uppercase clearfix">
-                                <a href="#/index.html" class="btn btn-main text-center">
-                                    <span href="#/index.html" class="hidden-xs">Add Admin</span>
-                                </a>
+                                    <button type="submit" title="Add" class="btn btn-default tool-tip" ng-click="shoAddAdminModal()">Add Admin
+                                    </button>
                             </div>
                         </div>
                     </div>

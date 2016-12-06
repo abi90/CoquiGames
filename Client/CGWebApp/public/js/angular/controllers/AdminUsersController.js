@@ -8,7 +8,6 @@ app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'au
         $scope.sortType = 'active';
         $scope.sortReverse = false;
         $scope.searchUser = '';
-        $scope.selectedUser;
 
         // Get list of users from the WS API
         adminwsapi.getUsers(auth.uname, auth.token).then(

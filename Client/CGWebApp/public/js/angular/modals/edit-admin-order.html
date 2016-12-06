@@ -8,37 +8,17 @@
             <div class="modal-body">
                 <!-- Edit Order Information Starts -->
                 <div class="row">
-                    <label for="txtFname" class="col-sm-3 control-label">First Name :</label>
+                    <label class="col-sm-3 control-label">Order Status :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtFname" placeholder="First Name">
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtLname" class="col-sm-3 control-label">Last Name :</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtLname" placeholder="Last Name">
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtDateOfBirth" class="col-sm-3 control-label">Date of Birth :</label>
-                    <div class="col-sm-9">
-                        <input type="date" class="form-control" id="txtDateOfBirth" placeholder="Date of Birth">
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtEmail" class="col-sm-3 control-label">Email :</label>
-                    <div class="col-sm-9">
-                        <input type="email" class="form-control" id="txtEmail" placeholder="Email">
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtPhone" class="col-sm-3 control-label">Phone :</label>
-                    <div class="col-sm-9">
-                        <input type="tel" pattern="^(\d{4}\-\d{2}\-\d{2})$" class="form-control" id="txtPhone" placeholder="Phone">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-check">
+                                <form action="">
+                                    <select class="form-control" autocomplete="on" ng-model="selectedOrder.order_status_name"
+                                            ng-options="order.orderid as order.order_status_name for order in status">
+                                    </select>
+                                </form>
+                            </div>
+                        </form>
                         <br>
                     </div>
                 </div>
