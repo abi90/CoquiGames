@@ -1,5 +1,5 @@
 serviceURL = 'https://cgwsapi.herokuapp.com';
-
+//serviceURL = 'http://0.0.0.0:5000';
 app.factory('storewsapi', ['$http',
     function($http) {
         var storeServiceURL = serviceURL + '/store';
@@ -304,6 +304,17 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    userwsapi.postUser = function(user){
+        return $http({
+            method:'POST',
+            url: userServiceURL + '/',
+            dataType: 'json',
+            data: user,
+            headers: {'Content-Type': 'application/json'}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
     return userwsapi;
 }]);
 
@@ -341,7 +352,6 @@ app.factory("authenticationSvc", ["$http","$q","$window", '$rootScope',function 
         }
         catch(err) {
             deferred.reject(err);
-            console.log(JSON.toString(err))
         }
 
         return deferred.promise;

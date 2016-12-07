@@ -92,8 +92,17 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
 
         })
         .when('/register.html', {
-            controller: 'HomeController',
-            templateUrl: 'views/register.html'
+            controller: 'RegisterController',
+            templateUrl: 'views/register.html',
+            resolve:{
+                auth: function ($q, $location,authenticationSvc)
+                {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    if (userInfo) {
+                        $location.path('/account-info');
+                    }
+                }
+            }
         })
         .when('/wishlist', {
             controller: 'WishListController',
@@ -252,11 +261,6 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
 }]);
 
 app.run(["$rootScope", "$location", function ($rootScope, $location) {
-
-    $rootScope.$on("$routeChangeSuccess", function (userInfo) {
-        //console.log(userInfo);
-    });
-
     $rootScope.$on("$routeChangeError", function (event, current, previous, eventObj) {
         if (eventObj.authenticated === false) {
             $location.path("/login.html");

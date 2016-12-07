@@ -1,10 +1,10 @@
 <!-- Header Section Ends -->
 <!-- Main Container Starts -->
-<div id="main-container" class="container">
+<div name="main-container" class="container">
     <!-- Breadcrumb Starts -->
     <ol class="breadcrumb">
         <li>
-            <a href="index.html">Home</a>
+            <a href="#/index.html">Home</a>
         </li>
         <li class="active">Register</li>
     </ol>
@@ -18,7 +18,7 @@
     <!-- Registration Section Starts -->
     <section class="registration-area">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-offset-1 col-md-10">
                 <!-- Registration Block Starts -->
                 <div class="panel panel-smart">
                     <div class="panel-heading">
@@ -26,75 +26,125 @@
                     </div>
                     <div class="panel-body">
                         <!-- Registration Form Starts -->
-                        <form class="form-horizontal" role="form">
+                        <form class="form-horizontal" role="form" name="register" novalidate>
                             <!-- Personal Information Starts -->
                             <div class="form-group">
-                                <label for="txtFname" class="col-sm-3 control-label">First Name :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtFname" placeholder="First Name">
+                                <label  class="col-sm-2 control-label">First Name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtFname"  ng-maxlength="255"
+                                           ng-minlength="1" placeholder="First Name"
+                                           ng-model="new_user.ufirstname" required ng-pattern="regexs.bigText">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtFname.$dirty && register.txtFname.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtLname" class="col-sm-3 control-label">Last Name :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtLname" placeholder="Last Name">
+                                <label  class="col-sm-2 control-label">Last Name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtLname" placeholder="Last Name"
+                                           ng-maxlength="255" ng-minlength="1"
+                                           ng-model="new_user.ulastname" required ng-pattern="regexs.bigText">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtLname.$dirty && register.txtLname.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtDateOfBirth" class="col-sm-3 control-label">Date of Birth :</label>
-                                <div class="col-sm-9">
-                                    <input type="date" class="form-control" id="txtDateOfBirth" placeholder="Date of Birth">
+                                <label  class="col-sm-2 control-label">Date of Birth :</label>
+                                <div class="col-sm-8">
+                                    <input type="date" class="form-control" name="txtDateOfBirth"
+                                           placeholder="yyyy-MM-dd" ng-model="userDOB" required>
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtDateOfBirth.$dirty && register.txtDateOfBirth.$error.required">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtEmail" class="col-sm-3 control-label">Email :</label>
-                                <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="txtEmail" placeholder="Email">
+                                <label  class="col-sm-2 control-label">Email :</label>
+                                <div class="col-sm-8">
+                                    <input type="email" class="form-control" name="txtEmail" placeholder="Email"
+                                           ng-maxlength="255"
+                                           ng-model="new_user.uemail" required ng-pattern="regexs.email">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtEmail.$dirty && register.txtEmail.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtPhone" class="col-sm-3 control-label">Phone :</label>
-                                <div class="col-sm-9">
-                                    <input type="tel" pattern="^(\d{4}\-\d{2}\-\d{2})$" class="form-control" id="txtPhone" placeholder="Phone">
+                                <label  class="col-sm-2 control-label">Phone :</label>
+                                <div class="col-sm-8">
+                                    <input type="tel" class="form-control" name="txtPhone" placeholder="Phone"
+                                           ng-minlength="1" ng-maxlength="15"
+                                           ng-model="new_user.uphone" required>
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtPhone.$dirty && register.txtPhone.$invalid">*</p>
                                 </div>
                             </div>
                             <!-- Personal Information Ends -->
                             <h3 class="panel-heading inner">Shipping Address</h3>
                             <!-- Delivery Information Starts -->
                             <div class="form-group">
-                                <label for="txtSAddFname" class="col-sm-3 control-label">Full Name :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtSAddFname" placeholder="Full Name">
+                                <label  class="col-sm-2 control-label">Full Name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtSAddFname" placeholder="Full Name"
+                                           ng-minlength="1" ng-maxlength="255"
+                                           ng-model="new_user.ushippingaddress.afullname" required ng-pattern="regexs.bigText">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtSAddFname.$dirty && register.txtSAddFname.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtSAddress1" class="col-sm-3 control-label">Address/1 :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtSAddress1" placeholder="Address/1">
+                                <label  class="col-sm-2 control-label">Address/1 :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtSAddress1" placeholder="Address/1"
+                                           ng-minlength="1" ng-maxlength="255"
+                                           ng-model="new_user.ushippingaddress.aaddress1" required ng-pattern="regexs.bigText">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtSAddress1.$dirty && register.txtSAddress1.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtSAddress2" class="col-sm-3 control-label">Address/2 :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtSAddress2" placeholder="Address/2">
+                                <label  class="col-sm-2 control-label">Address/2 :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtSAddress2" placeholder="Address/2"
+                                           ng-maxlength="255"
+                                           ng-model="new_user.ushippingaddress.aaddress2">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtSAddress2.$dirty && register.txtSAddress2.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtSCity" class="col-sm-3 control-label">City :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtSCity" placeholder="City">
+                                <label  class="col-sm-2 control-label">City :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtSCity" placeholder="City"
+                                           ng-minlength="1" ng-maxlength="255"
+                                           ng-model="new_user.ushippingaddress.acity" required ng-pattern="regexs.bigText">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtSCity.$dirty && register.txtSCity.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtSPostCode" class="col-sm-3 control-label">Zip :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtSPostCode" placeholder="Postal Code">
+                                <label  class="col-sm-2 control-label">Zip :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtSPostCode" placeholder="Postal Code"
+                                           ng-minlength="1" ng-maxlength="6"
+                                           ng-model="new_user.ushippingaddress.azip" required ng-pattern="regexs.postal">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtSPostCode.$dirty && register.txtSPostCode.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="drpSState" class="col-sm-3 control-label">State :</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" id="drpSState" autocomplete="on">
+                                <label  class="col-sm-2 control-label">State :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="drpSState" autocomplete="on"
+                                            ng-model="new_user.ushippingaddress.astate" required>
                                         <option value="">State</option>
                                         <option value="PR">PR</option>
                                         <option value="AK">AK</option>
@@ -150,52 +200,85 @@
                                         <option value="WY">WY</option>
                                     </select>
                                 </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.drpSState.$dirty && register.drpSState.$error.required">*</p>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="drpSCountry" class="col-sm-3 control-label">Country :</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" id="drpSCountry" autocomplete="on">
+                                <label  class="col-sm-2 control-label">Country :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="drpSCountry" autocomplete="on"
+                                            ng-model="new_user.ushippingaddress.acountry" required>
                                         <option value="USA">USA</option>
                                     </select>
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.drpSCountry.$dirty && register.drpSCountry.$error.required">*</p>
                                 </div>
                             </div>
                             <!-- Delivery Information Ends -->
                             <h3 class="panel-heading inner">Billing Address</h3>
                             <!-- Billing Information Starts -->
                             <div class="form-group">
-                                <label for="txtBAddFname" class="col-sm-3 control-label">Full Name :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtBAddFname" placeholder="Full Name">
+                                <label  class="col-sm-2 control-label">Full Name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtBAddFname" placeholder="Full Name"
+                                           ng-minlength="1" ng-maxlength="255"
+                                           ng-model="new_user.ubillingaddress.afullname" required ng-pattern="regexs.bigText">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtBAddFname.$dirty && register.txtBAddFname.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtBAddress1" class="col-sm-3 control-label">Address/1 :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtBAddress1" placeholder="Address/1">
+                                <label  class="col-sm-2 control-label">Address/1 :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtBAddress1" placeholder="Address/1"
+                                           ng-minlength="1" ng-maxlength="255"
+                                           ng-model="new_user.ubillingaddress.aaddress1" required ng-pattern="regexs.bigText">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtBAddress1.$dirty && register.txtBAddress1.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtBAddress2" class="col-sm-3 control-label">Address/2 :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtBAddress2" placeholder="Address/2">
+                                <label  class="col-sm-2 control-label">Address/2 :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtBAddress2" placeholder="Address/2"
+                                           ng-maxlength="255"
+                                           ng-model="new_user.ubillingaddress.aaddress2">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtBAddress2.$dirty && register.txtBAddress2.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtBCity" class="col-sm-3 control-label">City :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtBCity" placeholder="City">
+                                <label  class="col-sm-2 control-label">City :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtBCity" placeholder="City"
+                                           ng-minlength="1" ng-maxlength="255"
+                                           ng-model="new_user.ubillingaddress.acity" required ng-pattern="regexs.bigText">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtBCity.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtBPostCode" class="col-sm-3 control-label">Zip :</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtBPostCode" placeholder="Postal Code">
+                                <label  class="col-sm-2 control-label">Zip :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtBPostCode" placeholder="Postal Code"
+                                           ng-minlength="1" ng-maxlength="6"
+                                           ng-model="new_user.ubillingaddress.azip" required ng-pattern="regexs.postal">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtBPostCode.$dirty && register.txtBPostCode.$invalid">*</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="drpBState" class="col-sm-3 control-label">State :</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" id="drpBState" autocomplete="on">
+                                <label  class="col-sm-2 control-label">State :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="drpBState" autocomplete="on"
+                                            ng-model="new_user.ubillingaddress.astate" required>
                                         <option value="">State</option>
                                         <option value="PR">PR</option>
                                         <option value="AK">AK</option>
@@ -251,28 +334,162 @@
                                         <option value="WY">WY</option>
                                     </select>
                                 </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.drpBState.$dirty && register.drpBState.$error.required">*</p>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="drpBCountry" class="col-sm-3 control-label">Country :</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" id="drpBCountry" autocomplete="on">
+                                <label  class="col-sm-2 control-label">Country :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="drpBCountry" autocomplete="on"
+                                            ng-model="new_user.ubillingaddress.acountry" required>
                                         <option value="USA">USA</option>
                                     </select>
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.drpBCountry.$dirty && register.drpBCountry.$error.required">*</p>
                                 </div>
                             </div>
                             <!-- Billing Information Ends -->
                             <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="submit" class="btn btn-black">Same As Shipping Address</button>
+                                <div class="col-md-offset-2 col-sm-8">
+                                    <a ng-click="sameAdd()" class="btn btn-main">Same As Shipping Address</a>
+                                </div>
+                            </div>
+                            <h3 class="panel-heading inner">Credit Card Information</h3>
+                            <!-- Credit Carg Information Starts -->
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">Name on Card:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtCardName" placeholder="Name on Card"
+                                           ng-minlength="1" ng-maxlength="255"
+                                           ng-model="new_user.upayment.cname" required ng-pattern="regexs.bigText">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtCardName.$dirty && register.txtCardName.$invalid">*</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">Card Number:</label>
+                                <div class="col-sm-8">
+                                    <input type='number' autocomplete="on"
+                                           class="form-control" name="txtCardNumber" placeholder="Card Number"
+                                           ng-minlength="13" ng-maxlength="16"
+                                           ng-model="userCard.cardNumber" required ng-pattern="regexs.ccard">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtCardNumber.$dirty && register.txtCardNumber.$invalid">*</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">Expiration Date :</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" autocomplete="on" name="drpCardNumber"
+                                            ng-model="paymentMonth" required>
+                                        <option value=''>Month</option>
+                                        <option value='01'>Janaury</option>
+                                        <option value='02'>February</option>
+                                        <option value='03'>March</option>
+                                        <option value='04'>April</option>
+                                        <option value='05'>May</option>
+                                        <option value='06'>June</option>
+                                        <option value='07'>July</option>
+                                        <option value='08'>August</option>
+                                        <option value='09'>September</option>
+                                        <option value='10'>October</option>
+                                        <option value='11'>November</option>
+                                        <option value='12'>December</option>
+                                    </select>
+                                    <div class="col-sm-1">
+                                        <p class="text-danger" ng-if="register.drpCardNumber.$dirty && register.drpCardNumber.$error.required">*</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select class="form-control" autocomplete="on" name="drpCardYear"
+                                            ng-model="paymentYear" ng-options="year for year in yearOptions" required>
+                                        <option value=''>Year</option>
+                                    </select>
+                                    <div class="col-sm-1">
+                                        <p class="text-danger" ng-if="register.drpCardYear.$dirty && register.drpCardYear.$error.required">*</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">CVC :</label>
+                                <div class="col-sm-8">
+                                    <input type="number" autocomplete="off" max="999"
+                                           class="form-control" name="txtCVC" placeholder="CVC required"
+                                           ng-model="userCard.CVC" required ng-pattern="regexs.cvc">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtCVC.$dirty && register.txtCVC.$invalid">*</p>
+                                </div>
+                            </div>
+                            <br>
+                            <!-- Credit Card Information Ends -->
+                            <h3 class="panel-heading inner">Account Information</h3>
+                            <!-- Password Area Starts -->
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">Username:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="txtUname" placeholder="Username"
+                                           ng-minlength="4" ng-maxlength="20"
+                                           ng-model="new_user.uname" required ng-pattern="regexs.userName">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="register.txtUname.$dirty && register.txtUname.$invalid">*</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">Password :</label>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" name="txtPassword" autocomplete="off"
+                                           placeholder="Password" ng-minlength="8" ng-maxlength="20"
+                                           ng-model="new_user.upassword" required ng-pattern="regexs.password">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="(register.txtRePassword.$dirty || register.txtPassword.$dirty) && (register.txtPassword.$invalid && !validPassword())">*</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">Re-Password :</label>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" name="txtRePassword" autocomplete="off"
+                                           placeholder="Re-Password" ng-minlength="8" ng-maxlength="20"
+                                           ng-model="new_user.upassword2" required ng-pattern="regexs.password">
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="text-danger" ng-if="(register.txtRePassword.$dirty || register.txtPassword.$dirty) && (register.txtRePassword.$invalid && !validPassword())">*</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-sm-8">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="aggrement" type="checkbox"
+                                                   ng-model="aggrement">I'v read and agreed on Conditions</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="col-md-offset-5 col-md-10 form-actions">
+                                    <a href="#/login.html" class="btn btn-danger">Cancel</a>
+                                    <button type="submit" ng-click="submitUser()" class="btn btn-black"
+                                            ng-disabled="(!aggrement || !validPassword() || register.$invalid || isPosting)">
+                                        Register</button>
+                                    <img ng-if="isPosting" src="images/ajax-loader.gif" height="32" width="32"/>
                                 </div>
                             </div>
                         </form>
-                        <!-- Registration Form Starts -->
+                        <!-- Registration Form Ends -->
                     </div>
                 </div>
                 <!-- Registration Block Ends -->
             </div>
-            <div class="col-sm-6">
+            <div class="col-md-offset-1 col-md-10">
+                <div uib-alert ng-repeat="err in errors" class="alert-danger" close="closeAlert($index)">{{err}}</div>
+            </div>
+            <div class="col-md-offset-1 col-md-10">
                 <!-- Conditions Panel Starts -->
                 <div class="panel panel-smart">
                     <div class="panel-heading">
@@ -289,109 +506,12 @@
                         <p>This web store does not contain any inventory.</p>
                         <p>Purchase will be register but no transactioned.</p>
                         <br>
-                        <h3 class="panel-heading inner">Credit Card</h3>
-                        <form class="form-horizontal" role="form">
-                            <!-- Credit Carg Information Starts -->
-                            <div class="form-group">
-                                <label for="txtAddress1" class="col-sm-3 control-label">Name on Card:</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtAddress1" placeholder="Name on Card">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="txtAddress2" class="col-sm-3 control-label">Card Number:</label>
-                                <div class="col-sm-9">
-                                    <input type='number' pattern="[0-9]{13,16}" autocomplete="on" maxlength="16" class="form-control" id="txtAddress2" placeholder="Card Number">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="drpCardNumber" class="col-sm-3 control-label">Expiration Date :</label>
-                                <div class="col-sm-3">
-                                    <select class="form-control" autocomplete="on" id="drpCardNumber">
-                                        <option value=''>Month</option>
-                                        <option value='01'>Janaury</option>
-                                        <option value='02'>February</option>
-                                        <option value='03'>March</option>
-                                        <option value='04'>April</option>
-                                        <option value='05'>May</option>
-                                        <option value='06'>June</option>
-                                        <option value='07'>July</option>
-                                        <option value='08'>August</option>
-                                        <option value='09'>September</option>
-                                        <option value='10'>October</option>
-                                        <option value='11'>November</option>
-                                        <option value='12'>December</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6">
-                                    <select class="form-control" autocomplete="on" id="drpCardYear">
-                                        <option value=''>Year</option>
-                                        <option value='2016'>2016</option>
-                                        <option value='2016'>2017</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="txtCVC" class="col-sm-3 control-label">CVC :</label>
-                                <div class="col-sm-9">
-                                    <input type="number" pattern="[0-9]{3}" autocomplete="off" maxlength="3" class="form-control" id="txtCVC" placeholder="CVC">
-                                </div>
-                            </div>
-                            <br>
-                            <!-- Credit Card Information Ends -->
-                            <h3 class="panel-heading inner">Account Information</h3>
-                            <!-- Password Area Starts -->
-                            <div class="form-group">
-                                <label for="txtUname" class="col-sm-3 control-label">Username:</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtUname" placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="txtPassword" class="col-sm-3 control-label">Password :</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="txtPassword" autocomplete="off" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="txtRePassword" class="col-sm-3 control-label">Re-Password :</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="txtRePassword" autocomplete="off" placeholder="Re-Password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <span class="col-sm-3 control-label">Newsletter :</span>
-                                <div class="col-sm-9">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">Subscribe</label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option1">Unsubscribe</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox">I'v read and agreed on Conditions</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="submit" class="btn btn-black">Register</button>
-                                </div>
-                            </div>
-                            <!-- Password Area Ends -->
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
+<div class="hidden">{{register.$invalid}}</div>
 <!-- Registration Section Ends -->
 <!-- Main Container Ends -->

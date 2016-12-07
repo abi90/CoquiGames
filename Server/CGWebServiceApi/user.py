@@ -15,6 +15,8 @@ post_payment_keys = ['cname', 'cnumber', 'cexpdate', 'cvc', 'ctype']
 
 cc_regex = r"""^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|3[47][0-9]{13})$"""
 
+MISSING_PARAMETER = "Missing Parameter {0} in Request JSON."
+
 
 @user_blueprint.route("/<int:userid>/preferences", methods=['GET', 'PUT'])
 @requires_auth
@@ -52,9 +54,7 @@ def user_order(userid):
     try:
         if request.method == 'GET':
             orders = dbm.fetch_user_orders(userid)
-            if orders:
-                return jsonify(orders)
-            return not_found()
+            return jsonify(orders)
         elif request.method == 'POST':
             if not request.json:
                 return bad_request()
@@ -394,13 +394,13 @@ def post_user():
             # Verify request json contains needed parameters
             for key in post_user_keys:
                 if key not in request.json:
-                    return missing_parameters_error()
+                    return jsonify({'Error': MISSING_PARAMETER.format(key)}), 400
             for key in post_address_keys:
                 if key not in request.json['ushippingaddress'] or key not in request.json['ubillingaddress']:
-                    return missing_parameters_error()
+                    return jsonify({'Error': MISSING_PARAMETER.format(key)}), 400
             for key in post_payment_keys:
                 if key not in request.json['upayment']:
-                    return missing_parameters_error()
+                    return jsonify({'Error': MISSING_PARAMETER.format(key)}), 400
             # Verify that parameters are valid
             account_errors = validate_account(request.json)
             if account_errors:
@@ -426,7 +426,7 @@ def post_user():
         else:
             return bad_request()
     except Exception as e:
-        print e.message
+        print e
         return internal_server_error()
 
 
@@ -520,7 +520,7 @@ def validate_payment(data):
         errors.append('Invalid Card Name.')
 
     # Validate with Credit Card regex for python
-    is_valid_cc = re.search(cc_regex, data['cnumber'])
+    is_valid_cc = re.search(cc_regex, str(data['cnumber']))
     if not is_valid_cc:
         errors.append('Invalid Credit Card.')
 
@@ -535,7 +535,7 @@ def validate_payment(data):
         errors.append('Invalid Expiration Date.')
 
     # Validate CVC
-    is_digit = re.search(r'^([\d]+)$', data['cvc'])
+    is_digit = re.search(r'^([\d]+)$', str(data['cvc']))
     if len(str(data['cvc'])) < 3 or len(str(data['cvc'])) > 4 or not is_digit:
         errors.append('Invalid CVC.')
 
