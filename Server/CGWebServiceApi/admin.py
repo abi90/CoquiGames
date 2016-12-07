@@ -1,13 +1,16 @@
 from flask import Blueprint, jsonify, request, json
 from authentication import admin_verification
 from errors import not_found, bad_request, internal_server_error, missing_parameters_error
-from user import validate_account, post_user_keys
+from user import validate_account
 import DBManager as dbm
 
 admin_blueprint = Blueprint('admin', __name__)
 
 product_keys = ['title', 'release', 'price', 'platformid',
                 'genre', 'esrb', 'description', 'aditionalinfo', 'category']
+
+post_user_keys = ['ufirstname', 'ulastname', 'uemail', 'uphone', 'udob',
+                  'uname', 'upassword']
 
 
 @admin_blueprint.route("/users", methods=['GET'])

@@ -1,8 +1,9 @@
 /**
  * Created by abi on 12/1/16.
  */
-app.controller('EditSAMoController', [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'shipping_address',
-    function ($scope, authenticationSvc, $rootScope, Popeye, shipping_address){
+app.controller('EditSAModalController',
+    [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'shipping_address', '$location',
+    function ($scope, authenticationSvc, $rootScope, Popeye, shipping_address, $location){
 
         var tempAddress = {
             "aaddress1": shipping_address.aaddress1,
@@ -18,19 +19,29 @@ app.controller('EditSAMoController', [ '$scope', 'authenticationSvc',  '$rootSco
             "apreferred": shipping_address.apreferred
         };
 
-        $scope.selectedShippingAddress = tempAddress;
-        $scope.userInfo = authenticationSvc.getUserInfo();
+        $scope.new_password = tempAddress;
+
 
         $scope.close = function() {
-            $scope.selectedShippingAddress = tempAddress;
-            return Popeye.closeCurrentModal($scope.selectedShippingAddress);
+            $scope.new_password = tempAddress;
+            return Popeye.closeCurrentModal($scope.new_password);
         };
 
         $scope.cancel = function () {
-            $scope.selectedShippingAddress = shipping_address;
+            $scope.new_password = shipping_address;
             return Popeye.closeCurrentModal(shipping_address);
         };
 
+        $scope.userInfo = authenticationSvc.getUserInfo();
 
+        var getUser = function(){
+            if(!$scope.userInfo){
+                $rootScope.$emit('unLogin');
+                $location.path('/login.html');
+                return Popeye.closeCurrentModal(shipping_address);
+            }
+        };
+
+        getUser();
 
 }]);

@@ -37,7 +37,7 @@ app.controller('UserCheckoutController', ['$scope', '$location', 'authentication
                 function (response) {
                     $scope.userPreferences = response.data;
                     $scope.selectedPayment = $scope.userPreferences.payment_method;
-                    $scope.selectedShippingAddress = $scope.userPreferences.shipping_address;
+                    $scope.new_password = $scope.userPreferences.shipping_address;
                 },
                 function () {
                     logout();
@@ -74,7 +74,7 @@ app.controller('UserCheckoutController', ['$scope', '$location', 'authentication
         $scope.placeOrder = function () {
             var order = {
                 "shipment_feeid": $scope.shipmentFee.shipment_feeid,
-                "aid": $scope.selectedShippingAddress.aid,
+                "aid": $scope.new_password.aid,
                 "cid": $scope.selectedPayment.cid
             };
 

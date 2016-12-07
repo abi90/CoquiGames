@@ -13,7 +13,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         $scope.shippmentFees;
         $scope.shipmentFee;
         $scope.selectedPayment = {};
-        $scope.selectedShippingAddress = {};
+        $scope.new_password = {};
         $scope.userPreferences;
 
         // Local Functions
@@ -87,7 +87,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
                 function (response) {
                     $scope.userPreferences = response.data;
                     $scope.selectedPayment = $scope.userPreferences.payment_method;
-                    $scope.selectedShippingAddress = $scope.userPreferences.shipping_address;
+                    $scope.new_password = $scope.userPreferences.shipping_address;
                 },
                 function (error) {
                     console.log("Error: " +error.statusCode);
@@ -172,7 +172,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
         $scope.placeOrder = function () {
             order = {
                 "shipment_feeid": $scope.shipmentFee.shipment_feeid,
-                "aid": $scope.selectedShippingAddress.aid,
+                "aid": $scope.new_password.aid,
                 "cid": $scope.selectedPayment.cid,
             };
 
