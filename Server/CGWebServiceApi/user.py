@@ -105,26 +105,32 @@ def user_payment(userid):
         return internal_server_error()
 
 
-@user_blueprint.route("/<int:userid>/payment/<payment_methodid>", methods=['PUT'])
+@user_blueprint.route("/<int:userid>/payment/<payment_methodid>", methods=['PUT', 'DELETE'])
 @requires_auth
 def update_payment(userid, payment_methodid):
     try:
-        if request.json:
-            payment_keys = post_payment_keys
-            payment_keys.append('ppreferred')
-            for key in payment_keys:
-                if key not in request.json:
-                    return missing_parameters_error()
-            errors = validate_payment(request.json)
-            if errors:
-                return jsonify({'Errors': errors}), 400
-            billing_addressid = dbm.fetch_user_preferences(userid)['billing_address']['aid']
-            if billing_addressid:
-                pid = dbm.update_payment_method(userid, payment_methodid, request.json, billing_addressid)
-                return jsonify({'payment_methodid': pid}), 201
-            else:
-                return jsonify({'error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
-        return bad_request()
+        if request.method=='PUT':
+            if request.json:
+                payment_keys = post_payment_keys
+                payment_keys.append('ppreferred')
+                for key in payment_keys:
+                    if key not in request.json:
+                        return missing_parameters_error()
+                errors = validate_payment(request.json)
+                if errors:
+                    return jsonify({'Errors': errors}), 400
+                billing_addressid = dbm.fetch_user_preferences(userid)['billing_address']['aid']
+                if billing_addressid:
+                    pid = dbm.update_payment_method(userid, payment_methodid, request.json, billing_addressid)
+                    return jsonify({'payment_methodid': pid}), 201
+                else:
+                    return jsonify({'error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
+            return bad_request()
+        elif request.method=='DELETE':
+            result = dbm.deactivate_user_payment_method(userid, payment_methodid)
+            if result:
+                return jsonify(result)
+            return bad_request()
     except Exception as e:
         print e.message
         return internal_server_error()

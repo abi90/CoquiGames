@@ -246,7 +246,7 @@ def deactivate_user_cart(cartid, userid):
 
 
 def deactivate_user_payment_method(userid, payment_methodid):
-    return __execute_commit_query__(Query.UPDATE_USER_PAYMENT_METHOD_TO_INACTIVE, (userid, payment_methodid))
+    return __execute_commit_query__(Query.UPDATE_USER_PAYMENT_METHOD_TO_INACTIVE, (userid, payment_methodid))[0]
 
 
 def insert_user_payment_method(card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid):

@@ -145,7 +145,14 @@ UPDATE_USER_PAYMENT_METHOD_TO_INACTIVE = """UPDATE payment_method
 
 UPDATE_USER_PAYMENT_METHOD_TO_INACTIVE = """UPDATE payment_method
                                             SET active = FALSE
-                                            WHERE userid = %s AND payment_methodid = %s RETURNING *"""
+                                            WHERE payment_method.userid = %s
+                                                  AND payment_method.payment_methodid = %s
+                                                  AND payment_method.payment_methodid
+                                                  NOT IN (
+                                                        SELECT up.payment_methodid FROM user_preferences up
+                                                        WHERE up.payment_methodid = payment_method.payment_methodid
+                                                      )
+                                            RETURNING payment_methodid"""
 
 
 INSERT_USER_PAYMENT_METHOD_USING_PREF = """INSERT INTO payment_method (card_name, card_last_four_digits, card_number, card_exp_date, cvc, card_type, userid, billing_addressid, active)

@@ -82,7 +82,6 @@ app.controller('RegisterController',
                     );
                 },
                 function (err) {
-                    console.log(JSON.stringify(err.data));
                     if(err.data.errors){
                         $scope.errors = err.data.errors;
                     }
