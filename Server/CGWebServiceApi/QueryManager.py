@@ -433,3 +433,7 @@ INSERT_PRODUCT_COVER = """INSERT INTO product_img (productid, product_img, cover
 
 SELECT_ALL_STATUS = """SELECT * FROM order_status"""
 
+IS_USERNAME_TAKEN = """SELECT count(*) > 0 AS taken FROM account_info WHERE username = %s"""
+
+IS_EMAIL_TAKEN = """SELECT count(*) > 0 AS taken FROM cg_user WHERE email = %s"""
+

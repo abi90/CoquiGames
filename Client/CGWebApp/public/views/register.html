@@ -36,7 +36,10 @@
                                            ng-model="new_user.ufirstname" required ng-pattern="regexs.bigText">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtFname.$dirty && register.txtFname.$invalid">*</p>
+                                    <img   ng-if="register.txtFname.$dirty && register.txtFname.$invalid"
+                                           src="images/invalid.png" width="16" height="16"/>
+                                    <img   ng-if="register.txtFname.$dirty && register.txtFname.$valid"
+                                           src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -47,7 +50,10 @@
                                            ng-model="new_user.ulastname" required ng-pattern="regexs.bigText">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtLname.$dirty && register.txtLname.$invalid">*</p>
+                                    <img  ng-if="register.txtLname.$dirty && register.txtLname.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtLname.$dirty && register.txtLname.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -57,7 +63,12 @@
                                            placeholder="yyyy-MM-dd" ng-model="userDOB" required>
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtDateOfBirth.$dirty && register.txtDateOfBirth.$error.required">*</p>
+                                    <img 
+                                         ng-if="register.txtDateOfBirth.$dirty && register.txtDateOfBirth.$error.required"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img 
+                                         ng-if="register.txtDateOfBirth.$dirty && !register.txtDateOfBirth.$error.required"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -68,7 +79,10 @@
                                            ng-model="new_user.uemail" required ng-pattern="regexs.email">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtEmail.$dirty && register.txtEmail.$invalid">*</p>
+                                    <img  ng-if="register.txtEmail.$dirty && register.txtEmail.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtEmail.$dirty && register.txtEmail.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -79,7 +93,10 @@
                                            ng-model="new_user.uphone" required>
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtPhone.$dirty && register.txtPhone.$invalid">*</p>
+                                    <img  ng-if="register.txtPhone.$dirty && register.txtPhone.$invalid"
+                                       src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtPhone.$dirty && register.txtPhone.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <!-- Personal Information Ends -->
@@ -93,7 +110,10 @@
                                            ng-model="new_user.ushippingaddress.afullname" required ng-pattern="regexs.bigText">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtSAddFname.$dirty && register.txtSAddFname.$invalid">*</p>
+                                    <img  ng-if="register.txtSAddFname.$dirty && register.txtSAddFname.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtSAddFname.$dirty && register.txtSAddFname.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -104,7 +124,10 @@
                                            ng-model="new_user.ushippingaddress.aaddress1" required ng-pattern="regexs.bigText">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtSAddress1.$dirty && register.txtSAddress1.$invalid">*</p>
+                                    <img  ng-if="register.txtSAddress1.$dirty && register.txtSAddress1.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtSAddress1.$dirty && register.txtSAddress1.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -115,7 +138,10 @@
                                            ng-model="new_user.ushippingaddress.aaddress2">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtSAddress2.$dirty && register.txtSAddress2.$invalid">*</p>
+                                    <img  ng-if="register.txtSAddress2.$dirty && register.txtSAddress2.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtSAddress2.$dirty && register.txtSAddress2.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -126,7 +152,10 @@
                                            ng-model="new_user.ushippingaddress.acity" required ng-pattern="regexs.bigText">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtSCity.$dirty && register.txtSCity.$invalid">*</p>
+                                    <img  ng-if="register.txtSCity.$dirty && register.txtSCity.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtSCity.$dirty && register.txtSCity.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -137,7 +166,10 @@
                                            ng-model="new_user.ushippingaddress.azip" required ng-pattern="regexs.postal">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtSPostCode.$dirty && register.txtSPostCode.$invalid">*</p>
+                                    <img  ng-if="register.txtSPostCode.$dirty && register.txtSPostCode.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtSPostCode.$dirty && register.txtSPostCode.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -201,7 +233,10 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.drpSState.$dirty && register.drpSState.$error.required">*</p>
+                                    <img  ng-if="register.drpSState.$dirty && register.drpSState.$error.required"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.drpSState.$dirty && !register.drpSState.$error.required"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -213,7 +248,10 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.drpSCountry.$dirty && register.drpSCountry.$error.required">*</p>
+                                    <img  ng-if="register.drpSCountry.$dirty && register.drpSCountry.$error.required"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.drpSCountry.$dirty && !register.drpSCountry.$error.required"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <!-- Delivery Information Ends -->
@@ -227,7 +265,10 @@
                                            ng-model="new_user.ubillingaddress.afullname" required ng-pattern="regexs.bigText">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtBAddFname.$dirty && register.txtBAddFname.$invalid">*</p>
+                                    <img  ng-if="register.txtBAddFname.$dirty && register.txtBAddFname.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtBAddFname.$dirty && register.txtBAddFname.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -238,7 +279,10 @@
                                            ng-model="new_user.ubillingaddress.aaddress1" required ng-pattern="regexs.bigText">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtBAddress1.$dirty && register.txtBAddress1.$invalid">*</p>
+                                    <img  ng-if="register.txtBAddress1.$dirty && register.txtBAddress1.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtBAddress1.$dirty && register.txtBAddress1.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -249,7 +293,8 @@
                                            ng-model="new_user.ubillingaddress.aaddress2">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtBAddress2.$dirty && register.txtBAddress2.$invalid">*</p>
+                                    <img  ng-if="register.txtBAddress2.$dirty && register.txtBAddress2.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -260,7 +305,10 @@
                                            ng-model="new_user.ubillingaddress.acity" required ng-pattern="regexs.bigText">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtBCity.$invalid">*</p>
+                                    <img  ng-if="register.txtBCity.$dirty && register.txtBCity.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtBCity.$dirty && register.txtBCity.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -271,7 +319,10 @@
                                            ng-model="new_user.ubillingaddress.azip" required ng-pattern="regexs.postal">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtBPostCode.$dirty && register.txtBPostCode.$invalid">*</p>
+                                    <img  ng-if="register.txtBPostCode.$dirty && register.txtBPostCode.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtBPostCode.$dirty && register.txtBPostCode.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -335,7 +386,10 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.drpBState.$dirty && register.drpBState.$error.required">*</p>
+                                    <img  ng-if="register.drpBState.$dirty && register.drpBState.$error.required"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.drpBState.$dirty && !register.drpBState.$error.required"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -347,7 +401,10 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.drpBCountry.$dirty && register.drpBCountry.$error.required">*</p>
+                                    <img ng-if="register.drpBCountry.$dirty && register.drpBCountry.$error.required"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img ng-if="register.drpBCountry.$dirty && !register.drpBCountry.$error.required"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <!-- Billing Information Ends -->
@@ -366,7 +423,10 @@
                                            ng-model="new_user.upayment.cname" required ng-pattern="regexs.bigText">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtCardName.$dirty && register.txtCardName.$invalid">*</p>
+                                    <img  ng-if="register.txtCardName.$dirty && register.txtCardName.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtCardName.$dirty && register.txtCardName.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -378,7 +438,10 @@
                                            ng-model="userCard.cardNumber" required ng-pattern="regexs.ccard">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtCardNumber.$dirty && register.txtCardNumber.$invalid">*</p>
+                                    <img  ng-if="register.txtCardNumber.$dirty && register.txtCardNumber.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtCardNumber.$dirty && register.txtCardNumber.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -401,7 +464,10 @@
                                         <option value='12'>December</option>
                                     </select>
                                     <div class="col-sm-1">
-                                        <p class="text-danger" ng-if="register.drpCardNumber.$dirty && register.drpCardNumber.$error.required">*</p>
+                                        <img  ng-if="register.drpCardNumber.$dirty && register.drpCardNumber.$error.required"
+                                             src="images/invalid.png" width="16" height="16"/>
+                                        <img  ng-if="register.drpCardNumber.$dirty && !register.drpCardNumber.$error.required"
+                                             src="images/valid.png" width="16" height="16"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -410,7 +476,10 @@
                                         <option value=''>Year</option>
                                     </select>
                                     <div class="col-sm-1">
-                                        <p class="text-danger" ng-if="register.drpCardYear.$dirty && register.drpCardYear.$error.required">*</p>
+                                        <img  ng-if="register.drpCardYear.$dirty && register.drpCardYear.$error.required"
+                                             src="images/invalid.png" width="16" height="16"/>
+                                        <img  ng-if="register.drpCardYear.$dirty && !register.drpCardYear.$error.required"
+                                             src="images/valid.png" width="16" height="16"/>
                                     </div>
                                 </div>
                             </div>
@@ -422,7 +491,10 @@
                                            ng-model="userCard.CVC" required ng-pattern="regexs.cvc">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtCVC.$dirty && register.txtCVC.$invalid">*</p>
+                                    <img  ng-if="register.txtCVC.$dirty && register.txtCVC.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtCVC.$dirty && register.txtCVC.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <br>
@@ -437,7 +509,10 @@
                                            ng-model="new_user.uname" required ng-pattern="regexs.userName">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="register.txtUname.$dirty && register.txtUname.$invalid">*</p>
+                                    <img  ng-if="register.txtUname.$dirty && register.txtUname.$invalid"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img  ng-if="register.txtUname.$dirty && register.txtUname.$valid"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -448,7 +523,10 @@
                                            ng-model="new_user.upassword" required ng-pattern="regexs.password">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="(register.txtRePassword.$dirty || register.txtPassword.$dirty) && (register.txtPassword.$invalid && !validPassword())">*</p>
+                                    <img ng-if="(register.txtRePassword.$dirty || register.txtPassword.$dirty) && (register.txtPassword.$invalid && !validPassword())"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img ng-if="(register.txtRePassword.$dirty || register.txtPassword.$dirty) && (register.txtPassword.$valid && validPassword())"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -459,7 +537,10 @@
                                            ng-model="new_user.upassword2" required ng-pattern="regexs.password">
                                 </div>
                                 <div class="col-sm-1">
-                                    <p class="text-danger" ng-if="(register.txtRePassword.$dirty || register.txtPassword.$dirty) && (register.txtRePassword.$invalid && !validPassword())">*</p>
+                                    <img ng-if="(register.txtRePassword.$dirty || register.txtPassword.$dirty) && (register.txtRePassword.$invalid && !validPassword())"
+                                         src="images/invalid.png" width="16" height="16"/>
+                                    <img ng-if="(register.txtRePassword.$dirty || register.txtPassword.$dirty) && (register.txtRePassword.$valid && validPassword())"
+                                         src="images/valid.png" width="16" height="16"/>
                                 </div>
                             </div>
                             <div class="form-group">

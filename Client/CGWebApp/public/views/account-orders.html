@@ -13,7 +13,7 @@
             <!-- Breadcrumb Starts -->
             <ol class="breadcrumb">
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="#/index.html">Home</a>
                 </li>
                 <li class="active">{{userData.uname}}</li>
                 <li class="active">Orders</li>
@@ -23,7 +23,7 @@
             <h2 class="main-heading2">Orders</h2>
             <!-- Main Heading Ends -->
             <!-- Category Intro Content Starts -->
-            <div class="table table-responsive shopping-cart-table">
+            <div class="table table-responsive shopping-cart-table" ng-if="userOrder.length > 0">
                 <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -52,12 +52,31 @@
                 </table>
             </div>
             <!-- Category Intro Content Ends -->
-            <!-- Product Filter Starts -->
-            <!-- Product Filter Ends -->
-            <!-- Product List Display Starts -->
-            <!-- Product List Display Ends -->
-            <!-- Pagination & Results Starts -->
-            <!-- Pagination & Results Ends -->
+            <!-- Empty Cart Section Starts -->
+            <div class="text-center" ng-if="userOrder.length <= 0">
+                <section class="registration-area">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-offset-3" >
+                            <!-- Message Panel Starts -->
+                            <div class="panel panel-smart">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">There Are No Recent Orders.</h3>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <div class="text-uppercase clearfix">
+                                        <a href="#/index.html" class="btn btn-main text-center">
+                                            <span href="#/index.html" class="hidden-xs">Continue Shopping</span>
+                                            <span class="visible-xs" href="#/index.html">Continue</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Message Panel Ends -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- Empty Cart Section Ends -->
         </div>
         <!-- Primary Content Ends -->
     </div>

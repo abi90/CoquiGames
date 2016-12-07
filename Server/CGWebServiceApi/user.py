@@ -473,6 +473,8 @@ def validate_account(data):
     # username must be greater than 4 characters but less than 20 characters
     if len(str(data['uname'])) < 4 or len(str(data['uname'])) > 20 or not is_valid_username:
         errors.append('Invalid username.')
+    elif dbm.is_username_taken(data['uname']):
+        errors.append('Username already taken. Please try with another username.')
 
     # A Password must contain atleast an Upper case leter and a number
     has_upper = re.search('[A-Z]+', data['upassword'])
@@ -485,6 +487,8 @@ def validate_account(data):
     is_email = re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", data['uemail'])
     if not is_email:
         errors.append('Invalid email.')
+    elif dbm.is_email_taken(data['uemail']):
+        errors.append('Email already taken. Please try with another email.')
 
     # Phone regex for python
     is_phone = re.search(r'^(\d{3})([-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})$',

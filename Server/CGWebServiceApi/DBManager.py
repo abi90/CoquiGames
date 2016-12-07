@@ -849,6 +849,7 @@ def add_admin_user(user_data):
 def fetch_all_orders():
     return __execute_select_query__(Query.SELECT_ALL_ORDERS, ())
 
+
 def fetch_all_status():
     return __execute_select_query__(Query.SELECT_ALL_STATUS, ())
 
@@ -919,6 +920,14 @@ def create_product(new_product):
                 conn.rollback()
                 conn.close()
         raise
+
+
+def is_username_taken(username):
+    return __execute_select_query__(Query.IS_USERNAME_TAKEN, (username,))[0]
+
+
+def is_email_taken(email):
+    return __execute_select_query__(Query.IS_EMAIL_TAKEN, (email,))[0]
 
 
 
