@@ -223,9 +223,10 @@ def update_order_status(order_statusid,orderid):
         print e.message
         return internal_server_error()
 
+
 @admin_blueprint.route("/announcement/<int:aid>/deactivate", methods=['PUT'])
 @admin_verification
-def update_order_status(aid):
+def deactivate_announcement(aid):
     try:
         if request.json:
             if 'platformid' in request.json:
