@@ -156,9 +156,9 @@
         </table>
     </div>
     <!-- Users Table Ends -->
-        <div class="col-md-offset-1 col-md-10">
-            <div uib-alert ng-repeat="m in messages track by $index" class="alert-success" close="closeAlert($index)">{{m}}</div>
-
+    <div class="col-md-offset-1 col-md-10">
+        <div uib-alert ng-repeat="m in messages track by $index" class="alert-success" close="closeAlert($index)">{{m}}
+        </div>
     </div>
     <!-- Add Admin Section Starts -->
     <div class="text-center">
@@ -171,13 +171,12 @@
                             <h3 class="panel-title">Add a New Admin User.</h3>
                         </div>
                         <div class="panel-body text-center">
-                                    <button type="submit" title="Add" class="btn btn-default tool-tip" ng-click="shoAddAdminModal(u)">Add Admin
-                                    </button>
-                            </div>
+                            <button type="submit" title="Add" class="btn btn-default tool-tip" ng-click="shoAddAdminModal(u)">Add Admin
+                            </button>
                         </div>
                     </div>
-                    <!-- Message Panel Ends -->
                 </div>
+                <!-- Message Panel Ends -->
             </div>
         </section>
     </div>
