@@ -144,10 +144,10 @@
                     {{u.active}}
                 </td>
                 <td class="text-center">
-                    <button type="submit" title="Edit" class="btn btn-default tool-tip" ng-click="shoEditUserInfoModal()">
+                    <button type="submit" title="Edit" class="btn btn-default tool-tip" ng-click="shoEditUserInfoModal(u)">
                         <i class="fa fa-edit"></i>
                     </button>
-                    <button type="button" title="Remove" class="btn btn-default tool-tip">
+                    <button type="button" title="Remove" class="btn btn-default tool-tip" ng-click="shoDeactivateUser(u)">
                         <i class="fa fa-times-circle"></i>
                     </button>
                 </td>
@@ -156,6 +156,10 @@
         </table>
     </div>
     <!-- Users Table Ends -->
+        <div class="col-md-offset-1 col-md-10">
+            <div uib-alert ng-repeat="m in messages track by $index" class="alert-success" close="closeAlert($index)">{{m}}</div>
+
+    </div>
     <!-- Add Admin Section Starts -->
     <div class="text-center">
         <section class="registration-area">
@@ -167,7 +171,7 @@
                             <h3 class="panel-title">Add a New Admin User.</h3>
                         </div>
                         <div class="panel-body text-center">
-                                    <button type="submit" title="Add" class="btn btn-default tool-tip" ng-click="shoAddAdminModal()">Add Admin
+                                    <button type="submit" title="Add" class="btn btn-default tool-tip" ng-click="shoAddAdminModal(u)">Add Admin
                                     </button>
                             </div>
                         </div>

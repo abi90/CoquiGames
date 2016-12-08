@@ -101,13 +101,13 @@
                     </a>
                 </td>
                 <td class="text-center">
-                    <a ng-click="sortType = 'availability'; sortReverse = !sortReverse">Availability
+                    <a ng-click="sortType = 'active'; sortReverse = !sortReverse">Active
                         <span
-                                ng-show="sortType == 'availability' && sortReverse"
+                                ng-show="sortType == 'active' && sortReverse"
                                 class="fa fa-caret-down">
                         </span>
                         <span
-                                ng-show="sortType == 'availability' && !sortReverse"
+                                ng-show="sortType == 'active' && !sortReverse"
                                 class="fa fa-caret-up">
                         </span>
                     </a>
@@ -138,13 +138,13 @@
                     {{u.release}}
                 </td>
                 <td class="text-center">
-                    {{u.availability}}
+                    {{u.active}}
                 </td>
                 <td class="text-center">
                     <button type="submit" title="Edit" class="btn btn-default tool-tip" ng-click="shoEditNewProductModal(u)">
                         <i class="fa fa-edit"></i>
                     </button>
-                    <button type="button" title="Remove" class="btn btn-default tool-tip">
+                    <button type="button" title="Remove" class="btn btn-default tool-tip" ng-click="shoDeactivateProduct(u.pid)">
                         <i class="fa fa-times-circle"></i>
                     </button>
                 </td>
