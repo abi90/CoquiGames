@@ -14,7 +14,7 @@
                             <div class="form-check">
                                 <form action="">
                                     <select class="form-control" autocomplete="on" ng-model="selectedOrder.order_status_name"
-                                            ng-options="order.orderid as order.order_status_name for order in status">
+                                            ng-options="o.order_status_name as o.order_status_name for o in status">
                                     </select>
                                 </form>
                             </div>

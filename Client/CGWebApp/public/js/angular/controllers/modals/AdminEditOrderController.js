@@ -7,7 +7,7 @@
 /**
  * Created by abi on 12/1/16.
  */
-app.controller('AdmingEditOrderController', [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'order', 'adminwsapi',
+app.controller('AdminEditOrderController', [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'order', 'adminwsapi',
     function ($scope, authenticationSvc, $rootScope, Popeye, order, adminwsapi){
 
         $scope.auth = authenticationSvc.getUserInfo();
@@ -21,13 +21,13 @@ app.controller('AdmingEditOrderController', [ '$scope', 'authenticationSvc',  '$
                 $scope.status = [];
             }
         );
-
+    console.log(JSON.stringify(order));
         var tempOrder = {
             "order_status_name": order.order_status_name
         };
 
 
-        $scope.selectedOrder = tempProduct;
+        $scope.selectedOrder = tempOrder;
         $scope.userInfo = authenticationSvc.getUserInfo();
 
         $scope.close = function() {

@@ -20,19 +20,14 @@ app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'a
             }
         );
 
-        $scope.shoEditOrderModal = function() {
+        $scope.shoEditOrderModal = function(order) {
             // Open a modal for admin to edit an order
             var modal = Popeye.openModal({
-                controller: 'AdminOrdersController',
+                controller: 'AdminEditOrderController',
                 templateUrl: "js/angular/modals/edit-admin-order.html",
                 resolve: {
-                    auth: function ($q, authenticationSvc) {
-                        var userInfo = authenticationSvc.getUserInfo();
-                        if (userInfo) {
-                            return $q.when(userInfo);
-                        } else {
-                            return $q.reject({authenticated: false});
-                        }
+                    order: function () {
+                        return order;
                     }
                 }
             });

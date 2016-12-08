@@ -2,8 +2,8 @@
  * Created by abi on 12/7/16.
  */
 app.controller('ChangeUserPassword',
-    ['$scope', 'authenticationSvc', '$rootScope', 'Popeye', '$location',
-        function ($scope, authenticationSvc, $rootScope, Popeye, $location){
+    ['$scope', 'authenticationSvc', '$rootScope', 'Popeye', '$location', 'user',
+        function ($scope, authenticationSvc, $rootScope, Popeye, $location, user){
 
             $scope.new_password = {password1: '', password2: ''};
 
@@ -15,7 +15,8 @@ app.controller('ChangeUserPassword',
 
             $scope.submit = function()
             {
-                return Popeye.closeCurrentModal($scope.new_password);
+                user.password = $scope.new_password.password1;
+                return Popeye.closeCurrentModal(user);
             };
 
             $scope.cancel = function () {

@@ -7,40 +7,49 @@
         <div class="modal-dialog">
             <div class="modal-body">
                 <!-- Personal Information Starts -->
+                <form class="horizontal" role="form" name="registerAdmin" novalidate>
                 <h3 class="panel-inner">Personal Information</h3>
                 <br>
                 <div class="row">
-                    <label for="txtFname" class="col-sm-3 control-label">First Name :</label>
+                    <label class="col-sm-3 control-label">First Name :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtFname" placeholder="First Name">
+                        <input type="text" class="form-control" name="txtFname" placeholder="First Name" ng-model="selectedAdmin.ufirstname"
+                               ng-minlength="1" ng-maxlength="255"
+                               required ng-pattern="regex.bigText">
                         <br>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="txtLname" class="col-sm-3 control-label">Last Name :</label>
+                    <label class="col-sm-3 control-label">Last Name :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtLname" placeholder="Last Name">
+                        <input type="text" class="form-control" name="txtLname" placeholder="Last Name" ng-model="selectedAdmin.ulastname"
+                               ng-minlength="1" ng-maxlength="255"
+                               required ng-pattern="regex.bigText">
                         <br>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="txtDateOfBirth" class="col-sm-3 control-label">Date of Birth :</label>
+                    <label class="col-sm-3 control-label">Date of Birth :</label>
                     <div class="col-sm-9">
-                        <input type="date" class="form-control" id="txtDateOfBirth" placeholder="Date of Birth">
+                        <input type="date" class="form-control" name="txtDateOfBirth" placeholder="Date of Birth" ng-model="selectedAdmin.udob">
                         <br>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="txtEmail" class="col-sm-3 control-label">Email :</label>
+                    <label class="col-sm-3 control-label">Email :</label>
                     <div class="col-sm-9">
-                        <input type="email" class="form-control" id="txtEmail" placeholder="Email">
+                        <input type="email" class="form-control" name="txtEmail" placeholder="Email" ng-model="selectedAdmin.uemail"
+                               ng-minlength="1" ng-maxlength="255"
+                               required ng-pattern="regex.email">
                         <br>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="txtPhone" class="col-sm-3 control-label">Phone :</label>
+                    <label class="col-sm-3 control-label">Phone :</label>
                     <div class="col-sm-9">
-                        <input type="tel" pattern="^(\d{4}\-\d{2}\-\d{2})$" class="form-control" id="txtPhone" placeholder="Phone">
+                        <input type="tel" class="form-control" name="txtPhone" placeholder="Phone" ng-model="selectedAdmin.uphone"
+                               required ng-pattern="regex.phone"
+                               ng-maxlength="15">
                         <br>
                     </div>
                 </div>
@@ -49,31 +58,51 @@
                 <br>
                 <!--Username & Password begins -->
                 <div class="row">
-                    <label for="txtUname" class="col-sm-3 control-label">Username:</label>
+                    <label class="col-sm-3 control-label">Username:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtUname" placeholder="Username">
+                        <input type="text" class="form-control" name="txtUname" placeholder="Username" ng-model="selectedAdmin.uname"
+                               ng-minlength="4" ng-maxlength="20"
+                               required ng-pattern="regex.userName">
                         <br>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="txtPassword" class="col-sm-3 control-label">Password :</label>
+                    <label class="col-sm-3 control-label">Password :</label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control" id="txtPassword" autocomplete="off" placeholder="Password">
+                        <input autocomplete="off" type="password" class="form-control" name="txtPassword" autocomplete="off" placeholder="Password"
+                               ng-model="selectedAdmin.upassword"
+                               required ng-pattern="regexs.password"
+                               ng-minlength="8" ng-maxlength="20">
                         <br>
+                    </div>
+                    <div class="col-sm-1">
+                        <img ng-if="(registerAdmin.txtRePassword.$dirty || registerAdmin.txtPassword.$dirty) && (registerAdmin.txtPassword.$invalid && !validAdminPassword())"
+                             src="images/invalid.png" width="16" height="16"/>
+                        <img ng-if="(registerAdmin.txtRePassword.$dirty || registerAdmin.txtPassword.$dirty) && (registerAdmin.txtPassword.$valid && validAdminPassword())"
+                             src="images/valid.png" width="16" height="16"/>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="txtRePassword" class="col-sm-3 control-label">Re-Password :</label>
+                    <label class="col-sm-3 control-label">Re-Password :</label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control" id="txtRePassword" autocomplete="off" placeholder="Re-Password">
+                        <input autocomplete="off" required ng-pattern="regexs.password" type="password" class="form-control" name="txtRePassword" autocomplete="off" placeholder="Re-Password"
+                               ng-minlength="8" ng-maxlength="20"
+                               ng-model="selectedAdmin.upassword2">
                         <br>
+                    </div>
+                    <div class="col-sm-1">
+                        <img ng-if="(registerAdmin.txtRePassword.$dirty || registerAdmin.txtPassword.$dirty) && (registerAdmin.txtRePassword.$invalid && !validAdminPassword())"
+                             src="images/invalid.png" width="16" height="16"/>
+                        <img ng-if="(registerAdmin.txtRePassword.$dirty || registerAdmin.txtPassword.$dirty) && (registerAdmin.txtRePassword.$valid && validAdminPassword())"
+                             src="images/valid.png" width="16" height="16"/>
                     </div>
                 </div>
                 <!-- Username & password ends -->
+                </form>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-black" ng-click="$close()">Add</button>
+            <button type="button" class="btn btn-black" ng-click="submit()">Add</button>
         </div>
     </div>
 </div>

@@ -44,9 +44,33 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
             });
 
             // Update user selected address after modal is closed
-            modal.closed.then(function() {
+            modal.closed.then(function(product) {
+
+                adminwsapi.deactivateProduct(auth.uname, auth.token, product).then(
+                    function (response) {
+                        getProducts()
+                    },
+                    function (err) {
+                        getProducts()
+                    }
+                );
+
 
             });
+        };
+
+
+        //Deactivate a product
+        $scope.shoDeactivateProduct = function(pid){
+            adminwsapi.deactivateProduct(auth.uname, auth.token, pid).then(
+                function (response) {
+                    getProducts()
+                },
+                function (err) {
+                    getProducts()
+                }
+            );
+
         };
 
         $scope.shoAddNewProductModal = function() {

@@ -399,7 +399,6 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
-    //NOT FUNCTIONING YET!!!!!!!!!!!!!!!!!!!!!!
     adminwsapi.getOrderStatus= function (username, password) {
         return $http.get(adminServiceURL + '/orders/status', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
             .success(function (data) {return data;})
@@ -463,12 +462,22 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    adminwsapi.deactivateProduct= function (username, password, productid) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/product/' + productid + '/deactivate',
+            headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+
     adminwsapi.changeUserPassword= function (username, password, uid, upassword) {
         return $http({
             method: 'PUT',
             url: adminServiceURL + '/account/' + uid + '/password',
             dataType: 'json',
-            data: {"upasword": upassword},
+            data: upassword,
             headers: {'Content-Type': 'application/json',
                 'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
             .success(function (data) {return data;})
