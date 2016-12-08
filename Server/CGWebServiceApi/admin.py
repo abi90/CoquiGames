@@ -211,3 +211,13 @@ def deactivate_product(productid):
     except Exception as e:
         print e.message
         return internal_server_error()
+
+@admin_blueprint.route("/order/<int:orderid>/status/<int:order_statusid>", methods=['PUT'])
+@admin_verification
+def update_order_status(order_statusid,orderid):
+    try:
+        result = dbm.change_order_status(order_statusid,orderid)
+        return jsonify({"mesagge": result})
+    except Exception as e:
+        print e.message
+        return internal_server_error()

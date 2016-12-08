@@ -606,7 +606,7 @@ def update_user_password(accountid, upassword):
     :param upassword:
     :return:
     """
-    return __execute_commit_query__(Query.UPDATE_USER_PASSWORD, (accountid, upassword))
+    return __execute_commit_query__(Query.UPDATE_USER_PASSWORD, (upassword, accountid))
 
 
 
@@ -931,7 +931,8 @@ def is_email_taken(email):
     return __execute_select_query__(Query.IS_EMAIL_TAKEN, (email,))[0]
 
 
-
+def change_order_status(order_statusid, orderid):
+    return __execute_select_query__(Query.CHANGE_ORDER_STATUS, (order_statusid, orderid))
 
 
 

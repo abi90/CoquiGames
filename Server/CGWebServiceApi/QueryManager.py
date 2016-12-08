@@ -444,3 +444,4 @@ IS_USERNAME_TAKEN = """SELECT count(*) > 0 AS taken FROM account_info WHERE user
 
 IS_EMAIL_TAKEN = """SELECT count(*) > 0 AS taken FROM cg_user WHERE email = %s"""
 
+CHANGE_ORDER_STATUS = """UPDATE orders SET order_statusid = %s WHERE orderid = %s RETURNING *"""
