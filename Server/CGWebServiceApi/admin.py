@@ -241,7 +241,7 @@ def deactivate_announcement(aid):
         return internal_server_error()
 
 
-@admin_blueprint.route("/products/<int:productid>/", methods=['PUT'])
+@admin_blueprint.route("/product/<int:productid>", methods=['PUT'])
 @admin_verification
 def update_product(productid):
     try:
