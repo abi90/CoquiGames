@@ -225,7 +225,7 @@ def update_order_status(order_statusid,orderid):
 
 @admin_blueprint.route("/announcement/<int:aid>/deactivate", methods=['PUT'])
 @admin_verification
-def update_order_status(aid):
+def deactivate_announcement(aid):
     try:
         if request.json:
             if 'platformid' in request.json:
@@ -239,3 +239,16 @@ def update_order_status(aid):
         print e.message
         return internal_server_error()
 
+@admin_blueprint.route("/products/<int:productid>/", methods=['PUT'])
+@admin_verification
+def update_product(productid):
+    try:
+        if request.json:
+            for key in product_keys:
+                if key not in request.json:
+                    return jsonify({"error": "Missing {0} in request".format(key)})
+            result = dbm.update_product(request.json)
+            return jsonify({"pid": result})
+    except Exception as e:
+        print e.message
+        return internal_server_error()
