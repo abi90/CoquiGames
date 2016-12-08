@@ -123,9 +123,9 @@ SELECT_USER_CART = """SELECT cc.productid AS pid,p.product_title AS pname, p.pro
 SELECT_USER_CARTID = """SELECT cartid FROM cart WHERE userid = %s AND active = TRUE;"""
 
 
-UPDATE_USER_ACCOUNT = """UPDATE account_info
-                          SET username = %s, upassword = crypt(%s,gen_salt('md5'))
-                          WHERE accountid = (SELECT u.accountid FROM cg_user AS u WHERE u.userid = %s) RETURNING *"""
+UPDATE_USERNAME = """UPDATE account_info
+                          SET username = %s
+                          WHERE accountid = (SELECT u.accountid FROM cg_user AS u WHERE u.userid = %s) RETURNING username"""
 
 
 UPDATE_USER_CART = """UPDATE cart_contains AS cc
@@ -293,7 +293,7 @@ UPDATE_USER_PREFERRED_SHIPPING_ADDR = """UPDATE user_preferences SET shipping_ad
 UPDATE_USER_PREFERRED_PAYMENT = """UPDATE user_preferences SET payment_methodid = %s WHERE userid = %s RETURNING *"""
 
 
-UPDATE_USER_PASSWORD = """update account_info set upassword = crypt(%s, gen_salt('md5')) where accountid = %s RETURNING *"""
+UPDATE_USER_PASSWORD_ADMIN = """update account_info set upassword = crypt(%s, gen_salt('md5')) where accountid = %s RETURNING *"""
 
 
 SELECT_USER_PREFERENCES = """SELECT * FROM user_preferences WHERE userid = %s"""
@@ -404,7 +404,7 @@ INSERT_ADMIN_USER = """INSERT INTO account_info (username, upassword, roleid, ac
                           VALUES (%s, crypt(%s, gen_salt('md5')), 3, TRUE) RETURNING accountid"""
 
 
-SELECT_ALL_ORDERS = """SELECT o.orderid, o.userid, u.user_firstname, u.user_lastname, u.email, o.order_date, o.order_total, s.order_status_name
+SELECT_ALL_ORDERS = """SELECT o.orderid, o.userid, u.user_firstname, u.user_lastname, u.email, o.order_date, o.order_total, s.order_status_name, o.order_statusid
                         FROM orders AS o JOIN cg_user as u USING (userid)
                         JOIN order_status AS s USING(order_statusid)"""
 
@@ -455,4 +455,10 @@ UDPATE_ADMIN_PRODUCT = """UPDATE product
                           SET product_title = %s, genreid = %s, esrbid = %s, release_date = to_date(%s, 'YYYY-MM-DD'),
                           product_price = %s, product_qty = %s, product_description = %s,prodcut_additional_info = %s, categoryid = %s, platformid =  %s, active = %s
                           WHERE productid = %s
+                          RETURNING *"""
+
+
+UPDATE_USER_PASSWORD = """update account_info
+                          set upassword = crypt(%s, gen_salt('md5'))
+                          where accountid = (select accountid from cg_user where userid=%s )
                           RETURNING *"""

@@ -233,9 +233,35 @@ def fetch_user_cart(userid):
     return __execute_select_query__(Query.SELECT_USER_CART, (userid,))
 
 
-def update_user_account(username, upassword, userid):
-    return __execute_commit_query__(Query.UPDATE_USER_ACCOUNT, (username, upassword, userid))
+def update_user_account(username, userid, user_firstname, user_lastname, email, phone, dob):
+    """
 
+    :param username:
+    :param userid:
+    :param user_firstname:
+    :param user_lastname:
+    :param email:
+    :param phone:
+    :param dob:
+    :return:
+    """
+    try:
+        conn = __connection__()
+        cur = conn.cursor()
+        cur.execute(Query.UPDATE_USERNAME, (username,  userid))
+        cur.fetchall()
+        cur.execute(Query.UPDATE_USER, (user_firstname, user_lastname, email, phone, dob, userid))
+        cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return userid
+    except:
+        if conn:
+            if not conn.closed:
+                conn.rollback()
+                conn.close()
+        raise
 
 def update_cart_product_qty(product_qty, productid, userid):
     return __execute_commit_query__(Query.UPDATE_USER_CART, (product_qty, productid, userid))
@@ -262,7 +288,6 @@ def add_product_to_user_wishlist(productid, userid):
 
 
 def update_user_info(user_firstname, user_lastname, email, phone, dob, userid):
-    print user_firstname, user_lastname, email, phone, dob, userid
     return __execute_commit_query__(Query.UPDATE_USER, (user_firstname, user_lastname, email, phone, dob, userid))
 
 
@@ -606,7 +631,7 @@ def update_user_password(accountid, upassword):
     :param upassword:
     :return:
     """
-    return __execute_commit_query__(Query.UPDATE_USER_PASSWORD, (upassword, accountid))
+    return __execute_commit_query__(Query.UPDATE_USER_PASSWORD_ADMIN, (upassword, accountid))
 
 
 
@@ -929,12 +954,8 @@ def update_product(product):
         cur.execute(Query.SELECT_IDS, (product['category'], product['esrb'], product['genre']))
         columns1 = [x[0] for x in cur.description]
         attributes = [dict(zip(columns1, row)) for row in cur.fetchall()][0]
-        #Update Product Information
-        """UPDATE product
-                                  SET product_title = %s, genreid = %s, esrbid = %s, release_date = to_date(%s, 'YYYY-MM-DD'),
-                                  product_price = %d,product_qty = %s, product_description = %s,prodcut_additional_info = %s, categoryid = %s, platformid =  %s, active = %s,
-                                  WHERE productid = %s
-                                  RETURNING *"""
+
+        # Update Product Information
         cur.execute(Query.UDPATE_ADMIN_PRODUCT, (product['title'], attributes['genreid'], attributes['esrbid'],
                                                  product['release'], product['price'], product['productqty'], product['description'],
                                                  product['aditionalinfo'], attributes['categoryid'], product['platformid'], product['active'], product['pid']))
@@ -984,6 +1005,10 @@ def deactivate_announcements(platformid,aid):
 
     else:
         return __execute_commit_query__(Query.DEACTIVATE_STORE_ANNOUNCEMENTS, (aid,))
+
+
+def change_password(userid):
+    return __execute_commit_query__(Query.UPDATE_USER_PASSWORD, (userid,))
 
 
 

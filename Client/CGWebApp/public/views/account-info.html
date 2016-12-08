@@ -71,6 +71,16 @@
                                 <button type="submit" class="btn btn-black" ng-click="shoChangePassModal()">CHANGE PASSWORD</button>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="">
+                                <div uib-alert ng-repeat="m in messages track by $index" class="alert-success" close="closeMessageAlert($index)">{{m}}
+                                </div>
+                            </div>
+                            <div class="">
+                                <div uib-alert ng-repeat="m in errors track by $index" class="alert-danger" close="closeErrorAlert($index)">{{m}}
+                                </div>
+                            </div>
+                        </div>
                         <!-- Password Area Ends -->
                     </form>
                     <!-- Registration Form Starts -->

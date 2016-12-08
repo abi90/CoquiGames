@@ -5,8 +5,9 @@
 app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc', 'auth', 'userwsapi', '$rootScope', 'Popeye',
     function ($scope, $location, authenticationSvc, auth, userwsapi, $rootScope, Popeye){
 
+        $scope.errors = [];
+        $scope.messages = [];
         // Local Functions
-
         var logout = function () {
 
             authenticationSvc.logout()
@@ -38,10 +39,10 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
                 controller: 'ChangeUserPassword',
                 templateUrl: "js/angular/modals/change-password.html",
                 resolve: {
-                    auth: function ($q, authenticationSvc) {
+                    user: function ($q, authenticationSvc) {
                         var userInfo = authenticationSvc.getUserInfo();
                         if (userInfo) {
-                            return $q.when(userInfo);
+                            return $q.when($scope.userData);
                         } else {
                             return $q.reject({authenticated: false});
                         }
@@ -57,7 +58,10 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
 
             // Update user selected address after modal is closed
             modal.closed.then(function(passwords) {
-                console.log(JSON.stringify(passwords));
+                if(passwords){
+                    $scope.messages[$scope.messages.length]= "Your Password was updated!";
+                    getUser();
+                }
             });
         };
 
@@ -65,13 +69,14 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
 
             // Open a modal to edit user info
             var modal = Popeye.openModal({
-                controller: 'AccountController',
+                controller: 'EditUserAccountInfoController',
                 templateUrl: "js/angular/modals/edit-personal-info.html",
                 resolve: {
-                    auth: function ($q, authenticationSvc) {
+                    account: function ($q, authenticationSvc) {
                         var userInfo = authenticationSvc.getUserInfo();
                         if (userInfo) {
-                            return $q.when(userInfo);
+                            console.log(JSON.stringify($scope.userData));
+                            return $q.when($scope.userData);
                         } else {
                             return $q.reject({authenticated: false});
                         }
@@ -86,9 +91,29 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
             });
 
             // Update user selected address after modal is closed
-            modal.closed.then(function() {
+            modal.closed.then(function(value){
+                if(value){
+                    userwsapi.putUser(auth.uid, auth.uname, auth.token, value)
+                        .then(
+                            function (response){
+                                $scope.messages[$scope.messages.length]= "Your Information was updated!";
+                                getUser();
 
+                            },
+                            function (err) {
+                                $scope.errors[$scope.errors.length]= err.data;
+                                    getUser();
+                            });
+                }
             });
+        };
+
+        $scope.closeErrorAlert= function(index){
+            $scope.errors.splice(index,1);
+        };
+
+        $scope.closeMessageAlert= function(index){
+            $scope.messages.splice(index,1);
         };
 
         // Get User Data on startup

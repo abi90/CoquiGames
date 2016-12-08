@@ -352,6 +352,28 @@ def user_cart(userid):
         return internal_server_error()
 
 
+@user_blueprint.route("/<int:userid>/password", methods=['PUT'])
+@requires_auth
+def change_password(userid):
+    try:
+        if request.json:
+            # Verify request json contains needed parameters
+            if 'upassword' in request.json:
+                return missing_parameters_error()
+            # Verify that parameters are valid
+            if not validate_password(request.json['upassword']):
+                return jsonify({'error': 'Invalid Password.'}), 400
+            # Update user password:
+            if dbm.change_password(userid):
+                return jsonify({"message": "User {0} Password Was Changed.".format(userid)})
+            return not_found()
+        else:
+            return bad_request()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
+
 @user_blueprint.route("/<int:userid>", methods=['GET', 'PUT'])
 @requires_auth
 def user(userid):
@@ -364,23 +386,22 @@ def user(userid):
         elif request.method == 'PUT':
             if request.json:
                 # Verify request json contains needed parameters
-                if ('uname' and 'upassword' and 'ufirstname' and 'ulastname'
-                    and 'uemail' and 'uphone' and 'udob' not in request.json):
+                if ('uname' and 'ufirstname' and 'ulastname'
+                        and 'uemail' and 'uphone' and 'udob' not in request.json):
                     return missing_parameters_error()
                 # Verify that parameters are valid
-                errors = validate_account(request.json)
+                errors = validate_account_data(request.json)
                 if errors:
                     return jsonify({'Errors': errors}), 400
                 # Update user account:
                 if dbm.update_user_account(username=request.json['uname'],
-                                           upassword=request.json['upassword'],
-                                           userid=userid):
-                    dbm.update_user_info(user_firstname=request.json['ufirstname'],
-                                         user_lastname=request.json['ulastname'],
-                                         email=request.json['uemail'],
-                                         phone=request.json['uphone'],
-                                         dob=request.json['udob'],
-                                         userid=userid)
+                                           userid=userid,
+                                           user_firstname=request.json['ufirstname'],
+                                           user_lastname=request.json['ulastname'],
+                                           email=request.json['uemail'],
+                                           phone=request.json['uphone'],
+                                           dob=request.json['udob'],
+                                           ):
                     response = jsonify(request.json)
                     response.status_code = 201
                     return response
@@ -467,7 +488,7 @@ def shipment_fees():
         return internal_server_error()
 
 
-def validate_account(data):
+def validate_account_data(data):
     """
     Validates user account data in request.json
     :param data: request.json
@@ -481,13 +502,6 @@ def validate_account(data):
         errors.append('Invalid username.')
     elif dbm.is_username_taken(data['uname'])['taken']:
         errors.append('Username already taken. Please try with another username.')
-
-    # A Password must contain atleast an Upper case leter and a number
-    has_upper = re.search('[A-Z]+', data['upassword'])
-    has_digit = re.search('[\d]+', data['upassword'])
-    # A Password must be 8 characters to 20 characters long
-    if len(str(data['upassword'])) < 8 or len(str(data['upassword'])) > 20 or not has_upper or not has_digit:
-        errors.append('Invalid password.')
 
     # Email regex for python
     is_email = re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", data['uemail'])
@@ -627,6 +641,23 @@ def validate_user_preferences(data, userid):
         if not is_valid_cid:
             errors.append('Invalid Payment Method.')
     return errors
+
+
+def validate_password(password):
+    # A Password must contain at least an Upper case letter and a number
+    has_upper = re.search('[A-Z]+', password)
+    has_digit = re.search('[\d]+', password)
+    # A Password must be 8 characters to 20 characters long
+    valid = not (len(str(password)) < 8 or len(str(password)) > 20 or not has_upper or not has_digit)
+    return valid
+
+
+def validate_account(data):
+    errors = validate_account_data(data)
+    if not validate_password(data['upassword']):
+        errors.append('Invalid Password')
+    return errors
+
 
 
 

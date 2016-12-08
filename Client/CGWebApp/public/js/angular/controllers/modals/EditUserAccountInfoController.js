@@ -2,8 +2,8 @@
  * Created by abi on 12/7/16.
  */
 app.controller('EditUserAccountInfoController',
-    ['$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'account', '$location',
-        function ($scope, authenticationSvc, $rootScope, Popeye, account, $location){
+    ['$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'account', '$location', '$filter',
+        function ($scope, authenticationSvc, $rootScope, Popeye, account, $location, $filter){
 
             var tempAccount = {
                 ufirstname: account.ufirstname,
@@ -21,18 +21,18 @@ app.controller('EditUserAccountInfoController',
                 userName: '[a-zA-Z]+[\\da-zA-Z]+'
             };
 
-            $scope.new_password = tempAccount;
+            $scope.new_info = tempAccount;
 
             $scope.userDOB = new Date(account.udob);
 
-            $scope.close = function() {
-                $scope.new_password.udob = $filter('date')(new Date($scope.userDOB),'yyyy-MM-dd');;
-                return Popeye.closeCurrentModal($scope.new_password);
+            $scope.submit = function() {
+                $scope.new_info.udob = $filter('date')(new Date($scope.userDOB),'yyyy-MM-dd');;
+                return Popeye.closeCurrentModal($scope.new_info);
             };
 
             $scope.cancel = function () {
-                $scope.new_password = account;
-                return Popeye.closeCurrentModal(account);
+                $scope.new_info = account;
+                return Popeye.closeCurrentModal(null);
             };
 
             var getUser = function(){

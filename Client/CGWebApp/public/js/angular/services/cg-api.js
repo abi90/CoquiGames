@@ -315,6 +315,18 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    userwsapi.putUser = function (uid, username, password, product) {
+        return $http({
+            method: 'PUT',
+            url: userServiceURL + '/' + uid,
+            dataType: 'json',
+            data: product,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
     return userwsapi;
 }]);
 
