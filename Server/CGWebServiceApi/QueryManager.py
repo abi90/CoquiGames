@@ -394,10 +394,10 @@ SELECT_PRODUCT_ALT_IMGS = """SELECT pi.product_img FROM product_img AS pi WHERE 
 SELECT_ALL_PRODUCTS = """SELECT * FROM admin_product_details"""
 
 
-DEACTIVATE_ACCOUNT = """UPDATE account_info SET account_info.active = FALSE WHERE account_info.accountid = %s RETURNING *;"""
+DEACTIVATE_ACCOUNT = """UPDATE account_info SET active = FALSE WHERE account_info.accountid = %s RETURNING *;"""
 
 
-DEACTIVATE_USER = """UPDATE cg_user SET cg_user.active = FALSE WHERE cg_user.accountid = %s RETURNING *;"""
+DEACTIVATE_USER = """UPDATE cg_user SET active = FALSE WHERE cg_user.accountid = %s RETURNING *;"""
 
 
 INSERT_ADMIN_USER = """INSERT INTO account_info (username, upassword, roleid, active)
@@ -416,7 +416,7 @@ SELECT_ALL_CATEGORIES = """ SELECT category FROM category"""
 
 SELECT_ALL_ANNOUNCEMENTS = """SELECT paid AS aid, pa_title AS a_title, pa_img AS a_img, platformid, active FROM platform_announcements
                                UNION
-                               SELECT said AS aid,sa_title AS a_title ,sa_img AS a_img ,NULL AS platformid, activ FROM store_announcement"""
+                               SELECT said AS aid,sa_title AS a_title ,sa_img AS a_img ,NULL AS platformid, active FROM store_announcement"""
 
 DEACTIVATE_PLATFORM = """UPDATE platform SET active = FALSE WHERE platformid = %s RETURNING *"""
 
