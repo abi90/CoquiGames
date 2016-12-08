@@ -401,7 +401,7 @@ DEACTIVATE_USER = """UPDATE cg_user SET active = FALSE WHERE cg_user.accountid =
 
 
 INSERT_ADMIN_USER = """INSERT INTO account_info (username, upassword, roleid, active)
-                          VALUES (%s, crypt(%s, gen_salt('md5')), 1, TRUE) RETURNING accountid"""
+                          VALUES (%s, crypt(%s, gen_salt('md5')), 3, TRUE) RETURNING accountid"""
 
 
 SELECT_ALL_ORDERS = """SELECT o.orderid, o.userid, u.user_firstname, u.user_lastname, u.email, o.order_date, o.order_total, s.order_status_name
