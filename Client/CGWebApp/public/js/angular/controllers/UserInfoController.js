@@ -35,7 +35,7 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
 
             // Open a modal to change user password
             var modal = Popeye.openModal({
-                controller: 'AccountController',
+                controller: 'ChangeUserPassword',
                 templateUrl: "js/angular/modals/change-password.html",
                 resolve: {
                     auth: function ($q, authenticationSvc) {
@@ -56,8 +56,8 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
             });
 
             // Update user selected address after modal is closed
-            modal.closed.then(function() {
-
+            modal.closed.then(function(passwords) {
+                console.log(JSON.stringify(passwords));
             });
         };
 
