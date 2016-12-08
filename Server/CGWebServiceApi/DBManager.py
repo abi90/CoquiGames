@@ -922,6 +922,43 @@ def create_product(new_product):
                 conn.close()
         raise
 
+def update_product(product):
+    try:
+        conn = __connection__()
+        cur = conn.cursor()
+        cur.execute(Query.SELECT_IDS, (product['category'], product['esrb'], product['genre']))
+        columns1 = [x[0] for x in cur.description]
+        attributes = [dict(zip(columns1, row)) for row in cur.fetchall()][0]
+        #Update Product Information
+        """UPDATE product
+                                  SET product_title = %s, genreid = %s, esrbid = %s, release_date = to_date(%s, 'YYYY-MM-DD'),
+                                  product_price = %d,product_qty = %s, product_description = %s,prodcut_additional_info = %s, categoryid = %s, platformid =  %s, active = %s,
+                                  WHERE productid = %s
+                                  RETURNING *"""
+        cur.execute(Query.UDPATE_ADMIN_PRODUCT, (product['title'], attributes['genreid'], attributes['esrbid'],
+                                                 product['release'], product['price'], product['productqty'], product['description'],
+                                                 product['aditionalinfo'], attributes['categoryid'], product['platformid'], product['active'], product['pid']))
+        columns = [x[0] for x in cur.description]
+        result = [dict(zip(columns, row)) for row in cur.fetchall()][0]['productid']
+
+        # Insert offer price
+        if product['inoffer'] == True and product['offerprice'] > 0:
+            cur.execute(Query.INSERT_PRODUCT_OFFER, (result, product['offerprice'], product['offer_start_date'],
+                                                     product['offer_end_date']))
+            cur.fetchall()
+
+        #cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return result
+    except:
+        if conn:
+            if not conn.closed:
+                conn.rollback()
+                conn.close()
+        raise
+
 
 def is_username_taken(username):
     return __execute_select_query__(Query.IS_USERNAME_TAKEN, (username,))[0]

@@ -447,6 +447,12 @@ IS_EMAIL_TAKEN = """SELECT count(*) > 0 AS taken FROM cg_user WHERE email = %s""
 CHANGE_ORDER_STATUS = """UPDATE orders SET order_statusid = %s WHERE orderid = %s RETURNING *"""
 
 
-DEACTIVATE_STORE_ANNOUNCEMENTS = """ UPDATE store_announcement SET active = FALSE WHERE said = %s RETURNING*"""
+DEACTIVATE_STORE_ANNOUNCEMENTS = """ UPDATE store_announcement SET active = FALSE WHERE said = %s RETURNING *"""
 
 DEACTIVATE_PLATFORM_ANNOUNCEMENTS = """ UPDATE platform_announcements SET active = FALSE WHERE paid = %s"""
+
+UDPATE_ADMIN_PRODUCT = """UPDATE product
+                          SET product_title = %s, genreid = %s, esrbid = %s, release_date = to_date(%s, 'YYYY-MM-DD'),
+                          product_price = %s, product_qty = %s, product_description = %s,prodcut_additional_info = %s, categoryid = %s, platformid =  %s, active = %s
+                          WHERE productid = %s
+                          RETURNING *"""
