@@ -222,3 +222,20 @@ def update_order_status(order_statusid,orderid):
     except Exception as e:
         print e.message
         return internal_server_error()
+
+@admin_blueprint.route("/announcement/<int:aid>/deactivate", methods=['PUT'])
+@admin_verification
+def update_order_status(aid):
+    try:
+        if request.json:
+            if 'platformid' in request.json:
+                result = dbm.change_order_status(aid,request.json['platformid'])
+                return jsonify({"mesagge": result})
+            else:
+                return jsonify({'Error':'platformid missing in request.json'}),400
+        else:
+            bad_request()
+    except Exception as e:
+        print e.message
+        return internal_server_error()
+

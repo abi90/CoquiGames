@@ -5,9 +5,9 @@ import QueryManager as Query
 
 
 DEC2FLOAT = psycopg2.extensions.new_type(
-        psycopg2.extensions.DECIMAL.values,
-        'DEC2FLOAT',
-        lambda value, curs: float(value) if value is not None else None)
+    psycopg2.extensions.DECIMAL.values,
+    'DEC2FLOAT',
+    lambda value, curs: float(value) if value is not None else None)
 
 psycopg2.extensions.register_type(DEC2FLOAT)
 
@@ -163,8 +163,8 @@ def fetch_platforms():
             for row in cur.fetchall():
                 r['gamegen'].append(str(row[0]))
 
-        #for e in results:
-            #print e
+                #for e in results:
+                #print e
         conn.close()
         return results
     except Exception as e:
@@ -195,7 +195,7 @@ def fetch_store_announcements():
 
 
 def insert_product_rating(productid, rate):
-   return __execute_commit_query__(Query.INSERT_PRODUCT_RATING, (productid, rate))
+    return __execute_commit_query__(Query.INSERT_PRODUCT_RATING, (productid, rate))
 
 
 def authenticate_user(username, userid, password):
@@ -349,17 +349,17 @@ def validate_exp_date(date):
 
 
 def fetch_order(orderid, userid):
-        order = __execute_select_query__(Query.SELECT_ORDER, (orderid, userid))[0]
-        if order:
-            products = __execute_select_query__(Query.SELECT_ORDER_PRODUCTS, (orderid,))
-            order['oproducts'] = products
-            order['shipping_address'] = __execute_select_query__(Query.SELECT_USER_ADDRESS_ID, (userid, order['shipping_addressid'],))[0]
-            order['billing_address'] = __execute_select_query__(Query.SELECT_USER_ADDRESS_ID, (userid, order['billing_addressid'],))[0]
-            order['payment_method'] = __execute_select_query__(Query.SELECT_USER_PAYMENT_BY_ID, (userid, order['cid']))[0]
-            order.pop('shipping_addressid', None)
-            order.pop('billing_addressid', None)
-            order.pop('cid', None)
-        return order
+    order = __execute_select_query__(Query.SELECT_ORDER, (orderid, userid))[0]
+    if order:
+        products = __execute_select_query__(Query.SELECT_ORDER_PRODUCTS, (orderid,))
+        order['oproducts'] = products
+        order['shipping_address'] = __execute_select_query__(Query.SELECT_USER_ADDRESS_ID, (userid, order['shipping_addressid'],))[0]
+        order['billing_address'] = __execute_select_query__(Query.SELECT_USER_ADDRESS_ID, (userid, order['billing_addressid'],))[0]
+        order['payment_method'] = __execute_select_query__(Query.SELECT_USER_PAYMENT_BY_ID, (userid, order['cid']))[0]
+        order.pop('shipping_addressid', None)
+        order.pop('billing_addressid', None)
+        order.pop('cid', None)
+    return order
 
 
 def fetch_user_orders(userid):
@@ -632,9 +632,9 @@ def update_payment_method(userid, payment_methodid, card_data, billing_addressid
             raise Exception("Invalid Payment.")
         # Create an new card
         cur.execute(Query.INSERT_USER_PAYMENT_METHOD,
-                                    (card_data['cname'], card_data['cnumber'][-4:], card_data['cnumber'],
-                                     card_data['cexpdate'], card_data['cvc'], card_data['ctype'],
-                                     userid, billing_addressid))
+                    (card_data['cname'], card_data['cnumber'][-4:], card_data['cnumber'],
+                     card_data['cexpdate'], card_data['cvc'], card_data['ctype'],
+                     userid, billing_addressid))
         columns = [x[0] for x in cur.description]
         cid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['payment_methodid']
         # Verify if it is preferred payment
@@ -709,9 +709,9 @@ def create_user_payment_method(userid, card_data, billing_addressid):
         cur = conn.cursor()
         # Create an new card
         cur.execute(Query.INSERT_USER_PAYMENT_METHOD,
-                                    (card_data['cname'], card_data['cnumber'][-4:], card_data['cnumber'],
-                                     card_data['cexpdate'], card_data['cvc'], card_data['ctype'],
-                                     userid, billing_addressid))
+                    (card_data['cname'], card_data['cnumber'][-4:], card_data['cnumber'],
+                     card_data['cexpdate'], card_data['cvc'], card_data['ctype'],
+                     userid, billing_addressid))
         columns = [x[0] for x in cur.description]
         cid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['payment_methodid']
         # Verify if it is preferred payment
@@ -932,7 +932,22 @@ def is_email_taken(email):
 
 
 def change_order_status(order_statusid, orderid):
-    return __execute_select_query__(Query.CHANGE_ORDER_STATUS, (order_statusid, orderid))
+    return __execute_commit_query__(Query.CHANGE_ORDER_STATUS, (order_statusid, orderid))
+
+
+def deactivate_announcements(platformid,aid):
+    """
+    Deactivates an announcement
+    :param platformid:
+    :param aid:
+    :return:aid
+    """
+    if platformid != None :
+        return __execute_commit_query__(Query.DEACTIVATE_PLATFORM_ANNOUNCEMENTS, (aid,))
+
+    else:
+        return __execute_commit_query__(Query.DEACTIVATE_STORE_ANNOUNCEMENTS, (aid,))
+
 
 
 
