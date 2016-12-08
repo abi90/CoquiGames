@@ -240,6 +240,7 @@ def deactivate_announcement(aid):
         print e.message
         return internal_server_error()
 
+
 @admin_blueprint.route("/products/<int:productid>/", methods=['PUT'])
 @admin_verification
 def update_product(productid):
