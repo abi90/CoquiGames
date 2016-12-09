@@ -441,6 +441,48 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    adminwsapi.getAnnouncements= function (username, password) {
+        return $http.get(adminServiceURL + '/announcements', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.postAnnouncement= function (username, password, announcement) {
+        return $http({
+            method: 'POST',
+            url: adminServiceURL + '/announcements',
+            dataType: 'json',
+            data: announcement,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.updateAnnouncement= function (username, password, announcement) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/announcement/' + announcement.aid,
+            dataType: 'json',
+            data: announcement,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.deactivateAnnouncement= function (username, password, announcement) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/announcement/' + announcement.aid + '/deactivate',
+            dataType: 'json',
+            data: announcement,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
     adminwsapi.postAdminProduct= function (username, password, newProduct) {
         return $http({
             method: 'POST',
@@ -496,6 +538,28 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    adminwsapi.updateProduct = function (username, password, product) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/product/' + product.pid,
+            dataType: 'json',
+            data: product,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    adminwsapi.updateOrder = function (username, password, order_statusid, orderid) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/order/' + orderid + '/status/' + order_statusid,
+            dataType: 'json',
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
 
 
     return adminwsapi;

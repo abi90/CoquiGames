@@ -1,7 +1,7 @@
 <div class="popeye-modal-container">
     <div class="popeye-modal modal-content">
         <div class="modal-header">
-            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
             <h4 class="modal-title">Edit Order Information</h4>
         </div>
         <div class="modal-dialog">
@@ -13,8 +13,8 @@
                         <form class="form-horizontal" role="form">
                             <div class="form-check">
                                 <form action="">
-                                    <select class="form-control" autocomplete="on" ng-model="selectedOrder.order_status_name"
-                                            ng-options="o.order_status_name as o.order_status_name for o in status">
+                                    <select class="form-control" autocomplete="on" ng-model="selectedOrder"
+                                            ng-options="o.order_statusid as o.order_status_name for o in status">
                                     </select>
                                 </form>
                             </div>
@@ -26,7 +26,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-black" ng-click="$close()">Done</button>
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-black" ng-click="submit()">Done</button>
         </div>
     </div>
 </div>

@@ -69,21 +69,22 @@ app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  
             "productqty": product.productqty,
             "offer_start_date": product.offer_start_date,
             "offer_end_date": product.offer_end_date,
-            "active": product.active
+            "active": product.active,
+            "offerid": product.offerid
         };
 
 
         $scope.selectedProduct = tempProduct;
         $scope.userInfo = authenticationSvc.getUserInfo();
 
-        $scope.close = function() {
-            $scope.selectedProduct = tempProduct;
+        $scope.submit = function() {
             return Popeye.closeCurrentModal($scope.selectedProduct);
         };
 
         $scope.cancel = function () {
-            $scope.selectedProduct= product;
-            return Popeye.closeCurrentModal(product);
+            return Popeye.closeCurrentModal(null);
         };
+
+
 
     }]);

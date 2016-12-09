@@ -254,6 +254,22 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
             }
 
         })
+
+        .when('/admin-announcements', {
+            controller: 'AdminAnnouncementsController',
+            templateUrl: 'views/admin-announcements.html',
+            resolve: {
+                auth:  function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    if (userInfo.roleid === 3){
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }
+            }
+
+        })
         .otherwise({
             redirectTo: '/'
         });

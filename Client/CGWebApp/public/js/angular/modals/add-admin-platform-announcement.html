@@ -1,0 +1,55 @@
+<div class="popeye-modal-container">
+    <div class="popeye-modal modal-content">
+        <div class="modal-header">
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
+            <h4 class="modal-title">Add Platform Announcement</h4>
+        </div>
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <!-- Announcement Information Starts -->
+                <div class="row">
+                    <label for="txtTitle" class="col-sm-3 control-label">Title :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtTitle" ng-model="selectedAnnouncement.a_title" placeholder="Title">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtImage" class="col-sm-3 control-label">Image :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtImage" ng-model="selectedAnnouncement.a_img" placeholder="Image">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtActive" class="col-sm-3 control-label">Active :</label>
+                    <div class="col-sm-9">
+                        <input id="txtActive" type="checkbox" ng-model="selectedAnnouncement.active">
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 control-label">Platform :</label>
+                    <div class="col-sm-9">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-check">
+                                <form action="">
+                                    <select class="form-control" autocomplete="on" ng-model="selectedAnnouncement.platformid"
+                                            ng-options="p.platformid as p.platform for p in platforms">
+                                    </select>
+                                </form>
+                            </div>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+                <!-- Announcement Information ends -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-black" ng-click="submit()">Add</button>
+        </div>
+    </div>
+</div>

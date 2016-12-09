@@ -7,37 +7,31 @@
 /**
  * Created by abi on 12/1/16.
  */
-app.controller('AdminEditOrderController', [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'order', 'adminwsapi',
-    function ($scope, authenticationSvc, $rootScope, Popeye, order, adminwsapi){
-
-        $scope.auth = authenticationSvc.getUserInfo();
-
-        adminwsapi.getOrderStatus($scope.auth.uname, $scope.auth.token).then(
+app.controller('AdminEditOrderController', [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'order', 'adminwsapi', '$location',
+    function ($scope, authenticationSvc, $rootScope, Popeye, order, adminwsapi, $location){
+        var auth = authenticationSvc.getUserInfo();
+        adminwsapi.getOrderStatus(auth.uname, auth.token).then(
             function (response) {
-                $scope.status = response.data
+                $scope.status = response.data;
             },
-            function (err) {
-                console.log(err.toString());
+            function () {
                 $scope.status = [];
+                $rootScope.$emit('unLogin');
+                $location.path('/login.html');
+                $scope.cancel();
             }
         );
-    console.log(JSON.stringify(order));
-        var tempOrder = {
-            "order_status_name": order.order_status_name
-        };
+        console.log(JSON.stringify(order));
 
-
+        var tempOrder = order.order_statusid;
         $scope.selectedOrder = tempOrder;
-        $scope.userInfo = authenticationSvc.getUserInfo();
 
-        $scope.close = function() {
-            $scope.selectedOrder = tempOrder;
-            return Popeye.closeCurrentModal($scope.selectedOrder);
+        $scope.submit = function(){
+            return Popeye.closeCurrentModal({orderid: order.orderid, status: $scope.selectedOrder});
         };
 
         $scope.cancel = function () {
-            $scope.selectedOrder= order;
-            return Popeye.closeCurrentModal(order);
+            return Popeye.closeCurrentModal(null);
         };
 
     }]);

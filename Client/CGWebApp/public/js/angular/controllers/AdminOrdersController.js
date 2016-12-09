@@ -1,8 +1,8 @@
 /**
  * Created by Abisai on 11/29/16.
  */
-app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye',
-    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye){
+app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye', '$location',
+    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, location){
 
         // Defaults sort type, order adn default search filter
         $scope.sortType = 'active';
@@ -10,15 +10,19 @@ app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'a
         $scope.searchOrders = '';
 
         // Get list of orders from the WS API
-        adminwsapi.getOrders(auth.uname, auth.token).then(
-            function (response) {
-                $scope.orders = response.data
-            },
-            function (err) {
-                console.log(err.toString());
-                $scope.orders = [];
-            }
-        );
+        var getAnyOrders = function() {
+            adminwsapi.getOrders(auth.uname, auth.token).then(
+                function (response) {
+                    $scope.orders = response.data
+                },
+                function (err) {
+                    console.log(err.toString());
+                    $scope.orders = [];
+                    $rootScope.$emit('unLogin');
+                    $location.path('/login.html');
+                }
+            );
+        };
 
         $scope.shoEditOrderModal = function(order) {
             // Open a modal for admin to edit an order
@@ -39,9 +43,20 @@ app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'a
             });
 
             // Update user selected address after modal is closed
-            modal.closed.then(function() {
+            modal.closed.then(function(order_response) {
+                if(order_response){
+                    adminwsapi.updateOrder(auth.uname, auth.token, order_response.status, order_response.orderid).then(
+                        function (response) {
+                            getAnyOrders()
+                        },
+                        function (err) {
+                            getAnyOrders()
+                        }
+                    );
+                }
 
             });
         };
 
+        getAnyOrders();
     }]);

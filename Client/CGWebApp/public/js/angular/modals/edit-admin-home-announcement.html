@@ -1,0 +1,40 @@
+<div class="popeye-modal-container">
+    <div class="popeye-modal modal-content">
+        <div class="modal-header">
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
+            <h4 class="modal-title">Edit Announcement</h4>
+        </div>
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <!-- Announcement Information Starts -->
+                <div class="row">
+                    <label for="txtTitle" class="col-sm-3 control-label">Title :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtTitle" ng-model="selectedEditAnnouncement.a_title" placeholder="Title">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtImage" class="col-sm-3 control-label">Image :</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtImage" ng-model="selectedEditAnnouncement.a_img" placeholder="Image">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="txtActive" class="col-sm-3 control-label">Active :</label>
+                    <div class="col-sm-9">
+                        <input id="txtActive" type="checkbox" ng-model="selectedEditAnnouncement.active">
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <!-- Announcement Information ends -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-black" ng-click="submit()">Add</button>
+        </div>
+    </div>
+</div>

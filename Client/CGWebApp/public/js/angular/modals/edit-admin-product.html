@@ -1,7 +1,7 @@
 <div class="popeye-modal-container">
     <div class="popeye-modal modal-content">
         <div class="modal-header">
-            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
             <h4 class="modal-title">Edit Product</h4>
         </div>
         <div class="modal-dialog">
@@ -173,7 +173,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-black" ng-click="$close()">Edit</button>
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-black" ng-click="submit()">Edit</button>
         </div>
     </div>
 </div>

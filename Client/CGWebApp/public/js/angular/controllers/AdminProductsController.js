@@ -8,6 +8,8 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
         $scope.sortType = 'active';
         $scope.sortReverse = false;
         $scope.searchProduct = '';
+        $scope.messages = [];
+        $scope.errors = [];
 
         $scope.esrbRating = {esrb_rate: "Everyone", esrbid: 1};
         $scope.esrb_ratings = [{esrb_rate: "Everyone", esrbid: 1}, {esrb_rate: "Teen", esrbid: 2}];
@@ -25,6 +27,7 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
             );
         };
 
+        //NOT TESTED FOR ACTUAL EDITING. JUST PULLS INFORMATION
         $scope.shoEditNewProductModal = function(product) {
             // Open a modal for admin to edit a new product
             var modal = Popeye.openModal({
@@ -46,15 +49,18 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
             // Update user selected address after modal is closed
             modal.closed.then(function(product) {
 
-                adminwsapi.deactivateProduct(auth.uname, auth.token, product).then(
-                    function (response) {
-                        getProducts()
-                    },
-                    function (err) {
-                        getProducts()
-                    }
-                );
-
+                if(product){
+                    adminwsapi.updateProduct(auth.uname, auth.token, product).then(
+                        function (response) {
+                            $scope.messages[$scope.messages.length]= "Your Information was updated!";
+                            getProducts()
+                        },
+                        function (err) {
+                            $scope.errors[$scope.errors.length]= err.data;
+                            getProducts()
+                        }
+                    );
+                }
 
             });
         };
@@ -73,6 +79,7 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
 
         };
 
+        //Add A New Product
         $scope.shoAddNewProductModal = function() {
             // Open a modal for admin to add a new product
             var modal = Popeye.openModal({
@@ -88,18 +95,29 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
 
             // Update user selected address after modal is closed
             modal.closed.then(function(product) {
+                if(product){
+                    adminwsapi.postAdminProduct(auth.uname, auth.token, product).then(
+                        function (response) {
+                            $scope.messages[$scope.messages.length]= "Your Information was updated!";
+                            getProducts()
+                        },
+                        function (err) {
+                            $scope.errors[$scope.errors.length]= err.data;
+                            getProducts()
+                        }
+                    );
 
-                adminwsapi.postAdminProduct(auth.uname, auth.token, product).then(
-                    function (response) {
-                        getProducts()
-                    },
-                    function (err) {
-                        getProducts()
-                    }
-                );
-
+                }
 
             });
+        };
+
+        $scope.closeErrorAlert= function(index){
+            $scope.errors.splice(index,1);
+        };
+
+        $scope.closeMessageAlert= function(index){
+            $scope.messages.splice(index,1);
         };
 
         getProducts();
