@@ -45,7 +45,7 @@ SELECT_PLATFORM_LATEST_PRODUCTS = """SELECT *
 SELECT_PLATFORM_SPECIAL_PRODUCTS = """SELECT * FROM product_details WHERE inoffer = true AND platformid = %s"""
 
 
-SELECT_PLATFORM_ANNOUNCEMENTS = """SELECT * FROM platform_announcements WHERE platformid = %s"""
+SELECT_PLATFORM_ANNOUNCEMENTS = """SELECT * FROM platform_announcements WHERE platformid = %s AND active = TRUE"""
 
 
 SELECT_STORE_ANNOUNCEMENT = """SELECT * FROM store_announcement WHERE active = TRUE"""
