@@ -949,9 +949,9 @@ def create_product(new_product):
 
 def update_product(productid, product):
     try:
+        conn = __connection__()
+        cur = conn.cursor()
         if productid == int(product['pid']):
-            conn = __connection__()
-            cur = conn.cursor()
             cur.execute(Query.SELECT_IDS, (product['category'], product['esrb'], product['genre']))
             columns1 = [x[0] for x in cur.description]
             attributes = [dict(zip(columns1, row)) for row in cur.fetchall()][0]
