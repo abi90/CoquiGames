@@ -438,18 +438,24 @@ INSERT_PRODUCT_OFFER = """INSERT INTO offer (productid, offer_price, offer_start
 
 INSERT_PRODUCT_COVER = """INSERT INTO product_img (productid, product_img, cover) VALUES (%s, %s, TRUE) RETURNING *"""
 
+
 SELECT_ALL_STATUS = """SELECT * FROM order_status"""
+
 
 IS_USERNAME_TAKEN = """SELECT count(*) > 0 AS taken FROM account_info WHERE username = %s"""
 
+
 IS_EMAIL_TAKEN = """SELECT count(*) > 0 AS taken FROM cg_user WHERE email = %s"""
+
 
 CHANGE_ORDER_STATUS = """UPDATE orders SET order_statusid = %s WHERE orderid = %s RETURNING *"""
 
 
 DEACTIVATE_STORE_ANNOUNCEMENTS = """ UPDATE store_announcement SET active = FALSE WHERE said = %s RETURNING *"""
 
+
 DEACTIVATE_PLATFORM_ANNOUNCEMENTS = """ UPDATE platform_announcements SET active = FALSE WHERE paid = %s"""
+
 
 UDPATE_ADMIN_PRODUCT = """UPDATE product
                           SET product_title = %s, genreid = %s, esrbid = %s, release_date = to_date(%s, 'YYYY-MM-DD'),
@@ -462,3 +468,9 @@ UPDATE_USER_PASSWORD = """update account_info
                           set upassword = crypt(%s, gen_salt('md5'))
                           where accountid = (select accountid from cg_user where userid=%s )
                           RETURNING *"""
+
+
+UPDATE_OFFER = """UPDATE offer
+                  SET offer_price = %s, offer_start_date = to_date(%s, 'YYYY-MM-DD'), offer_end_date = to_date(%s, 'YYYY-MM-DD')
+                  WHERE productid = %s AND offerid = %s
+                  RETURNING *"""

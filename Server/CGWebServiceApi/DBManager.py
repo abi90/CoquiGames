@@ -964,11 +964,12 @@ def update_product(product):
 
         # Insert offer price
         if product['inoffer'] == True and product['offerprice'] > 0:
-            cur.execute(Query.INSERT_PRODUCT_OFFER, (result, product['offerprice'], product['offer_start_date'],
-                                                     product['offer_end_date']))
+            if product['offerid'] > 0:
+                cur.execute(Query.UPDATE_OFFER, (product['offer_price'], product['offer_start_date'], product['offer_end_date'], product['pid'], product['offerid']))
+            else:
+                cur.execute(Query.INSERT_PRODUCT_OFFER, (result, product['offerprice'], product['offer_start_date'],
+                                                         product['offer_end_date']))
             cur.fetchall()
-
-        #cur.fetchall()
         conn.commit()
         cur.close()
         conn.close()

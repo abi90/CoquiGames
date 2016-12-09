@@ -249,7 +249,7 @@ def update_product(productid):
             for key in product_keys:
                 if key not in request.json:
                     return jsonify({"error": "Missing {0} in request".format(key)})
-            result = dbm.update_product(request.json)
+            result = dbm.update_product(productid, request.json)
             return jsonify({"pid": result})
     except Exception as e:
         print e.message
