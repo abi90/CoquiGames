@@ -12,6 +12,8 @@ product_keys = ['title', 'release', 'price', 'platformid',
 post_user_keys = ['ufirstname', 'ulastname', 'uemail', 'uphone', 'udob',
                   'uname', 'upassword']
 
+announcement_keys = ['aid', 'a_img', 'a_title', 'active', 'platformid']
+
 
 @admin_blueprint.route("/users", methods=['GET'])
 @admin_verification
@@ -77,14 +79,21 @@ def get_genre():
         return internal_server_error()
 
 
-@admin_blueprint.route("/announcements", methods=['GET'])
+@admin_blueprint.route("/announcements", methods=['GET', 'POST'])
 @admin_verification
 def get_announcements():
     try:
-        announcements = dbm.fetch_all_announcements()
-        if announcements:
-            return jsonify(announcements)
-        return not_found()
+        if request.method=='GET':
+            announcements = dbm.fetch_all_announcements()
+            if announcements:
+                return jsonify(announcements)
+            return not_found()
+        elif request.method=='POST':
+            for key in announcement_keys:
+                if key not in announcement_keys:
+                    return jsonify({"error": "Paramenter {0} missing in request".format(key)})
+            aid = dbm.create_announcement(request.json['a_title'], request.json['a_img'], request.json['platformid'], request.json['active'])
+            return jsonify({'aid': aid})
     except Exception as e:
         print e
         return internal_server_error()
@@ -229,13 +238,37 @@ def update_order_status(order_statusid,orderid):
 def deactivate_announcement(aid):
     try:
         if request.json:
-            if 'platformid' in request.json:
-                result = dbm.change_order_status(aid,request.json['platformid'])
-                return jsonify({"mesagge": result})
-            else:
-                return jsonify({'Error':'platformid missing in request.json'}),400
+
+            for key in announcement_keys:
+                if key not in request.json:
+                    return jsonify({"error": "Paramenter {0} missing in request".format(key)})
+
+            result = dbm.deactivate_announcements(request.json['platformid'], aid)
+            return jsonify(result)
         else:
-            bad_request()
+            return bad_request()
+    except Exception as e:
+        print e.message
+        return internal_server_error()
+
+
+@admin_blueprint.route("/announcement/<int:aid>", methods=['PUT'])
+@admin_verification
+def update_announcement(aid):
+    try:
+        if request.json:
+            for key in announcement_keys:
+                if key not in request.json:
+                    return jsonify({"error": "Paramenter {0} missing in request".format(key)})
+            if int(request.json['platformid']) > 0:
+                result = dbm.edit_platform_announcement(request.json['a_img'], request.json['a_title'],
+                                                        request.json['aid'], request.json['active'],request.json['platformid'])
+            else:
+                result = dbm.edit_store_announcement(request.json['a_img'],
+                                                     request.json['a_title'], request.json['active'], request.json['aid'])
+            return jsonify({'aid': result})
+        else:
+            return bad_request()
     except Exception as e:
         print e.message
         return internal_server_error()

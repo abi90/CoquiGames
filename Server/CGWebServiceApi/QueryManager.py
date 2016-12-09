@@ -415,8 +415,9 @@ SELECT_ALL_PLATFORMS = """SELECT * FROM platform"""
 SELECT_ALL_CATEGORIES = """ SELECT category FROM category"""
 
 SELECT_ALL_ANNOUNCEMENTS = """SELECT paid AS aid, pa_title AS a_title, pa_img AS a_img, platformid, active FROM platform_announcements
-                               UNION
-                               SELECT said AS aid,sa_title AS a_title ,sa_img AS a_img ,NULL AS platformid, active FROM store_announcement"""
+                               UNION ALL
+                               SELECT said AS aid,sa_title AS a_title ,sa_img AS a_img, 0 AS platformid, active FROM store_announcement
+                               ORDER BY platformid, aid"""
 
 DEACTIVATE_PLATFORM = """UPDATE platform SET active = FALSE WHERE platformid = %s RETURNING *"""
 
@@ -474,3 +475,24 @@ UPDATE_OFFER = """UPDATE offer
                   SET offer_price = %s, offer_start_date = to_date(%s, 'YYYY-MM-DD'), offer_end_date = to_date(%s, 'YYYY-MM-DD')
                   WHERE productid = %s AND offerid = %s
                   RETURNING *"""
+
+
+UPDATE_PLATFORM_ANNOUNCEMENTS = """UPDATE platform_announcements
+                                    SET pa_img = %s, pa_title = %s, active = %s
+                                    WHERE paid = %s AND platformid = %s
+                                    RETURNING paid"""
+
+
+UPDATE_STORE_ANNOUNCEMENTS = """UPDATE store_announcement
+                                SET sa_img = %s, sa_title = %s, active = %s
+                                WHERE said = %s
+                                RETURNING said"""
+
+
+INSERT_PLATFORM_ANNOUNCEMENTS = """INSERT INTO platform_announcements (pa_title, pa_img, platformid, active)
+                                   VALUES (%s, %s, %s, %s)
+                                   RETURNING paid"""
+
+INSERT_STORE_ANNOUNCEMENTS = """INSERT INTO store_announcement (sa_img, sa_title, active)
+                                VALUES (%s, %s, %s)
+                                RETURNING said"""

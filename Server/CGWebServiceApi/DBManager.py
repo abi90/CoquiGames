@@ -947,6 +947,7 @@ def create_product(new_product):
                 conn.close()
         raise
 
+
 def update_product(productid, product):
     try:
         conn = __connection__()
@@ -997,22 +998,49 @@ def change_order_status(order_statusid, orderid):
     return __execute_commit_query__(Query.CHANGE_ORDER_STATUS, (order_statusid, orderid))
 
 
-def deactivate_announcements(platformid,aid):
+def deactivate_announcements(platformid, aid):
     """
     Deactivates an announcement
     :param platformid:
     :param aid:
     :return:aid
     """
-    if platformid != None :
-        return __execute_commit_query__(Query.DEACTIVATE_PLATFORM_ANNOUNCEMENTS, (aid,))
+    if platformid > 0:
+        return __execute_commit_query__(Query.DEACTIVATE_PLATFORM_ANNOUNCEMENTS, (aid,))[0]
 
     else:
-        return __execute_commit_query__(Query.DEACTIVATE_STORE_ANNOUNCEMENTS, (aid,))
+        return __execute_commit_query__(Query.DEACTIVATE_STORE_ANNOUNCEMENTS, (aid,))[0]
 
 
 def change_password(userid):
     return __execute_commit_query__(Query.UPDATE_USER_PASSWORD, (userid,))
+
+
+def edit_platform_announcement(img, title, active, aid, platformid):
+    return __execute_commit_query__(Query.UPDATE_PLATFORM_ANNOUNCEMENTS, (img, title, active,aid, platformid))[0]['paid']
+
+
+def edit_store_announcement(img, title, active, aid):
+    return __execute_commit_query__(Query.UPDATE_STORE_ANNOUNCEMENTS, (img, title, active, aid))[0]['said']
+
+
+def create_announcement(title, img, platformid, active):
+    """
+
+    :param title:
+    :param img:
+    :param platformid:
+    :param active:
+    :return:
+    """
+    if int(platformid) != 0:
+        return __execute_commit_query__(Query.INSERT_PLATFORM_ANNOUNCEMENTS,
+                                        (title, img, platformid, active))[0]['paid']
+
+    else:
+        return __execute_commit_query__(Query.INSERT_STORE_ANNOUNCEMENTS, (img, title, active))[0]['said']
+
+
 
 
 
