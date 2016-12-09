@@ -1,8 +1,8 @@
 <div class="popeye-modal-container">
     <div class="popeye-modal modal-content">
         <div class="modal-header">
-            <a class="popeye-close-modal" href ng-click="$close()"></a>
-            <h4 class="modal-title">Add Billing Address</h4>
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
+            <h4 class="modal-title">EDIT {{selectedAddress.atype | uppercase}} ADDRESS</h4>
         </div>
         <div class="modal-dialog">
             <div class="modal-body">
@@ -10,42 +10,48 @@
                 <div class="row">
                     <label for="txtSAddFname" class="col-sm-3 control-label">Full Name :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSAddFname" placeholder="Full Name">
+                        <input type="text" class="form-control" id="txtSAddFname" placeholder="Full Name"
+                               ng-model="selectedAddress.afullname">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="txtSAddress1" class="col-sm-3 control-label">Address/1 :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSAddress1" placeholder="Address/1">
+                        <input type="text" class="form-control" id="txtSAddress1" placeholder="Address/1"
+                               ng-model="selectedAddress.aaddress1">
                         <br>
                     </div>
                 </div>
-                <div class="rowp">
+                <div class="row">
                     <label for="txtSAddress2" class="col-sm-3 control-label">Address/2 :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSAddress2" placeholder="Address/2">
+                        <input type="text" class="form-control" id="txtSAddress2" placeholder="Address/2"
+                               ng-model="selectedAddress.aaddress2">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="txtSCity" class="col-sm-3 control-label">City :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSCity" placeholder="City">
+                        <input type="text" class="form-control" id="txtSCity" placeholder="City"
+                               ng-model="selectedAddress.acity">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="txtSPostCode" class="col-sm-3 control-label">Zip :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtSPostCode" placeholder="Postal Code">
+                        <input type="text" class="form-control" id="txtSPostCode" placeholder="Postal Code"
+                               ng-model="selectedAddress.azip">
                         <br>
                     </div>
                 </div>
                 <div class="row">
                     <label for="drpSState" class="col-sm-3 control-label">State :</label>
                     <div class="col-sm-9">
-                        <select class="form-control" id="drpSState" autocomplete="on">
+                        <select class="form-control" id="drpSState" autocomplete="on"
+                                ng-model="selectedAddress.astate">
                             <option value="">State</option>
                             <option value="PR">PR</option>
                             <option value="AK">AK</option>
@@ -106,21 +112,28 @@
                 <div class="row">
                     <label for="drpSCountry" class="col-sm-3 control-label">Country :</label>
                     <div class="col-sm-9">
-                        <select class="form-control" id="drpSCountry" autocomplete="on">
+                        <select class="form-control" id="drpSCountry" autocomplete="on"
+                                ng-model="selectedAddress.acountry">
                             <option value="USA">USA</option>
                         </select>
                         <br>
                     </div>
                 </div>
+                <div class="row">
+                    <label for="Preferred" class="col-sm-3 control-label">Set as Preferred :</label>
+                    <div class="col-sm-9">
+                        <input id="Preferred" type="checkbox" ng-model="selectedAddress.apreferred">
+                    </div>
+                </div>
                 <!-- Delivery Information Ends -->
                 <!-- Payment Dropdown  Starts-->
                 <div class="row">
-                    <label class="col-sm-3 control-label">Select Payment:</label>
+                    <label class="col-sm-3 control-label">Payment Method:</label>
                     <span class="col-sm-9" uib-dropdown on-toggle="toggled(open)">
-                        <a href id="simple-dropdown" uib-dropdown-toggle>User Cards</a>
+                        <a href id="simple-dropdown" uib-dropdown-toggle>{{(selectedAddress.pid == 0) ? 'Please Select a Payment': 'Card Ending in ' + selectedAddress.cnumber}}</a>
                         <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
-                            <li role="menuitem" ng-repeat="pay in userPayment">
-                                <a>
+                            <li role="menuitem" ng-repeat="pay in userPayments">
+                                <a ng-click="setPayment(pay)">
                                     <img ng-if="pay.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
                                     <img ng-if="pay.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
                                     <img ng-if="pay.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
@@ -134,7 +147,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-black" ng-click="$close()">Done</button>
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-black" ng-click="close()">Done</button>
         </div>
     </div>
 </div>

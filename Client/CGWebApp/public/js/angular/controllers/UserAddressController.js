@@ -48,17 +48,13 @@ app.controller('UserAddressController',
         };
 
         // Modals functions:
-        $scope.shoEditShpAddModal = function(shipping_address) {
+        $scope.shoEditAddModal = function(address) {
 
             // Open a modal to edit ship add
             var modal = Popeye.openModal({
-                controller: 'EditSAModalController as modalCtrl',
-                templateUrl: "js/angular/modals/edit-shipping-address.html",
-                resolve: {
-                    shipping_address: function () {
-                        return shipping_address;
-                    }
-                }
+                controller: 'EditUserAddressModalController',
+                templateUrl: "js/angular/modals/user-address.html",
+                resolve: {address: function () {return address;}}
             });
 
             // Show a spinner while modal is resolving dependencies
@@ -69,18 +65,16 @@ app.controller('UserAddressController',
 
             // Update user selected address after modal is closed
             modal.closed.then(function(value) {
-                console.log(JSON.stringify(value));
-                var changed = shipping_address===value;
-                if(!changed){
+                if(value){
                     userwsapi.putUserAddress(auth.uid, auth.uname, auth.token, value)
-                        .then(function (response) {
-
-                        }, function (error) {
-
+                        .then(function () {
+                            getUserShippingAddress();
+                            getUserBillingAddress();
+                        }, function () {
+                            getUserShippingAddress();
+                            getUserBillingAddress();
                         });
                 }
-                getUserShippingAddress();
-                getUserBillingAddress();
             });
         };
 
@@ -88,18 +82,8 @@ app.controller('UserAddressController',
 
             // Open a modal to add a ship add
             var modal = Popeye.openModal({
-                controller: 'AccountController',
-                templateUrl: "js/angular/modals/add-shipping-address.html",
-                resolve: {
-                    auth: function ($q, authenticationSvc) {
-                        var userInfo = authenticationSvc.getUserInfo();
-                        if (userInfo) {
-                            return $q.when(userInfo);
-                        } else {
-                            return $q.reject({authenticated: false});
-                        }
-                    }
-                }
+                controller: 'AddUserShAddressModalController',
+                templateUrl: "js/angular/modals/user-address.html"
             });
 
             // Show a spinner while modal is resolving dependencies
@@ -108,8 +92,18 @@ app.controller('UserAddressController',
                 $scope.showLoading = false;
             });
 
-            // Update user selected address after modal is closed
-            modal.closed.then(function() {
+            // Post user address after modal is closed
+            modal.closed.then(function(new_address) {
+                if(new_address){
+                    userwsapi.postUserAddress(auth.uid, auth.uname, auth.token, new_address)
+                        .then(function () {
+                            getUserShippingAddress();
+                            getUserBillingAddress();
+                        }, function () {
+                            getUserShippingAddress();
+                            getUserBillingAddress();
+                        });
+                }
 
             });
         };
@@ -118,7 +112,7 @@ app.controller('UserAddressController',
 
             // Open a modal to add a bil address
             var modal = Popeye.openModal({
-                controller: 'AccountController',
+                controller: 'AddUserBlAddressModalController',
                 templateUrl: "js/angular/modals/add-billing-address.html",
                 resolve: {
                     auth: function ($q, authenticationSvc) {
@@ -138,38 +132,18 @@ app.controller('UserAddressController',
                 $scope.showLoading = false;
             });
 
-            // Update user selected address after modal is closed
-            modal.closed.then(function() {
-
-            });
-        };
-
-        $scope.shoEditBilAddModal = function() {
-
-            // Open a modal to edit user bil add
-            var modal = Popeye.openModal({
-                controller: 'AccountController',
-                templateUrl: "js/angular/modals/edit-billing-address.html",
-                resolve: {
-                    auth: function ($q, authenticationSvc) {
-                        var userInfo = authenticationSvc.getUserInfo();
-                        if (userInfo) {
-                            return $q.when(userInfo);
-                        } else {
-                            return $q.reject({authenticated: false});
-                        }
-                    }
+            // Post user address after modal is closed
+            modal.closed.then(function(new_address) {
+                if(new_address){
+                    userwsapi.postUserAddress(auth.uid, auth.uname, auth.token, new_address)
+                        .then(function () {
+                            getUserShippingAddress();
+                            getUserBillingAddress();
+                        }, function () {
+                            getUserShippingAddress();
+                            getUserBillingAddress();
+                        });
                 }
-            });
-
-            // Show a spinner while modal is resolving dependencies
-            $scope.showLoading = true;
-            modal.resolved.then(function() {
-                $scope.showLoading = false;
-            });
-
-            // Update user selected address after modal is closed
-            modal.closed.then(function() {
 
             });
         };

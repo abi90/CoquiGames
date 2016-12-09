@@ -31,16 +31,17 @@
                             <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="address in userShippingAddress">
                                 <p> <strong>{{address.afullname}}</strong>
                                     <br>{{address.aaddress1}}
-                                    <br ng-if="address.aaddress2.length < 0">{{address.aaddress2}}
+                                    <br ng-if="address.aaddress2.length > 0">{{address.aaddress2}}
                                     <br>{{address.acity}}, {{address.astate}} {{address.azip}}
                                     <br>{{address.acountry}}<br>
                                     <strong ng-if="address.apreferred == true">[ * Preferred * ]</strong>
-                                    <br ng-if="address.apreferred == false">
+                                    <br>
+                                    <br ng-if="address.aaddress2.length <= 0">
                                 </p>
                                 <div class="grid">
                                     <div class="row">
                                         <div class="col-md-3 col-sm-2 col-xs-2">
-                                            <button type="submit" class="btn btn-black" ng-click="shoEditShpAddModal(address)">EDIT</button>
+                                            <button type="submit" class="btn btn-black" ng-click="shoEditAddModal(address)">EDIT</button>
                                         </div>
                                         <div class="col-md-3 col-sm-2 col-xs-2">
                                             <button type="submit" class="btn btn-black">DELETE</button>
@@ -68,16 +69,17 @@
                             <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="address in userBillingAddress">
                                 <p> <strong>{{address.afullname}}</strong>
                                     <br>{{address.aaddress1}}
-                                    <br ng-if="address.aaddress2.length < 0">{{address.aaddress2}}
+                                    <br ng-if="address.aaddress2.length > 0">{{address.aaddress2}}
                                     <br>{{address.acity}}, {{address.astate}} {{address.azip}}
                                     <br>{{address.acountry}}<br>
                                     <strong ng-if="address.apreferred == true">[ * Preferred * ]</strong>
-                                    <br ng-if="address.apreferred == false">
+                                    <br>
+                                    <br ng-if="address.aaddress2.length <= 0">
                                 </p>
                                 <div class="grid">
                                     <div class="row">
                                         <div class="col-md-3 col-sm-2 col-xs-2">
-                                            <button type="submit" class="btn btn-black" ng-click="shoEditBilAddModal()">EDIT</button>
+                                            <button type="submit" class="btn btn-black" ng-click="shoEditAddModal(address)">EDIT</button>
                                         </div>
                                         <div class="col-md-3 col-sm-2 col-xs-2">
                                             <button type="submit" class="btn btn-black">DELETE</button>

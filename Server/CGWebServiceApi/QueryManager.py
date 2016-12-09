@@ -498,7 +498,14 @@ INSERT_STORE_ANNOUNCEMENTS = """INSERT INTO store_announcement (sa_img, sa_title
                                 VALUES (%s, %s, %s)
                                 RETURNING said"""
 
-UPDATE_PAYMENT_ADDRESS = """UPDATE payment_method
+UPDATE_MULTIPLE_PAYMENT_ADDRESS_ID = """UPDATE payment_method
                             SET billing_addressid = %s
                             WHERE billing_addressid = %s AND userid =%s
                             RETURNING *"""
+
+
+UPDATE_MULTIPLE_PAYMENT_ADDRESS_ID = """UPDATE payment_method
+                            SET billing_addressid = %s
+                            WHERE payment_methodid = %s AND userid =%s
+                            RETURNING *"""
+

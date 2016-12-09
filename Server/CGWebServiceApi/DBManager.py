@@ -711,7 +711,7 @@ def update_user_address(userid, addressid, address_data):
                 cur.execute(Query.UPDATE_USER_PREFERRED_SHIPPING_ADDR, (new_addressid, userid))
 
         if address_data['atype'] == 'billing':
-            cur.execute(Query.UPDATE_PAYMENT_ADDRESS, (new_addressid, addressid, userid))
+            cur.execute(Query.UPDATE_MULTIPLE_PAYMENT_ADDRESS_ID, (new_addressid, addressid, userid))
             cur.fetchall()
 
         conn.commit()
@@ -784,6 +784,9 @@ def create_user_address(userid, address_data):
                 cur.execute(Query.UPDATE_USER_PREFERRED_BILLING_ADDR, (addressid, userid))
             elif address_data['atype'] == 'shipping':
                 cur.execute(Query.UPDATE_USER_PREFERRED_SHIPPING_ADDR, (addressid, userid))
+        if address_data['atype'] == 'billing':
+            cur.execute(Query.UPDATE_MULTIPLE_PAYMENT_ADDRESS_ID, (addressid, address_data['pid'], userid))
+            cur.fetchall()
         conn.commit()
         cur.close()
         conn.close()

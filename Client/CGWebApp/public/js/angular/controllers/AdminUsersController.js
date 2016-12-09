@@ -50,17 +50,19 @@ app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'au
 
             // Update user selected address after modal is closed
             modal.closed.then(function(value) {
-                adminwsapi.changeUserPassword(auth.uname, auth.token, value.accountid, {upassword: value.password}).then(
-                    function (response) {
-                        $scope.messages = ["Password change for " + value.accountid + " was succesful"];
-                        getUsers()
-                    },
-                    function (err) {
-                        console.log(JSON.stringify(err.data));
-                        getUsers()
-                    }
-                );
+                if(value){
 
+                    adminwsapi.changeUserPassword(auth.uname, auth.token, value.accountid, {upassword: value.password}).then(
+                        function (response) {
+                            $scope.messages = ["Password change for " + value.accountid + " was succesful"];
+                            getUsers()
+                        },
+                        function (err) {
+                            console.log(JSON.stringify(err.data));
+                            getUsers()
+                        }
+                    );
+                }
             });
         };
 

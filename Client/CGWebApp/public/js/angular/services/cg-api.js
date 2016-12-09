@@ -251,6 +251,18 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    userwsapi.postUserAddress= function (uid, username, password, address) {
+        return $http({
+            method: 'POST',
+            url: userServiceURL + '/' + uid + '/address',
+            dataType: 'json',
+            data: address,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
     userwsapi.putUserCart= function (uid, username, password, product) {
         return $http({
             method: 'PUT',

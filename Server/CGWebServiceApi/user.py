@@ -178,6 +178,10 @@ def user_address(userid):
                 errors = validate_address(request.json)
                 if errors:
                     return jsonify({'Errors': errors}), 400
+
+                if request.json['atype'] == 'billing' and 'pid' not in request.json:
+                    return jsonify({'Errors': errors.append("Missing Payment Method.")}), 400
+
                 new_address_id = dbm.create_user_address(userid, request.json)
                 return jsonify({'aid': new_address_id}), 201
             else:

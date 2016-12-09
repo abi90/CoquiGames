@@ -224,7 +224,7 @@ app.controller('AccountController', ['$scope', '$location', 'authenticationSvc',
             // Open a modal to edit ship add
             var modal = Popeye.openModal({
                 controller: 'EditSAModalController as modalCtrl',
-                templateUrl: "js/angular/modals/edit-shipping-address.html",
+                templateUrl: "js/angular/modals/user-address.html",
                 resolve: {
                     shipping_address: function () {
                         return shipping_address;
