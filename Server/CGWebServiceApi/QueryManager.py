@@ -48,7 +48,7 @@ SELECT_PLATFORM_SPECIAL_PRODUCTS = """SELECT * FROM product_details WHERE inoffe
 SELECT_PLATFORM_ANNOUNCEMENTS = """SELECT * FROM platform_announcements WHERE platformid = %s"""
 
 
-SELECT_STORE_ANNOUNCEMENT = """SELECT * FROM store_announcement"""
+SELECT_STORE_ANNOUNCEMENT = """SELECT * FROM store_announcement WHERE active = TRUE"""
 
 
 INSERT_PRODUCT_RATING = """INSERT INTO rate (productid, rate_date, rate)
