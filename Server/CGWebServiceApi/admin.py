@@ -262,7 +262,7 @@ def update_announcement(aid):
                     return jsonify({"error": "Paramenter {0} missing in request".format(key)})
             if int(request.json['platformid']) > 0:
                 result = dbm.edit_platform_announcement(request.json['a_img'], request.json['a_title'],
-                                                        request.json['aid'], request.json['active'],request.json['platformid'])
+                                                        request.json['active'], request.json['aid'], request.json['platformid'])
             else:
                 result = dbm.edit_store_announcement(request.json['a_img'],
                                                      request.json['a_title'], request.json['active'], request.json['aid'])

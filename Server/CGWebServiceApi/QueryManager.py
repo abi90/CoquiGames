@@ -480,7 +480,7 @@ UPDATE_OFFER = """UPDATE offer
 UPDATE_PLATFORM_ANNOUNCEMENTS = """UPDATE platform_announcements
                                     SET pa_img = %s, pa_title = %s, active = %s
                                     WHERE paid = %s AND platformid = %s
-                                    RETURNING paid"""
+                                    RETURNING *"""
 
 
 UPDATE_STORE_ANNOUNCEMENTS = """UPDATE store_announcement

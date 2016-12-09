@@ -1017,7 +1017,7 @@ def change_password(userid):
 
 
 def edit_platform_announcement(img, title, active, aid, platformid):
-    return __execute_commit_query__(Query.UPDATE_PLATFORM_ANNOUNCEMENTS, (img, title, active,aid, platformid))[0]['paid']
+    return __execute_commit_query__(Query.UPDATE_PLATFORM_ANNOUNCEMENTS, (img, title, active, aid, platformid))[0]['paid']
 
 
 def edit_store_announcement(img, title, active, aid):
