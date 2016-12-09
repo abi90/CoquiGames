@@ -480,11 +480,11 @@ def fetch_shipment_fees():
 
 
 def fetch_user_billing_address(userid):
-    return __execute_select_query__(Query.SELECT_USER_BILLING_ADDRESS, (userid,))
+    return __execute_select_query__(Query.SELECT_USER_BILLING_ADDRESS, (userid, userid, userid, userid))
 
 
 def fetch_user_shipping_address(userid):
-    return __execute_select_query__(Query.SELECT_USER_SHIPPING_ADDRESS, (userid,))
+    return __execute_select_query__(Query.SELECT_USER_SHIPPING_ADDRESS, (userid, userid, userid, userid))
 
 
 def fetch_store_genres():
@@ -701,18 +701,23 @@ def update_user_address(userid, addressid, address_data):
                      address_data['acity'], address_data['azip'], address_data['acountry'],
                      address_data['astate'], userid))
         columns = [x[0] for x in cur.description]
-        addressid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['addressid']
+        new_addressid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['addressid']
         # Verify if it's going to be a preferred address
         set_preferred = address_data['apreferred']
         if set_preferred:
             if address_data['atype'] == 'billing':
-                cur.execute(Query.UPDATE_USER_PREFERRED_BILLING_ADDR, (addressid, userid))
+                cur.execute(Query.UPDATE_USER_PREFERRED_BILLING_ADDR, (new_addressid, userid))
             elif address_data['atype'] == 'shipping':
-                cur.execute(Query.UPDATE_USER_PREFERRED_SHIPPING_ADDR, (addressid, userid))
+                cur.execute(Query.UPDATE_USER_PREFERRED_SHIPPING_ADDR, (new_addressid, userid))
+
+        if address_data['atype'] == 'billing':
+            cur.execute(Query.UPDATE_PAYMENT_ADDRESS, (new_addressid, addressid, userid))
+            cur.fetchall()
+
         conn.commit()
         cur.close()
         conn.close()
-        return addressid
+        return new_addressid
     except:
         if conn:
             if not conn.closed:

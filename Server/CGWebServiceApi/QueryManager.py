@@ -342,21 +342,21 @@ SELECT_SHIPMENT_FEE = """SELECT f.shipment_feeid, f.fee, f.fee_description FROM 
 SELECT_USER_SHIPPING_ADDRESS = """SELECT address_state AS aState, address_line_1 AS aaddress1, address_line_2 AS aaddress2, address_city AS acity,
                       address_country AS acountry, active AS acurrent, address_fullname AS afullname, addressid AS aid,
                       address_zip AS azip, 'shipping' AS atype,
-                      CASE WHEN addressid IN (SELECT up.billing_addressid FROM user_preferences up) THEN TRUE
-                        WHEN  addressid IN (SELECT up.shipping_addressid FROM user_preferences up) THEN TRUE
+                      CASE WHEN addressid IN (SELECT up1.billing_addressid FROM user_preferences up1 WHERE up1.userid =%s) THEN TRUE
+                        WHEN  addressid IN (SELECT up2.shipping_addressid FROM user_preferences up2 WHERE up2.userid =%s) THEN TRUE
                         ELSE FALSE END AS apreferred
                       FROM address
-                      WHERE userid = %s AND  addressid NOT IN (SELECT billing_addressid FROM payment_method) AND address.active = TRUE"""
+                      WHERE userid = %s AND addressid NOT IN (SELECT billing_addressid FROM payment_method pm WHERE pm.userid = %s) AND address.active = TRUE"""
 
 
 SELECT_USER_BILLING_ADDRESS = """SELECT address_state AS aState, address_line_1 AS aaddress1, address_line_2 AS aaddress2, address_city AS acity,
-                      address_country AS acountry, active AS acurrent, address_fullname AS afullname, addressid AS aid,
-                      address_zip AS azip, 'billing' AS atype,
-                      CASE WHEN addressid IN (SELECT up.billing_addressid FROM user_preferences up) THEN TRUE
-                        WHEN  addressid IN (SELECT up.shipping_addressid FROM user_preferences up) THEN TRUE
-                        ELSE FALSE END AS apreferred
-                      FROM address
-                      WHERE userid = %s AND  addressid IN (SELECT billing_addressid FROM payment_method) AND address.active = TRUE"""
+                                  address_country AS acountry, active AS acurrent, address_fullname AS afullname, addressid AS aid,
+                                  address_zip AS azip, 'billing' AS atype,
+                                  CASE WHEN addressid IN (SELECT up1.billing_addressid FROM user_preferences up1 WHERE up1.userid =%s) THEN TRUE
+                                    WHEN  addressid IN (SELECT up2.shipping_addressid FROM user_preferences up2 WHERE up2.userid =%s) THEN TRUE
+                                    ELSE FALSE END AS apreferred
+                                  FROM address
+                                  WHERE userid = %s AND addressid IN (SELECT billing_addressid FROM payment_method pm WHERE pm.userid = %s) AND address.active = TRUE"""
 
 
 SELECT_STORE_GENRES = """SELECT genre FROM genre WHERE active = TRUE"""
@@ -493,6 +493,12 @@ INSERT_PLATFORM_ANNOUNCEMENTS = """INSERT INTO platform_announcements (pa_title,
                                    VALUES (%s, %s, %s, %s)
                                    RETURNING paid"""
 
+
 INSERT_STORE_ANNOUNCEMENTS = """INSERT INTO store_announcement (sa_img, sa_title, active)
                                 VALUES (%s, %s, %s)
                                 RETURNING said"""
+
+UPDATE_PAYMENT_ADDRESS = """UPDATE payment_method
+                            SET billing_addressid = %s
+                            WHERE billing_addressid = %s AND userid =%s
+                            RETURNING *"""

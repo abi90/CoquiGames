@@ -150,8 +150,8 @@ def update_address(userid, addressid):
             errors = validate_address(request.json)
             if errors:
                 return jsonify({'Errors': errors}), 400
-            new_addres_id = dbm.update_user_address(userid, addressid, request.json)
-            return jsonify({'aid': new_addres_id}), 201
+            new_address_id = dbm.update_user_address(userid, addressid, request.json)
+            return jsonify({'aid': new_address_id}), 201
         return bad_request()
     except Exception as e:
         print e.message
