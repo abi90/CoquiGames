@@ -550,3 +550,4 @@ UPDATE_PAYMENT_ADDRESS_ID = """UPDATE payment_method
 
 UPDATE_PRODUCT_QTY = """UPDATE product SET product_qty = product_qty - %s WHERE productid = %s"""
 
+SELECT_ALL_GENRES = """SELECT * FROM genre"""

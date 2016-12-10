@@ -909,8 +909,8 @@ def fetch_all_genre():
     return __execute_select_query__(Query.SELECT_GENRES, ())
 
 
-def fetch_all_genre():
-    return __execute_select_query__(Query.SELECT_GENRES, ())
+def fetch_all_genres():
+    return __execute_select_query__(Query.SELECT_ALL_GENRES, ())
 
 
 def deactivate_product(productid):

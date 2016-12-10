@@ -287,3 +287,16 @@ def update_product(productid):
     except Exception as e:
         print e.message
         return internal_server_error()
+
+@admin_blueprint.route("/genres", methods=['GET'])
+@admin_verification
+def get_genres():
+    try:
+        genres = dbm.fetch_all_genres()
+        if genres:
+            return jsonify(genres)
+        return not_found()
+    except Exception as e:
+        print e
+        return internal_server_error()
+
