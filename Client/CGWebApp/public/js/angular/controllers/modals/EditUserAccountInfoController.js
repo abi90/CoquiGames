@@ -18,7 +18,7 @@ app.controller('EditUserAccountInfoController',
                 bigText: '[a-zA-Z\\d\\.\\:\\,\\;\\s\\-]+',
                 email: /(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/g,
                 phone: /^(\d{3})([-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})$/g,
-                userName: '[a-zA-Z]+[\\da-zA-Z]+',
+                userName: '[a-zA-Z]+[\\da-zA-Z]+'
             };
 
             $scope.new_info = tempAccount;

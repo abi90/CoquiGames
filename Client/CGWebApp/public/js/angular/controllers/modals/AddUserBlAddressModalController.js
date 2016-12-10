@@ -25,6 +25,11 @@ app.controller('AddUserBlAddressModalController',
 
             $scope.userPayments = [];
 
+            $scope.patterns = {
+                bigText: '[a-zA-Z\\d\\.\\:\\,\\;\\s\\-]+',
+                cvc: '\\d{3}',
+                postal: '\\d{5,6}'
+            };
 
             $scope.close = function() {
                 return Popeye.closeCurrentModal($scope.selectedAddress);

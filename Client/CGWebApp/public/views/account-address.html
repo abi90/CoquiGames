@@ -43,7 +43,7 @@
                                         <div class="col-md-3 col-sm-2 col-xs-2">
                                             <button type="submit" class="btn btn-black" ng-click="shoEditAddModal(address)"> EDIT </button>
                                         </div>
-                                        <div class="col-md-3 col-sm-2 col-xs-2">
+                                        <div class="col-md-3 col-sm-2 col-xs-2" ng-if="userShippingAddress.length > 1">
                                             <button type="submit" class="btn btn-danger" ng-click="deactivateAddress(address)">DELETE</button>
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                                         <div class="col-md-3 col-sm-2 col-xs-2">
                                             <button type="submit" class="btn btn-black" ng-click="shoEditAddModal(address)">EDIT</button>
                                         </div>
-                                        <div class="col-md-3 col-sm-2 col-xs-2">
+                                        <div class="col-md-3 col-sm-2 col-xs-2" ng-if="userBillingAddress.length > 1">
                                             <button type="submit" class="btn btn-danger" ng-click="deactivateAddress(address)">DELETE</button>
                                         </div>
                                     </div>

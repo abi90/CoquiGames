@@ -6,48 +6,85 @@
         </div>
         <div class="modal-dialog">
             <div class="modal-body">
-                <!-- Personal Information Starts -->
-                <div class="row">
-                    <label for="txtFname" class="col-sm-3 control-label">First Name :</label>
-                    <div class="col-sm-9">
-                        <input ng-model="new_info.ufirstname" type="text" class="form-control" id="txtFname" placeholder="First Name">
-                        <br>
+                <form role="form" name="editInfo">
+                    <!-- Personal Information Starts -->
+                    <div class="row">
+                        <label class="col-sm-2 control-label">First Name :</label>
+                        <div class="col-sm-9">
+                            <input ng-model="new_info.ufirstname" type="text" class="form-control"
+                                   name="txtFname"  placeholder="First Name" ng-pattern="patterns.bigText">
+                            <br>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="editInfo.txtFname.$dirty && editInfo.txtFname.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="editInfo.txtFname.$dirty && editInfo.txtFname.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label for="txtLname" class="col-sm-3 control-label">Last Name :</label>
-                    <div class="col-sm-9">
-                        <input ng-model="new_info.ulastname" type="text" class="form-control" id="txtLname" placeholder="Last Name">
-                        <br>
+                    <div class="row">
+                        <label  class="col-sm-2 control-label">Last Name :</label>
+                        <div class="col-sm-9">
+                            <input ng-model="new_info.ulastname" type="text" class="form-control" name="txtLname"
+                                   placeholder="Last Name" ng-pattern="patterns.bigText">
+                            <br>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="editInfo.txtLname.$dirty && editInfo.txtLname.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="editInfo.txtLname.$dirty && editInfo.txtLname.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label for="txtDateOfBirth" class="col-sm-3 control-label">Date of Birth :</label>
-                    <div class="col-sm-9">
-                        <input ng-model="userDOB" type="date" class="form-control" id="txtDateOfBirth" placeholder="Date of Birth">
-                        <br>
+                    <div class="row">
+                        <label  class="col-sm-2 control-label">Date of Birth :</label>
+                        <div class="col-sm-9">
+                            <input ng-model="userDOB" type="date" class="form-control" name="txtDateOfBirth"
+                                   placeholder="Date of Birth">
+                            <br>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="editInfo.txtDateOfBirth.$dirty && editInfo.txtDateOfBirth.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="editInfo.txtDateOfBirth.$dirty && editInfo.txtDateOfBirth.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label for="txtEmail" class="col-sm-3 control-label">Email :</label>
-                    <div class="col-sm-9">
-                        <input ng-model="new_info.uemail" type="email" class="form-control" id="txtEmail" placeholder="Email">
-                        <br>
+                    <div class="row">
+                        <label  class="col-sm-2 control-label">Email :</label>
+                        <div class="col-sm-9">
+                            <input ng-model="new_info.uemail" type="email" class="form-control" name="txtEmail"
+                                   placeholder="Email" ng-pattern="patterns.email">
+                            <br>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="editInfo.txtEmail.$dirty && editInfo.txtEmail.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="editInfo.txtEmail.$dirty && editInfo.txtEmail.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label for="txtPhone" class="col-sm-3 control-label">Phone :</label>
-                    <div class="col-sm-9">
-                        <input ng-model="new_info.uphone" type="tel" class="form-control" id="txtPhone" placeholder="Phone">
-                        <br>
+                    <div class="row">
+                        <label  class="col-sm-2 control-label">Phone :</label>
+                        <div class="col-sm-9">
+                            <input ng-model="new_info.uphone" type="tel" class="form-control" name="txtPhone"
+                                   placeholder="Phone" ng-pattern="patterns.phone">
+                            <br>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="editInfo.txtPhone.$dirty && editInfo.txtPhone.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="editInfo.txtPhone.$dirty && editInfo.txtPhone.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
                     </div>
-                </div>
-                <!-- Personal Information Ends -->
+                    <!-- Personal Information Ends -->
+                </form>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
-            <button type="button" class="btn btn-black" ng-click="submit()">Done</button>
+            <button type="button" class="btn btn-black" ng-disabled="editInfo.$invalid" ng-click="submit()">Done</button>
         </div>
     </div>
 </div>
