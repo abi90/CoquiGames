@@ -51,7 +51,7 @@ app.controller('RegisterController',
             if(cardNumber.match($scope.regexs.ccard)){
                 result = (cardNumber.match(visa)) ? (cardNumber.match(visa).length == 1) ? 'Visa':result:result;
                 result = (cardNumber.match(aExp)) ? (cardNumber.match(aExp).length == 1) ? 'American Express':result:result;
-                result = (cardNumber.match(mCard)) ? (cardNumber.match(visa).length == 1) ? 'Master Card':result:result;
+                result = (cardNumber.match(mCard)) ? (cardNumber.match(mCard).length == 1) ? 'Master Card':result:result;
             }
             return result;
         };

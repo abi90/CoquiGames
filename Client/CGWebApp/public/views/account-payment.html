@@ -15,7 +15,7 @@
                 <li>
                     <a href="index.html">Home</a>
                 </li>
-                <li class="active">{{userData.uname}}</li>
+                <li class="active">{{auth.uname}}</li>
                 <li class="active">Payment Method</li>
             </ol>
             <div class="panel panel-smart">
@@ -66,6 +66,16 @@
                 </div>
             </div>
             <!-- Primary Content Ends -->
+            <div class="col-md-9">
+                <div class="">
+                    <div uib-alert ng-repeat="m in messages track by $index" class="alert-success" close="closeMessageAlert($index)">{{m}}
+                    </div>
+                </div>
+                <div class="">
+                    <div uib-alert ng-repeat="m in errors track by $index" class="alert-danger" close="closeErrorAlert($index)">{{m}}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,31 +1,47 @@
 <div class="popeye-modal-container">
     <div class="popeye-modal modal-content">
         <div class="modal-header">
-            <a class="popeye-close-modal" href ng-click="$close()"></a>
-            <h4 class="modal-title">Add Payment Method</h4>
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
+            <h4 class="modal-title">Payment Method</h4>
         </div>
         <div class="modal-dialog">
             <div class="modal-body">
-                <form role="form">
+                <form role="form" name="modal">
                     <!-- Credit Card Information Starts -->
                     <div class="row">
-                        <label for="txtAddress1" class="col-sm-3 control-label">Name on Card:</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtAddress1" placeholder="Name on Card">
-                            <br>
+                        <label  class="col-sm-3 control-label">Name on Card:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="txtCardName" placeholder="Name on Card"
+                                   ng-minlength="1" ng-maxlength="255"
+                                   ng-model="selectedPayment.cname" required ng-pattern="patterns.bigText">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="modal.txtCardName.$dirty && modal.txtCardName.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="modal.txtCardName.$dirty && modal.txtCardName.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="txtAddress2" class="col-sm-3 control-label">Card Number:</label>
-                        <div class="col-sm-9">
-                            <input type='number' pattern="[0-9]{13,16}" autocomplete="on" maxlength="16" class="form-control" id="txtAddress2" placeholder="Card Number">
-                            <br>
+                        <label  class="col-sm-3 control-label">Card Number:</label>
+                        <div class="col-sm-8">
+                            <input type='number' autocomplete="on"
+                                   class="form-control" name="txtCardNumber" placeholder="Card Number"
+                                   ng-minlength="13" ng-maxlength="16"
+                                   ng-model="userCard.cardNumber" required ng-pattern="patterns.ccard">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="modal.txtCardNumber.$dirty && modal.txtCardNumber.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="modal.txtCardNumber.$dirty && modal.txtCardNumber.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="drpCardNumber" class="col-sm-3 control-label">Expiration Date :</label>
-                        <div class="col-sm-3">
-                            <select class="form-control" autocomplete="on" id="drpCardNumber">
+                        <label  class="col-sm-3 control-label">Expiration Date :</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" autocomplete="on" name="drpCardNumber"
+                                    ng-model="paymentMonth" required>
                                 <option value=''>Month</option>
                                 <option value='01'>Janaury</option>
                                 <option value='02'>February</option>
@@ -40,30 +56,55 @@
                                 <option value='11'>November</option>
                                 <option value='12'>December</option>
                             </select>
+                            <div class="col-sm-1">
+                                <img  ng-if="modal.drpCardNumber.$dirty && modal.drpCardNumber.$error.required"
+                                      src="images/invalid.png" width="16" height="16"/>
+                                <img  ng-if="modal.drpCardNumber.$dirty && !modal.drpCardNumber.$error.required"
+                                      src="images/valid.png" width="16" height="16"/>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <select class="form-control" autocomplete="on" id="drpCardYear">
+                        <div class="col-sm-4">
+                            <select class="form-control" autocomplete="on" name="drpCardYear"
+                                    ng-model="paymentYear" ng-options="year for year in yearOptions" required>
                                 <option value=''>Year</option>
-                                <option value='2016'>2016</option>
-                                <option value='2016'>2017</option>
                             </select>
-                            <br>
+                            <div class="col-sm-1">
+                                <img  ng-if="modal.drpCardYear.$dirty && modal.drpCardYear.$error.required"
+                                      src="images/invalid.png" width="16" height="16"/>
+                                <img  ng-if="modal.drpCardYear.$dirty && !modal.drpCardYear.$error.required"
+                                      src="images/valid.png" width="16" height="16"/>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="txtCVC" class="col-sm-3 control-label">CVC :</label>
-                        <div class="col-sm-9">
-                            <input type="number" pattern="[0-9]{3}" autocomplete="off" maxlength="3" class="form-control" id="txtCVC" placeholder="CVC">
-                        <br>
+                        <label  class="col-sm-3 control-label">CVC :</label>
+                        <div class="col-sm-8">
+                            <input type="number" autocomplete="off" max="999"
+                                   class="form-control" name="txtCVC" placeholder="CVC required"
+                                   ng-model="userCard.CVC" required ng-pattern="patterns.cvc">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="modal.txtCVC.$dirty && modal.txtCVC.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="modal.txtCVC.$dirty && modal.txtCVC.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
+                    <br>
                     <!-- Credit Card Information Ends -->
+                    <div class="row">
+                        <label for="Preferred" class="col-sm-3 control-label">Set as Preferred :</label>
+                        <div class="col-sm-9">
+                            <input id="Preferred" type="checkbox" ng-model="selectedPayment.ppreferred">
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
         <div class="modal-footer row">
-            <div class="form-group">
-                <button type="button" class="btn btn-black" ng-click="$close()">Done</button>
+            <div class="row">
+                <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+                <button type="button" class="btn btn-black" ng-disabled="modal.$invalid" ng-click="submit()">Add</button>
             </div>
         </div>
     </div>

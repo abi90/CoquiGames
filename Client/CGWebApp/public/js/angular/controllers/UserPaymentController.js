@@ -5,6 +5,9 @@ app.controller('UserPaymentController',
     ['$scope', '$location', 'authenticationSvc', 'auth', 'userwsapi', '$rootScope', 'Popeye',
     function ($scope, $location, authenticationSvc, auth, userwsapi, $rootScope, Popeye){
 
+        $scope.errors = [];
+        $scope.messages = [];
+
         // Local Functions
         var logout = function () {
             authenticationSvc.logout()
@@ -22,9 +25,7 @@ app.controller('UserPaymentController',
                 function (response) {
                     $scope.userPayment = response.data;
                 },
-                function (error) {
-                    console.log("Error: " +error.statusCode);
-                    $location.path("/404.html");
+                function () {
                     logout();
                 }
             )
@@ -36,7 +37,7 @@ app.controller('UserPaymentController',
 
             // Open a modal to show the let the user add a Payment Method
             var modal = Popeye.openModal({
-                controller: 'AccountController',
+                controller: 'AddPaymentMethodModalController',
                 templateUrl: "js/angular/modals/add-payment.html",
                 resolve: {
                     auth: function ($q, authenticationSvc) {
@@ -57,8 +58,28 @@ app.controller('UserPaymentController',
             });
 
             // Update user payments after modal is closed
-            modal.closed.then(function(){
-                getUserPayments();
+            modal.closed.then(function(response){
+                if(response){
+                    userwsapi.postUserPayment(auth.uid, auth.uname, auth.token, response)
+                        .then(
+                            function () {
+                                $scope.messages[$scope.messages.length]= "Your Card was added!";
+                                getUserPayments();
+                            },
+                            function (err) {
+                                if(err.data.Errors){
+                                    $scope.errors = err.data.Errors;
+                                }
+                                else if(err.data.Error){
+                                    $scope.errors = [err.data.Error];
+                                }
+                                else{
+                                    $scope.errors = ['Unknown Error. Please verify your internet connection.'];
+                                }
+                                getUserPayments();
+                            }
+                        );
+                }
             });
         };
 
@@ -74,6 +95,14 @@ app.controller('UserPaymentController',
                         getUserPayments();
                     }
                 );
+        };
+
+        $scope.closeErrorAlert= function(index){
+            $scope.errors.splice(index,1);
+        };
+
+        $scope.closeMessageAlert= function(index){
+            $scope.messages.splice(index,1);
         };
 
         // Get User Data on startup
