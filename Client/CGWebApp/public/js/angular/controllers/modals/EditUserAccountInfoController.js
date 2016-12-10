@@ -18,7 +18,7 @@ app.controller('EditUserAccountInfoController',
                 bigText: '[a-zA-Z\\d\\.\\:\\,\\;\\s\\-]+',
                 email: /(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/g,
                 phone: /^(\d{3})([-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})$/g,
-                userName: '[a-zA-Z]+[\\da-zA-Z]+'
+                userName: '[a-zA-Z]+[\\da-zA-Z]+',
             };
 
             $scope.new_info = tempAccount;
@@ -26,8 +26,14 @@ app.controller('EditUserAccountInfoController',
             $scope.userDOB = new Date(account.udob);
 
             $scope.submit = function() {
-                $scope.new_info.udob = $filter('date')(new Date($scope.userDOB),'yyyy-MM-dd');;
-                return Popeye.closeCurrentModal($scope.new_info);
+                $scope.new_info.udob = $filter('date')(new Date($scope.userDOB),'yyyy-MM-dd');
+                var result = {};
+                for(x in $scope.new_info){
+                    if(account[x] !== $scope.new_info[x]){
+                        result[x] = $scope.new_info[x];
+                    }
+                }
+                return Popeye.closeCurrentModal(result);
             };
 
             $scope.cancel = function () {

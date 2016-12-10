@@ -551,3 +551,33 @@ UPDATE_PAYMENT_ADDRESS_ID = """UPDATE payment_method
 UPDATE_PRODUCT_QTY = """UPDATE product SET product_qty = product_qty - %s WHERE productid = %s"""
 
 SELECT_ALL_GENRES = """SELECT * FROM genre"""
+
+
+UPDATE_USER_FNAME = """UPDATE cg_user AS u
+                        SET user_firstname = %s
+                        WHERE u.userid = %s
+                        RETURNING *"""
+
+
+UPDATE_USER_LNAME = """UPDATE cg_user AS u
+                        SET user_lastname = %s
+                        WHERE u.userid = %s
+                        RETURNING *"""
+
+
+UPDATE_USER_EMAIL = """UPDATE cg_user AS u
+                        SET email = %s
+                        WHERE u.userid = %s
+                        RETURNING *"""
+
+
+UPDATE_USER_PHONE = """UPDATE cg_user AS u
+                        SET phone = %s
+                        WHERE u.userid = %s
+                        RETURNING *"""
+
+
+UPDATE_USER_DOB = """UPDATE cg_user AS u
+                        SET dob = to_date(%s, 'YYYY-MM-DD')
+                        WHERE u.userid = %s
+                        RETURNING *"""

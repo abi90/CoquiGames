@@ -395,22 +395,15 @@ def user(userid):
         elif request.method == 'PUT':
             if request.json:
                 # Verify request json contains needed parameters
-                if ('uname' and 'ufirstname' and 'ulastname'
-                        and 'uemail' and 'uphone' and 'udob' not in request.json):
+                if not ('uname' or 'ufirstname' or 'ulastname'
+                        or 'uemail' or 'uphone' or 'udob' in request.json):
                     return missing_parameters_error()
                 # Verify that parameters are valid
-                errors = validate_account_data(request.json)
+                errors = validate_update_account_data(request.json)
                 if errors:
                     return jsonify({'Errors': errors}), 400
                 # Update user account:
-                if dbm.update_user_account(username=request.json['uname'],
-                                           userid=userid,
-                                           user_firstname=request.json['ufirstname'],
-                                           user_lastname=request.json['ulastname'],
-                                           email=request.json['uemail'],
-                                           phone=request.json['uphone'],
-                                           dob=request.json['udob'],
-                                           ):
+                if dbm.update_user_account(userid, request.json):
                     response = jsonify(request.json)
                     response.status_code = 201
                     return response
@@ -537,6 +530,56 @@ def validate_account_data(data):
     # Validate Last Name
     if len(str(data['ulastname'])) <= 1 or len(str(data['ulastname'])) > 255:
         errors.append('Invalid Last Name.')
+
+    return errors
+
+
+def validate_update_account_data(data):
+    """
+    Validates user account data in request.json
+    :param data: request.json
+    :return: list of errors
+    """
+    errors = []
+    if 'uname' in data:
+        # Limit username to only characters and numbers. Starting with a letter.
+        is_valid_username = re.search(r'(^([a-zA-Z]+)[\w]+)$', data['uname'])
+        # username must be greater than 4 characters but less than 20 characters
+        if len(str(data['uname'])) < 4 or len(str(data['uname'])) > 20 or not is_valid_username:
+            errors.append('Invalid username.')
+        elif dbm.is_username_taken(data['uname'])['taken']:
+            errors.append('Username already taken. Please try with another username.')
+
+    if 'uemail' in data:
+        # Email regex for python
+        is_email = re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", data['uemail'])
+        if not is_email:
+            errors.append('Invalid email.')
+        elif dbm.is_email_taken(data['uemail'])['taken']:
+            errors.append('Email already taken. Please try with another email.')
+
+    if 'uphone' in data:
+        # Phone regex for python
+        is_phone = re.search(r'^(\d{3})([-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})$',
+                             data['uphone'])
+        if not is_phone:
+            errors.append('Invalid Phone Number.')
+
+    if 'udob' in data:
+        # Date regex for python
+        is_date = re.search(r'^(\d{4}\-\d{2}\-\d{2})$', data['udob'])
+        if not is_date:
+            errors.append('Invalid DOB.')
+
+    if 'ufirstname' in data:
+        # Validate First Name
+        if len(str(data['ufirstname'])) <= 1 or len(str(data['ufirstname'])) > 255:
+            errors.append('Invalid First Name.')
+
+    if 'ulastname' in data:
+        # Validate Last Name
+        if len(str(data['ulastname'])) <= 1 or len(str(data['ulastname'])) > 255:
+            errors.append('Invalid Last Name.')
 
     return errors
 

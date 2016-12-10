@@ -233,25 +233,41 @@ def fetch_user_cart(userid):
     return __execute_select_query__(Query.SELECT_USER_CART, (userid,))
 
 
-def update_user_account(username, userid, user_firstname, user_lastname, email, phone, dob):
+def update_user_account(userid, user_data):
     """
-
-    :param username:
-    :param userid:
-    :param user_firstname:
-    :param user_lastname:
-    :param email:
-    :param phone:
-    :param dob:
-    :return:
+    Update user data.
+    :param userid: user id
+    :param user_data: user data
+    :return: user id
     """
     try:
         conn = __connection__()
         cur = conn.cursor()
-        cur.execute(Query.UPDATE_USERNAME, (username,  userid))
-        cur.fetchall()
-        cur.execute(Query.UPDATE_USER, (user_firstname, user_lastname, email, phone, dob, userid))
-        cur.fetchall()
+
+        if 'uname' in user_data:
+            cur.execute(Query.UPDATE_USERNAME, (user_data['uname'],  userid))
+            cur.fetchall()
+
+        if 'ufirstname' in user_data:
+            cur.execute(Query.UPDATE_USER_FNAME, (user_data['ufirstname'], userid))
+            cur.fetchall()
+
+        if 'ulastname' in user_data:
+            cur.execute(Query.UPDATE_USER_LNAME, (user_data['ulastname'], userid))
+            cur.fetchall()
+
+        if 'uphone' in user_data:
+            cur.execute(Query.UPDATE_USER_PHONE, (user_data['uphone'], userid))
+            cur.fetchall()
+
+        if 'udob' in user_data:
+            cur.execute(Query.UPDATE_USER_DOB, (user_data['udob'], userid))
+            cur.fetchall()
+
+        if 'uemail' in user_data:
+            cur.execute(Query.UPDATE_USER_EMAIL, (user_data['uemail'], userid))
+            cur.fetchall()
+
         conn.commit()
         cur.close()
         conn.close()
