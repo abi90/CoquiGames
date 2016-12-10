@@ -76,7 +76,21 @@ SELECT_USER = """SELECT to_char(dob, 'YYYY-MM-DD') AS udob, email AS uemail, use
                   WHERE userid = %s"""
 
 
-SELECT_USER_WISH_LIST = """SELECT wi.productid as pid, p.product_title as pname, p.product_price as pprice, pi.product_img as cover
+SELECT_USER_WISH_LIST = """SELECT wi.productid as pid, p.product_title as pname, p.product_price as pprice, pi.product_img as cover,
+CASE
+            WHEN (p.productid IN ( SELECT offer.productid
+               FROM offer
+              WHERE ((offer.offer_start_date <= ('now'::text)::date) AND (offer.offer_end_date > ('now'::text)::date)))) THEN true
+            ELSE false
+        END AS inoffer,
+        CASE
+            WHEN (p.productid IN ( SELECT offer.productid
+               FROM offer
+              WHERE ((offer.offer_start_date <= ('now'::text)::date) AND (offer.offer_end_date > ('now'::text)::date)))) THEN (( SELECT min(o.offer_price) AS min
+               FROM offer o
+              WHERE ((o.productid = p.productid) AND (o.offer_start_date <= ('now'::text)::date) AND (o.offer_end_date > ('now'::text)::date))))::real
+            ELSE (0)::real
+        END AS offerprice
                           FROM wishlist_contains wi JOIN product p USING (productid) JOIN product_img pi USING(productid)
                           WHERE wi.userid = %s and pi.cover = true"""
 
@@ -114,7 +128,23 @@ SELECT_USER_PAYMENT_BY_ID= """SELECT to_char(card_exp_date, 'YYYY-MM') AS cexpda
                               WHERE userid = %s AND payment_methodid = %s"""
 
 
-SELECT_USER_CART = """SELECT cc.productid AS pid,p.product_title AS pname, p.product_price AS pprice, cc.cart_product_qty as pquantity, pi.product_img AS cover
+SELECT_USER_CART = """SELECT cc.productid AS pid,p.product_title AS pname, p.product_price AS pprice, cc.cart_product_qty as pquantity, pi.product_img AS cover,
+
+  CASE
+            WHEN (p.productid IN ( SELECT offer.productid
+               FROM offer
+              WHERE ((offer.offer_start_date <= ('now'::text)::date) AND (offer.offer_end_date > ('now'::text)::date)))) THEN true
+            ELSE false
+        END AS inoffer,
+        CASE
+            WHEN (p.productid IN ( SELECT offer.productid
+               FROM offer
+              WHERE ((offer.offer_start_date <= ('now'::text)::date) AND (offer.offer_end_date > ('now'::text)::date)))) THEN (( SELECT min(o.offer_price) AS min
+               FROM offer o
+              WHERE ((o.productid = p.productid) AND (o.offer_start_date <= ('now'::text)::date) AND (o.offer_end_date > ('now'::text)::date))))::real
+            ELSE (0)::real
+        END AS offerprice
+
                       FROM cart_contains cc JOIN product P USING (productid) JOIN product_img pi USING (productid)
                       WHERE cc.cartid IN (SELECT c.cartid FROM cart as c WHERE c.userid = %s AND c.active = TRUE) AND pi.cover = TRUE
                       ORDER BY cc.cartid, cc.insert_date"""

@@ -634,10 +634,6 @@ def update_user_password(accountid, upassword):
     return __execute_commit_query__(Query.UPDATE_USER_PASSWORD_ADMIN, (upassword, accountid))
 
 
-
-
-
-
 def update_payment_method(userid, payment_methodid, card_data, billing_addressid):
     """
     Update Payment Method
@@ -824,6 +820,7 @@ def deactivate_user(accountid):
                 conn.rollback()
                 conn.close()
         raise
+
 
 def deactivate_platform(platformid):
     """
