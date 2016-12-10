@@ -57,10 +57,21 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
             });
 
             // Update user selected address after modal is closed
-            modal.closed.then(function(passwords) {
-                if(passwords){
-                    $scope.messages[$scope.messages.length]= "Your Password was updated!";
-                    getUser();
+            modal.closed.then(function(response) {
+                if(response){
+                    var data = { upassword: response.password };
+                    console.log(JSON.stringify(data));
+                    userwsapi.putUserPassword(auth.uid, auth.uname, auth.token, data)
+                        .then(
+                            function () {
+                                $scope.messages[$scope.messages.length]= "Your Password was updated!";
+                                getUser()
+                            },
+                            function (err) {
+                                console.log(JSON.stringify(err.data));
+                                getUser()
+                            }
+                        );
                 }
             });
         };
@@ -95,15 +106,16 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
                 if(value){
                     userwsapi.putUser(auth.uid, auth.uname, auth.token, value)
                         .then(
-                            function (response){
+                            function (){
                                 $scope.messages[$scope.messages.length]= "Your Information was updated!";
                                 getUser();
 
                             },
                             function (err) {
                                 $scope.errors[$scope.errors.length]= err.data;
-                                    getUser();
-                            });
+                                getUser();
+                            }
+                        );
                 }
             });
         };

@@ -1021,8 +1021,8 @@ def deactivate_announcements(platformid, aid):
         return __execute_commit_query__(Query.DEACTIVATE_STORE_ANNOUNCEMENTS, (aid,))[0]
 
 
-def change_password(userid):
-    return __execute_commit_query__(Query.UPDATE_USER_PASSWORD, (userid,))
+def change_password(userid, password):
+    return __execute_commit_query__(Query.UPDATE_USER_PASSWORD, (password, userid))
 
 
 def edit_platform_announcement(img, title, active, aid, platformid):

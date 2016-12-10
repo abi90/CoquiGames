@@ -365,14 +365,15 @@ def user_cart(userid):
 def change_password(userid):
     try:
         if request.json:
+            print request.json
             # Verify request json contains needed parameters
-            if 'upassword' in request.json:
+            if 'upassword' not in request.json:
                 return missing_parameters_error()
             # Verify that parameters are valid
             if not validate_password(request.json['upassword']):
                 return jsonify({'error': 'Invalid Password.'}), 400
             # Update user password:
-            if dbm.change_password(userid):
+            if dbm.change_password(userid, request.json['upassword']):
                 return jsonify({"message": "User {0} Password Was Changed.".format(userid)})
             return not_found()
         else:

@@ -506,7 +506,7 @@ UDPATE_ADMIN_PRODUCT = """UPDATE product
 
 UPDATE_USER_PASSWORD = """update account_info
                           set upassword = crypt(%s, gen_salt('md5'))
-                          where accountid = (select accountid from cg_user where userid=%s )
+                          where accountid = (select accountid from cg_user where userid = %s)
                           RETURNING *"""
 
 
