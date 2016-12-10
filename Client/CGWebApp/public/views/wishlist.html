@@ -44,7 +44,11 @@
                     <a ng-href="#/product.html/{{wish.pid}}">{{wish.pname |limitTo:10}}{{wish.pname.length > 10 ? '...':''}}</a>
                 </td>
                 <td class="text-center">
-                    {{wish.pprice}}
+
+                    <span ng-if="wish.inoffer==true" class="price-new">{{wish.offerprice | currency}}</span>
+                    <span ng-if="wish.inoffer==false" class="price-new">{{wish.pprice | currency}}</span>
+                    <span ng-if="wish.inoffer==true" class="price-old"><strike>{{wish.pprice | currency}}</strike></span>
+
                 </td>
                 <td class="text-center">
                     <button type="submit" title="Add To Cart" class="btn btn-default tool-tip" ng-click="addToCartFromWishList(wish.pid)">

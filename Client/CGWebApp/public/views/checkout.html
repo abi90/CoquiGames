@@ -34,8 +34,15 @@
                                         <a ng-href="#/product.html/{{cart.pid}}">{{cart.pname}}</a>
                                     </td>
                                     <td class="text-left">{{cart.pquantity | number}}</td>
-                                    <td class="text-left">{{cart.pprice | currency}}</td>
-                                    <td class="text-left">{{cart.pprice * cart.pquantity | currency}}</td>
+                                    <td class="text-left">
+                                        <span ng-if="cart.inoffer==true" class="price-new">{{cart.offerprice | currency}}</span>
+                                        <span ng-if="cart.inoffer==false" class="price-new">{{cart.pprice | currency}}</span>
+                                        <span ng-if="cart.inoffer==true" class="price-old"><strike>{{cart.pprice | currency}}</strike></span>
+                                    </td>
+                                    <td class="text-left">
+                                        <span ng-if="cart.inoffer==true" class="price-new">{{cart.offerprice * cart.pquantity | currency}}</span>
+                                        <span ng-if="cart.inoffer==false" class="price-new">{{cart.pprice * cart.pquantity | currency}}</span>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -167,7 +174,7 @@
                         <hr />
                         <dl class="dl-horizontal total">
                             <dt>Total :</dt>
-                            <dd>{{getSubTotal() + $scope.shipmentFee.fee | currency}}</dd>
+                            <dd>{{getSubTotal() + shipmentFee.fee | currency}}</dd>
                         </dl>
                         <hr />
                         <div class="text-uppercase clearfix">

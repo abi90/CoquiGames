@@ -31,7 +31,12 @@ app.controller('CartController',
                 var subtotal = 0;
                 for(var i = 0; i < $scope.userCart.length; i++){
                     var product = $scope.userCart[i];
-                    subtotal += (product.pprice * product.pquantity);
+                    if (product.inoffer) {
+                        subtotal += (product.offerprice * product.pquantity);
+                    }
+                    else{
+                        subtotal += (product.pprice * product.pquantity);
+                    }
                 }
                 $scope.cartTotal = subtotal + $scope.shippmentFee;
                 return subtotal;

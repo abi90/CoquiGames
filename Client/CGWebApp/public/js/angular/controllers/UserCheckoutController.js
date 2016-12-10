@@ -63,7 +63,12 @@ app.controller('UserCheckoutController', ['$scope', '$location', 'authentication
             try {
                 for (var i = 0; i < $scope.userCart.length; i++) {
                     var product = $scope.userCart[i];
-                    subtotal += (product.pprice * product.pquantity);
+                    if (product.inoffer) {
+                        subtotal += (product.offerprice * product.pquantity);
+                    }
+                    else{
+                        subtotal += (product.pprice * product.pquantity);
+                    }
                 }
             }catch (err){
                 subtotal = 0;
