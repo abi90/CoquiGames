@@ -605,6 +605,10 @@ def process_order(userid, order_data):
         orderid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['orderid']
         # Insert products from cart into the order details
         cur.execute(Query.INSERT_ORDER_DETAILS, (orderid, cartid))
+        columns = [x[0] for x in cur.description]
+        products = [dict(zip(columns, row)) for row in cur.fetchall()]
+        for p in products:
+            cur.execute(Query.UPDATE_PRODUCT_QTY, (p['product_qty'], p['productid']))
         # Update order total
         cur.execute(Query.UPDATE_ORDER_TOTAL, (orderid, orderid))
         # Create a new cart to the user
@@ -781,7 +785,7 @@ def create_user_address(userid, address_data):
             elif address_data['atype'] == 'shipping':
                 cur.execute(Query.UPDATE_USER_PREFERRED_SHIPPING_ADDR, (addressid, userid))
         if address_data['atype'] == 'billing':
-            cur.execute(Query.UPDATE_MULTIPLE_PAYMENT_ADDRESS_ID, (addressid, address_data['pid'], userid))
+            cur.execute(Query.UPDATE_PAYMENT_ADDRESS_ID, (addressid, address_data['pid'], userid))
             cur.fetchall()
         conn.commit()
         cur.close()

@@ -109,7 +109,7 @@ def user_payment(userid):
 @requires_auth
 def update_payment(userid, payment_methodid):
     try:
-        if request.method=='PUT':
+        if request.method == 'PUT':
             if request.json:
                 payment_keys = post_payment_keys
                 payment_keys.append('ppreferred')
@@ -126,7 +126,7 @@ def update_payment(userid, payment_methodid):
                 else:
                     return jsonify({'error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
             return bad_request()
-        elif request.method=='DELETE':
+        elif request.method == 'DELETE':
             result = dbm.deactivate_user_payment_method(userid, payment_methodid)
             if result:
                 return jsonify(result)
@@ -136,23 +136,27 @@ def update_payment(userid, payment_methodid):
         return internal_server_error()
 
 
-@user_blueprint.route("/<int:userid>/address/<int:addressid>", methods=['PUT'])
+@user_blueprint.route("/<int:userid>/address/<int:addressid>", methods=['PUT', 'DELETE'])
 @requires_auth
 def update_address(userid, addressid):
     try:
-        if request.json:
-            put_address_keys = post_address_keys
-            put_address_keys.append('apreferred')
-            put_address_keys.append('atype')
-            for key in put_address_keys:
-                if key not in request.json:
-                    return missing_parameters_error()
-            errors = validate_address(request.json)
-            if errors:
-                return jsonify({'Errors': errors}), 400
-            new_address_id = dbm.update_user_address(userid, addressid, request.json)
-            return jsonify({'aid': new_address_id}), 201
-        return bad_request()
+        if request.method == 'PUT':
+            if request.json:
+                put_address_keys = post_address_keys
+                put_address_keys.append('apreferred')
+                put_address_keys.append('atype')
+                for key in put_address_keys:
+                    if key not in request.json:
+                        return missing_parameters_error()
+                errors = validate_address(request.json)
+                if errors:
+                    return jsonify({'Errors': errors}), 400
+                new_address_id = dbm.update_user_address(userid, addressid, request.json)
+                return jsonify({'aid': new_address_id}), 201
+            return bad_request()
+        elif request.method == 'DELETE':
+            result = dbm.deactivate_user_address(userid, addressid)
+            return jsonify(result)
     except Exception as e:
         print e.message
         return internal_server_error()
@@ -180,7 +184,7 @@ def user_address(userid):
                     return jsonify({'Errors': errors}), 400
 
                 if request.json['atype'] == 'billing' and 'pid' not in request.json:
-                    return jsonify({'Errors': errors.append("Missing Payment Method.")}), 400
+                    return jsonify({'Errors': "Missing Payment Method."}), 400
 
                 new_address_id = dbm.create_user_address(userid, request.json)
                 return jsonify({'aid': new_address_id}), 201

@@ -119,7 +119,7 @@ SELECT_USER_CREDIT_CARD = """SELECT to_char(card_exp_date, 'YYYY-MM') AS cexpdat
                               CASE WHEN payment_methodid IN (SELECT up.payment_methodid FROM user_preferences up) THEN TRUE
                               ELSE FALSE END AS ppreferred
                               FROM payment_method
-                              WHERE userid = %s"""
+                              WHERE userid = %s AND active = TRUE"""
 
 SELECT_USER_PAYMENT_BY_ID= """SELECT to_char(card_exp_date, 'YYYY-MM') AS cexpdate, payment_methodid AS cid, card_last_four_digits AS cnumber, card_type AS ctype,
                               CASE WHEN payment_methodid IN (SELECT up.payment_methodid FROM user_preferences up) THEN TRUE
@@ -308,8 +308,17 @@ INSERT_EMPTY_ORDER = """INSERT INTO orders (cartid, shipment_feeid, order_status
 
 
 INSERT_ORDER_DETAILS = """INSERT INTO order_details (orderid, productid, product_price, product_qty)
-                          (SELECT %s AS orderid, productid, product_price, cart_product_qty as product_qty
-                          FROM cart_contains JOIN product USING (productid)
+                          (SELECT %s AS orderid, productid,
+                          CASE
+                                WHEN (p.productid IN ( SELECT offer.productid
+                                   FROM offer
+                                  WHERE ((offer.offer_start_date <= ('now'::text)::date) AND (offer.offer_end_date > ('now'::text)::date)))) THEN (( SELECT min(o.offer_price) AS min
+                                   FROM offer o
+                                  WHERE ((o.productid = p.productid) AND (o.offer_start_date <= ('now'::text)::date) AND (o.offer_end_date > ('now'::text)::date))))::real
+                                ELSE (p.product_price)
+                            END AS product_price,
+                          cart_product_qty as product_qty
+                          FROM cart_contains JOIN product p USING (productid)
                           WHERE cartid = %s)
                           RETURNING *"""
 
@@ -534,8 +543,10 @@ UPDATE_MULTIPLE_PAYMENT_ADDRESS_ID = """UPDATE payment_method
                             RETURNING *"""
 
 
-UPDATE_MULTIPLE_PAYMENT_ADDRESS_ID = """UPDATE payment_method
+UPDATE_PAYMENT_ADDRESS_ID = """UPDATE payment_method
                             SET billing_addressid = %s
                             WHERE payment_methodid = %s AND userid =%s
                             RETURNING *"""
+
+UPDATE_PRODUCT_QTY = """UPDATE product SET product_qty = product_qty - %s WHERE productid = %s"""
 

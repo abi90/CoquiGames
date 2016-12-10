@@ -35,7 +35,7 @@ app.controller('AddUserBlAddressModalController',
             };
 
             $scope.setPayment = function (payment) {
-                $scope.selectedAddress.pid = payment.pid;
+                $scope.selectedAddress.pid = payment.cid;
                 $scope.selectedAddress.cnumber = payment.cnumber;
                 $scope.validPayment = true;
             };

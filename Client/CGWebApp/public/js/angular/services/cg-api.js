@@ -339,6 +339,37 @@ app.factory('userwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    userwsapi.deleteAddress = function (uid, username, password, aid) {
+        return $http({
+            method: 'DELETE',
+            url: userServiceURL + '/' + uid + '/address/' + aid,
+            headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    userwsapi.deletePayment = function (uid, username, password, pid) {
+        return $http({
+            method: 'DELETE',
+            url: userServiceURL + '/' + uid + '/payment/' + pid,
+            headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+    userwsapi.putUserPassword = function (uid, username, password, passwords) {
+        return $http({
+            method: 'PUT',
+            url: userServiceURL + '/' + uid + '/password',
+            dataType: 'json',
+            data: passwords,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
+
     return userwsapi;
 }]);
 

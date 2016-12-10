@@ -58,8 +58,22 @@ app.controller('UserPaymentController',
 
             // Update user payments after modal is closed
             modal.closed.then(function(){
-
+                getUserPayments();
             });
+        };
+
+        $scope.removePayment = function(payment){
+
+            userwsapi.deletePayment(auth.uid, auth.uname, auth.token, payment.cid)
+                .then(
+                    function () {
+                        getUserPayments();
+                    },
+                    function (err){
+                        console.log(JSON.stringify(err));
+                        getUserPayments();
+                    }
+                );
         };
 
         // Get User Data on startup

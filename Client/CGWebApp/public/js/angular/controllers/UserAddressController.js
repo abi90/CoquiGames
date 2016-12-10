@@ -139,13 +139,30 @@ app.controller('UserAddressController',
                         .then(function () {
                             getUserShippingAddress();
                             getUserBillingAddress();
-                        }, function () {
+                        }, function (err) {
+                            console.log(JSON.stringify(err.data));
+                            console.log(JSON.stringify(new_address));
                             getUserShippingAddress();
                             getUserBillingAddress();
                         });
                 }
 
             });
+        };
+
+        $scope.deactivateAddress = function (address) {
+            userwsapi.deleteAddress(auth.uid, auth.uname, auth.token, address.aid)
+                .then(
+                    function () {
+                        getUserShippingAddress();
+                        getUserBillingAddress();
+                    },
+                    function (err) {
+                        console.log(JSON.stringify(err));
+                        getUserShippingAddress();
+                        getUserBillingAddress();
+                    }
+                );
         };
 
         // Get User Data on startup

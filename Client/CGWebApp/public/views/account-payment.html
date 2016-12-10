@@ -32,17 +32,23 @@
                                 <img ng-if="pay.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
                                 <img ng-if="pay.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
                             </div>
-                            <div class="col-md-2 col-sm-2 col-xs-3">
+                            <div class="col-md-2 col-sm-2 col-xs-2">
                                 <label class="control-label">Ending in {{pay.cnumber}}</label>
                             </div>
-                            <div class="col-md-3 col-sm-3 col-xs-3">
+                            <div class="col-md-2 col-sm-3 col-xs-2">
                                 <label class="control-label">Expires {{pay.cexpdate | date}}</label>
                             </div>
-                            <div class="col-md-2 col-sm-2 col-xs-3">
+                            <div class="col-md-2 col-sm-2 col-xs-2">
                                 <button type="submit" class="btn btn-black" ng-click="shoAddPaymentModal()">CHANGE</button>
                             </div>
-                            <div class="col-md-3 col-sm-2 col-xs-3" ng-if="pay.ppreferred == true">
+                            <div class="col-md-2 col-sm-2 col-xs-2">
+                                <button type="submit" class="btn btn-danger" ng-click="removePayment(pay)">DELETE</button>
+                            </div>
+                            <div class="col-md-2 col-sm-2 hidden-xs" ng-if="pay.ppreferred == true">
                                 <label class="control-label">[*Preferred*]</label>
+                            </div>
+                            <div class="hidden-lg hidden-md hidden-sm col-xs-2" ng-if="pay.ppreferred == true">
+                                <label class="control-label">[Preferred]</label>
                             </div>
                             <!-- Password Area Ends -->
                             <!-- Registration Form Starts -->
