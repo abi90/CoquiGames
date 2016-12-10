@@ -7,6 +7,8 @@ app.controller('UserPaymentController',
 
         $scope.errors = [];
         $scope.messages = [];
+        $scope.userData = {};
+        $scope.userData.uname = auth.uname;
 
         // Local Functions
         var logout = function () {

@@ -89,7 +89,7 @@ def user_payment(userid):
                 payment_keys.append('ppreferred')
                 for key in payment_keys:
                     if key not in request.json:
-                        return missing_parameters_error()
+                        return jsonify({"Errors": "Missing {0} in request.".format(key)}), 400
                 errors = validate_payment(request.json)
                 if errors:
                     return jsonify({'Errors': errors}), 400
@@ -124,7 +124,7 @@ def update_payment(userid, payment_methodid):
                     pid = dbm.update_payment_method(userid, payment_methodid, request.json, billing_addressid)
                     return jsonify({'payment_methodid': pid}), 201
                 else:
-                    return jsonify({'error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
+                    return jsonify({'Error': 'Preferred Billing Address Not Found For User {0}'.format(userid)}), 400
             return bad_request()
         elif request.method == 'DELETE':
             result = dbm.deactivate_user_payment_method(userid, payment_methodid)

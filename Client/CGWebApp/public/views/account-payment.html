@@ -15,7 +15,7 @@
                 <li>
                     <a href="index.html">Home</a>
                 </li>
-                <li class="active">{{auth.uname}}</li>
+                <li class="active">{{userData.uname}}</li>
                 <li class="active">Payment Method</li>
             </ol>
             <div class="panel panel-smart">
@@ -37,9 +37,6 @@
                             </div>
                             <div class="col-md-2 col-sm-3 col-xs-2">
                                 <label class="control-label">Expires {{pay.cexpdate | date}}</label>
-                            </div>
-                            <div class="col-md-2 col-sm-2 col-xs-2">
-                                <button type="submit" class="btn btn-black" ng-click="shoAddPaymentModal()">CHANGE</button>
                             </div>
                             <div class="col-md-2 col-sm-2 col-xs-2">
                                 <button type="submit" class="btn btn-danger" ng-click="removePayment(pay)">DELETE</button>
