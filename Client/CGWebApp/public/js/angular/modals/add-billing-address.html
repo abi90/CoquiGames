@@ -6,53 +6,78 @@
         </div>
         <div class="modal-dialog">
             <div class="modal-body">
-                <row role="row" name="addAddress" novalidation>
+                <form role="form" name="addAddress">
                     <!-- Delivery Information Starts -->
                     <div class="row">
-                        <label for="txtSAddFname" class="col-sm-3 control-label">Full Name :</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtSAddFname" placeholder="Full Name"
-                                   ng-model="selectedAddress.afullname" ng-pattern="patterns.bigText">
-                            <br>
+                        <label class="col-sm-3 control-label">Full Name :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="txtSAddFname" placeholder="Full Name"
+                                   ng-model="selectedAddress.afullname" required ng-pattern="patterns.bigText">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="addAddress.txtSAddFname.$dirty && addAddress.txtSAddFname.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="addAddress.txtSAddFname.$dirty && addAddress.txtSAddFname.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="txtSAddress1" class="col-sm-3 control-label">Address/1 :</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtSAddress1" placeholder="Address/1"
-                                   ng-model="selectedAddress.aaddress1" ng-pattern="patterns.bigText">
-                            <br>
+                        <label class="col-sm-3 control-label">Address/1 :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="txtSAddress1" placeholder="Address/1"
+                                   ng-model="selectedAddress.aaddress1" required ng-pattern="patterns.bigText">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="addAddress.txtSAddress1.$dirty && addAddress.txtSAddress1.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="addAddress.txtSAddress1.$dirty && addAddress.txtSAddress1.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="txtSAddress2" class="col-sm-3 control-label">Address/2 :</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtSAddress2" placeholder="Address/2"
-                                   ng-model="selectedAddress.aaddress2" ng-pattern="patterns.bigText">
-                            <br>
+                        <label class="col-sm-3 control-label">Address/2 :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="txtSAddress2" placeholder="Address/2"
+                                   ng-model="selectedAddress.aaddress2" required ng-pattern="patterns.bigText">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="addAddress.txtSAddress2.$dirty && addAddress.txtSAddress2.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="addAddress.txtSAddress2.$dirty && addAddress.txtSAddress2.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="txtSCity" class="col-sm-3 control-label">City :</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtSCity" placeholder="City"
-                                   ng-model="selectedAddress.acity" ng-pattern="patterns.bigText">
-                            <br>
+                        <label class="col-sm-3 control-label">City :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="txtSCity" placeholder="City"
+                                   ng-model="selectedAddress.acity" required ng-pattern="patterns.bigText">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="addAddress.txtSCity.$dirty && addAddress.txtSCity.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="addAddress.txtSCity.$dirty && addAddress.txtSCity.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="txtSPostCode" class="col-sm-3 control-label">Zip :</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtSPostCode" placeholder="Postal Code"
-                                   ng-model="selectedAddress.azip" ng-pattern="patterns.postal">
-                            <br>
+                        <label class="col-sm-3 control-label">Zip :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="txtSPostCode" placeholder="Postal Code"
+                                   ng-model="selectedAddress.azip" required ng-pattern="patterns.postal">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="addAddress.txtSPostCode.$dirty && addAddress.txtSPostCode.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="addAddress.txtSPostCode.$dirty && addAddress.txtSPostCode.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="drpSState" class="col-sm-3 control-label">State :</label>
-                        <div class="col-sm-9">
-                            <select class="form-control" id="drpSState" autocomplete="on"
-                                    ng-model="selectedAddress.astate">
+                        <label class="col-sm-3 control-label">State :</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="drpSState" autocomplete="on"
+                                    ng-model="selectedAddress.astate" required>
                                 <option value="">State</option>
                                 <option value="PR">PR</option>
                                 <option value="AK">AK</option>
@@ -107,31 +132,41 @@
                                 <option value="WV">WV</option>
                                 <option value="WY">WY</option>
                             </select>
-                            <br>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="addAddress.drpSState.$dirty && addAddress.drpSState.$error.required"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="addAddress.drpSState.$dirty && !addAddress.drpSState.$error.required"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="drpSCountry" class="col-sm-3 control-label">Country :</label>
-                        <div class="col-sm-9">
-                            <select class="form-control" id="drpSCountry" autocomplete="on"
-                                    ng-model="selectedAddress.acountry">
+                        <label class="col-sm-3 control-label">Country :</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="drpSCountry" autocomplete="on"
+                                    ng-model="selectedAddress.acountry" required>
                                 <option value="USA">USA</option>
                             </select>
-                            <br>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="addAddress.drpSCountry.$dirty && addAddress.drpSCountry.$error.required"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="addAddress.drpSCountry.$dirty && !addAddress.drpSCountry.$error.required"
+                                  src="images/valid.png" width="16" height="16"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="Preferred" class="col-sm-3 control-label">Set as Preferred :</label>
-                        <div class="col-sm-9">
-                            <input id="Preferred" type="checkbox" ng-model="selectedAddress.apreferred">
+                        <label class="col-sm-3 control-label">Set as Preferred :</label>
+                        <div class="col-sm-8">
+                            <input name="Preferred" type="checkbox" ng-model="selectedAddress.apreferred">
                         </div>
                     </div>
                     <!-- Delivery Information Ends -->
                     <!-- Payment Dropdown  Starts-->
                     <div class="row">
                         <label class="col-sm-3 control-label">Payment Method:</label>
-                        <span class="col-sm-9" uib-dropdown on-toggle="toggled(open)">
-                        <a href id="simple-dropdown" uib-dropdown-toggle>{{(selectedAddress.pid == 0) ? 'Please Select a Payment': 'Card Ending in ' + selectedAddress.cnumber}}</a>
+                        <span class="col-sm-8" uib-dropdown on-toggle="toggled(open)" required>
+                        <a href name="simple-dropdown" uib-dropdown-toggle>{{(selectedAddress.pid == 0) ? 'Please Select a Payment': 'Card Ending in ' + selectedAddress.cnumber}}</a>
                         <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
                             <li role="menuitem" ng-repeat="pay in userPayments">
                                 <a ng-click="setPayment(pay)">
@@ -145,12 +180,12 @@
                     </span>
                     </div>
                     <!-- Payment Dropdown  Ends-->
-                </row>
+                </form>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
-            <button type="button" class="btn btn-black" ng-disabled="addAddress.$invalid" ng-click="close()">Done</button>
+            <button type="button" class="btn btn-black" ng-disabled="addAddress.$invalid && !cardSelected()" ng-click="close()">Done</button>
         </div>
     </div>
 </div>

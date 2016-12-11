@@ -45,6 +45,10 @@ app.controller('AddUserBlAddressModalController',
                 $scope.validPayment = true;
             };
 
+            $scope.cardSelected=function () {
+              return ($scope.selectedAddress.pid  > 0 && $scope.selectedAddress.cnumber);
+            };
+
             var getUser = function(){
                 var userInfo = authenticationSvc.getUserInfo();
                 if(!userInfo){
