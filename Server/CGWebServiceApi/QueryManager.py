@@ -587,3 +587,7 @@ DEACTIVATE_GENRE = """ UPDATE genre SET active = FALSE WHERE genreid = %s RETURN
 ACTIVATE_GENRE = """UPDATE genre SET active = TRUE WHERE genreid = %s RETURNING *"""
 
 UPDATE_PRODUCT_COVER = """UPDATE product_img SET product_img = %s WHERE productid = %s AND cover = TRUE RETURNING *"""
+
+INSERT_GENRE = """insert INTO genre (genre, active)
+                  VALUES (%s,%s)
+                  RETURNING genreid"""

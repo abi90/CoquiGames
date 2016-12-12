@@ -322,3 +322,18 @@ def activate_genre(genreid):
         print e.message
         return internal_server_error()
 
+@admin_blueprint.route("/genres", methods=['POST'])
+@admin_verification
+def create_genre():
+    try:
+        if request.json:
+            for key in product_keys:
+                if key not in request.json:
+                    return missing_parameters_error()
+            result = dbm.create_genre(request.json)
+            return jsonify({"genreid": result})
+        else:
+            return bad_request
+    except Exception as e:
+        print e.message
+        return internal_server_error()
