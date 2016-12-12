@@ -10,6 +10,8 @@ app.controller('AdminUsersController',
         $scope.sortReverse = false;
         $scope.searchUser = '';
         $scope.Loading = false;
+        $scope.messages = [];
+        $scope.errors = [];
 
         // Get list of users from the WS API
         var getUsers = function() {
@@ -89,6 +91,21 @@ app.controller('AdminUsersController',
             );
         };
 
+        //NOT TESTED YET
+        //Activate User Account
+        $scope.shoActivateUser = function(user) {
+            console.log(JSON.stringify(user));
+            // Deactivate user account
+            adminwsapi.activateUser(auth.uname, auth.token, user.accountid).then(
+                function () {
+                    getUsers()
+                },
+                function () {
+                    getUsers()
+                }
+            );
+        };
+
 
         //Add New Admin User
         $scope.shoAddAdminModal = function() {
@@ -110,11 +127,19 @@ app.controller('AdminUsersController',
                 user.udob = $filter('date')(new Date(user.udob),'yyyy-MM-dd');
 
                 adminwsapi.postAdminUser(auth.uname, auth.token, user).then(
-                    function () {
+                    function (response) {
+                        scope.messages[$scope.messages.length]= "Your Information was succesfully posted!";
                         getUsers()
                     },
-                    function () {
-                        getUsers()
+                    function (err) {
+                        if(err.data.errors){
+                            $scope.errors[$scope.errors.length] = err.data.errors;
+                            getUsers();
+                        }
+                        else {
+                            $scope.errors[$scope.errors.length]  = "Please fill all the required fields.";
+                            getUsers();
+                        }
                     }
                 );
 

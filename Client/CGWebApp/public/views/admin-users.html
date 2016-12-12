@@ -150,14 +150,23 @@
                     <button type="button" title="Remove" class="btn btn-default tool-tip" ng-click="shoDeactivateUser(u)">
                         <i class="fa fa-times-circle"></i>
                     </button>
+                    <button type="button" title="Activate" class="btn btn-default tool-tip" ng-click="shoActivateUser(u)">
+                        <i class="fa fa-check"></i>
+                    </button>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
     <!-- Users Table Ends -->
-    <div class="col-md-offset-1 col-md-10">
-        <div uib-alert ng-repeat="m in messages track by $index" class="alert-success" close="closeAlert($index)">{{m}}
+    <div>
+        <div class="">
+            <div uib-alert ng-repeat="m in messages track by $index" class="alert-success" close="closeMessageAlert($index)">{{m}}
+            </div>
+        </div>
+        <div class="">
+            <div uib-alert ng-repeat="m in errors track by $index" class="alert-danger" close="closeErrorAlert($index)">{{m}}
+            </div>
         </div>
     </div>
     <!-- Add Admin Section Starts -->

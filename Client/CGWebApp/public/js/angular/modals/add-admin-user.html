@@ -1,7 +1,7 @@
 <div class="popeye-modal-container">
     <div class="popeye-modal modal-content">
         <div class="modal-header">
-            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
             <h4 class="modal-title">Add New Administrator</h4>
         </div>
         <div class="modal-dialog">
@@ -97,11 +97,20 @@
                              src="images/valid.png" width="16" height="16"/>
                     </div>
                 </div>
+                    <div class="row">
+                        <label for="txtActive" class="col-sm-3 control-label">Active :</label>
+                        <div class="col-sm-9">
+                            <input id="txtActive" type="checkbox" ng-model="selectedAdmin.active">
+                            <br>
+                            <br>
+                        </div>
+                    </div>
                 <!-- Username & password ends -->
                 </form>
             </div>
         </div>
         <div class="modal-footer">
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
             <button type="button" class="btn btn-black" ng-click="submit()">Add</button>
         </div>
     </div>

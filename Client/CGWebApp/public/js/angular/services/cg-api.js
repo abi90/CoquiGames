@@ -583,6 +583,16 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    //NOT TESTED YET!!!!!
+    adminwsapi.activateUser= function (username, password, uid) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/account/' + uid + '/activate',
+            headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
     adminwsapi.deactivateProduct= function (username, password, productid) {
         return $http({
             method: 'PUT',
