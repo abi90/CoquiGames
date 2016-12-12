@@ -585,3 +585,5 @@ UPDATE_USER_DOB = """UPDATE cg_user AS u
 DEACTIVATE_GENRE = """ UPDATE genre SET active = FALSE WHERE genreid = %s RETURNING *"""
 
 ACTIVATE_GENRE = """UPDATE genre SET active = TRUE WHERE genreid = %s RETURNING *"""
+
+UPDATE_PRODUCT_COVER = """UPDATE product_img SET product_img = %s WHERE productid = %s AND cover = TRUE RETURNING *"""

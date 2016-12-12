@@ -4,10 +4,13 @@
 /**
  * Created by abi on 12/1/16.
  */
-app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'product', 'adminwsapi',
-    function ($scope, authenticationSvc, $rootScope, Popeye, product, adminwsapi){
+app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'product',
+    'adminwsapi', 'Upload', 'cloudinary',
+    function ($scope, authenticationSvc, $rootScope, Popeye, product, adminwsapi, $upload, cloudinary){
 
         $scope.auth = authenticationSvc.getUserInfo();
+
+        $scope.selectedProduct = {};
 
         adminwsapi.getESRBRating($scope.auth.uname, $scope.auth.token).then(
             function (response) {
@@ -50,31 +53,40 @@ app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  
         );
 
 
-        var tempProduct = {
-            "availability": product.availability,
-            "aditionalinfo": product.aditionalinfo,
-            "category": product.category,
-            "description": product.description,
-            "esrb": product.esrb,
-            "genre": product.genre,
-            "inoffer": product.inoffer,
-            "offerprice": product.offerprice,
-            "photolink": product.photolink,
-            "pid": product.pid,
-            "platformid": product.platformid,
-            "price": product.price,
-            "rating": product.rating,
-            "release": product.release,
-            "title": product.title,
-            "productqty": product.productqty,
-            "offer_start_date": product.offer_start_date,
-            "offer_end_date": product.offer_end_date,
-            "active": product.active,
-            "offerid": product.offerid
+
+        var setProduct = function () {
+            var tempProduct = {
+                "availability": product.availability,
+                "aditionalinfo": product.aditionalinfo,
+                "category": product.category,
+                "description": product.description,
+                "esrb": product.esrb,
+                "genre": product.genre,
+                "inoffer": product.inoffer,
+                "offerprice": product.offerprice,
+                "photolink": product.photolink,
+                "pid": product.pid,
+                "platformid": product.platformid,
+                "price": product.price,
+                "rating": product.rating,
+                "release": product.release,
+                "title": product.title,
+                "productqty": product.productqty,
+                "offer_start_date": product.offer_start_date,
+                "offer_end_date": product.offer_end_date,
+                "active": product.active,
+                "offerid": product.offerid
+            };
+
+            if(!product.inoffer){
+                tempProduct.offerid=0;
+                tempProduct.offer_start_date='';
+                tempProduct.offer_end_date='';
+            }
+
+            $scope.selectedProduct = tempProduct;
         };
 
-
-        $scope.selectedProduct = tempProduct;
         $scope.userInfo = authenticationSvc.getUserInfo();
 
         $scope.submit = function() {
@@ -85,6 +97,56 @@ app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  
             return Popeye.closeCurrentModal(null);
         };
 
+        var d = new Date();
+        //$scope.$watch('files', function() {
+        $scope.uploadFiles = function(files){
+            $scope.files = files;
+            if (!$scope.files) return;
+            angular.forEach(files, function(file){
+                if (file && !file.$error) {
+                    file.upload = $upload.upload({
+                        url: "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
+                        data: {
+                            upload_preset: cloudinary.config().upload_preset,
+                            tags: 'myphotoalbum',
+                            context: 'photo=' + $scope.selectedProduct.title,
+                            file: file
+                        }
+                    }).progress(function (e) {
+                        file.progress = Math.round((e.loaded * 100.0) / e.total);
+                        file.status = "Uploading... " + file.progress + "%";
+                    }).success(function (data, status, headers, config) {
+                        $rootScope.photos = $rootScope.photos || [];
+                        data.context = {custom: {photo: $scope.selectedProduct.title}};
+                        file.result = data;
+                        $scope.selectedProduct.photolink = file.result.url;
+                        $rootScope.photos.push(data);
+                    }).error(function (data, status, headers, config) {
+                        file.result = data;
+                    });
+                }
+            });
+        };
+        //});
+
+        /* Modify the look and fill of the dropzone when files are being dragged over it */
+        $scope.dragOverClass = function($event) {
+            var items = $event.dataTransfer.items;
+            var hasFile = false;
+            if (items != null) {
+                for (var i = 0 ; i < items.length; i++) {
+                    if (items[i].kind == 'file') {
+                        hasFile = true;
+                        break;
+                    }
+                }
+            } else {
+                hasFile = true;
+            }
+            return hasFile ? "dragover" : "dragover-err";
+        };
+
+        setProduct();
 
 
     }]);
