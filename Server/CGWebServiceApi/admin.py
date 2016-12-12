@@ -329,7 +329,7 @@ def create_genre():
         if request.json:
             if 'genre' and 'active' not in request.json:
                     return missing_parameters_error()
-            result = dbm.create_genre(request.json)
+            result = dbm.create_genre(request.json['genre'], request.json['active'])
             return jsonify({"genreid": result})
         else:
             return bad_request
