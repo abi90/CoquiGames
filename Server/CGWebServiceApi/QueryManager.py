@@ -581,3 +581,7 @@ UPDATE_USER_DOB = """UPDATE cg_user AS u
                         SET dob = to_date(%s, 'YYYY-MM-DD')
                         WHERE u.userid = %s
                         RETURNING *"""
+
+DEACTIVATE_GENRE = """ UPDATE genre SET active = FALSE WHERE genreid = %s RETURNING *"""
+
+ACTIVATE_GENRE = """UPDATE genre SET active = TRUE WHERE genreid = %s RETURNING *"""

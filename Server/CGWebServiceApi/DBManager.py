@@ -932,6 +932,12 @@ def fetch_all_genres():
 def deactivate_product(productid):
     return __execute_commit_query__(Query.DEACTIVATE_PRODUCT, (productid,))
 
+def deactivate_genre(genreid):
+    return __execute_commit_query__(Query.DEACTIVATE_GENRE, (genreid,))
+
+def activate_genre(genreid):
+    return __execute_commit_query__(Query.ACTIVATE_GENRE, (genreid,))
+
 
 def create_product(new_product):
     """

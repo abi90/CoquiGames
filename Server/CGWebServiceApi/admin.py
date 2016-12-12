@@ -300,3 +300,25 @@ def get_genres():
         print e
         return internal_server_error()
 
+
+@admin_blueprint.route("/genres/<int:genreid>/deactivate", methods=['PUT'])
+@admin_verification
+def deactivate_genre(genreid):
+    try:
+        result = dbm.deactivate_genre(genreid)
+        return jsonify({"mesagge": result})
+    except Exception as e:
+        print e.message
+        return internal_server_error()
+
+
+@admin_blueprint.route("/genres/<int:genreid>/activate", methods=['PUT'])
+@admin_verification
+def activate_genre(genreid):
+    try:
+        result = dbm.activate_genre(genreid)
+        return jsonify({"mesagge": result})
+    except Exception as e:
+        print e.message
+        return internal_server_error()
+
