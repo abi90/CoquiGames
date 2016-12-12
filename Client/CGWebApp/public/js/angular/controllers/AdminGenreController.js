@@ -2,8 +2,9 @@
  * Created by felix on 12/10/16.
  */
 
-app.controller('AdminGenreController', ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye',
-    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye){
+app.controller('AdminGenreController',
+    ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye', 'authenticationSvc',
+    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, authenticationSvc){
 
         // Defaults sort type, order adn default search filter
         $scope.sortType = 'active';
@@ -14,13 +15,15 @@ app.controller('AdminGenreController', ['$scope', '$location', 'adminwsapi', 'au
 
         var getGenres = function(){
             adminwsapi.getAllGenres(auth.name,auth.token).then(
-            function (response) {
-                $scope.genres = response.data
-            },
-            function (err) {
-                console.log(err.toString());
-                $scope.genres = [];
-            }
+                function (response) {
+                    $scope.genres = response.data
+                },
+                function () {
+                    $scope.genres = [];
+                    authenticationSvc.logout();
+                    $rootScope.$broadcast('unLogin');
+                    $location.path('/login.html');
+                }
             );
 
 
@@ -30,10 +33,10 @@ app.controller('AdminGenreController', ['$scope', '$location', 'adminwsapi', 'au
         //Deactivate a genre
         $scope.shoDeactivateGenre = function(genreid){
             adminwsapi.deactivateGenre(auth.uname, auth.token, genreid).then(
-                function (response) {
+                function () {
                     getGenres();
                 },
-                function (err) {
+                function () {
                     getGenres();
                 }
             );
@@ -43,10 +46,10 @@ app.controller('AdminGenreController', ['$scope', '$location', 'adminwsapi', 'au
         //Activate a Genre
         $scope.shoActivateGenre = function(genreid){
             adminwsapi.activateGenre(auth.uname, auth.token, genreid).then(
-                function (response) {
+                function () {
                     getGenres();
                 },
-                function (err) {
+                function () {
                     getGenres();
                 }
             );
@@ -72,10 +75,10 @@ app.controller('AdminGenreController', ['$scope', '$location', 'adminwsapi', 'au
             modal.closed.then(function(genre) {
                 if(genre){
                     adminwsapi.postGenre(auth.uname, auth.token, genre).then(
-                        function (response) {
+                        function () {
                             getGenres();
                         },
-                        function (err) {
+                        function () {
                             getGenres();
                         }
                     );
@@ -83,12 +86,6 @@ app.controller('AdminGenreController', ['$scope', '$location', 'adminwsapi', 'au
 
             });
         };
-
-
-
-
-
-
 
         $scope.closeErrorAlert= function(index){
             $scope.errors.splice(index,1);
@@ -98,22 +95,6 @@ app.controller('AdminGenreController', ['$scope', '$location', 'adminwsapi', 'au
             $scope.messages.splice(index,1);
         };
 
-
-
-
-
-
-
-    getGenres();
-
-
-
-
-
-
-
-
-
-
+        getGenres();
 
     }]);

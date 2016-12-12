@@ -17,9 +17,10 @@ app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'au
                 function (response) {
                     $scope.users = response.data
                 },
-                function (err) {
-                    $rootScope.$emit("unLogin");
-                    $location.path("/login.html");
+                function () {
+                    authenticationSvc.logout();
+                    $rootScope.$broadcast('unLogin');
+                    $location.path('/login.html');
                     $scope.users = [];
                 }
             );
@@ -78,11 +79,10 @@ app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'au
 
             // Deactivate user account
             adminwsapi.deactivateUser(auth.uname, auth.token, user.accountid).then(
-                function (response) {
+                function () {
                     getUsers()
                 },
-                function (err) {
-                    console.log(JSON.stringify(err));
+                function () {
                     getUsers()
                 }
             );
@@ -109,11 +109,10 @@ app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'au
                 user.udob = $filter('date')(new Date(user.udob),'yyyy-MM-dd');
 
                 adminwsapi.postAdminUser(auth.uname, auth.token, user).then(
-                    function (response) {
+                    function () {
                         getUsers()
                     },
-                    function (err) {
-                        console.log(JSON.stringify(err));
+                    function () {
                         getUsers()
                     }
                 );

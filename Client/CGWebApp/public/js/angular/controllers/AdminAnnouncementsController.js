@@ -1,8 +1,8 @@
 /**
  * Created by Abisai on 11/29/16.
  */
-app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye', '$location',
-    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, location) {
+app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye', 'authenticationSvc',
+    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, authenticationSvc) {
 
         $scope.sortType = 'active';
         $scope.sortReverse = false;
@@ -17,11 +17,12 @@ app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsa
                 function (response) {
                     $scope.announcements = response.data
                 },
-                function (err) {
-                    console.log(err.toString());
+                function () {
                     $scope.announcements = [];
-                    $rootScope.$emit('unLogin');
+                    authenticationSvc.logout();
+                    $rootScope.$broadcast('unLogin');
                     $location.path('/login.html');
+
                 }
             );
             $scope.Loading = false;
@@ -47,10 +48,10 @@ app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsa
             modal.closed.then(function(announcement) {
                 if(announcement){
                     adminwsapi.postAnnouncement(auth.uname, auth.token, announcement).then(
-                        function (response) {
+                        function () {
                             getAllAnnouncements()
                         },
-                        function (err) {
+                        function () {
                             getAllAnnouncements()
                         }
                     );
@@ -77,10 +78,10 @@ app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsa
             modal.closed.then(function(announcement) {
                 if(announcement){
                     adminwsapi.postAnnouncement(auth.uname, auth.token, announcement).then(
-                        function (response) {
+                        function () {
                             getAllAnnouncements()
                         },
-                        function (err) {
+                        function () {
                             getAllAnnouncements()
                         }
                     );
@@ -112,10 +113,10 @@ app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsa
             modal.closed.then(function(announcement) {
                 if(announcement){
                     adminwsapi.updateAnnouncement(auth.uname, auth.token, announcement).then(
-                        function (response) {
+                        function () {
                             getAllAnnouncements()
                         },
-                        function (err) {
+                        function () {
                             getAllAnnouncements()
                         }
                     );
@@ -126,10 +127,10 @@ app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsa
 
         $scope.shoDeactivateAnnouncement = function(announcement){
             adminwsapi.deactivateAnnouncement(auth.uname, auth.token, announcement).then(
-                function (response) {
+                function () {
                     getAllAnnouncements()
                 },
-                function (err) {
+                function () {
                     getAllAnnouncements()
                 }
             );

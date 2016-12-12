@@ -1,8 +1,9 @@
 /**
  * Created by abi on 11/16/16.
  */
-app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye',
-    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye){
+app.controller('AdminProductsController',
+    ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye', 'authenticationSvc',
+    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, authenticationSvc){
 
         // Defaults sort type, order adn default search filter
         $scope.sortType = 'active';
@@ -21,9 +22,10 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
                 function (response) {
                     $scope.products = response.data
                 },
-                function (err) {
-                    console.log(err.toString());
-                    $scope.products = [];
+                function () {
+                    authenticationSvc.logout();
+                    $rootScope.$broadcast('unLogin');
+                    $location.path('/login.html');
                 }
             );
             $scope.Loading = false;
@@ -53,8 +55,8 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
 
                 if(product){
                     adminwsapi.updateProduct(auth.uname, auth.token, product).then(
-                        function (response) {
-                            $scope.messages[$scope.messages.length]= "Your Information was updated!";
+                        function () {
+                            $scope.messages[$scope.messages.length]= "Product "+product.pid +" was updated!";
                             getProducts()
                         },
                         function (err) {
@@ -71,10 +73,12 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
         // Deactivate a product
         $scope.shoDeactivateProduct = function(pid){
             adminwsapi.deactivateProduct(auth.uname, auth.token, pid).then(
-                function (response) {
+                function () {
+                    $scope.messages[$scope.messages.length]= "Product "+pid +" was deactivated!";
                     getProducts()
                 },
                 function (err) {
+                    $scope.errors[$scope.errors.length]= err.data;
                     getProducts()
                 }
             );
@@ -100,7 +104,7 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
                 if(product){
                     adminwsapi.postAdminProduct(auth.uname, auth.token, product).then(
                         function (response) {
-                            $scope.messages[$scope.messages.length]= "Your Information was updated!";
+                            $scope.messages[$scope.messages.length]= "Product "+response.data.pid+" was created!";
                             getProducts()
                         },
                         function (err) {
@@ -123,8 +127,5 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
         };
 
         getProducts();
-
-
-
 
     }]);

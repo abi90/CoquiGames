@@ -1,8 +1,9 @@
 /**
  * Created by Abisai on 11/29/16.
  */
-app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye', '$location',
-    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, location){
+app.controller('AdminOrdersController',
+    ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye', 'authenticationSvc',
+    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, authenticationSvc){
 
         // Defaults sort type, order adn default search filter
         $scope.sortType = 'active';
@@ -17,10 +18,10 @@ app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'a
                 function (response) {
                     $scope.orders = response.data
                 },
-                function (err) {
-                    console.log(err.toString());
+                function () {
                     $scope.orders = [];
-                    $rootScope.$emit('unLogin');
+                    authenticationSvc.logout();
+                    $rootScope.$broadcast('unLogin');
                     $location.path('/login.html');
                 }
             );
@@ -52,7 +53,7 @@ app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'a
                         function (response) {
                             getAnyOrders()
                         },
-                        function (err) {
+                        function () {
                             getAnyOrders()
                         }
                     );
