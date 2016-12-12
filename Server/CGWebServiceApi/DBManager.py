@@ -841,6 +841,32 @@ def deactivate_user(accountid):
                 conn.close()
         raise
 
+def activate_user(accountid):
+    """
+    Deactivate user account
+    :param userid: user id
+    :return: las record updated
+    """
+    try:
+        conn = __connection__()
+        cur = conn.cursor()
+        cur.execute(Query.ACTIVATE_USER, (accountid,))
+        columns = [x[0] for x in cur.description]
+        aid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
+        cur.execute(Query.ACTIVATE_USER, (aid,))
+        columns = [x[0] for x in cur.description]
+        done = [dict(zip(columns, row)) for row in cur.fetchall()]
+        conn.commit()
+        cur.close()
+        conn.close()
+        return done
+    except:
+        if conn:
+            if not conn.closed:
+                conn.rollback()
+                conn.close()
+        raise
+
 
 def deactivate_platform(platformid):
     """

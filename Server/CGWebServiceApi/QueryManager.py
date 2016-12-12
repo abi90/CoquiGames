@@ -438,6 +438,7 @@ DEACTIVATE_ACCOUNT = """UPDATE account_info SET active = FALSE WHERE account_inf
 
 DEACTIVATE_USER = """UPDATE cg_user SET active = FALSE WHERE cg_user.accountid = %s RETURNING *;"""
 
+ACTIVATE_USER = """UPDATE cg_user SET active = TRUE WHERE cg_user.accountid = %s RETURNING *;"""
 
 INSERT_ADMIN_USER = """INSERT INTO account_info (username, upassword, roleid, active)
                           VALUES (%s, crypt(%s, gen_salt('md5')), 3, TRUE) RETURNING accountid"""

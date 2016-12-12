@@ -109,6 +109,16 @@ def deactivate_user(accountid):
         print e.message
         return internal_server_error()
 
+@admin_blueprint.route("/account/<int:accountid>/activate", methods=['PUT'])
+@admin_verification
+def activate_user(accountid):
+    try:
+        result = dbm.activate_user(accountid)
+        return jsonify({"mesagge": result})
+    except Exception as e:
+        print e.message
+        return internal_server_error()
+
 
 @admin_blueprint.route("/account/<int:accountid>/password", methods=['PUT'])
 @admin_verification
