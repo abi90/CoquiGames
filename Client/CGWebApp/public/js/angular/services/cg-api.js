@@ -656,7 +656,7 @@ app.factory('addToUserCart', ['authenticationSvc','userwsapi', '$location', '$ro
                         var cart = response.data;
                         var product;
                         for (i = 0; i < cart.length; i++) {
-                            if(cart[i].pid === pid)
+                            if(cart[i].pid == pid)
                             {
                                 product = cart[i];
                                 product.pquantity = product.pquantity + pqty;

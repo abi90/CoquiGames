@@ -1,6 +1,6 @@
 app.controller("PlatformController",
-    ["$scope", "$location", "storewsapi", "platformId", 'authenticationSvc', 'userwsapi',
-        function ($scope, $location, storewsapi, platformId, authenticationSvc, userwsapi) {
+    ["$scope", "$location", "storewsapi", "platformId", 'addToUserCart', 'addToWishList',
+        function ($scope, $location, storewsapi, platformId, addToUserCart, addToWishList) {
 
             $scope.platformId = platformId;
             $scope.platform = {};
@@ -60,7 +60,7 @@ app.controller("PlatformController",
             };
 
             var getPlatformTopProducts = function () {
-                if($scope.platformLatest.length == 0 || $scope.platformSpecials.length == 0)
+                if($scope.platformLatest.length <= 2 || $scope.platformSpecials.length <= 2)
                 {
                     storewsapi.topPlatProducts($scope.platformId)
                         .then(function (response) {
@@ -71,6 +71,16 @@ app.controller("PlatformController",
                             $scope.platformTop = [];
                         });
                 }
+            };
+
+            $scope.addToCart = function (pid) {
+                if(addToUserCart.addProductWithQty(pid, 1)){
+                    $rootScope.$broadcast('uCart');
+                }
+            };
+
+            $scope.addProductToWishList = function (pid) {
+                addToWishList.addProductToWishList(pid);
             };
 
             getPlatform();

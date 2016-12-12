@@ -6,7 +6,7 @@ from DBManager import authenticate_user, authenticate_admin
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
 
-def generate_auth_token(id, expiration=600):
+def generate_auth_token(id, expiration=60000):
     """
     Generates token with the given id and expiration time
     :param id:

@@ -1,14 +1,8 @@
 /**
  * Created by jesmarie on 12-05-16.
  */
-/**
- * Created by jesmarie on 12-04-16.
- */
-/**
- * Created by abi on 12/1/16.
- */
-app.controller('AdminAddProductController', [ '$scope', 'authenticationSvc',  '$rootScope',
-    'Popeye', 'adminwsapi', 'Upload', 'cloudinary',
+app.controller('AdminAddProductController',
+    ['$scope', 'authenticationSvc',  '$rootScope', 'Popeye', 'adminwsapi', 'Upload', 'cloudinary',
     function ($scope, authenticationSvc, $rootScope, Popeye, adminwsapi, $upload, cloudinary){
 
         $scope.auth = authenticationSvc.getUserInfo();
@@ -17,8 +11,7 @@ app.controller('AdminAddProductController', [ '$scope', 'authenticationSvc',  '$
             function (response) {
                 $scope.ratings = response.data
             },
-            function (err) {
-                console.log(err.toString());
+            function () {
                 $scope.ratings = [];
             }
         );
@@ -27,8 +20,7 @@ app.controller('AdminAddProductController', [ '$scope', 'authenticationSvc',  '$
             function (response) {
                 $scope.categories = response.data
             },
-            function (err) {
-                console.log(err.toString());
+            function () {
                 $scope.categories = [];
             }
         );
@@ -37,8 +29,7 @@ app.controller('AdminAddProductController', [ '$scope', 'authenticationSvc',  '$
             function (response) {
                 $scope.platforms = response.data
             },
-            function (err) {
-                console.log(err.toString());
+            function () {
                 $scope.platforms = [];
             }
         );
@@ -47,12 +38,16 @@ app.controller('AdminAddProductController', [ '$scope', 'authenticationSvc',  '$
             function (response) {
                 $scope.genres = response.data
             },
-            function (err) {
-                console.log(err.toString());
+            function () {
                 $scope.genres = [];
             }
         );
 
+        $scope.patterns={
+            bigText: '[a-zA-Z\\d\\.\\:\\,\\;\\s\\-\\!\\?\\>\\<\\&\\^\\%\\$\\#\\@\\*\\(\\)\\_\\=\\`\\~\\/\\\]+',
+            date: /\d{4}-\d{2}-\d{2}/,
+            url: '((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?'
+        };
 
         var tempProduct = {
             "availability": false,
@@ -89,8 +84,7 @@ app.controller('AdminAddProductController', [ '$scope', 'authenticationSvc',  '$
             $scope.selectedProduct= tempProduct;
             return Popeye.closeCurrentModal(null);
         };
-        var d = new Date();
-        //$scope.$watch('files', function() {
+
         $scope.uploadFiles = function(files){
             $scope.files = files;
             if (!$scope.files) return;
@@ -100,7 +94,7 @@ app.controller('AdminAddProductController', [ '$scope', 'authenticationSvc',  '$
                         url: "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
                         data: {
                             upload_preset: cloudinary.config().upload_preset,
-                            tags: 'myphotoalbum',
+                            tags: 'product',
                             context: 'photo=' + $scope.selectedProduct.title,
                             file: file
                         }
@@ -108,34 +102,17 @@ app.controller('AdminAddProductController', [ '$scope', 'authenticationSvc',  '$
                         file.progress = Math.round((e.loaded * 100.0) / e.total);
                         file.status = "Uploading... " + file.progress + "%";
                     }).success(function (data, status, headers, config) {
-                        $rootScope.photos = $rootScope.photos || [];
                         data.context = {custom: {photo: $scope.selectedProduct.title}};
                         file.result = data;
-                        $scope.selectedProduct.photolink = file.result.url;
-                        $rootScope.photos.push(data);
+                        $scope.selectedProduct.photolink = file.result.secure_url;
+                        // Transform image link
+                        $scope.selectedProduct.photolink = $scope.selectedProduct.photolink.replace('upload/','upload/c_pad,h_320,w_250/');
                     }).error(function (data, status, headers, config) {
                         file.result = data;
                     });
                 }
             });
         };
-        //});
 
-        /* Modify the look and fill of the dropzone when files are being dragged over it */
-        $scope.dragOverClass = function($event) {
-            var items = $event.dataTransfer.items;
-            var hasFile = false;
-            if (items != null) {
-                for (var i = 0 ; i < items.length; i++) {
-                    if (items[i].kind == 'file') {
-                        hasFile = true;
-                        break;
-                    }
-                }
-            } else {
-                hasFile = true;
-            }
-            return hasFile ? "dragover" : "dragover-err";
-        };
 
     }]);

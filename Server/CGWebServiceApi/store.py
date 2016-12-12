@@ -161,6 +161,7 @@ def store_top():
 @store_blueprint.route("/platforms", methods=['GET'])
 def store_platforms():
     try:
+        platform_list = dbm.fetch_platforms()
         return jsonify(platform_list)
     except Exception as e:
         print e

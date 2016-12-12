@@ -6,197 +6,243 @@
         </div>
         <div class="modal-dialog">
             <div class="modal-body">
-                <!-- Product Information Starts -->
-                <div class="row">
-                    <label for="txtTitle" class="col-sm-3 control-label">Title :</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtTitle" ng-model="selectedProduct.title" placeholder="Title">
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtReleaseDate" class="col-sm-3 control-label">Release Date :</label>
-                    <div class="col-sm-9">
-                        <input type="text" datetime="yyyy-MM-dd" class="form-control" id="txtReleaseDate" ng-model="selectedProduct.release" placeholder="Release Date">
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtProductPrice" class="col-sm-3 control-label">Product Price :</label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control" id="txtProductPrice" ng-model="selectedProduct.price" placeholder="Product Price">
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtProductRating" class="col-sm-3 control-label">Rating :</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtProductRating" ng-model="selectedProduct.rating" placeholder="Rating">
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtDescription" class="col-sm-3 control-label">Product Description :</label>
-                    <div class="col-sm-9">
-                        <textarea cols="50" rows="4" id="txtDescription" ng-model="selectedProduct.description" placeholder="Product Description"></textarea>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtAdditional" class="col-sm-3 control-label">Additional Info :</label>
-                    <div class="col-sm-9">
-                        <textarea cols="50" rows="4" id="txtAdditional" ng-model="selectedProduct.aditionalinfo" placeholder="Additional Info"></textarea>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtphoto" class="col-sm-3 control-label">Photolink :</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtphoto" ng-model="selectedProduct.photolink" placeholder="PhotoLink" disabled>
-                        <br>
-                    </div>
-                    <div class="col-sm-offset-3 col-sm-3">
-                        <button class="btn btn-info" ngf-select="uploadFiles($files)" multiple title="upload" resetOnClick="true" ng-disabled="!selectedProduct.title || selectedProduct.photolink">Upload Cover</button>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="row" ng-repeat="file in files">
-                    <div class="col-sm-offset-3 col-sm-9">
-                        <label>{{file.name}} {{f.$error}} {{f.$errorParam}}</label>
-                        <div class="status">{{file.status}}</div>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: {{file.progress}}%" ng-init="progress=0"></div>
+                <form role="form" name="productForm">
+                    <!-- Product Information Starts -->
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Title :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="txtTitle"
+                                   ng-model="selectedProduct.title" placeholder="Title"
+                                   ng-pattern="patterns.bigText" required>
                         </div>
-                        <div class="row">
-                            <div class="row">
-                                <div class="preview">
-                                    <img ngf-src="file.result.url || file">
-                                </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtTitle.$dirty && productForm.txtTitle.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtTitle.$dirty && productForm.txtTitle.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Release Date :</label>
+                        <div class="col-sm-8">
+                            <input type="text" datetime="yyyy-MM-dd" class="form-control"
+                                   name="txtReleaseDate" ng-model="selectedProduct.release"
+                                   placeholder="yyyy-MM-dd" ng-pattern="patterns.date" required>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtReleaseDate.$dirty && productForm.txtReleaseDate.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtReleaseDate.$dirty && productForm.txtReleaseDate.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Product Price :</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="txtProductPrice"
+                                   ng-model="selectedProduct.price" placeholder="Product Price"
+                                   min="1" required>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtProductPrice.$dirty && productForm.txtProductPrice.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtProductPrice.$dirty && productForm.txtProductPrice.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Product Description :</label>
+                        <div class="col-sm-8">
+                            <textarea cols="50" rows="4" name="txtDescription" ng-model="selectedProduct.description"
+                                      placeholder="Product Description" required ng-pattern="patterns.bigText">
+                            </textarea>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtDescription.$dirty && productForm.txtDescription.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtDescription.$dirty && productForm.txtDescription.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Additional Info :</label>
+                        <div class="col-sm-8">
+                            <textarea cols="50" rows="4" name="txtAdditional"
+                                      ng-model="selectedProduct.aditionalinfo"
+                                      placeholder="Additional Info" required ng-pattern="patterns.bigText">
+                            </textarea>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtAdditional.$dirty && productForm.txtAdditional.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtAdditional.$dirty && productForm.txtAdditional.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Photolink :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="txtphoto"
+                                   ng-model="selectedProduct.photolink"
+                                   placeholder="PhotoLink" disabled required ng-pattern="patterns.url">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtphoto.$dirty && productForm.txtphoto.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtphoto.$dirty && productForm.txtphoto.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-offset-3 col-sm-3">
+                            <button class="btn btn-info" ngf-select="uploadFiles($files)"
+                                    multiple title="upload" resetOnClick="true"
+                                    ng-disabled="!selectedProduct.title || selectedProduct.photolink">Upload Cover</button>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row" ng-repeat="file in files">
+                        <div class="col-sm-offset-3 col-sm-8">
+                            <label>{{file.name}} {{f.$error}} {{f.$errorParam}}</label>
+                            <div class="status">{{file.status}}</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: {{file.progress}}%" ng-init="progress=0"></div>
+                            </div>
+                            <br>
+                            <div class="col-sm-8">
+                                <img ngf-src="file.result.url || file" width="300" height="300">
                             </div>
                         </div>
                     </div>
                     <br>
-                </div>
-                <div class="row">
-                    <label for="txtProductqty" class="col-sm-3 control-label">Quantity :</label>
-                    <div class="col-sm-9">
-                        <input id="txtProductqty" class="form-control" type="text" ng-model="selectedProduct.productqty">
-                        <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Quantity :</label>
+                        <div class="col-sm-8">
+                            <input name="txtProductqty" class="form-control" type="number"
+                                   ng-model="selectedProduct.productqty" min="1" required>
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtProductqty.$dirty && productForm.txtProductqty.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtProductqty.$dirty && productForm.txtProductqty.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label for="txtAvailability" class="col-sm-3 control-label">Availability :</label>
-                    <div class="col-sm-9">
-                        <input id="txtAvailability" type="checkbox" ng-model="selectedProduct.availability">
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtActive" class="col-sm-3 control-label">Active :</label>
-                    <div class="col-sm-9">
-                        <input id="txtActive" type="checkbox" ng-model="selectedProduct.active">
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtInOffer" class="col-sm-3 control-label">In Offer :</label>
-                    <div class="col-sm-9">
-                        <input id="txtInOffer" type="checkbox" ng-model="selectedProduct.inoffer">
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="txtOfferStart" class="col-sm-3 control-label">Offer Start Date :</label>
-                    <div class="col-sm-9">
-                        <input id="txtOfferStart" class="form-control" type="text" datetime="yyyy-MM-dd" ng-model="selectedProduct.offer_start_date" placeholder="yyyy-MM-dd">
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                <label for="txtOfferEnd" class="col-sm-3 control-label">Offer End Date :</label>
-                <div class="col-sm-9">
-                    <input id="txtOfferEnd" type="text" class="form-control" datetime="yyyy-MM-dd" ng-model="selectedProduct.offer_end_date" placeholder="yyyy-MM-dd">
                     <br>
-                </div>
-            </div>
-                <div class="row">
-                    <label for="txtOfferPrice" class="col-sm-3 control-label">Offer Price :</label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control" id="txtOfferPrice" ng-model="selectedProduct.offerprice" placeholder="Offer Price">
-                        <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Active :</label>
+                        <div class="col-sm-8">
+                            <input name="txtActive" type="checkbox" ng-model="selectedProduct.active">
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label class="col-sm-3 control-label">Platform :</label>
-                    <div class="col-sm-9">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-check">
-                                <form action="">
-                                    <select class="form-control" autocomplete="on" ng-model="selectedProduct.platformid"
-                                            ng-options="platform.platformid as platform.platform for platform in platforms">
-                                    </select>
-                                </form>
-                            </div>
-                        </form>
-                        <br>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">In Offer :</label>
+                        <div class="col-sm-8">
+                            <input name="txtInOffer" type="checkbox" ng-model="selectedProduct.inoffer">
+                            <br>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label class="col-sm-3 control-label">Category :</label>
-                    <div class="col-sm-9">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-check">
-                                <form action="">
-                                    <select class="form-control" autocomplete="on" ng-model="selectedProduct.category"
-                                            ng-options="category.category as category.category for category in categories">
-                                    </select>
-                                </form>
-                            </div>
-                        </form>
-                        <br>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Offer Start Date :</label>
+                        <div class="col-sm-8">
+                            <input name="txtOfferStart" class="form-control"
+                                   type="text" datetime="yyyy-MM-dd"
+                                   ng-model="selectedProduct.offer_start_date" placeholder="yyyy-MM-dd"
+                                   ng-required="selectedProduct.inoffer" ng-pattern="patterns.date">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtOfferStart.$dirty && productForm.txtOfferStart.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtOfferStart.$dirty && productForm.txtOfferStart.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label class="col-sm-3 control-label">Genre :</label>
-                    <div class="col-sm-9">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-check">
-                                <form action="">
-                                    <select class="form-control" autocomplete="on" ng-model="selectedProduct.genre"
-                                            ng-options="genre.genre as genre.genre for genre in genres">
-                                    </select>
-                                </form>
-                            </div>
-                        </form>
-                        <br>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Offer End Date :</label>
+                        <div class="col-sm-8">
+                            <input name="txtOfferEnd" type="text" class="form-control" datetime="yyyy-MM-dd"
+                                   ng-model="selectedProduct.offer_end_date" placeholder="yyyy-MM-dd"
+                                   ng-required="selectedProduct.inoffer" ng-pattern="patterns.date">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtOfferEnd.$dirty && productForm.txtOfferEnd.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtOfferEnd.$dirty && productForm.txtOfferEnd.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label class="col-sm-3 control-label">ESRB Rating :</label>
-                    <div class="col-sm-9">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-check">
-                                <form action="">
-                                    <select class="form-control" autocomplete="on" ng-model="selectedProduct.esrb"
-                                            ng-options="esrb.esrb_rate as esrb.esrb_rate for esrb in ratings">
-                                    </select>
-                                </form>
-                            </div>
-                        </form>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Offer Price :</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="txtOfferPrice" min="1"
+                                   ng-model="selectedProduct.offerprice" placeholder="Offer Price"
+                                   ng-required="selectedProduct.inoffer">
+                        </div>
+                        <div class="col-sm-1">
+                            <img  ng-if="productForm.txtOfferPrice.$dirty && productForm.txtOfferPrice.$invalid"
+                                  src="images/invalid.png" width="16" height="16"/>
+                            <img  ng-if="productForm.txtOfferPrice.$dirty && productForm.txtOfferPrice.$valid"
+                                  src="images/valid.png" width="16" height="16"/>
+                        </div>
                     </div>
-                </div>
-                <!-- Product Information ends -->
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Platform :</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" autocomplete="on"
+                                    ng-model="selectedProduct.platformid" required
+                                    ng-options="platform.platformid as platform.platform for platform in platforms">
+                            </select>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Category :</label>
+                        <div class="col-sm-8">
+                            <select required class="form-control" autocomplete="on" ng-model="selectedProduct.category"
+                                    ng-options="category.category as category.category for category in categories">
+                            </select>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Genre :</label>
+                        <div class="col-sm-8">
+                            <select required class="form-control" autocomplete="on" ng-model="selectedProduct.genre"
+                                    ng-options="genre.genre as genre.genre for genre in genres">
+                            </select>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-sm-3 control-label">ESRB Rating :</label>
+                        <div class="col-sm-8">
+                            <select required class="form-control" autocomplete="on" ng-model="selectedProduct.esrb"
+                                    ng-options="esrb.esrb_rate as esrb.esrb_rate for esrb in ratings">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Product Information ends -->
+                </form>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
-            <button type="button" class="btn btn-black" ng-click="submit()">Add</button>
+            <button type="button" class="btn btn-black" ng-disabled="productForm.$invalid" ng-click="submit()">Add</button>
         </div>
     </div>
 </div>

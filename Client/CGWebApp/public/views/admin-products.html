@@ -53,6 +53,18 @@
                     </a>
                 </td>
                 <td class="text-center">
+                    <a ng-click="sortType = 'pid'; sortReverse = !sortReverse">Cover
+                        <span
+                                ng-show="sortType == 'pid' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'pid' && !sortReverse"
+                                class="fa fa-caret-up">
+                    </span>
+                    </a>
+                </td>
+                <td class="text-center">
                     <a ng-click="sortType = 'genre'; sortReverse = !sortReverse">Genre
                         <span
                                 ng-show="sortType == 'genre' && sortReverse"
@@ -119,11 +131,17 @@
             </thead>
             <tbody>
             <tr ng-repeat="u in products | orderBy:sortType:sortReverse | filter:searchProduct">
-                <td class="text-center">
+                <td class="text-center" ng-if="u.active">
+                    <a ng-href="#/product.html/{{u.pid}}">{{u.pid}}</a>
+                </td>
+                <td class="text-center" ng-if="!u.active">
                     {{u.pid}}
                 </td>
                 <td class="text-center">
                     {{u.title}}
+                </td>
+                <td class="text-center">
+                    <img src="{{u.photolink}}" height="95" width="80">
                 </td>
                 <td class="text-center">
                     {{u.genre}}

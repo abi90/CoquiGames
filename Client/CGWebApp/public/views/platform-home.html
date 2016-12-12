@@ -3,8 +3,8 @@
     <div class="container">
         <div class="hidden" ng-controller="NavBarController"></div>
         <!-- Primary Content Starts -->
-        <div class="text-center">
-            <div class="container">
+        <div class="">
+            <div class="container text-center">
                 <h2 class="main-heading2">
                     {{platform.platform}}
                 </h2>
@@ -13,7 +13,7 @@
                 <br>
             </div>
             <!-- Slider Section Starts -->
-            <div class="slider">
+            <div class="slider text-center">
                 <div ng-if="slides.length > 0">
                     <div style="">
                         <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
@@ -41,11 +41,13 @@
                             <div owl-carousel-item="" ng-repeat="item in ::platformLatest" class="item" >
                                 <div class="product-col">
                                     <div class="image">
-                                        <img ng-src="{{item.photolink}}" alt="{{item.title}}" class="img-responsive">
+                                        <a ng-href="#/product.html/{{item.pid}}">
+                                            <img ng-src="{{item.photolink}}" alt="{{item.title}}" class="img-responsive">
+                                        </a>
                                     </div>
                                     <div class="caption">
                                         <h4>
-                                            <a href="#/product.html/{{item.pid}}">{{item.title | limitTo:16}}</a>
+                                            <a href="#/product.html/{{item.pid}}">{{item.title | limitTo:13}}{{(item.title.length > 13) ? '...':''}}</a>
                                         </h4>
                                         <div class="description"></div>
                                         <div class="price">
@@ -55,8 +57,13 @@
                                             <span ng-if="item.inoffer==true" class="price-old">{{item.price | currency}}</span>
 
                                         </div>
-                                        <div class="cart-button">
-                                            <button type="button" class="btn btn-cart" ng-click="addToCart(item.pid)">Add to cart
+                                        <div class="cart-button button-group">
+                                            <button type="button" title="Wishlist" class="btn btn-wishlist"
+                                                    ng-click="addProductToWishList(item.pid)">
+                                                <i class="fa fa-heart"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-cart"
+                                                    ng-click="addToCart(item.pid)">Add to cart
                                                 <i class="fa fa-shopping-cart"></i>
                                             </button>
                                         </div>
@@ -83,22 +90,27 @@
                             <div owl-carousel-item="" ng-repeat="item in ::platformSpecials" class="item" >
                                 <div class="product-col">
                                     <div class="image">
-                                        <img ng-src="{{item.photolink}}" alt="{{item.title}}" class="img-responsive">
+                                        <a ng-href="#/product.html/{{item.pid}}">
+                                            <img ng-src="{{item.photolink}}" alt="{{item.title}}" class="img-responsive">
+                                        </a>
                                     </div>
                                     <div class="caption">
                                         <h4>
-                                            <a href="#/product.html/{{item.pid}}">{{item.title | limitTo:16}}</a>
+                                            <a href="#/product.html/{{item.pid}}">{{item.title | limitTo:13}}{{(item.title.length > 13) ? '...':''}}</a>
                                         </h4>
                                         <div class="description"></div>
                                         <div class="price">
-
                                             <span ng-if="item.inoffer==true" class="price-new">{{item.offerprice | currency}}</span>
                                             <span ng-if="item.inoffer==false" class="price-new">{{item.price | currency}}</span>
                                             <span ng-if="item.inoffer==true" class="price-old">{{item.price | currency}}</span>
-
                                         </div>
-                                        <div class="cart-button">
-                                            <button type="button" class="btn btn-cart" ng-click="addToCart(item.pid)">Add to cart
+                                        <div class="cart-button button-group">
+                                            <button type="button" title="Wishlist" class="btn btn-wishlist"
+                                                    ng-click="addProductToWishList(item.pid)">
+                                                <i class="fa fa-heart"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-cart"
+                                                    ng-click="addToCart(item.pid)">Add to cart
                                                 <i class="fa fa-shopping-cart"></i>
                                             </button>
                                         </div>
@@ -113,7 +125,7 @@
             </section>
             <!-- Specials Products Ends -->
             <!-- Top Products Starts -->
-            <section class="product-carousel" ng-if="platformSpecials.length <= 0 || platformLatest.length <= 0">
+            <section class="product-carousel" ng-if="platformSpecials.length <= 2 || platformLatest.length <= 2">
                 <!-- Heading Starts -->
                 <h2 class="product-head">Top Products</h2>
                 <!-- Heading Ends -->
@@ -125,11 +137,13 @@
                             <div owl-carousel-item="" ng-repeat="item in platformTop" class="item" >
                                 <div class="product-col">
                                     <div class="image">
-                                        <img ng-src="{{item.photolink}}" alt="{{item.title}}" class="img-responsive">
+                                        <a ng-href="#/product.html/{{item.pid}}">
+                                            <img ng-src="{{item.photolink}}" alt="{{item.title}}" class="img-responsive">
+                                        </a>
                                     </div>
                                     <div class="caption">
                                         <h4>
-                                            <a ng-href="#/product.html/{{item.pid}}">{{item.title | limitTo:16}}</a>
+                                            <a ng-href="#/product.html/{{item.pid}}">{{item.title | limitTo:13}}{{(item.title.length > 13) ? '...':''}}</a>
                                         </h4>
                                         <div class="description"></div>
                                         <div class="price">
@@ -137,8 +151,13 @@
                                             <span ng-if="item.inoffer==false" class="price-new">{{item.price | currency}}</span>
                                             <span ng-if="item.inoffer==true" class="price-old">{{item.price | currency}}</span>
                                         </div>
-                                        <div class="cart-button">
-                                            <button type="button" class="btn btn-cart" ng-click="addToCart(item.pid)">Add to cart
+                                        <div class="cart-button button-group">
+                                            <button type="button" title="Wishlist" class="btn btn-wishlist"
+                                                    ng-click="addProductToWishList(item.pid)">
+                                                <i class="fa fa-heart"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-cart"
+                                                    ng-click="addToCart(item.pid)">Add to cart
                                                 <i class="fa fa-shopping-cart"></i>
                                             </button>
                                         </div>

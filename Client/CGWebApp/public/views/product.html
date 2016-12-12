@@ -73,8 +73,17 @@
                     <!-- Available Options Starts -->
                     <div class="options">
                         <div class="form-group">
-                            <label class="control-label text-uppercase" for="input-quantity">Qty:</label>
-                            <input type="text" name="quantity" value="1" size="2" id="input-quantity" class="form-control">
+                            <div class="row">
+                                <div class="col-md-1 col-xs-2">
+                                    <label class="control-label text-uppercase">Qty:</label>
+                                </div>
+                                <div class="col-md-2 col-xs-3">
+                                    <select class="form-control dropdown"
+                                            autocomplete="on" ng-model="qty"
+                                            ng-options="value for value in prange">
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="cart-button button-group">
                             <button type="button" title="Wishlist" class="btn btn-wishlist" ng-click="addProductToWishList()">
@@ -129,7 +138,9 @@
                     <div class="col-md-4 col-sm-6" ng-repeat="product in relatedPrds">
                         <div class="product-col">
                             <div class="image">
-                                <img ng-src="{{product.photolink}}" alt="{{product.title}}" class="img-responsive">
+                                <a ng-href="#/product.html/{{product.pid}}">
+                                    <img ng-src="{{product.photolink}}" alt="{{product.title}}" class="img-responsive">
+                                    </a>
                             </div>
                             <div class="caption">
                                 <h4>

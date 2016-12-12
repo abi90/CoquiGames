@@ -2,8 +2,9 @@
  * Created by felix on 12/1/16.
  */
 
-app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi", "search_data", '$rootScope', 'orderByFilter',
-    function ($scope, $location, storewsapi, search_data, $rootScope, orderBy) {
+app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
+    "search_data", '$rootScope', 'orderByFilter', 'addToUserCart', 'addToWishList',
+    function ($scope, $location, storewsapi, search_data, $rootScope, orderBy, addToUserCart, addToWishList) {
 
         //Scope Variables
         $scope.data = search_data;
@@ -87,6 +88,15 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
             sliceResults();
         });
 
+        $scope.addToCart = function (pid) {
+            if(addToUserCart.addProductWithQty(pid, 1)){
+                $rootScope.$broadcast('uCart');
+            }
+        };
+
+        $scope.addProductToWishList = function (pid) {
+            addToWishList.addProductToWishList(pid);
+        };
 
         //Get Results on startup
         searchByData($scope.data);

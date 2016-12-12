@@ -1,6 +1,6 @@
 app.controller('HomeController',
-    ['$scope', 'storewsapi', 'addToUserCart', '$rootScope',
-    function($scope, storewsapi, addToUserCart, $rootScope) {
+    ['$scope', 'storewsapi', 'addToUserCart', 'addToWishList','$rootScope',
+    function($scope, storewsapi, addToUserCart, addToWishList, $rootScope) {
 
         $scope.slides = [];
         $scope.myInterval = 5000;
@@ -46,7 +46,7 @@ app.controller('HomeController',
         };
 
         var getTopProducts = function() {
-            if ($scope.specials.length == 0 || $scope.latest.length == 0) {
+            if ($scope.specials.length <= 2 || $scope.latest.length <= 2) {
                 storewsapi.topProducts().then(
                     function (response) {
                         $scope.tops = response.data;
@@ -70,6 +70,10 @@ app.controller('HomeController',
             if(addToUserCart.addProductWithQty(pid, 1)){
                 $rootScope.$broadcast('uCart');
             }
+        };
+
+        $scope.addProductToWishList = function (pid) {
+            addToWishList.addProductToWishList(pid);
         };
 
         init();

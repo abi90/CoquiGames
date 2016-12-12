@@ -6,8 +6,8 @@ SELECT_PRODUCT_DETAILS = """SELECT * FROM product_details WHERE pid = %s"""
 
 SELECT_LATEST_PRODUCTS = """SELECT *
                             FROM product_details
-                            WHERE to_date(release,'YYYY-MM-DD') BETWEEN now()::DATE -  '30 days'::INTERVAL AND now()::DATE
-                            ORDER BY to_date(release,'YYYY-MM-DD')"""
+                            WHERE to_date(release,'YYYY-MM-DD') BETWEEN now()::DATE -  '62 days'::INTERVAL AND now()::DATE
+                            ORDER BY to_date(release,'YYYY-MM-DD') DESC"""
 
 
 SELECT_SPECIAL_PRODUCTS = """SELECT * FROM product_details WHERE INOFFER = true"""
@@ -37,9 +37,9 @@ SELECT_PLATFORM_ACCESORIES = """SELECT DISTINCT G.genre
 
 SELECT_PLATFORM_LATEST_PRODUCTS = """SELECT *
                                       FROM product_details AS P
-                                      WHERE to_date(P.release,'YYYY-MM-DD') BETWEEN now()::DATE -  '30 days'::INTERVAL AND now()::DATE
+                                      WHERE to_date(P.release,'YYYY-MM-DD') BETWEEN now()::DATE -  '62 days'::INTERVAL AND now()::DATE
                                       AND P.platformid = %s
-                                      ORDER BY to_date(P.release,'YYYY-MM-DD')"""
+                                      ORDER BY to_date(P.release,'YYYY-MM-DD') DESC"""
 
 
 SELECT_PLATFORM_SPECIAL_PRODUCTS = """SELECT * FROM product_details WHERE inoffer = true AND platformid = %s"""
@@ -300,7 +300,7 @@ SELECT_USER_ORDERS = """SELECT orderid AS oid, to_char(order_date, 'YYYY-MM-DD')
                   fee AS oshipmment_fee, order_total AS ototal, shipping_addressid, billing_addressid
                   FROM orders JOIN order_status USING (order_statusid) JOIN order_subtotal USING (orderid)
                   JOIN payment_method USING (userid, payment_methodid) JOIN shipment_fee USING (shipment_feeid)
-                  WHERE userid = %s"""
+                  WHERE userid = %s ORDER BY oid DESC"""
 
 
 INSERT_EMPTY_ORDER = """INSERT INTO orders (cartid, shipment_feeid, order_statusid, shipping_addressid, userid, payment_methodid, order_date, order_total)

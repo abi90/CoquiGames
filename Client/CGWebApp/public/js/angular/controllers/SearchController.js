@@ -1,8 +1,9 @@
 /**
  * Created by abi on 11/12/16.
  */
-app.controller("SearchController", ["$scope", "$location", "storewsapi", "title", '$rootScope', 'Popeye', 'orderByFilter',
-    function ($scope, $location, storewsapi, title, $rootScope, Popeye, orderBy) {
+app.controller("SearchController", ["$scope", "$location", "storewsapi", "title",
+    '$rootScope', 'Popeye', 'orderByFilter', 'addToUserCart', 'addToWishList',
+    function ($scope, $location, storewsapi, title, $rootScope, Popeye, orderBy, addToUserCart, addToWishList) {
         //Scope Variables
         $scope.title = title;
         $scope.results = [];
@@ -159,6 +160,16 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
             searchByTitle(title);
             getGenres();
             $scope.Loading = false;
+        };
+
+        $scope.addToCart = function (pid) {
+            if(addToUserCart.addProductWithQty(pid, 1)){
+                $rootScope.$broadcast('uCart');
+            }
+        };
+
+        $scope.addProductToWishList = function (pid) {
+            addToWishList.addProductToWishList(pid);
         };
 
         //Get Results on startup
