@@ -514,6 +514,18 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    adminwsapi.postGenre= function (username, password, genre) {
+        return $http({
+            method: 'POST',
+            url: adminServiceURL + '/genres',
+            dataType: 'json',
+            data: genre,
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
     adminwsapi.updateAnnouncement= function (username, password, announcement) {
         return $http({
             method: 'PUT',
