@@ -853,7 +853,7 @@ def activate_user(accountid):
         cur.execute(Query.ACTIVATE_USER, (accountid,))
         columns = [x[0] for x in cur.description]
         aid = [dict(zip(columns, row)) for row in cur.fetchall()][0]['accountid']
-        cur.execute(Query.ACTIVATE_USER, (aid,))
+        cur.execute(Query.ACTIVATE_ACCOUNT, (aid,))
         columns = [x[0] for x in cur.description]
         done = [dict(zip(columns, row)) for row in cur.fetchall()]
         conn.commit()

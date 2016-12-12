@@ -435,6 +435,7 @@ SELECT_ALL_PRODUCTS = """SELECT * FROM admin_product_details"""
 
 DEACTIVATE_ACCOUNT = """UPDATE account_info SET active = FALSE WHERE account_info.accountid = %s RETURNING *;"""
 
+ACTIVATE_ACCOUNT = """UPDATE account_info SET active = TRUE WHERE account_info.accountid = %s RETURNING *;"""
 
 DEACTIVATE_USER = """UPDATE cg_user SET active = FALSE WHERE cg_user.accountid = %s RETURNING *;"""
 
