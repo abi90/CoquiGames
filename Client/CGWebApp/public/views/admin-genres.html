@@ -1,0 +1,132 @@
+<!-- Main Container Starts -->
+<div id="main-container" class="container">
+    <!-- Breadcrumb Starts -->
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Genres</li>
+    </ol>
+    <!-- Breadcrumb Ends -->
+    <!-- Main Heading Starts -->
+    <h2 class="main-heading text-center">
+        CoquiGames Genres
+    </h2>
+    <!-- Main Heading Ends -->
+    <!-- Search Filter Starts -->
+    <div>
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon btn-black"><i class="fa fa-search"></i></div>
+                    <input type="text" class="form-control" placeholder="Search Genres" ng-model="searchGenres">
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Search Filter Ends -->
+    <!-- Product Table Starts -->
+    <div class="table table-responsive shopping-cart-table">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td class="text-center">
+                    <a ng-click="sortType = 'genreid'; sortReverse = !sortReverse">Genre ID
+                        <span
+                                ng-show="sortType == 'genreid' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'genreid' && !sortReverse"
+                                class="fa fa-caret-up">
+                    </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'genre'; sortReverse = !sortReverse">Genre
+                        <span
+                                ng-show="sortType == 'genre' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'genre' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="sortType = 'active'; sortReverse = !sortReverse">Active
+                        <span
+                                ng-show="sortType == 'active' && sortReverse"
+                                class="fa fa-caret-down">
+                        </span>
+                        <span
+                                ng-show="sortType == 'active' && !sortReverse"
+                                class="fa fa-caret-up">
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    Action
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="u in genres | orderBy:sortType:sortReverse | filter:searchGenres">
+                <td class="text-center">
+                    {{u.genreid}}
+                </td>
+                <td class="text-center">
+                    {{u.genre}}
+                </td>
+                <td class="text-center">
+                    {{u.active}}
+                </td>
+                <td class="text-center">
+
+                    <button type="submit" title="Activate" class="btn btn-default tool-tip" ng-click="shoActivateGenre(u.genreid)">
+                        <i class="fa fa-edit"></i>
+                    </button>
+
+                    <button type="button" title="Remove" class="btn btn-default tool-tip" ng-click="shoDeactivateGenre(u.genreid)">
+                        <i class="fa fa-times-circle"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <div class="">
+            <div uib-alert ng-repeat="m in messages track by $index" class="alert-success" close="closeMessageAlert($index)">{{m}}
+            </div>
+        </div>
+        <div class="">
+            <div uib-alert ng-repeat="m in errors track by $index" class="alert-danger" close="closeErrorAlert($index)">{{m}}
+            </div>
+        </div>
+    </div>
+    <!-- Product Table Ends -->
+    <!-- Add Products Section Starts -->
+    <div class="text-center">
+        <section class="registration-area">
+            <div class="row">
+                <div class="col-sm-6 col-md-offset-3" >
+                    <!-- Message Panel Starts -->
+                    <div class="panel panel-smart">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Add a New Genre</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            <button type="submit" title="Add" class="btn btn-default tool-tip" ng-click="shoAddGenre()">
+                                Add Genres
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Message Panel Ends -->
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Add Admin Section Ends -->
+</div>
+<!-- Main Container Ends -->

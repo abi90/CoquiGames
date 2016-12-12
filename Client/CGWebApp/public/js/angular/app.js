@@ -260,6 +260,21 @@ app.config(['$httpProvider', '$routeProvider', 'cloudinaryProvider', function ($
 
         })
 
+        .when('/admin-genres', {
+            controller: 'AdminGenreController',
+            templateUrl: 'views/admin-genres.html',
+            resolve: {
+                auth:  function($q, authenticationSvc) {
+                    var userInfo = authenticationSvc.getUserInfo();
+                    if (userInfo.roleid === 3){
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({ authenticated: false });
+                    }
+                }
+            }
+        })
+
         .when('/admin-announcements', {
             controller: 'AdminAnnouncementsController',
             templateUrl: 'views/admin-announcements.html',

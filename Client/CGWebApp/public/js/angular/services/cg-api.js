@@ -616,6 +616,28 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
             .error(function (error) {return error;});
     };
 
+    adminwsapi.getAllGenres= function (username, password) {
+        return $http.get(adminServiceURL + '/genres', { headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password) } })
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+    adminwsapi.deactivateGenre= function (username, password, genreid) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/genres/' + genreid + '/deactivate',
+            headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+    adminwsapi.activateGenre= function (username, password, genreid) {
+        return $http({
+            method: 'PUT',
+            url: adminServiceURL + '/genres/' + genreid + '/activate',
+            headers: {'Authorization': 'Basic '+ $base64.encode( username + ':' + password)}})
+            .success(function (data) {return data;})
+            .error(function (error) {return error;});
+    };
+
 
     return adminwsapi;
 }]);
