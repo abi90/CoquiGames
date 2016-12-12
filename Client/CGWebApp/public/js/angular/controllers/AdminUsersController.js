@@ -1,8 +1,9 @@
 /**
  * Created by abi on 11/16/16.
  */
-app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye','$filter',
-    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, $filter){
+app.controller('AdminUsersController',
+    ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye','$filter', 'authenticationSvc',
+    function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, $filter,authenticationSvc){
 
         // Defaults sort type, order adn default search filter
         $scope.sortType = 'active';

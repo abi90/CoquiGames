@@ -97,8 +97,7 @@ app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  
             return Popeye.closeCurrentModal(null);
         };
 
-        var d = new Date();
-        //$scope.$watch('files', function() {
+
         $scope.uploadFiles = function(files){
             $scope.files = files;
             if (!$scope.files) return;
@@ -119,7 +118,9 @@ app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  
                         $rootScope.photos = $rootScope.photos || [];
                         data.context = {custom: {photo: $scope.selectedProduct.title}};
                         file.result = data;
-                        $scope.selectedProduct.photolink = file.result.url;
+                        $scope.selectedProduct.photolink = file.result.secure_url;
+                        // Transform image link
+                        $scope.selectedProduct.photolink = $scope.selectedProduct.photolink.replace('upload/','upload/c_pad,h_320,w_250/');
                         $rootScope.photos.push(data);
                     }).error(function (data, status, headers, config) {
                         file.result = data;
@@ -127,25 +128,6 @@ app.controller('AdmingEditProductController', [ '$scope', 'authenticationSvc',  
                 }
             });
         };
-        //});
-
-        /* Modify the look and fill of the dropzone when files are being dragged over it */
-        $scope.dragOverClass = function($event) {
-            var items = $event.dataTransfer.items;
-            var hasFile = false;
-            if (items != null) {
-                for (var i = 0 ; i < items.length; i++) {
-                    if (items[i].kind == 'file') {
-                        hasFile = true;
-                        break;
-                    }
-                }
-            } else {
-                hasFile = true;
-            }
-            return hasFile ? "dragover" : "dragover-err";
-        };
-
         setProduct();
 
 

@@ -1,7 +1,8 @@
 /**
  * Created by Abisai on 11/29/16.
  */
-app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye', 'authenticationSvc',
+app.controller('AdminAnnouncementsController',
+    ['$scope', '$location', 'adminwsapi', 'auth', '$rootScope', 'Popeye', 'authenticationSvc',
     function ($scope, $location, adminwsapi, auth, $rootScope, Popeye, authenticationSvc) {
 
         $scope.sortType = 'active';
