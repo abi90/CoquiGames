@@ -69,9 +69,9 @@ app.controller('AdminGenreController', ['$scope', '$location', 'adminwsapi', 'au
             });
 
             // Update user selected address after modal is closed
-            modal.closed.then(function(announcement) {
-                if(announcement){
-                    adminwsapi.postAnnouncement(auth.uname, auth.token, announcement).then(
+            modal.closed.then(function(genre) {
+                if(genre){
+                    adminwsapi.postGenre(auth.uname, auth.token, genre).then(
                         function (response) {
                             getGenres();
                         },

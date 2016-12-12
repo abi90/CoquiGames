@@ -8,7 +8,7 @@ app.controller('AdminAddGenreController', ['$scope', 'authenticationSvc','$rootS
         $scope.auth = authenticationSvc.getUserInfo();
 
         var tempGenre = {
-            "genre": null,
+            "genre": '',
             "active": false
         };
 
