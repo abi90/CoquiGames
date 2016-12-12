@@ -327,8 +327,7 @@ def activate_genre(genreid):
 def create_genre():
     try:
         if request.json:
-            for key in product_keys:
-                if key not in request.json:
+            if 'genre' and 'active' not in request.json:
                     return missing_parameters_error()
             result = dbm.create_genre(request.json)
             return jsonify({"genreid": result})
