@@ -4,13 +4,14 @@
 app.controller('OrderController', ['$scope', '$location', 'userwsapi','orderId', 'authenticationSvc',function($scope, $location, userwsapi, orderId, authenticationSvc)
 {
     $scope.orderId = orderId;
-    $scope.auth;
-    $scope.userOrder;
+    $scope.userOrder = {};
+    $scope.Loading = false;
 
     var getOrderDetail = function() {
-        $scope.auth = authenticationSvc.getUserInfo();
-        if($scope.auth) {
-            userwsapi.getUserOrders($scope.auth.uid, $scope.auth.uname, $scope.auth.upassword).then(
+        $scope.Loading = true;
+        var auth = authenticationSvc.getUserInfo();
+        if(auth) {
+            userwsapi.getUserOrders(auth.uid, auth.uname, auth.upassword).then(
                 function (response) {
                     for(var i in response.data)
                     {
@@ -19,16 +20,19 @@ app.controller('OrderController', ['$scope', '$location', 'userwsapi','orderId',
                             $scope.userOrder = response.data[i];
                         }
                     }
+                    if(!orderId){
+                        $location.path("/login.html");
+                    }
                 },
-                function (error) {
-                    console.log("Error: " + error.statusCode);
-                    $location.path("/404.html");
+                function () {
+                    $location.path("/login.html");
                 }
-            )
+            );
         }
         else {
-            $location.path("/");
+            $location.path("/login.html");
         }
+        $scope.Loading = false;
     };
 
     getOrderDetail();

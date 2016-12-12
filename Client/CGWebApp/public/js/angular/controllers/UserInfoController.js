@@ -7,6 +7,7 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
 
         $scope.errors = [];
         $scope.messages = [];
+        $scope.Loading = false;
         // Local Functions
         var logout = function () {
 
@@ -21,6 +22,7 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
         };
 
         var getUser = function () {
+            $scope.Loading = true;
             userwsapi.getUser(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userData = response.data;
@@ -29,6 +31,7 @@ app.controller('UserInfoController', ['$scope', '$location', 'authenticationSvc'
                     logout();
                 }
             );
+            $scope.Loading = false;
         };
 
         // Modals functions:

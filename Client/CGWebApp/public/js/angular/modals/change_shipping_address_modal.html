@@ -1,23 +1,27 @@
 <div class="popeye-modal-container">
     <div class="popeye-modal modal-content">
         <div class="modal-header">
-            <a class="popeye-close-modal" href ng-click="$close()"></a>
+            <a class="popeye-close-modal" href ng-click="cancel()"></a>
             <h4 class="modal-title">Select Shipping Address</h4>
         </div>
         <div class="modal-dialog">
             <div class="modal-body">
-                <form role="form">
+                <form name="Form" novalidate>
                     <div ng-repeat="address in userShippingAddress">
-                        <input type="radio" name="pageNumber" ng-model="$parent.pageNumber" ng-value="n" />
-                        <b>{{address.afullname}}</b> {{address.aaddress1}} {{address.aaddress2}}, {{address.acity}}, {{address.astate}}
-                        , {{address.azip}}, {{address.acountry}}
-                        <a href="#/account-address" ng-click="$close()">Edit</a>
+                        <label>
+                            <input type="radio" name="radioAddress" ng-model="selection.address" ng-value="address"/>{{address.afullname}}
+                        </label>
+                        <b></b> {{address.aaddress1}}
+                        {{address.aaddress2}}, {{address.acity}},
+                        {{address.astate}}, {{address.azip}}, {{address.acountry}}
+                        <a href="#/account-address" ng-click="cancel()">Edit</a>
                     </div>
                 </form>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" ng-click="$close()">Done</button>
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-black" ng-click="submit()">Submit</button>
         </div>
     </div>
 </div>

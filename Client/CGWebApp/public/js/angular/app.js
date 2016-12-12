@@ -1,6 +1,7 @@
-var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize','$base64', 'pathgather.popeye', 'ui.bootstrap', 'fancyboxplus']);
+var app = angular.module('MainApp', ['ngRoute','ui.bootstrap.demo','ngAnimate', 'ngSanitize','$base64', 'ngFileUpload',
+    'pathgather.popeye', 'ui.bootstrap', 'fancyboxplus', 'cloudinary']);
 
-app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
+app.config(['$httpProvider', '$routeProvider', 'cloudinaryProvider', function ($httpProvider, $routeProvider, cloudinaryProvider) {
 
     // Configuration to access Flask
     $httpProvider.defaults.useXDomain = true;
@@ -8,6 +9,10 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
     $httpProvider.defaults.headers.common["Accept"] = "application/json";
     $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
+
+    cloudinaryProvider
+        .set("cloud_name", "coquigames-herokuapp-com")
+        .set("upload_preset", "o6kned8u");
 
     $routeProvider
         .when('/', {
@@ -275,6 +280,7 @@ app.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routePr
         });
 
 }]);
+
 
 app.run(["$rootScope", "$location", function ($rootScope, $location) {
     $rootScope.$on("$routeChangeError", function (event, current, previous, eventObj) {

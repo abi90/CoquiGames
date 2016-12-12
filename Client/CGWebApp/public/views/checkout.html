@@ -35,13 +35,13 @@
                                     </td>
                                     <td class="text-left">{{cart.pquantity | number}}</td>
                                     <td class="text-left">
-                                        <span ng-if="cart.inoffer==true" class="price-new">{{cart.offerprice | currency}}</span>
-                                        <span ng-if="cart.inoffer==false" class="price-new">{{cart.pprice | currency}}</span>
-                                        <span ng-if="cart.inoffer==true" class="price-old"><strike>{{cart.pprice | currency}}</strike></span>
+                                        <span ng-if="cart.inoffer==true" class="price price-new">{{cart.offerprice | currency}}</span>
+                                        <span ng-if="cart.inoffer==false" class="price price-new">{{cart.pprice | currency}}</span>
+                                        <span ng-if="cart.inoffer==true" class="price price-old"><strike>{{cart.pprice | currency}}</strike></span>
                                     </td>
                                     <td class="text-left">
-                                        <span ng-if="cart.inoffer==true" class="price-new">{{cart.offerprice * cart.pquantity | currency}}</span>
-                                        <span ng-if="cart.inoffer==false" class="price-new">{{cart.pprice * cart.pquantity | currency}}</span>
+                                        <span ng-if="cart.inoffer==true" class="price price-new">{{cart.offerprice * cart.pquantity | currency}}</span>
+                                        <span ng-if="cart.inoffer==false" class="price price-new">{{cart.pprice * cart.pquantity | currency}}</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -76,11 +76,11 @@
                     </div>
                     <div class="panel-body">
                         <p>
-                            <b>{{new_password.afullname}}</b>
-                            <br>{{new_password.aaddress1}}
-                            <br ng-if="new_password.address2.length > 0">{{new_password.address2}}
-                            <br>{{new_password.acity}}, {{new_password.astate}} {{new_password.azip}}
-                            <br>{{new_password.acountry}}<br>
+                            <b>{{selectedShAddress.afullname}}</b>
+                            <br>{{selectedShAddress.aaddress1}}
+                            <br ng-if="selectedShAddress.address2.length > 0">{{selectedShAddress.address2}}
+                            <br>{{selectedShAddress.acity}}, {{selectedShAddress.astate}} {{selectedShAddress.azip}}
+                            <br>{{selectedShAddress.acountry}}<br>
                         </p>
                         <p>
                             <button type="button" class="btn btn-black" ng-click="shoPreferredShpAddModal()">Change Address</button>
@@ -113,8 +113,8 @@
                                 <span uib-dropdown on-toggle="toggled(open)">
                                     <a href id="simple-dropdown" uib-dropdown-toggle>Change</a>
                                     <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown" ng-value="selectedPayment">
-                                        <li role="menuitem" ng-repeat="pay in userPayment">
-                                            <a>
+                                        <li role="menuitem" ng-repeat="pay in userPayments">
+                                            <a ng-click="changePayment(pay)">
                                                 <img ng-if="pay.ctype=='Visa'" src="images/payment-icon/visa.png" alt="PaymentGateway">
                                                 <img ng-if="pay.ctype=='Master Card'" src="images/payment-icon/mastercard.png" alt="PaymentGateway">
                                                 <img ng-if="pay.ctype=='American Express'" src="images/payment-icon/americanexpress.png" alt="PaymentGateway">
@@ -146,8 +146,8 @@
                         <form class="form-horizontal" role="form">
                             <div class="form-check">
                                 <form action="">
-                                    <select class="form-control" autocomplete="on" ng-model="shipmentFee"
-                                            ng-options="(fee.fee | currency:'$') + ' - ' + fee.fee_description for fee in shippmentFees">
+                                    <select class="form-control" autocomplete="on" ng-model="selection.fee" ng-options="fee as ((fee.fee | currency:'$') + ' - ' + fee.fee_description) for fee in shipmentFees">
+                                        <option value="" >Select a Shipment Fee</option>
                                     </select>
                                 </form>
                             </div>
@@ -169,12 +169,12 @@
                             <dt>Subtotal :</dt>
                             <dd>{{getSubTotal() | currency}}</dd>
                             <dt>Shipment Fee :</dt>
-                            <dd>{{shipmentFee.fee | currency}}</dd>
+                            <dd>{{selection.fee.fee | currency}}</dd>
                         </dl>
                         <hr />
                         <dl class="dl-horizontal total">
                             <dt>Total :</dt>
-                            <dd>{{getSubTotal() + shipmentFee.fee | currency}}</dd>
+                            <dd>{{getSubTotal() + selection.fee.fee | currency}}</dd>
                         </dl>
                         <hr />
                         <div class="text-uppercase clearfix">
@@ -182,7 +182,7 @@
                                 <span class="hidden-xs">Go back to cart</span>
                                 <span class="visible-xs">Continue Shopping</span>
                             </a>
-                            <a class="btn btn-main pull-right" ng-click="placeOrder()">
+                            <a class="btn btn-main pull-right" ng-disabled="!selection.fee" ng-click="placeOrder()">
                                 Place Order
                             </a>
                         </div>

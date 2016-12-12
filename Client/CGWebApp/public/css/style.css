@@ -1239,3 +1239,47 @@ input[type="number"] {
     max-width: 100%;
 
 }
+/* loading dots */
+
+.loading:after {
+    content: ' .';
+    animation: dots 1s steps(5, end) infinite;}
+
+@keyframes dots {
+    0%, 20% {
+        color: rgba(0,0,0,0);
+        text-shadow:
+                .25em 0 0 rgba(0,0,0,0),
+                .5em 0 0 rgba(0,0,0,0);}
+    40% {
+        color: #4bac52;
+        text-shadow:
+                .25em 0 0 rgba(0,0,0,0),
+                .5em 0 0 rgba(0,0,0,0);}
+    60% {
+        text-shadow:
+                .25em 0 0 #4bac52,
+                .5em 0 0 rgba(0,0,0,0);}
+    80%, 100% {
+        text-shadow:
+                .25em 0 0 #4bac52,
+                .5em 0 0 #4bac52;}}
+
+.progress-bar{
+    width: 100px;
+    position: relative;
+    height: 4px;
+}
+.progress-bar .progress{
+    height: 4px;
+    background-color: #ff0000;
+    width: 0;
+}
+.preview img, .preview audio, .preview video {
+    max-width: 300px;
+    max-height: 150px;
+}
+
+.upload_details { font-size: 12px; margin: 20px; border-top: 1px solid #ccc; word-wrap: break-word; }
+
+.photo .thumbnail { margin-top: 10px; display: block; max-width: 200px; border: none; }

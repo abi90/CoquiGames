@@ -7,9 +7,12 @@ app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsa
         $scope.sortType = 'active';
         $scope.sortReverse = false;
         $scope.searchAnnouncements = '';
+        $scope.Loading = false;
+
 
         // Get list of announcements from the WS API
         var getAllAnnouncements = function() {
+            $scope.Loading = true;
             adminwsapi.getAnnouncements(auth.uname, auth.token).then(
                 function (response) {
                     $scope.announcements = response.data
@@ -21,6 +24,7 @@ app.controller('AdminAnnouncementsController', ['$scope', '$location', 'adminwsa
                     $location.path('/login.html');
                 }
             );
+            $scope.Loading = false;
         };
 
         getAllAnnouncements();

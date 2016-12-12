@@ -8,6 +8,7 @@ app.controller('UserAddressController',
     ['$scope', '$location', 'authenticationSvc', 'auth', 'userwsapi', '$rootScope', 'Popeye',
     function ($scope, $location, authenticationSvc, auth, userwsapi, $rootScope, Popeye){
 
+        $scope.uname = auth.uname;
         // Local Functions
         var logout = function () {
 

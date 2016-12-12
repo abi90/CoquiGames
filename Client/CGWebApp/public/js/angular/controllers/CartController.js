@@ -6,12 +6,15 @@
  */
 app.controller('CartController',
     ['$scope', '$location', 'auth', 'authenticationSvc', 'userwsapi', '$rootScope',
-    function ($scope, $location,auth,authenticationSvc, userwsapi, $rootScope) {
+    function ($scope, $location, auth,authenticationSvc, userwsapi, $rootScope) {
 
         $rootScope.userCart = [];
         $scope.cartTotal = 0;
+        $scope.Loading = false;
+
 
         var getUserCart= function () {
+            $scope.Loading = true;
             var auth = authenticationSvc.getUserInfo();
             if (auth){
                 userwsapi.getUserCart(auth.uid, auth.uname, auth.upassword).then(
@@ -24,6 +27,7 @@ app.controller('CartController',
                     }
                 )
             }
+            $scope.Loading = false;
         };
 
         $scope.getSubTotal = function(){

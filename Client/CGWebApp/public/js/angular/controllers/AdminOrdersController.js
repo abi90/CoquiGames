@@ -8,9 +8,11 @@ app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'a
         $scope.sortType = 'active';
         $scope.sortReverse = false;
         $scope.searchOrders = '';
+        $scope.Loading = false;
 
         // Get list of orders from the WS API
         var getAnyOrders = function() {
+            $scope.Loading = true;
             adminwsapi.getOrders(auth.uname, auth.token).then(
                 function (response) {
                     $scope.orders = response.data
@@ -22,6 +24,7 @@ app.controller('AdminOrdersController', ['$scope', '$location', 'adminwsapi', 'a
                     $location.path('/login.html');
                 }
             );
+            $scope.Loading = false;
         };
 
         $scope.shoEditOrderModal = function(order) {

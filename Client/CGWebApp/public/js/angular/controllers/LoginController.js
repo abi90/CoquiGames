@@ -2,8 +2,8 @@
  * Created by abi on 10/12/16.
  */
 app.controller("LoginController", ["$scope", '$rootScope',"$location", "$window", "authenticationSvc",function ($scope, $rootScope,$location, $window, authenticationSvc) {
+
     $scope.userInfo = null;
-    //$rootScope.$emit('unLogin');
     $scope.login = function () {
         authenticationSvc.login($scope.userName, $scope.password)
             .then(function (result) {
@@ -13,7 +13,7 @@ app.controller("LoginController", ["$scope", '$rootScope',"$location", "$window"
             }, function (error) {
                 $window.alert("Invalid credentials");
                 $rootScope.$emit('unLogin');
-                console.log(error.toString());
+                console.log(JSON.stringify(error));
             });
     };
 

@@ -619,3 +619,47 @@ app.factory('adminwsapi', ['$http','$base64', function($http, $base64) {
 
     return adminwsapi;
 }]);
+
+app.factory('addToUserCart', ['authenticationSvc','userwsapi', '$location', '$rootScope',
+    function (authenticationSvc, userwsapi, $location, $rootScope) {
+
+        var addToUserCart = {};
+
+        addToUserCart.addProductWithQty = function(pid, pqty) {
+            var userInfo = authenticationSvc.getUserInfo();
+            if(userInfo){
+                userwsapi.getUserCart(userInfo.uid,userInfo.uname, userInfo.upassword).then(
+                    function (response) {
+                        var i;
+                        var cart = response.data;
+                        var product;
+                        for (i = 0; i < cart.length; i++) {
+                            if(cart[i].pid === pid)
+                            {
+                                product = cart[i];
+                                product.pquantity = product.pquantity + pqty;
+                                userwsapi.putUserCart(userInfo.uid,userInfo.uname, userInfo.upassword, product)
+                                    .then(function (response) {},function (err){});
+                                break;
+                            }
+                        }
+                        if(!product){
+                            userwsapi.postUserCart(userInfo.uid,userInfo.uname, userInfo.upassword,{"pid":pid,"pquantity":pqty})
+                                .then(function (response) {},function (err){});
+                        }
+                        $rootScope.$broadcast('uCart');
+                    },
+                    function () {
+                        $rootScope.$broadcast('unLogin');
+                        $location.path('/404.html');
+                    }
+                );
+            }
+            else{
+                $location.path('/login.html');
+            }
+            return true;
+        };
+
+        return addToUserCart;
+    }]);

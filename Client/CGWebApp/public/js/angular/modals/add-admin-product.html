@@ -54,9 +54,31 @@
                 <div class="row">
                     <label for="txtphoto" class="col-sm-3 control-label">Photolink :</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txtphoto" ng-model="selectedProduct.photolink" placeholder="PhotoLink">
+                        <input type="text" class="form-control" id="txtphoto" ng-model="selectedProduct.photolink" placeholder="PhotoLink" disabled>
                         <br>
                     </div>
+                    <div class="col-sm-offset-3 col-sm-3">
+                        <button class="btn btn-info" ngf-select="uploadFiles($files)" multiple title="upload" resetOnClick="true" ng-disabled="!selectedProduct.title || selectedProduct.photolink">Upload Cover</button>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="row" ng-repeat="file in files">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <label>{{file.name}} {{f.$error}} {{f.$errorParam}}</label>
+                        <div class="status">{{file.status}}</div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: {{file.progress}}%" ng-init="progress=0"></div>
+                        </div>
+                        <div class="row">
+                            <div class="row">
+                                <div class="preview">
+                                    <img ngf-src="file.result.url || file">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
                 </div>
                 <div class="row">
                     <label for="txtProductqty" class="col-sm-3 control-label">Quantity :</label>

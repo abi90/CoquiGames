@@ -1,12 +1,12 @@
 app.controller('NavBarController',
     ['$scope', '$rootScope', '$location', 'storewsapi', 'authenticationSvc', 'userwsapi',
-        function($scope, $rootScope ,$location, storewsapi, authenticationSvc, userwsapi) {
+        function($scope, $rootScope, $location, storewsapi, authenticationSvc, userwsapi) {
 
-            $scope.navbarOptions;
-            $rootScope.platforms;
+            $scope.navbarOptions = [];
+            $rootScope.platforms = [];
             $rootScope.Loggedin = false;
-            $scope.user;
-            $scope.CartSize;
+            $scope.user = {};
+            $scope.CartSize = null;
             $scope.title = '';
 
 
@@ -31,14 +31,7 @@ app.controller('NavBarController',
                 {
                     $scope.Loggedin=true;
                 }
-
             };
-
-            $rootScope.$on('Login',function(){$scope.Loggedin=true; getCartLength(); getUser();});
-
-            $rootScope.$on('unLogin',function(){$scope.Loggedin=false});
-
-            $rootScope.$on('uCart',function () {getCartLength();});
 
             $scope.logoutUser = function () {
                 authenticationSvc.logout();
@@ -47,15 +40,16 @@ app.controller('NavBarController',
 
             var getCartLength =  function () {
                 var auth = authenticationSvc.getUserInfo();
-                userwsapi.getUserCart(auth.uid, auth.uname, auth.token).then(
-                    function (response) {
-                        $scope.CartSize = response.data.length;
-                    },
-                    function () {
-                        $scope.CartSize =0;
-                    }
-                );
-
+                if(auth){
+                    userwsapi.getUserCart(auth.uid, auth.uname, auth.token).then(
+                        function (response) {
+                            $scope.CartSize = response.data.length;
+                        },
+                        function () {
+                            $scope.CartSize = 0;
+                        }
+                    );
+                }
             };
 
             $scope.goToCart = function () {
@@ -80,6 +74,18 @@ app.controller('NavBarController',
                 );
 
             };
+
+
+            $rootScope.$on('Login',
+                function(){
+                    $scope.Loggedin=true;
+                    getCartLength();
+                    getUser();
+                });
+
+            $rootScope.$on('unLogin', function(){$scope.Loggedin=false});
+
+            $rootScope.$on('uCart', function () {getCartLength();});
 
 
             getUser();

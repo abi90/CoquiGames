@@ -7,6 +7,8 @@
 app.controller('UserCheckoutController', ['$scope', '$location', 'authenticationSvc', 'auth', 'userwsapi', '$rootScope', 'Popeye',
     function ($scope, $location, authenticationSvc, auth, userwsapi, $rootScope, Popeye){
 
+        $scope.selection = {fee: null};
+
         // Local Functions
         var logout = function () {
 
@@ -37,7 +39,7 @@ app.controller('UserCheckoutController', ['$scope', '$location', 'authentication
                 function (response) {
                     $scope.userPreferences = response.data;
                     $scope.selectedPayment = $scope.userPreferences.payment_method;
-                    $scope.new_password = $scope.userPreferences.shipping_address;
+                    $scope.selectedShAddress = $scope.userPreferences.shipping_address;
                 },
                 function () {
                     logout();
@@ -48,13 +50,24 @@ app.controller('UserCheckoutController', ['$scope', '$location', 'authentication
         var getShipmentFees= function () {
             userwsapi.getShipmentFees().then(
                 function (response) {
-                    $scope.shippmentFees = response.data;
-                    $scope.shipmentFee = $scope.shippmentFees[0];
+                    $scope.shipmentFees = response.data;
                 },
                 function () {
                     logout();
                 }
             )
+        };
+
+        var getUserPayments = function () {
+          userwsapi.getUserPayment(auth.uid, auth.uname, auth.token)
+              .then(
+                function (response) {
+                    $scope.userPayments = response.data;
+                },
+                  function () {
+                      logout();
+                  }
+              );
         };
 
         // Scope Functions (Can be called from de html)
@@ -77,9 +90,10 @@ app.controller('UserCheckoutController', ['$scope', '$location', 'authentication
         };
 
         $scope.placeOrder = function () {
+
             var order = {
-                "shipment_feeid": $scope.shipmentFee.shipment_feeid,
-                "aid": $scope.new_password.aid,
+                "shipment_feeid": $scope.selection.fee.shipment_feeid,
+                "aid": $scope.selectedShAddress.aid,
                 "cid": $scope.selectedPayment.cid
             };
 
@@ -93,23 +107,17 @@ app.controller('UserCheckoutController', ['$scope', '$location', 'authentication
             );
         };
 
+        $scope.changePayment= function(payment){
+            $scope.selectedPayment = payment;
+        };
+
         // Modals functions:
         $scope.shoPreferredShpAddModal = function() {
 
             // Open a modal to show the user address
             var modal = Popeye.openModal({
-                controller: 'AccountController',
-                templateUrl: "js/angular/modals/change_shipping_address_modal.html",
-                resolve: {
-                    auth: function ($q, authenticationSvc) {
-                        var userInfo = authenticationSvc.getUserInfo();
-                        if (userInfo) {
-                            return $q.when(userInfo);
-                        } else {
-                            return $q.reject({authenticated: false});
-                        }
-                    }
-                }
+                controller: 'CheckoutShipAddController',
+                templateUrl: "js/angular/modals/change_shipping_address_modal.html"
             });
 
             // Show a spinner while modal is resolving dependencies
@@ -119,14 +127,18 @@ app.controller('UserCheckoutController', ['$scope', '$location', 'authentication
             });
 
             // Update user selected address after modal is closed
-            modal.closed.then(function() {
-
+            modal.closed.then(function(response) {
+                if(response){
+                    $scope.selectedShAddress = response;
+                }
             });
         };
+
 
         // Get User Data on startup
         getUserPreferences();
         getShipmentFees();
         getUserCart();
+        getUserPayments();
 
     }]);

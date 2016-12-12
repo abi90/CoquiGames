@@ -13,6 +13,7 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
         $scope.format = false;
         $scope.currentPage = {number: 1};
         $scope.qty = {max: 9};
+        $scope.Loading = false;
 
         $scope.orderByFunc = function(product){
             if($scope.propertyName.name == 'highest' || $scope.propertyName.name == 'lowest' || $scope.propertyName.name == 'Price'){
@@ -30,6 +31,7 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
 
         //Local functions
         var searchByData = function (data) {
+            $scope.Loading = true;
             var isValid = data.category.length >0 && data.genre.length>0 && data.platformid > 0;
             if(isValid){
                 storewsapi.adSearch(data).then(
@@ -47,6 +49,8 @@ app.controller("AdvancedSearchController", ["$scope", "$location", "storewsapi",
                 //Empty Search
                 $location.path("/index.html");
             }
+
+            $scope.Loading = false;
 
         };
 

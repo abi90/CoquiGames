@@ -8,9 +8,11 @@ app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'au
         $scope.sortType = 'active';
         $scope.sortReverse = false;
         $scope.searchUser = '';
+        $scope.Loading = false;
 
         // Get list of users from the WS API
         var getUsers = function() {
+            $scope.Loading = true;
             adminwsapi.getUsers(auth.uname, auth.token).then(
                 function (response) {
                     $scope.users = response.data
@@ -21,6 +23,7 @@ app.controller('AdminUsersController', ['$scope', '$location', 'adminwsapi', 'au
                     $scope.users = [];
                 }
             );
+            $scope.Loading = false;
         };
 
         //Edit User Info

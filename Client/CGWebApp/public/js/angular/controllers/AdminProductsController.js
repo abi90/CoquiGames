@@ -10,12 +10,13 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
         $scope.searchProduct = '';
         $scope.messages = [];
         $scope.errors = [];
-
+        $scope.Loading = false;
         $scope.esrbRating = {esrb_rate: "Everyone", esrbid: 1};
         $scope.esrb_ratings = [{esrb_rate: "Everyone", esrbid: 1}, {esrb_rate: "Teen", esrbid: 2}];
 
         // Get list of products from the WS API
         var getProducts = function() {
+            $scope.Loading = true;
             adminwsapi.getAllProducts(auth.uname, auth.token).then(
                 function (response) {
                     $scope.products = response.data
@@ -25,6 +26,7 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
                     $scope.products = [];
                 }
             );
+            $scope.Loading = false;
         };
 
         //NOT TESTED FOR ACTUAL EDITING. JUST PULLS INFORMATION
@@ -66,7 +68,7 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
         };
 
 
-        //Deactivate a product
+        // Deactivate a product
         $scope.shoDeactivateProduct = function(pid){
             adminwsapi.deactivateProduct(auth.uname, auth.token, pid).then(
                 function (response) {
@@ -79,7 +81,7 @@ app.controller('AdminProductsController', ['$scope', '$location', 'adminwsapi', 
 
         };
 
-        //Add A New Product
+        // Add A New Product
         $scope.shoAddNewProductModal = function() {
             // Open a modal for admin to add a new product
             var modal = Popeye.openModal({

@@ -125,7 +125,6 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
             if($scope.genresSelection.length > 0){
                 data['genres'] = $scope.genresSelection;
             }
-            console.log(data)
             storewsapi.search(data).then(
                     function (response) {
                         $scope.results = response.data;
@@ -155,9 +154,14 @@ app.controller("SearchController", ["$scope", "$location", "storewsapi", "title"
         });
 
 
+        var search = function(){
+            $scope.Loading = true;
+            searchByTitle(title);
+            getGenres();
+            $scope.Loading = false;
+        };
 
         //Get Results on startup
-        searchByTitle(title);
-        getGenres();
+        search();
 
     }]);

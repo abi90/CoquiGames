@@ -3,10 +3,14 @@ app.controller("PlatformController",
         function ($scope, $location, storewsapi, platformId, authenticationSvc, userwsapi) {
 
             $scope.platformId = platformId;
+            $scope.platform = {};
             $scope.slides = [];
             $scope.myInterval = 5000;
             $scope.nowWrapSlides = true;
             $scope.active = 0;
+            $scope.platformTop = [];
+            $scope.platformSpecials = [];
+            $scope.platformLatest = [];
 
             var getPlatform = function () {
 
@@ -14,8 +18,7 @@ app.controller("PlatformController",
                     function (response) {
                         $scope.platform = response.data;
                     },
-                    function (error) {
-                        console.log(error.toString());
+                    function (){
                         $location.path("/404.html");
                     });
             };
@@ -26,24 +29,24 @@ app.controller("PlatformController",
                     function (response) {
                         $scope.platformLatest = response.data;
                     },
-                    function (error) {
-                        console.log(error.toString());
+                    function () {
                         $scope.platformLatest = [];
                     });
             };
 
-            storewsapi.getPlatformAnnouncements($scope.platformId).then(
-                function(response){
-                    $scope.slides = response.data;
-                    $scope.active = 0;
-                },
-                function(){
-                    $scope.slides = [];
-                    $scope.active = 0;
-                }
 
-
-            );
+            var getPlatformAnnouncements = function () {
+                storewsapi.getPlatformAnnouncements($scope.platformId).then(
+                    function(response){
+                        $scope.slides = response.data;
+                        $scope.active = 0;
+                    },
+                    function(){
+                        $scope.slides = [];
+                        $scope.active = 0;
+                    }
+                );
+            };
 
             var getPlatformSpecialProducts = function () {
 
@@ -51,63 +54,27 @@ app.controller("PlatformController",
                     .then(function (response) {
                         $scope.platformSpecials = response.data;
 
-                    }, function (error) {
-                        console.log(error.toString());
+                    }, function () {
                         $scope.platformSpecials = [];
                     });
             };
 
             var getPlatformTopProducts = function () {
+                if($scope.platformLatest.length == 0 || $scope.platformSpecials.length == 0)
+                {
+                    storewsapi.topPlatProducts($scope.platformId)
+                        .then(function (response) {
+                            $scope.platformTop = response.data;
 
-                storewsapi.topPlatProducts($scope.platformId)
-                    .then(function (response) {
-                        $scope.platformTop = response.data;
-
-                    }, function (error) {
-                        console.log(error.toString());
-                        $scope.platformTop = [];
-                    });
-            };
-
-            $scope.addToCart = function (pid) {
-                var userInfo = authenticationSvc.getUserInfo();
-                if(userInfo){
-                    userwsapi.getUserCart(userInfo.uid,userInfo.uname, userInfo.upassword).then(
-                        function (response) {
-                            var i;
-                            var cart = response.data;
-                            var product;
-                            for (i = 0; i < cart.length; i++) {
-                                console.log(cart[i].pid);
-                                if(cart[i].pid == pid)
-                                {
-                                    product = cart[i];
-                                    product.pquantity = product.pquantity + 1;
-                                    userwsapi.putUserCart(userInfo.uid,userInfo.uname, userInfo.upassword, product)
-                                        .then(function (response) {console.log(JSON.stringify(response));},function (err){});
-                                    break;
-                                }
-                            }
-                            if(!product){
-                                userwsapi.postUserCart(userInfo.uid,userInfo.uname, userInfo.upassword,{"pid":pid,"pquantity":1})
-                                    .then(function (response) {},function (err){});
-                            }
-                            $rootScope.$emit('uCart');
-                        },
-                        function () {
-                            $location.path('/404.html');
-                        }
-                    );
-                }
-                else{
-                    $location.path('/login.html');
+                        }, function (error) {
+                            console.log(error.toString());
+                            $scope.platformTop = [];
+                        });
                 }
             };
-
-
-
 
             getPlatform();
+            getPlatformAnnouncements();
             getPlatformLatestProducts();
             getPlatformSpecialProducts();
             getPlatformTopProducts();

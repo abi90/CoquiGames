@@ -10,6 +10,7 @@ app.controller('UserOrdersController', ['$scope', '$location', 'authenticationSv
         // Scope Variables
         $scope.userData = auth;
         $scope.userOrder = [];
+        $scope.Loading = false;
 
         var logout = function () {
 
@@ -24,6 +25,7 @@ app.controller('UserOrdersController', ['$scope', '$location', 'authenticationSv
         };
 
         var getUserOrder = function () {
+            $scope.Loading = true;
             userwsapi.getUserOrders(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userOrder = response.data;
@@ -31,7 +33,8 @@ app.controller('UserOrdersController', ['$scope', '$location', 'authenticationSv
                 function () {
                     logout();
                 }
-            )
+            );
+            $scope.Loading = false;
         };
 
         // Get User Data on startup

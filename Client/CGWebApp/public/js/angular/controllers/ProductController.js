@@ -4,26 +4,32 @@
 app.controller('ProductController',
     ['$scope', '$location', 'storewsapi', 'authenticationSvc', 'userwsapi','productId', '$rootScope',
     function($scope, $location, storewsapi, authenticationSvc, userwsapi, productId, $rootScope) {
+
         $scope.productId = productId;
+        $scope.Loading = false;
 
-        storewsapi.getProduct($scope.productId).then(
-            function(response) {
-                $scope.product = response.data;
-            },
-            function (error) {
-                console.log(error.toString());
-                $location.path("/404.html");
-            });
+        var getProduct = function () {
+            $scope.Loading = true;
+            storewsapi.getProduct($scope.productId).then(
+                function (response) {
+                    $scope.product = response.data;
+                },
+                function (error) {
+                    console.log(error.toString());
+                    $location.path("/404.html");
+                });
 
-        storewsapi.relatedProducts($scope.productId ).then(
-            function(response) {
-                $scope.relatedPrds = response.data;
-            },
-            function (error) {
-                console.log(error.toString());
-                $scope.relatedPrds = [];
-            }
-        );
+            storewsapi.relatedProducts($scope.productId).then(
+                function (response) {
+                    $scope.relatedPrds = response.data;
+                },
+                function (error) {
+                    console.log(error.toString());
+                    $scope.relatedPrds = [];
+                }
+            );
+            $scope.Loading = false;
+        };
 
         storewsapi.getProductAltImg($scope.productId).then(
             function (response){
@@ -180,4 +186,6 @@ app.controller('ProductController',
                 $location.path('/login.html');
             }
         };
+
+        getProduct();
     }]);

@@ -9,6 +9,7 @@ app.controller('UserPaymentController',
         $scope.messages = [];
         $scope.userData = {};
         $scope.userData.uname = auth.uname;
+        $scope.Loading = false;
 
         // Local Functions
         var logout = function () {
@@ -23,6 +24,7 @@ app.controller('UserPaymentController',
         };
 
         var getUserPayments = function () {
+            $scope.Loading = false;
             userwsapi.getUserPayment(auth.uid, auth.uname, auth.token).then(
                 function (response) {
                     $scope.userPayment = response.data;
@@ -30,7 +32,8 @@ app.controller('UserPaymentController',
                 function () {
                     logout();
                 }
-            )
+            );
+            $scope.Loading = false;
         };
 
 
