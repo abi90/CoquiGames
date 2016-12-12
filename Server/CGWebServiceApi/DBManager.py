@@ -1077,6 +1077,10 @@ def create_announcement(title, img, platformid, active):
         return __execute_commit_query__(Query.INSERT_STORE_ANNOUNCEMENTS, (img, title, active))[0]['said']
 
 
+def create_genre(genre,active):
+    return __execute_commit_query__(Query.INSERT_GENRE,(genre,active))[0]['genreid']
+
+
 
 
 
