@@ -673,7 +673,8 @@ app.factory('addToUserCart', ['authenticationSvc','userwsapi', '$location', '$ro
                     },
                     function () {
                         $rootScope.$broadcast('unLogin');
-                        $location.path('/404.html');
+                        authenticationSvc.logout();
+                        $location.path('/login.html');
                     }
                 );
             }
@@ -684,4 +685,50 @@ app.factory('addToUserCart', ['authenticationSvc','userwsapi', '$location', '$ro
         };
 
         return addToUserCart;
+    }]);
+
+app.factory('addToWishList', ['authenticationSvc','userwsapi', '$location', '$rootScope',
+    function (authenticationSvc, userwsapi, $location, $rootScope) {
+
+        var addToWishList = {};
+
+        addToWishList.addProductToWishList = function (pid) {
+            var userInfo = authenticationSvc.getUserInfo();
+            if(userInfo){
+                userwsapi.getUserWishlist(userInfo.uid, userInfo.uname, userInfo.upassword)
+                    .then(
+                        function (response) {
+                            var i;
+                            var wishList = response.data;
+                            var product;
+                            for (i = 0; i < wishList.length; i++) {
+                                if(wishList[i].pid == pid)
+                                {
+                                    product = wishList[i];
+                                    break;
+                                }
+                            }
+                            if(!product){
+                                userwsapi.postUserWishList(userInfo.uid,userInfo.uname,
+                                    userInfo.upassword, pid)
+                                    .then(
+                                        function (response) {
+                                            console.log(JSON.toString(response.data));
+                                        },
+                                        function (err){console.log(JSON.toString(err))});
+                            }
+                        },
+                        function () {
+                            $rootScope.$broadcast('unLogin');
+                            authenticationSvc.logout();
+                            $location.path('/login.html');
+                        }
+                    );
+            }
+            else{
+                $location.path('/login.html');
+            }
+        };
+
+        return addToWishList;
     }]);
