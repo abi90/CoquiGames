@@ -27,7 +27,7 @@ and administrator accounts also export sales data to a CSV file for reporting pu
 
 #3. Server Side Description
 
-The store data will be obtained from a Java Play server using REST calls and encoding data with JSON. The data will be stored in PostgreSQL (object-relational database system). The data objects are maintained and access in terms of four operations, often described with the acronym CRUD (Create, Read, Update, Delete). For the security and integrity of the store data the functionality will be limited to the user role.
+The store data will be obtained from a Flask (Python) server using REST calls and encoding data with JSON. The data will be stored in PostgreSQL (object-relational database system). The data objects are maintained and access in terms of four operations, often described with the acronym CRUD (Create, Read, Update, Delete). For the security and integrity of the store data the functionality will be limited to the user role.
 A regular user will be able to perform the following tasks in the server:
 Authenticate a customer account.
 Create\Read\Update a customer account. 
@@ -41,7 +41,7 @@ An administrator of the CoquiGames will be able to:
 Authenticate an administrator account.
 Create\Read\Update\Delete customer and administrator accounts.
 Read sales data.
-The signup process will be handled by way of a script configured for the application, which connects to the application server, handles the verification process and creates a session in the application server (Java Play Server). User sensitive information such as credit numbers must be encrypted, for safety and protection of all the clients. Our front-end (which will be Angular) is going to request the back-end (Java Play) for an encryption key. The front end will then encrypt the credit card information and then return it to the back end. Finally, the back end will decrypt information and the it will be stored in the database, which will once again encrypt the information.  
+The signup process will be handled by way of a script configured for the application, which connects to the application server, handles the verification process and creates a session in the application server (Flask Server). User sensitive information such as credit numbers must be encrypted, for safety and protection of all the clients. Our front-end (which will be Angular) is going to request the back-end (Flask Server) for an encryption key. The front end will then encrypt the credit card information and then return it to the back end. Finally, the back end will decrypt information and the it will be stored in the database, which will once again encrypt the information.  
 
 
 Planned Tables:
